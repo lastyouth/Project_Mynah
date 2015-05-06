@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:paddingBottom="@dimen/button_vertical_margin"
+    android:paddingLeft="@dimen/button_horizontal_margin"
+    android:paddingRight="@dimen/button_horizontal_margin"
+    android:paddingTop="@dimen/button_vertical_margin"
+    android:background="@color/weather_background">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+        
+       	<ImageView
+	        android:id="@+id/ivWeatherImage"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/ic_launcher" />
+    	
+    	
+    	<TextView
+	        android:id="@+id/tvWeatherType"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/ivWeatherImage"
+	        android:text="비(흐림)" />
+        
+        
+    </RelativeLayout>
+
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+    	
+        <TextView
+	        android:id="@+id/tvPlace"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="동대문구" />
+
+    	<TextView
+	        android:id="@+id/tvTemper"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tvPlace"
+	        android:text="12도" />
+    
+	    <TextView
+	        android:id="@+id/tvOption"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tvTemper"
+	        android:text="강수량 10mm" />
+	    
+	    
+	    <TextView
+	        android:id="@+id/tvOption2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tvOption"
+	    	android:text="몇시 몇분 기준" />
+        
+    </RelativeLayout>
+    
+   
+
+
+    
+    
+
+</LinearLayout>
