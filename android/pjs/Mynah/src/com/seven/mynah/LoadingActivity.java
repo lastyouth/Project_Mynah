@@ -18,9 +18,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.R;
 import com.seven.mynah.backgroundservice.GetInformationService;
+import com.seven.mynah.database.DBManager;
 
 public class LoadingActivity extends Activity{
 	
@@ -43,6 +45,9 @@ public class LoadingActivity extends Activity{
 	}
 	public void Loading()
 	{
+		
+		checkInitUser();
+		
 		Handler handler = new Handler()
 		{
 			public void handleMessage(Message msg)
@@ -53,7 +58,20 @@ public class LoadingActivity extends Activity{
 			}
 		};
 		
-		handler.sendEmptyMessageDelayed(0, 5000);
+		handler.sendEmptyMessageDelayed(0, 1000);
+	}
+	
+	private void checkInitUser()
+	{
+		if (DBManager.getManager(this).isInitialUser())
+		{
+			Toast.makeText(this, "유저정보 확인되었음", 1).show();
+		}
+		else 
+		{
+			Toast.makeText(this, "등록된 유저가 없습니다.", 1).show();
+		}
+			
 	}
 	
 	//사전 구동에 필요한 내용을 로드하는 함수.
@@ -66,8 +84,8 @@ public class LoadingActivity extends Activity{
 		finish();
 	}
 	
+	
 	// 현 상황에서 필요없음.. A->B에서 B->A로 갈때 다이얼로그 사용할 때 사용.
-
 	@Override 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

@@ -28,6 +28,52 @@
             android:name=".MainActivity">            
         </activity>
         
+        
+        <activity
+            android:name=".ScheduleListActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Schedule" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".BusSettingActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Bus" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SubwaySettingActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Subway" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".WeatherSettingActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Weather" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".GlobalSettingActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Setting" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
         <service
             android:name="com.seven.mynah.backgroundservice.GetInformationService">
             

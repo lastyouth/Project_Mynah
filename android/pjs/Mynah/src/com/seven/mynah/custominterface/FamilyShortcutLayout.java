@@ -22,7 +22,7 @@ private View view;
 	
 	private void initView() 
 	{
-		view = inflate(getContext(), R.layout.layout_family, null);
+		view = inflate(getContext(), R.layout.layout_button_family, null);
 		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new FamilyTouchListener());

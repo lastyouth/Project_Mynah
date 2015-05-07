@@ -17,9 +17,9 @@ import android.widget.RelativeLayout;
 public class CustomButton extends FrameLayout{
 
 	Context context;
+	public CustomButtonsFragment cbf;
 	//int border_color = android.graphics.Color.TRANSPARENT;
-	int border_color = android.graphics.Color.BLACK;
-	
+	int border_color = android.graphics.Color.BLACK;	
 	
 	public CustomButton(Context context) {
 		super(context);
@@ -43,8 +43,9 @@ public class CustomButton extends FrameLayout{
 	private void init(Context context) {
 		
 		//혹시나 이 부분에서 필요할 부분을 찾음...만약에 글 아래로 들어간다면?
-	    //inflate(getContext(), R.layout.layout_custombutton, this);	
-	    inflate(context, R.layout.layout_custombutton, this);	
+	    //inflate(getContext(), R.layout.layout_custombutton, this);
+		
+	    inflate(context, R.layout.layout_button_custombutton, this);	
 	    
 	    //background 설정
 	    
@@ -77,7 +78,4 @@ public class CustomButton extends FrameLayout{
 	{
 		border_color = color;
 	}
-
-
-
 }

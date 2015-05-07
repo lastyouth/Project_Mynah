@@ -20,7 +20,16 @@ public final class GlobalVariable {
 		
 	}
 	
-	
+	public final class UserType {
+		
+		public static final int
+		me = 1,
+		other = 2;
+		
+		public static final int 
+		master = 3,
+		normal = 4;
+	}
 
 
 	

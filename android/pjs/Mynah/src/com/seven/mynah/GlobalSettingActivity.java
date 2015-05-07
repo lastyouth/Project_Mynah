@@ -10,12 +10,12 @@ import android.preference.Preference.OnPreferenceClickListener;
 public class GlobalSettingActivity extends Activity{
 	
 	private boolean mIsBackKeyPressed = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		setContentView(R.layout.activity_setting_app);
 		
 	}
 	
@@ -29,8 +29,5 @@ public class GlobalSettingActivity extends Activity{
 			mIsBackKeyPressed = true;
 			finish();
 		}
-		
 	}
-	
-	
 }

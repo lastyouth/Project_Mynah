@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
+import com.seven.mynah.ScheduleListActivity;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.provider.Settings.Global;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Point;
@@ -45,6 +47,7 @@ public class CustomButtonsFragment extends Fragment{
 	
 	private View rootView;
 	private GridLayout mainGridLayout;
+	private String intentActionName;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -107,7 +110,6 @@ public class CustomButtonsFragment extends Fragment{
 		int screenWidth = metrics.widthPixels - gridmargin * 2;
 		int screenHeight = metrics.heightPixels - getStatusBarHeight() - gridmargin * 2;
 		
-		
 		//MeasureSpec.EXACTLY : fill_parent, match_parent 로 외부에서 미리 크기가 지정되었다.
 		//mainGridLayout.measure(MeasureSpec.EXACTLY, MeasureSpec.EXACTLY);
 		//int screenWidth = mainGridLayout.getMeasuredWidth();
@@ -115,16 +117,16 @@ public class CustomButtonsFragment extends Fragment{
 		
 		switch(type) {
 		case GlobalVariable.ShortcutType.typeScheduleShortcut:
-			cb = new ScheduleShortcutLayout(this.getActivity());
+			cb = new ScheduleShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeBusShortcut:
-			cb = new BusShortcutLayout(this.getActivity());
+			cb = new BusShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeSubwayShortcut:
-			cb = new SubwayShortcutLayout(this.getActivity());
+			cb = new SubwayShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeWeatherShortcut:
-			cb = new WeatherShortcutLayout(this.getActivity());
+			cb = new WeatherShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeGasAlarmShortcut:
 			cb = new GasAlarmShortcutLayout(this.getActivity());
@@ -139,7 +141,7 @@ public class CustomButtonsFragment extends Fragment{
 			cb = new VoiceLayout(this.getActivity());
 			break;
 		case GlobalVariable.ShortcutType.typeSetting:
-			cb = new SettingLayout(this.getActivity());
+			cb = new SettingLayout(this.getActivity(), this);
 			break;
 		
 		default:
@@ -165,9 +167,16 @@ public class CustomButtonsFragment extends Fragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		
-				
+		super.onActivityCreated(savedInstanceState);		
+	}
+	
+	
+	public void startSettingActivity(String type)
+	{
+		intentActionName = "com.seven.mynah.";
+		intentActionName += type;
+		Intent intent = new Intent(intentActionName);
+		startActivity(intent);
 	}
 	
 
