@@ -32,8 +32,10 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             setDefaultFragment();
         }
-        testSide();
+        //testSide();
     }
+    
+    
 
     private void setDefaultFragment()
 	{

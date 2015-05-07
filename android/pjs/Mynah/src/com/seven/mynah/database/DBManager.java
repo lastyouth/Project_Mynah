@@ -6,6 +6,7 @@ import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.TimeToWeather;
 import com.seven.mynah.artifacts.UserProfile;
 import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -151,6 +152,86 @@ public class DBManager {
 	
 	
 	public boolean isInitialUser()
+	{
+		String sql = "select id from " + MynahDB._USER_TABLE_NAME + 
+				" where " + MynahDB._USER_COL_TYPE + "=" + String.valueOf(GlobalVariable.UserType.me) 
+				+ " ;";
+		
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+		
+		if(c != null && c.getCount() != 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public FamilyInfo getFamilyDB()
+	{
+		FamilyInfo finfo = new FamilyInfo();
+		UserProfile userProfile;
+		
+		String sql = "select * from " + MynahDB._USER_TABLE_NAME + " " +
+				" order by " + MynahDB._USER_COL_TYPE + " ; ";
+		
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+		
+		int id_index = c.getColumnIndex(MynahDB._USER_COL_ID);
+		int passwd_index = c.getColumnIndex(MynahDB._USER_COL_PASSWD);
+		int inout_index = c.getColumnIndex(MynahDB._USER_COL_INOUT);
+		int name_index = c.getColumnIndex(MynahDB._USER_COL_NAME);
+		int key_index = c.getColumnIndex(MynahDB._USER_COL_CERTI_KEY);
+		int type_index = c.getColumnIndex(MynahDB._USER_COL_TYPE);
+		int master_type_index = c.getColumnIndex(MynahDB._USER_COL_MASTER_TYPE);
+	
+		while(!c.isAfterLast())
+		{
+			userProfile = new UserProfile();
+			userProfile.id = c.getString(id_index);
+			userProfile.passwd = c.getString(passwd_index);
+			userProfile.inout = c.getInt(inout_index);
+			userProfile.name = c.getString(name_index);
+			userProfile.mac_address = c.getString(key_index);
+			userProfile.usertype = c.getInt(type_index);
+			userProfile.mastertype = c.getInt(master_type_index);
+			
+			finfo.members.add(userProfile);
+			
+			c.moveToNext();
+		}
+		
+		return finfo;
+	}
+	
+	
+	//아예 타입으로 엎어버릴까 아님 개별로 작동시킬까...
+	public void setFamilyDB(FamilyInfo finfo)
+	{
+		
+		deleteFamilyExceptMe();
+		
+		String sql;
+		
+		for(int i = 0; i<finfo.members.size(); ++i)
+		{
+			if(finfo.members.get(i).usertype != GlobalVariable.UserType.me)
+			{
+				
+				
+			}
+		}
+	}
+	
+	
+	public void deleteFamilyExceptMe()
+	{
+		String sql = "delete from " + MynahDB._USER_TABLE_NAME + " where "
+				+ MynahDB._USER_COL_TYPE + "<>" + GlobalVariable.UserType.me
+				+ " ;";
+		dbh.mDB.execSQL(sql);
+	}
+	
 	
 	public void setBusDB(BusInfo binfo)
 	{
@@ -189,16 +270,6 @@ public class DBManager {
 		return muser;
 	}
 	
-	public void setFamiltyDB(FamilyInfo finfo)
-	{
-		
-	}
-	
-	public FamilyInfo getFamilyDB(FamilyInfo finfo)
-	{
-		
-		return finfo;
-	}
 	
 	
 

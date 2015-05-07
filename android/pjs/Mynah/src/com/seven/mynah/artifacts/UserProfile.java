@@ -11,7 +11,7 @@ public class UserProfile {
 	public String mac_address;
 	public int usertype;
 	public int inout;
-	
+	public int mastertype;
 	
 	public UserProfile() {
 		
