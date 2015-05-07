@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
+import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 
 
@@ -33,7 +35,7 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             setDefaultFragment();
         }
-        //testSide();
+        testSide();
     }
     
     
@@ -76,8 +78,19 @@ public class MainActivity extends Activity {
     	
     	
     	WeatherParser wp = new WeatherParser();
-    	wp.parserWeather_XML(winfo);
+    	wp.parseWeather_XML(winfo);
     	
+    	BusInfo binfo = new BusInfo();
+    	//정류소ID stId : 35428
+        //노선ID busRouteId : 4341100
+    	binfo.stId = String.valueOf(35428);
+    	binfo.busRouteId = String.valueOf(4341100);
+    	
+    	BusPaser bp = new BusPaser();
+    	//bp.parseBus_XML(binfo);
+    	
+    	bp.parseStationInfo_XML("광운대");
+    			
     	
     }
     

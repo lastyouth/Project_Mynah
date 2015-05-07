@@ -53,6 +53,7 @@ public class LoadingActivity extends Activity{
 			public void handleMessage(Message msg)
 			{
 				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+				//Intent intent = new Intent(getApplicationContext(), ScheduleListActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -94,5 +95,7 @@ public class LoadingActivity extends Activity{
 		
 		
 	}
+	
+	
 	
 }

@@ -2,7 +2,10 @@ package com.seven.mynah.custominterface;
 
 import com.seven.mynah.R;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.Layout;
@@ -17,9 +20,16 @@ import android.widget.RelativeLayout;
 public class CustomButton extends FrameLayout{
 
 	Context context;
+	public CustomButtonsFragment cbf;
+	
 	//int border_color = android.graphics.Color.TRANSPARENT;
 	int border_color = android.graphics.Color.BLACK;
 	
+
+	public void setCBF(CustomButtonsFragment _cbf)
+	{
+		cbf = _cbf;
+	}
 	
 	public CustomButton(Context context) {
 		super(context);
@@ -49,12 +59,20 @@ public class CustomButton extends FrameLayout{
 	    //background ¼³Á¤
 	    
     }
+	
 
 	@Override
 	public void addView(View child) {
 		// TODO Auto-generated method stub
 		super.addView(child);
 		//this.addView(child);
+	}
+	
+	
+	public void test()
+	{
+		//Intent intent = new Intent();
+		//ActivityManager am = ActivityManager
 	}
 	
 	

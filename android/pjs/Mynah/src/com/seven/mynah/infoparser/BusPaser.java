@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.util.Xml.Encoding;
 
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.TimeToBus;
@@ -23,7 +27,8 @@ public class BusPaser {
 
 	//여기에 들어가는게 3가지임.
 	private final String rssFeed = "http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute?stId=%s&busRouteId=%s&ord=%s";
-	private final String serviceKey = ""; //나중에 발급받으면 거기다가 넣을 것
+	private final String serviceKey = "0x3MtlITSbQrDntCBFU0A%2FKeCpVidWB9jeKt8acPuZ0ZHSTW%2FaMiRmuCAsifYUWyYn5jBZN0xEReaIKPMSJSWQ%3D%3D"; 
+	//나중에 발급받으면 거기다가 넣을 것
 	
 	
 	
@@ -31,7 +36,7 @@ public class BusPaser {
 		
 	}
 	
-	public void parserBus_XML(BusInfo binfo)
+	public void parseBus_XML(BusInfo binfo)
 	{
 		
 		String stId =  binfo.stId;
@@ -119,6 +124,80 @@ public class BusPaser {
 		
 		
 	}
+	
+	
+	public void parseStationInfo_XML(String _name)
+	{
+			
+		try {
+			
+			String stSrch =  URLEncoder.encode(_name, "utf-8");
+			
+			
+			XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();
+			XmlPullParser parser = parserFactory.newPullParser();
+			
+			
+			ReceiveXml rx = new ReceiveXml(
+					new URL("http://ws.bus.go.kr/api/rest/stationinfo/getStationByName"
+							+ "?ServiceKey=" + serviceKey
+							+ "?stSrch=" + stSrch));
+			
+			rx.start();
+			rx.join();
+			
+			parser.setInput(new StringReader(rx.getXml()));
+			
+			int eventType = parser.getEventType();
+ 
+            boolean done = false;
+			int i = -1;
+            TimeToBus ttb = null;
+			
+            while (eventType != XmlPullParser.END_DOCUMENT && !done){
+                String name = null;
+                //String temp;
+         
+                switch (eventType){
+                    case XmlPullParser.START_DOCUMENT:
+                        
+                        break;
+                    case XmlPullParser.START_TAG:
+                        // 태그를 식별한 뒤 태그에 맞는 작업을 수행합니다.
+                        
+                        break;
+                    
+                }
+                eventType = parser.next();
+                
+            }
+
+            //db에다가 저장하는 내용으로
+            
+            
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.d("Mynah", e.toString());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void parseStationInfo_XML(double x_pos, double y_pos)
+	{
+		
+		
+		
+	}
+	
+	
 	
 	class ReceiveXml extends Thread {
         

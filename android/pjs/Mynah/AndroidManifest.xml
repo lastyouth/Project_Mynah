@@ -28,6 +28,11 @@
             android:name=".MainActivity">            
         </activity>
         
+        <activity 
+        	android:name=".ScheduleListActivity">
+        	
+        </activity>
+        
         <service
             android:name="com.seven.mynah.backgroundservice.GetInformationService">
             

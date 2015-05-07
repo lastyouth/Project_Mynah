@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
+import com.seven.mynah.ScheduleListActivity;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.provider.Settings.Global;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Point;
@@ -116,6 +118,7 @@ public class CustomButtonsFragment extends Fragment{
 		switch(type) {
 		case GlobalVariable.ShortcutType.typeScheduleShortcut:
 			cb = new ScheduleShortcutLayout(this.getActivity());
+			cb.setCBF(this);
 			break;
 		case GlobalVariable.ShortcutType.typeBusShortcut:
 			cb = new BusShortcutLayout(this.getActivity());
@@ -168,6 +171,13 @@ public class CustomButtonsFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		
 				
+	}
+	
+	
+	public void startTest()
+	{
+		Intent intent = new Intent(this.getActivity(),ScheduleListActivity.class);
+		startActivity(intent);
 	}
 	
 

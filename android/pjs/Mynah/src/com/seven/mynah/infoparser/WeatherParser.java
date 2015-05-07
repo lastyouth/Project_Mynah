@@ -28,8 +28,6 @@ import com.seven.mynah.artifacts.*;
 
 
 
-
-
 //자체가 쓰레딩하지 않도록 함(다운받는곳 제외)
 //파서를 호출하는 클래스에서 쓰레딩
 public class WeatherParser {
@@ -39,6 +37,10 @@ public class WeatherParser {
 	//DB 내부 클래스의 경우 중복되거나 새로 추가되야하는 부분은 
 	//그쪽에서 다 처리한다.
 	
+	private final String rssCityTop = "http://www.kma.go.kr/DFSROOT/POINT/DATA/top.json.txt";
+	private final String rssCityMdl = "http://www.kma.go.kr/DFSROOT/POINT/DATA/mdl.%s.json.txt";
+	private final String rssCityleft = "http://www.kma.go.kr/DFSROOT/POINT/DATA/leaf.%s.json.txt";
+	
 	private final String rssFeed = "http://www.kma.go.kr/wid/queryDFS.jsp?gridx=%s&gridy=%s";
 	
 	//private SimpleDateFormat formater = new SimpleDateFormat("YYYYMMDDHH");
@@ -47,7 +49,7 @@ public class WeatherParser {
 		
 	}
     
-	public void parserWeather_XML(WeatherInfo winfo)
+	public void parseWeather_XML(WeatherInfo winfo)
 	{
 		
 		String xpos = String.valueOf(winfo.city_xpos); 
@@ -135,7 +137,79 @@ public class WeatherParser {
 		
 	}
 	
+	
+	private void parseCityInfo_JSON()  {
+	
+		ReceiveXml rx;
+		ReceiveXml rx2;
+		ReceiveXml rx3;
+		
+		String temp, temp2, temp3;
+		URL url;
+		
+		try {
+			url = new URL(rssCityTop);
+			rx = new ReceiveXml(url);
+			JSONObject jso = new JSONObject();
+			JSONArray jsa;
+			rx.start();
+			rx.join();
+			jsa = new JSONArray(rx.getXml()); 
+			
+			for(int i=0;i<jsa.length();++i)
+			{
+				jso = jsa.getJSONObject(i);
+				temp = jso.names().getString(0);
+				
+				
+				url = new URL("http://www.kma.go.kr/DFSROOT/POINT/DATA/mdl." + temp + ".json.txt");
+				rx2 = new ReceiveXml(url);
+				JSONObject jso2 = new JSONObject();
+				JSONArray jsa2;
+				rx2.start();
+				rx2.join();
+				jsa2 = new JSONArray(rx2.getXml());
+				
+				for(int j=0;j<jsa2.length();++j)
+				{
+					jso2 = jsa2.getJSONObject(j);
+					temp2 = jso2.names().getString(0);
+					
+					url = new URL("http://www.kma.go.kr/DFSROOT/POINT/DATA/leaf." + temp + ".json.txt");
+					rx3 = new ReceiveXml(url);
+					JSONObject jso3 = new JSONObject();
+					JSONArray jsa3;
+					rx3.start();
+					rx3.join();
+					jsa3 = new JSONArray(rx3.getXml());
+					
+					for (int k=0;k<jsa3.length();++k)
+					{
+						jso3 = jsa3.getJSONObject(k);
+						//temp3 = jso3.names().getString(0);
+						//여깄는 것들을 DB에다가 넣는 로직을 함...혹은 csv 전환
+						
+						
+					}
+					
+				}
+				
+			}
+			
 
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 	public void parseWeather_JSON(WeatherInfo winfo)
 	{
@@ -176,26 +250,6 @@ public class WeatherParser {
 	}
 	
 	
-	
-	
-	
-
-	private InputStream downloadUrl(String urlString) throws IOException {
-	    URL url = new URL(urlString);
-	    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	    conn.setReadTimeout(10000 /* milliseconds */);
-	    conn.setConnectTimeout(15000 /* milliseconds */);
-	    conn.setRequestMethod("GET");
-	    conn.setDoInput(true);
-	    // Starts the query
-	    conn.connect();
-	    return conn.getInputStream();
-	}
-	
-	
-	//receiveXML
-	//얘가 별로면 httpClient를 사용한다.
-	//이것조차 별로이면 XmlFullparser를 응용한다.
 	class ReceiveXml extends Thread {
         
 

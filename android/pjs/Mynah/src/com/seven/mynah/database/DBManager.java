@@ -37,7 +37,7 @@ public class DBManager {
         return instance;
     }
 	
-	public void setWeatherDB(WeatherInfo winfo)
+	public synchronized void setWeatherDB(WeatherInfo winfo)
 	{
 		ContentValues values;
 		
@@ -100,7 +100,7 @@ public class DBManager {
 		
 	}
 	
-	public WeatherInfo getWeatherDB(WeatherInfo winfo)
+	public synchronized WeatherInfo getWeatherDB(WeatherInfo winfo)
 	{
 		
 		//city코드를 기준으로 현재 시간의 이후 정보를 하루치로 return함.
@@ -151,7 +151,7 @@ public class DBManager {
 	}
 	
 	
-	public boolean isInitialUser()
+	public synchronized boolean isInitialUser()
 	{
 		String sql = "select id from " + MynahDB._USER_TABLE_NAME + 
 				" where " + MynahDB._USER_COL_TYPE + "=" + String.valueOf(GlobalVariable.UserType.me) 
@@ -167,7 +167,7 @@ public class DBManager {
 		}
 	}
 	
-	public FamilyInfo getFamilyDB()
+	public synchronized FamilyInfo getFamilyDB()
 	{
 		FamilyInfo finfo = new FamilyInfo();
 		UserProfile userProfile;
@@ -206,7 +206,7 @@ public class DBManager {
 	
 	
 	//아예 타입으로 엎어버릴까 아님 개별로 작동시킬까...
-	public void setFamilyDB(FamilyInfo finfo)
+	public synchronized void setFamilyDB(FamilyInfo finfo)
 	{
 		
 		deleteFamilyExceptMe();
@@ -224,7 +224,7 @@ public class DBManager {
 	}
 	
 	
-	public void deleteFamilyExceptMe()
+	public synchronized void deleteFamilyExceptMe()
 	{
 		String sql = "delete from " + MynahDB._USER_TABLE_NAME + " where "
 				+ MynahDB._USER_COL_TYPE + "<>" + GlobalVariable.UserType.me
@@ -232,25 +232,25 @@ public class DBManager {
 		dbh.mDB.execSQL(sql);
 	}
 	
-	public void setBusDB(BusInfo binfo)
+	public synchronized void setBusDB(BusInfo binfo)
 	{
 		
 	}
 	
-	public BusInfo getBusDB(BusInfo binfo)
+	public synchronized BusInfo getBusDB(BusInfo binfo)
 	{
 		
 		return binfo;
 	}
 	
 	
-	public void setSubwayDB(SubwayInfo swinfo)
+	public synchronized void setSubwayDB(SubwayInfo swinfo)
 	{
 		
 		
 	}
 	
-	public SubwayInfo getSubwayDB(SubwayInfo swinfo)
+	public synchronized SubwayInfo getSubwayDB(SubwayInfo swinfo)
 	{
 		
 		return swinfo;

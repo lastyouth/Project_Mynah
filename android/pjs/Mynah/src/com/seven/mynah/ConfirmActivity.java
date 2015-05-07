@@ -10,4 +10,14 @@ public class ConfirmActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
+	
+	
+	
+	public void setConnectingFragment()
+	{
+		
+		
+	}
+	
+	
 }
