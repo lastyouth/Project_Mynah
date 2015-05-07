@@ -42,7 +42,7 @@ public class SubwayPaser {
 		
 		
 		
-				
+		/*		
 		try {
 			
 			//first max size¸¦ ¾òÀ½.
@@ -123,6 +123,7 @@ public class SubwayPaser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
 	}
 	

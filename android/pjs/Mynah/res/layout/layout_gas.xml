@@ -7,62 +7,46 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    android:background="#9d00a5"
+    android:background="#d24726"
     android:clickable="true" >
 	
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
 		android:orientation="vertical"
 		android:layout_weight="1"
 		android:padding="5dp">
-		
-        <LinearLayout
-            android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:gravity="center"
-			android:layout_weight="1">
-			
-            <ImageView
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:src="@drawable/ic_subway" />
-            
-        </LinearLayout>
-       	
-    	<LinearLayout
-    	    android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:gravity="center"
-			android:layout_weight="2">
-    	   
-    	   	<TextView
-            android:id="@+id/subway_subwayname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="1호선 하행"
-            android:textColor="#ffffff"
-            android:textSize="12sp" />
-    	   	
-    	</LinearLayout>
+            android:src="@drawable/ic_gas" />
 
     </LinearLayout>
 	
     <LinearLayout
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_weight="1"
 		android:padding="5dp">
         
         <TextView 
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:gravity="center"
-            android:text="청량리역\n\n2분\n5분"
+            android:text="OFF"
+            android:textSize="30sp"
+            android:textColor="#ffffff"/>
+        
+        <TextView 
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text="15 도"
             android:textSize="12sp"
             android:textColor="#ffffff"/>
           

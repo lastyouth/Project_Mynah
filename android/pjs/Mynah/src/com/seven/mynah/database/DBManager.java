@@ -232,7 +232,6 @@ public class DBManager {
 		dbh.mDB.execSQL(sql);
 	}
 	
-	
 	public void setBusDB(BusInfo binfo)
 	{
 		

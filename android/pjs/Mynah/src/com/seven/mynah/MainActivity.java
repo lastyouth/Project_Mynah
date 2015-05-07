@@ -1,22 +1,17 @@
 package com.seven.mynah;
 
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.infoparser.WeatherParser;
-
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.os.Bundle;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 
 
@@ -29,6 +24,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        //Splash : LoadingActivity
+        //onCreate에서 splash를 하는경우 뒤로가기를 누를시 메인화면으로 돌아옴 > loading을 skip할 수 있다.
+        //startActivity(new Intent(this, LoadingActivity.class));
+        
+        
         if (savedInstanceState == null) {
             setDefaultFragment();
         }

@@ -65,9 +65,9 @@ public class MynahDB {
 				+ _USER_COL_MASTER_TYPE + " integer not null, "
 				+ _USER_COL_INOUT + " integer not null, "
 				+ _USER_COL_CERTI_KEY + " text, "
-				+ " primary key(" + _USER_COL_ID + "); ";
+				+ " primary key(" + _USER_COL_ID + ") ); ";
 		
-		public static final String _CREATE_WEATHER_TABLE = "create table " + _USER_TABLE_NAME
+		public static final String _CREATE_WEATHER_TABLE = "create table " + _WEATHER_TABLE_NAME
 				+ " (" + _WEATHER_COL_CITY_CODE + " text, "
 				+ _WEATHER_COL_CITY_NAME + " text, "
 				+ _WEATHER_COL_CITY_XPOS + " integer, "
@@ -78,14 +78,14 @@ public class MynahDB {
 				+ _WEATHER_COL_POP + " integer, "
 				+ _WEATHER_COL_WFKOR + " text, "
 				+ " primary key(" + _WEATHER_COL_CITY_CODE + "," 
-				+ _WEATHER_COL_DATETIME + ") );";
+				+ _WEATHER_COL_DATETIME + ") ); ";
 		
 		public static final String _CREATE_WEATHER_CITY_TABLE = "create table " + _WEATHER_CITY_TABLE_NAME
 				+ " ( " + _WEATHER_COL_CITY_CODE + " text,"
 				+ _WEATHER_COL_CITY_NAME + " text, "
 				+ _WEATHER_COL_CITY_XPOS + " integer, "
 				+ _WEATHER_COL_CITY_YPOS + " integer, "
-				+ " primary key(" + _WEATHER_COL_CITY_CODE + "); ";
+				+ " primary key(" + _WEATHER_COL_CITY_CODE + ") ); ";
 		
 		public static final String _CREATE_BUS_TABLE = "create table " + _BUS_TABLE_NAME
 				+ " ( " + _BUS_COL_BUS_ID + " text not null, "

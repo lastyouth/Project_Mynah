@@ -34,7 +34,6 @@ public class WeatherShortcutLayout extends CustomButton {
 		super(context);
 		// TODO Auto-generated constructor stub
 		initView();
-		setAnimation();
 	}
 	
 	
@@ -51,20 +50,6 @@ public class WeatherShortcutLayout extends CustomButton {
 		addView(view);
 		
 	}
-	
-	
-	public void setWeatherInfo(WeatherInfo wInfo)
-	{
-		
-		//업데이트 시간은 어떻게 알려줌?
-		
-	}
-	
-	
-	private void setAnimation() {
-		anim = new AnimationUtils().loadAnimation(getContext(), R.anim.slide_in_from_bottom);
-	}
-	
 	
 	public void refresh()
 	{
@@ -101,7 +86,6 @@ public class WeatherShortcutLayout extends CustomButton {
 			Log.d("Touch", "motionEvent.getAction()" + motionEvent.getAction());
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				view.setAlpha((float) 0.8);
-				//view.startAnimation(anim);
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
 				return true;

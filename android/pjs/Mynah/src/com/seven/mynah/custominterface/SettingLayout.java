@@ -4,14 +4,15 @@ import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.seven.mynah.R;
 
-public class ScheduleShortcutLayout extends CustomButton{
+public class SettingLayout extends CustomButton{
 private View view;
 	
-	public ScheduleShortcutLayout(Context context) 
+	public SettingLayout(Context context) 
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -20,14 +21,14 @@ private View view;
 	
 	private void initView() 
 	{
-		view = inflate(getContext(), R.layout.layout_schedule, null);
+		view = inflate(getContext(), R.layout.layout_setting, null);
 		
 		//추후 이부분은 다 xml로 넘길것
-		view.setOnTouchListener(new ScheduleTouchListener());
+		view.setOnTouchListener(new SettingTouchListener());
 		addView(view);
 	}
 	
-	private final class ScheduleTouchListener implements OnTouchListener {
+	private final class SettingTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			
 			Log.d("Touch", "motionEvent.getAction()" + motionEvent.getAction());
@@ -38,7 +39,7 @@ private View view;
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "스케줄 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "setting 버튼이 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
 				

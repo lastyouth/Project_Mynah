@@ -33,6 +33,10 @@ public class DBHelper {
 		mDB.close();
 	}
 	
+	
+	
+	
+	
 	private class DatabaseHelper extends SQLiteOpenHelper{
 
 		// »ý¼ºÀÚ
@@ -46,10 +50,11 @@ public class DBHelper {
 		public void onCreate(SQLiteDatabase db) {
 			
 			db.execSQL(MynahDB.CreateDB._CREATE_USER_TABLE);
-			db.execSQL(MynahDB.CreateDB._CREATE_BUS_TABLE);
-			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_WEATHER_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_WEATHER_CITY_TABLE);
+			db.execSQL(MynahDB.CreateDB._CREATE_BUS_TABLE);
+			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_TABLE);
+			
 
 		}
 
