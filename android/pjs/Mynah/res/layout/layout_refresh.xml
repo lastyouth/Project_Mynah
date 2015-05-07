@@ -5,7 +5,7 @@
     android:orientation="horizontal" 
 	android:padding="5dp"
 	android:layout_margin="5dp"
-    android:background="#009eb0">
+    android:background="#5435af">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 	        	android:id="@+id/ivWeatherImage"
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
-	        	android:src="@drawable/ic_umbrella" />
+	        	android:src="@drawable/ic_refresh" />
             
         </LinearLayout>
        	
@@ -32,20 +32,20 @@
     	    android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:gravity="center"
-			android:layout_weight="2">	
+			android:layout_weight="2">
     	   
     	   	<TextView
 	        	android:id="@+id/tvWeatherType"
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
-	        	android:text="비(흐림)" 
+	        	android:text="새로 고침" 
 	        	android:textColor="#ffffff"
 	        	android:textSize="12sp"/>
     	</LinearLayout>
     </LinearLayout>
 
     
-    <LinearLayout
+	<LinearLayout
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
@@ -58,7 +58,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        
-	        android:text="동대문구" 
+	        android:text="최종 업데이트 시간" 
 	        android:textColor="#ffffff"
 	        android:gravity="center"
 	        android:textSize="12sp"/>
@@ -68,32 +68,10 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        
-	        android:text="12°C" 
+	        android:text="05/07 15:32"
 	        android:textColor="#ffffff"
 	        android:gravity="center"
 	        android:textSize="12sp"/>
-    
-	    <TextView
-	        android:id="@+id/tvOption"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        
-	        android:text="17°/10°" 
-	        android:textColor="#f4e4e2"
-	        android:gravity="center"
-	        android:textSize="12sp"/>
-	    
-	    
-	    <TextView
-	        android:id="@+id/tvOption2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        
-	    	android:text="1.0mm" 
-	    	android:textColor="#ffffff"
-	    	android:gravity="center"
-	        android:textSize="12sp"/>
-        
     </LinearLayout>
     
    

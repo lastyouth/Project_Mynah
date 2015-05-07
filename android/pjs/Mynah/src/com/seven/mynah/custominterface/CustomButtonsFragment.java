@@ -34,9 +34,8 @@ public class CustomButtonsFragment extends Fragment{
 
 	
 	//일단 테스트용 내부 모습
-	private int mNumColumns = 2;
-	private int mNumRows = 4;
-	
+	private int mNumColumns = 4;
+	private int mNumRows = 5;
 	private int mNumButtons = 0;
 	
 	private HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
@@ -77,19 +76,21 @@ public class CustomButtonsFragment extends Fragment{
 	public void setGridLayoutDefault()
 	{
 		//onCreateView에서 호출
-		mainGridLayout.setOrientation(GridLayout.VERTICAL);
+		mainGridLayout.setOrientation(GridLayout.HORIZONTAL);
 		mainGridLayout.setRowCount(mNumRows);
 		mainGridLayout.setColumnCount(mNumColumns);
 		mNumButtons = 0;
 		
 
-		addButton(GlobalVariable.ShortcutType.Weather, 0,0,1);
-		addButton(GlobalVariable.ShortcutType.Weather, 1,0,2);
-		//addButton(GlobalVariable.typeWeatherShortcut, 1,1,1);		
-		addButton(GlobalVariable.ShortcutType.Weather, 2,0,2);
-		addButton(GlobalVariable.ShortcutType.Weather, 3,0,1);
-		
-		
+		addButton(GlobalVariable.ShortcutType.typeScheduleShortcut, 0,0,4);
+		addButton(GlobalVariable.ShortcutType.typeBusShortcut, 1,0,2);
+		addButton(GlobalVariable.ShortcutType.typeSubwayShortcut, 1,2,2);		
+		addButton(GlobalVariable.ShortcutType.typeWeatherShortcut, 2,0,2);
+		addButton(GlobalVariable.ShortcutType.typeGasAlarmShortcut, 2,2,2);
+		addButton(GlobalVariable.ShortcutType.typeFamilyShortcut, 3,0,4);
+		addButton(GlobalVariable.ShortcutType.typeRefrash, 4,0,2);
+		addButton(GlobalVariable.ShortcutType.typeVoice, 4,2,1);
+		addButton(GlobalVariable.ShortcutType.typeSetting, 4,3,1);
 	}
 	
 	
@@ -113,25 +114,45 @@ public class CustomButtonsFragment extends Fragment{
 		//int screenHeight = mainGridLayout.getMeasuredHeight();
 		
 		switch(type) {
-		case GlobalVariable.ShortcutType.Weather:
-			cb = new WeatherShortcutLayout(this.getActivity());
+		case GlobalVariable.ShortcutType.typeScheduleShortcut:
+			cb = new ScheduleShortcutLayout(this.getActivity());
 			break;
-		case GlobalVariable.ShortcutType.Schedule:
+		case GlobalVariable.ShortcutType.typeBusShortcut:
+			cb = new BusShortcutLayout(this.getActivity());
 			break;
-		case GlobalVariable.ShortcutType.Subway:
+		case GlobalVariable.ShortcutType.typeSubwayShortcut:
 			cb = new SubwayShortcutLayout(this.getActivity());
 			break;
+		case GlobalVariable.ShortcutType.typeWeatherShortcut:
+			cb = new WeatherShortcutLayout(this.getActivity());
+			break;
+		case GlobalVariable.ShortcutType.typeGasAlarmShortcut:
+			cb = new GasAlarmShortcutLayout(this.getActivity());
+			break;
+		case GlobalVariable.ShortcutType.typeFamilyShortcut:
+			cb = new FamilyShortcutLayout(this.getActivity());
+			break;
+		case GlobalVariable.ShortcutType.typeRefrash:
+			cb = new RefreshLayout(this.getActivity());
+			break;
+		case GlobalVariable.ShortcutType.typeVoice:
+			cb = new VoiceLayout(this.getActivity());
+			break;
+		case GlobalVariable.ShortcutType.typeSetting:
+			cb = new SettingLayout(this.getActivity());
+			break;
+		
 		default:
-			
 			return;
-			
+
 		}
 		
 		GridLayout.LayoutParams lp = new GridLayout.LayoutParams(_row, _colspan);
-		lp.width = (int) screenWidth / mNumColumns * colspan - padding_5dp_toPixel * 2;
-		lp.height = (int) screenHeight / mNumRows - padding_5dp_toPixel * 2;
-		lp.setMargins(padding_5dp, padding_5dp, padding_5dp, padding_5dp);
-        lp.setGravity(Gravity.CENTER);
+		lp.width = (int) (screenWidth / mNumColumns) * colspan - padding_5dp_toPixel * 2 / mNumColumns / colspan;
+		lp.height = (int) screenHeight / mNumRows - padding_5dp_toPixel ;
+		//lp.setMargins(padding_5dp, padding_5dp, padding_5dp, padding_5dp);
+        lp.setMargins(padding_5dp * 2, padding_5dp * 2, 0, 0);
+		//lp.setGravity(Gravity.CENTER);
         
 		cb.setLayoutParams(lp);
 		mainGridLayout.addView(cb);

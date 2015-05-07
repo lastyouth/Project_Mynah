@@ -150,7 +150,7 @@ public class DBManager {
 	}
 	
 	
-	public boolean isInitialUser()
+	//public boolean isInitialUser()
 	
 	public void setBusDB(BusInfo binfo)
 	{

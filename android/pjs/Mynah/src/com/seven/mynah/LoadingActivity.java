@@ -20,8 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.seven.mynah.R;
+import com.seven.mynah.backgroundservice.GetInformationService;
 
-public class LogoActivity extends Activity{
+public class LoadingActivity extends Activity{
 	
 	RelativeLayout rlayout;
 	
@@ -30,8 +31,29 @@ public class LogoActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_logo);
+		startService();
+		Loading();
 		
+	}
+	public void startService()
+	{
+		Intent service = new Intent(this, GetInformationService.class);
+		startService(service);
+		 
+	}
+	public void Loading()
+	{
+		Handler handler = new Handler()
+		{
+			public void handleMessage(Message msg)
+			{
+				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		};
 		
+		handler.sendEmptyMessageDelayed(0, 5000);
 	}
 	
 	//사전 구동에 필요한 내용을 로드하는 함수.
