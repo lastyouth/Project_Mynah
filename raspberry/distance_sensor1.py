@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 import time
+import Queue
+
 GPIO.setmode(GPIO.BCM)
 
 
@@ -14,10 +16,18 @@ GPIO.setup(ECHO,GPIO.IN)
 
 GPIO.output(TRIG,GPIO.LOW)
 
+distance_sum = 0
+
+distance_cnt = 0
+
+sq = Queue.Queue()
+
+
+
 while True:
     print "Waiting For Sensor To Settle"
 
-    time.sleep(0.3)
+    time.sleep(0.4)
 
     GPIO.output(TRIG,True)
     time.sleep(0.00001)
@@ -35,6 +45,23 @@ while True:
 
     distance = round(distance,2)
 
-    print "Distance:",distance,"cm"
+    if distance_cnt < 5:
+        distance_cnt+=1
+        sq.put(distance)
+        distance_sum += distance
+    else:
+        avg = distance_sum / distance_cnt
+
+        if distance < (avg / 2.0):
+            print "Detect person"
+        else:
+            dmin = avg*0.9
+            dmax = avg*1.1
+
+            if dmin <= distance and distance <= dmax:
+                distance_sum -= sq.get()
+                sq.put(distance)
+                distance_sum += distance
+                print "Distance:",distance,"cm Avg : ",avg
 
 GPIO.cleanup()
