@@ -19,49 +19,37 @@
 		android:padding="5dp">
         
         <LinearLayout
-            android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:gravity="center"
-			android:layout_weight="1"
-			android:padding="5dp">
-			
-            <TextView 
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:gravity="start"
-            android:textColor="#ffffff"
-            android:text="김진성"
-            android:textSize="12sp"/>
-        </LinearLayout>
-        <LinearLayout
+            android:id="@+id/layoutFamilyName"
             android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
+			android:orientation="vertical"
 			android:layout_weight="1"
 			android:padding="5dp">
 			
-            <TextView 
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:text="08:11"
-            android:textSize="12sp"/>
+            
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/layoutFamilyTime"
             android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center"
+			android:orientation="vertical"
 			android:layout_weight="1"
 			android:padding="5dp">
 			
-            <TextView 
-            android:layout_height="match_parent"
+            
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutFamilyInOut"
             android:layout_width="match_parent"
-            android:gravity="end"
-            android:textColor="#ffffff"
-            android:text="IN"
-            android:textSize="12sp"/>
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical"
+			android:layout_weight="1"
+			android:padding="5dp">
+			
+           
         </LinearLayout>
         
         

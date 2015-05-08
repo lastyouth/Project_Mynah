@@ -24,11 +24,10 @@
 			android:layout_weight="1">
 			
             <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/ivBusImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:src="@drawable/ic_bus"/>
+            android:gravity="center"/>
             
         </LinearLayout>
        	
@@ -39,11 +38,11 @@
 			android:layout_weight="2">
     	   
     	   	<TextView
-            android:id="@+id/bus_busname"
+            android:id="@+id/tvBusName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="121 버스"
+
             android:textColor="#ffffff"
             android:textSize="12sp" />
     	   	
@@ -56,14 +55,34 @@
 		android:layout_height="match_parent"
 		android:gravity="center"
 		android:layout_weight="1"
+		android:orientation="vertical"
 		android:padding="5dp">
         
-        <TextView 
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvBusStopName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:text="서울시립대앞\n\n3분\n7분"
+
+            android:textSize="12sp"/>
+        
+        <TextView
+            android:id="@+id/tvBusNextTime"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+
+            android:textSize="12sp"/>
+        
+        <TextView 
+            android:id="@+id/tvBusNextTime2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+
             android:textSize="12sp"/>
           
     </LinearLayout>	

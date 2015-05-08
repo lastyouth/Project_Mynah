@@ -9,14 +9,18 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SubwayShortcutLayout extends CustomButton{
 
 	private View view;
-	
-	private Animation anim;
+	private ImageView ivSubwayImage;
+	private TextView tvSubwayName;
+	private TextView tvSubwayStopName;
+	private TextView tvSubwayNextTime;
+	private TextView tvSubwayNextTime2;
 	
 	public SubwayShortcutLayout(Context context, CustomButtonsFragment _cbf) {
 		super(context);
@@ -28,10 +32,24 @@ public class SubwayShortcutLayout extends CustomButton{
 	private void initView() {
 		view = inflate(getContext(), R.layout.layout_button_subway, null);
 		
+		ivSubwayImage = (ImageView)view.findViewById(R.id.ivSubwayImage);
+		tvSubwayName = (TextView)view.findViewById(R.id.tvSubwayName);
+		tvSubwayStopName = (TextView)view.findViewById(R.id.tvSubwayStopName);
+		tvSubwayNextTime = (TextView)view.findViewById(R.id.tvSubwayNextTime);
+		tvSubwayNextTime2 = (TextView)view.findViewById(R.id.tvSubwayNextTime2);
+		
+		ivSubwayImage.setImageResource(R.drawable.ic_subway);
+		tvSubwayName.setText("1호선 하행");
+		tvSubwayStopName.setText("청량리역\n");
+		tvSubwayNextTime.setText("2분");
+		tvSubwayNextTime2.setText("5분");
+		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new SubwayTouchListener());
 		addView(view);
 	}
+	
+	
 	
 	private final class SubwayTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
