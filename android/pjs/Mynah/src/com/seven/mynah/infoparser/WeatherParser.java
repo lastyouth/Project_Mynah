@@ -30,6 +30,8 @@ import com.seven.mynah.artifacts.*;
 
 //자체가 쓰레딩하지 않도록 함(다운받는곳 제외)
 //파서를 호출하는 클래스에서 쓰레딩
+
+
 public class WeatherParser {
 
 	//파싱한 자료를 DB에 넣는것까지만 하는 것으로 한다.

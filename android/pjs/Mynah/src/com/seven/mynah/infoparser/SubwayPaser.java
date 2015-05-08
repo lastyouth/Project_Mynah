@@ -41,7 +41,6 @@ public class SubwayPaser {
 		int max_size = 0;
 		
 		
-		
 		/*		
 		try {
 			

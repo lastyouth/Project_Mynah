@@ -20,7 +20,7 @@ private View view;
 	}
 	
 	private void initView() {
-		view = inflate(getContext(), R.layout.layout_refresh, null);
+		view = inflate(getContext(), R.layout.layout_button_refresh, null);
 		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new RefreshTouchListener());

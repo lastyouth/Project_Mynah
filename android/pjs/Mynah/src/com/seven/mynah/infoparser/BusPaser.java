@@ -39,25 +39,30 @@ public class BusPaser {
 	public void parseBus_XML(BusInfo binfo)
 	{
 		
+		//
 		String stId =  binfo.stId;
 		String busRouteId = binfo.busRouteId;
-		String ord = ""; //일단 임시로
+		String ord = binfo.ord; //일단 임시로
 		
-				
+		
 		try {
 			XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();
 			XmlPullParser parser = parserFactory.newPullParser();
 			
 			
-			ReceiveXml rx = new ReceiveXml(
-					new URL("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute?ServiceKey=" 
-							+ serviceKey + "&stId=" + stId + "&busRouteId=" + busRouteId
-							+ "&ord=" + ord));
+			URL url = new URL("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRoute?ServiceKey=" 
+					+ serviceKey + "&stId=" + stId + "&busRouteId=" + busRouteId
+					+ "&ord=" + ord);
+			ReceiveXml rx = new ReceiveXml(url);
+			
+			System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
+			
+			System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -120,12 +125,15 @@ public class BusPaser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 	
 	
+	
+	
+	
+	/**
+	 * 도시코드와 버스아이디로 버스정류소정보를 조회한다
+	 **/
 	public void parseStationInfo_XML(String _name)
 	{
 			
@@ -138,15 +146,21 @@ public class BusPaser {
 			XmlPullParser parser = parserFactory.newPullParser();
 			
 			
-			ReceiveXml rx = new ReceiveXml(
-					new URL("http://ws.bus.go.kr/api/rest/stationinfo/getStationByName"
-							+ "?ServiceKey=" + serviceKey
-							+ "?stSrch=" + stSrch));
+			URL url = new URL("http://openapi.tago.go.kr/openapi/service/BusSttnInfoInqireService/getStationByName"
+					+ "?ServiceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
+					+ "?stSrch=" + stSrch);
+			
+			ReceiveXml rx = new ReceiveXml(url);
+			
+			System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
+			
+			System.out.println(rx.getXml());
+			
 			
 			int eventType = parser.getEventType();
  
@@ -191,6 +205,14 @@ public class BusPaser {
 	
 	
 	public void parseStationInfo_XML(double x_pos, double y_pos)
+	{
+		
+		
+		
+	}
+	
+	
+	public void parseStationInfo_XML()
 	{
 		
 		

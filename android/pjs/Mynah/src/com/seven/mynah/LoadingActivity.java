@@ -59,7 +59,7 @@ public class LoadingActivity extends Activity{
 			}
 		};
 		
-		handler.sendEmptyMessageDelayed(0, 5000);
+		handler.sendEmptyMessageDelayed(0, 1000);
 	}
 	
 	private void checkInitUser()

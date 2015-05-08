@@ -11,7 +11,7 @@ public class SubwayInfo {
 	public int inout_tag; //상/하행선
 	public String last_update; //의미없음
 
-	public ArrayList<TimeToSubway> tts;
+	//public ArrayList<TimeToSubway> tts;
 	
 	public SubwayInfo() {
 		
