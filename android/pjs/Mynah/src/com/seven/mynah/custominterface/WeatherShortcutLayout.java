@@ -1,25 +1,12 @@
 package com.seven.mynah.custominterface;
 
-import com.seven.mynah.R;
-import com.seven.mynah.artifacts.WeatherInfo;
-import com.seven.mynah.globalmanager.GlobalVariable;
-
-import android.R.color;
-import android.content.ClipData;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebChromeClient.CustomViewCallback;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.seven.mynah.R;
 
 public class WeatherShortcutLayout extends CustomButton {
 
