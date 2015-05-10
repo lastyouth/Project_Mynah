@@ -9,10 +9,10 @@ import android.widget.Toast;
 
 import com.seven.mynah.R;
 
-public class VoiceLayout extends CustomButton{
+public class VoiceShortcutLayout extends CustomButton{
 private View view;
 	
-	public VoiceLayout(Context context) 
+	public VoiceShortcutLayout(Context context) 
 	{
 		super(context);
 		// TODO Auto-generated constructor stub

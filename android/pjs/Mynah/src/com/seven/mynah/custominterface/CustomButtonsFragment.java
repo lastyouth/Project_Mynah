@@ -135,13 +135,13 @@ public class CustomButtonsFragment extends Fragment{
 			cb = new FamilyShortcutLayout(this.getActivity());
 			break;
 		case GlobalVariable.ShortcutType.typeRefrash:
-			cb = new RefreshLayout(this.getActivity());
+			cb = new RefreshShortcutLayout(this.getActivity());
 			break;
 		case GlobalVariable.ShortcutType.typeVoice:
-			cb = new VoiceLayout(this.getActivity());
+			cb = new VoiceShortcutLayout(this.getActivity());
 			break;
 		case GlobalVariable.ShortcutType.typeSetting:
-			cb = new SettingLayout(this.getActivity(), this);
+			cb = new SettingShortcutLayout(this.getActivity(), this);
 			break;
 		
 		default:

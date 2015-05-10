@@ -1,6 +1,8 @@
 package com.seven.mynah;
 
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,9 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.seven.mynah.artifacts.BusInfo;
+import com.seven.mynah.artifacts.BusRouteInfo;
+import com.seven.mynah.artifacts.BusStationInfo;
+import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
+import com.seven.mynah.database.DBManager;
 import com.seven.mynah.infoparser.BusPaser;
+import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 
 
@@ -72,25 +80,66 @@ public class MainActivity extends Activity {
     public void testSide()
     {
     	
+    	
+    	//날씨부분 
     	WeatherInfo winfo = new WeatherInfo();
-    	winfo.city_xpos = 57;
-    	winfo.city_ypos = 121;
     	
     	
     	WeatherParser wp = new WeatherParser();
-    	wp.parseWeather_XML(winfo);
+    	winfo = wp.getWeatherInfo(winfo);
+    	
+    	
+    	ArrayList<WeatherLocationInfo> array_location; 
+    	
+    	//불러오기부분
+    	//array_location = wp.getAllLocationInfo();
+    	//db 저장
+    	//DBManager.getManager(this).setWeatherLocationAll(array_location);
+    	array_location = DBManager.getManager(this).getWeatherLocationByName("월계");
+    	
+    	
+    	
+    	winfo.location = array_location.get(0);
+    	
+    	winfo = wp.getWeatherInfo(winfo);
+    	
+    	
+    	
     	
     	BusInfo binfo = new BusInfo();
-    	//정류소ID stId : 35428
-        //노선ID busRouteId : 4341100
-    	binfo.stId = String.valueOf(35428);
-    	binfo.busRouteId = String.valueOf(4341100);
-    	
     	BusPaser bp = new BusPaser();
-    	//bp.parseBus_XML(binfo);
     	
-    	bp.parseStationInfo_XML("광운대");
-    			
+    	
+    	
+    	ArrayList<BusRouteInfo> array_rinfo;
+    	ArrayList<BusStationInfo> array_sinfo;
+    	
+    	array_rinfo = bp.getBusRouteList("121");
+    	
+    	array_sinfo = bp.getStaionsByRouteList(array_rinfo.get(1).busRouteId);
+    	
+    	//array_sinfo = bp.getStationByNameList("광운대");
+    	
+    	binfo.route = array_rinfo.get(1);
+    	binfo.station = array_sinfo.get(5);
+    	
+    	binfo = bp.getStationByUid(binfo);
+    	bp.getBusArrInfoByRoute(binfo);
+    	
+    	
+    	SubwayPaser sp = new SubwayPaser();
+    	
+    	SubwayInfo sinfo = new SubwayInfo();
+    	
+    	sinfo.inout_tag = 2;
+    	sinfo.station.station_cd = "1006";
+    	sinfo.week_tag = 1;
+    	
+    	//sp.getTimeTableByID(sinfo);
+    	
+    	sp.getStationInfoByName("청량리");
+    	
+    	//bp.parseBus_XML(binfo);
     	
     }
     

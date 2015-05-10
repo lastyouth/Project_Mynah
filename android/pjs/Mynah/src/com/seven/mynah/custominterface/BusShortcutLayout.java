@@ -1,19 +1,21 @@
 package com.seven.mynah.custominterface;
 
-import com.seven.mynah.R;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.seven.mynah.R;
 
 public class BusShortcutLayout extends CustomButton {
-private View view;
+	
+	private View view;
+	private ImageView ivBusImage;
+	private TextView tvBusName;
+	private TextView tvBusStopName;
+	private TextView tvBusNextTime;
+	private TextView tvBusNextTime2;
 	
 	public BusShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
@@ -27,10 +29,25 @@ private View view;
 	{
 		view = inflate(getContext(), R.layout.layout_button_bus, null);
 		
+		ivBusImage = (ImageView)view.findViewById(R.id.ivBusImage);
+		tvBusName = (TextView)view.findViewById(R.id.tvBusName);
+		tvBusStopName = (TextView)view.findViewById(R.id.tvBusStopName);
+		tvBusNextTime = (TextView)view.findViewById(R.id.tvBusNextTime);
+		tvBusNextTime2 = (TextView)view.findViewById(R.id.tvBusNextTime2);
+		
+		ivBusImage.setImageResource(R.drawable.ic_bus);
+		tvBusName.setText("121 버스");
+		tvBusStopName.setText("서울시립대앞\n");
+		tvBusNextTime.setText("3분");
+		tvBusNextTime2.setText("7분");
+		
+		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
 	}
+	
+	
 	
 	private final class ScheduleTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
