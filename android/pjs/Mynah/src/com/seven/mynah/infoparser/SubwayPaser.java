@@ -39,6 +39,9 @@ public class SubwayPaser {
 		int start = 1;
 		int end = 200;
 		int i = 0;
+		boolean done = false;
+		
+		sinfo.array_tts.clear();
 		
 		try {
 			
@@ -46,7 +49,7 @@ public class SubwayPaser {
 			XmlPullParser parser = parserFactory.newPullParser();
 			
 			
-			while(i < end)
+			while(i < end && !done)
 			{
 				String str = open_Url + serviceKey + "/xml/SearchSTNTimeTableByIDService/"
 						+ String.valueOf(start) + "/" + String.valueOf(end) + "/"
@@ -65,12 +68,12 @@ public class SubwayPaser {
 				
 				int eventType = parser.getEventType();
 	 
-	            boolean done = false;
+	            
 	            TimeToSubway tts = null;
 				
 	            while (eventType != XmlPullParser.END_DOCUMENT && !done){
 	            	String name = null;
-	            	
+	            	String temp = null;
 	                switch (eventType){
 	                    case XmlPullParser.START_DOCUMENT:
 	                        
@@ -81,6 +84,12 @@ public class SubwayPaser {
 	                        if (name.equalsIgnoreCase("row")){
 	                            tts = new TimeToSubway();
 	                            i++;
+	                        }else if (name.equalsIgnoreCase("MESSAGE")){
+	                        	temp = parser.nextText();
+	                        	if(temp.equalsIgnoreCase("해당하는 데이터가 없습니다."))
+	                        	{
+	                        		done = true;
+	                        	}
 	                        }else if (name.equalsIgnoreCase("TRAIN_NO")){
 	                        	tts.train_no = parser.nextText();
 	                        }else if (name.equalsIgnoreCase("LEFTTIME")){

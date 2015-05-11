@@ -1,6 +1,18 @@
 package com.seven.mynah.custominterface;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.seven.mynah.R;
+import com.seven.mynah.artifacts.BusInfo;
+import com.seven.mynah.artifacts.GasAlarmInfo;
+import com.seven.mynah.artifacts.SubwayInfo;
+import com.seven.mynah.artifacts.SubwayStationInfo;
+import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.infoparser.SubwayPaser;
+import com.seven.mynah.infoparser.WeatherParser;
 
 import android.content.Context;
 import android.util.Log;
@@ -50,6 +62,55 @@ public class SubwayShortcutLayout extends CustomButton{
 	}
 	
 	
+	private void setSubwayInfo(SubwayInfo sinfo)
+	{
+		if(sinfo==null) {	
+			System.out.println("자료없음.");
+			return;
+			
+		}
+		tvSubwayName.setText(sinfo.station.line_num + "호선 ");
+		tvSubwayStopName.setText(sinfo.station.station_nm);
+		
+		tvSubwayNextTime.setText(sinfo.array_tts.get(0).arr_time
+				+ " " + sinfo.array_tts.get(0).subway_end_name + "행");
+		tvSubwayNextTime2.setText(sinfo.array_tts.get(1).arr_time
+				+ " " + sinfo.array_tts.get(1).subway_end_name + "행");
+		
+		
+		
+	}
+	
+	
+	public void setuptest()
+	{
+		
+		cbf.getActivity().runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				SubwayInfo sinfo = new SubwayInfo();
+		    	
+				
+				ArrayList<SubwayStationInfo> array_ssinfo = new ArrayList<SubwayStationInfo>();
+				
+				
+				//하나의 경로 정보를 얻기 위한 최소 단위
+		    	SubwayPaser sp = new SubwayPaser();
+		    	array_ssinfo =  sp.getStationInfoByName("석계");
+		    	sinfo.inout_tag = 1;
+		    	sinfo.week_tag  = 1;
+		    	sinfo.station = array_ssinfo.get(0);
+		    	sinfo = sp.getTimeTableByID(sinfo);
+		    
+		    	setSubwayInfo(sinfo);
+			}
+		});
+		
+	}
+	
+	
 	
 	private final class SubwayTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -62,7 +123,9 @@ public class SubwayShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				cbf.startSettingActivity("Subway");
+				//cbf.startSettingActivity("Subway");
+				setuptest();
+				
 				return true;
 			}
 			return true;

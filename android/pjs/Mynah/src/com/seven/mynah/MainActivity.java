@@ -92,57 +92,67 @@ public class MainActivity extends Activity {
     	ArrayList<WeatherLocationInfo> array_location; 
     	
     	//불러오기부분
-    	//array_location = wp.getAllLocationInfo();
+    	array_location = wp.getAllLocationInfo();
     	//db 저장
-    	//DBManager.getManager(this).setWeatherLocationAll(array_location);
+    	DBManager.getManager(this).setWeatherLocationAll(array_location);
+    	
     	array_location = DBManager.getManager(this).getWeatherLocationByName("월계");
     	
     	
-    	
-    	winfo.location = array_location.get(0);
-    	
-    	winfo = wp.getWeatherInfo(winfo);
-    	
-    	
-    	
-    	
-    	BusInfo binfo = new BusInfo();
-    	BusPaser bp = new BusPaser();
-    	
-    	
-    	
-    	ArrayList<BusRouteInfo> array_rinfo;
-    	ArrayList<BusStationInfo> array_sinfo;
-    	
-    	array_rinfo = bp.getBusRouteList("121");
-    	
-    	array_sinfo = bp.getStaionsByRouteList(array_rinfo.get(1).busRouteId);
-    	
-    	//array_sinfo = bp.getStationByNameList("광운대");
-    	
-    	binfo.route = array_rinfo.get(1);
-    	binfo.station = array_sinfo.get(5);
-    	
-    	binfo = bp.getStationByUid(binfo);
-    	bp.getBusArrInfoByRoute(binfo);
-    	
-    	
-    	SubwayPaser sp = new SubwayPaser();
-    	
-    	SubwayInfo sinfo = new SubwayInfo();
-    	
-    	sinfo.inout_tag = 2;
-    	sinfo.station.station_cd = "1006";
-    	sinfo.week_tag = 1;
-    	
-    	//sp.getTimeTableByID(sinfo);
-    	
-    	sp.getStationInfoByName("청량리");
-    	
-    	//bp.parseBus_XML(binfo);
+//    	
+//    	winfo.location = array_location.get(0);
+//    	
+//    	winfo = wp.getWeatherInfo(winfo);
+//    	
+//    	
+//    	
+//    	
+//    	BusInfo binfo = new BusInfo();
+//    	BusPaser bp = new BusPaser();
+//    	
+//    	
+//    	
+//    	ArrayList<BusRouteInfo> array_rinfo;
+//    	ArrayList<BusStationInfo> array_sinfo;
+//    	
+//    	array_rinfo = bp.getBusRouteList("121");
+//    	
+//    	array_sinfo = bp.getStaionsByRouteList(array_rinfo.get(1).busRouteId);
+//    	
+//    	//array_sinfo = bp.getStationByNameList("광운대");
+//    	
+//    	binfo.route = array_rinfo.get(1);
+//    	binfo.station = array_sinfo.get(5);
+//    	
+//    	binfo = bp.getStationByUid(binfo);
+//    	bp.getBusArrInfoByRoute(binfo);
+//    	
+//    	
+//    	SubwayPaser sp = new SubwayPaser();
+//    	
+//    	SubwayInfo sinfo = new SubwayInfo();
+//    	
+//    	sinfo.inout_tag = 2;
+//    	sinfo.station.station_cd = "1006";
+//    	sinfo.week_tag = 1;
+//    	
+//    	//sp.getTimeTableByID(sinfo);
+//    	
+//    	sp.getStationInfoByName("청량리");
+//    	
+//    	//bp.parseBus_XML(binfo);
     	
     }
     
+    public void startSettingActivity_temp(String type)
+    {
+    	String intentActionName = "com.seven.mynah.";
+		intentActionName += type;
+		Intent intent = new Intent(intentActionName);
+		startActivity(intent);
+		this.overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+		
+    }
     
     
 }

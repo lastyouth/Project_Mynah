@@ -21,6 +21,20 @@ public final class GlobalVariable {
 		
 	}
 	
+	
+	public final class SubwayConstant {
+		
+	}
+	
+	public final class BusConstant {
+		
+	}
+	
+	public final class WeatherConstant {
+		
+		
+	}
+	
 	public final class UserType {
 		
 		public static final int

@@ -29,6 +29,7 @@ public class MynahDB {
 	public static final String _WEATHER_COL_TEMPER = "temp";
 	public static final String _WEATHER_COL_POP = "pop";
 	public static final String _WEATHER_COL_WFKOR = "wfkor";
+	public static final String _WEATHER_COL_SKY = "sky";
 	
 	public static final String _WEATHER_CITY_TABLE_NAME = "weather_city";
 	
@@ -92,6 +93,8 @@ public class MynahDB {
 		public static final String _CREATE_WEATHER_TABLE = "create table " + _WEATHER_TABLE_NAME
 				+ " (" + _WEATHER_COL_CITY_CODE + " text, "
 				+ _WEATHER_COL_CITY_NAME + " text, "
+				+ _WEATHER_COL_CITY_TOP_NAME + " text, "
+				+ _WEATHER_COL_CITY_MDL_NAME + " text, "
 				+ _WEATHER_COL_CITY_XPOS + " text, "
 				+ _WEATHER_COL_CITY_YPOS + " text, "
 				+ _WEATHER_COL_DATETIME + " datetime, "
@@ -99,6 +102,7 @@ public class MynahDB {
 				+ _WEATHER_COL_REH + " text, "
 				+ _WEATHER_COL_POP + " text, "
 				+ _WEATHER_COL_WFKOR + " text, "
+				+ _WEATHER_COL_SKY + " text, "
 				+ " primary key(" + _WEATHER_COL_CITY_CODE + "," 
 				+ _WEATHER_COL_DATETIME + ") ); ";
 		

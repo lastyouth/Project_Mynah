@@ -59,6 +59,8 @@ public class WeatherParser {
 		SimpleDateFormat changeDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
+		winfo.array_ttw.clear();
+		
 		try {
 			standard_date = changeDateFormat.parse(changeDateFormat.format(standard_date));
 		} catch (ParseException e1) {
@@ -113,6 +115,8 @@ public class WeatherParser {
                         	ttw.pop = parser.nextText();
                         }else if (name.equalsIgnoreCase("reh")){
                         	ttw.reh = parser.nextText();
+                        }else if (name.equalsIgnoreCase("sky")){
+                        	ttw.sky = parser.nextText();
                         }else if (name.equalsIgnoreCase("hour")){
                         	
                         	temp = parser.nextText();

@@ -1,5 +1,8 @@
 package com.seven.mynah.custominterface;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -9,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seven.mynah.R;
+import com.seven.mynah.artifacts.GasAlarmInfo;
+import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.infoparser.WeatherParser;
 
 public class GasAlarmShortcutLayout extends CustomButton{
 	
@@ -44,6 +52,67 @@ public class GasAlarmShortcutLayout extends CustomButton{
 	
 	
 	
+	public void setGasAlarmInfo(GasAlarmInfo ginfo)
+	{
+		
+		if(ginfo.isFired)
+		{
+			tvGasOnOff.setText("ON");
+			setImageOnOff(2);
+		}
+		else
+		{
+			tvGasOnOff.setText("OFF");
+			setImageOnOff(1);
+		}
+		
+	}
+	
+	
+	private void setImageOnOff(int type)
+	{
+		switch (type)
+		{
+		case 1:
+			ivGasStatus.setImageResource(R.drawable.ic_gas_warning);
+			break;
+				
+		case 2:
+			ivGasStatus.setImageResource(R.drawable.ic_gas_warning2);
+			break;
+		case 3:
+			ivGasStatus.setImageResource(R.drawable.ic_gas);
+			break;
+		}
+		
+	}
+	
+	
+	public void setuptest()
+	{
+		
+		cbf.getActivity().runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+
+				GasAlarmInfo ginfo = new GasAlarmInfo();
+				
+				ginfo.isFired = true;
+				ginfo.last_update = String.valueOf(new Date());
+				ginfo.time = String.valueOf(new Date());
+				
+				setGasAlarmInfo(ginfo);
+				
+		    	
+			}
+		});
+		
+		
+	}
+	
+	
 	private final class GasAlarmTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			
@@ -58,7 +127,7 @@ public class GasAlarmShortcutLayout extends CustomButton{
 				//Toast.makeText(getContext(), "가스 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티
-				
+				setuptest();
 				return true;
 			}
 			return true;

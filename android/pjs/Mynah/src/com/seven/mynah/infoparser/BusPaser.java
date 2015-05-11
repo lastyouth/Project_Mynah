@@ -79,6 +79,9 @@ public class BusPaser {
 		SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREA);
 		
 		
+		binfo.array_ttb.clear();
+		
+		
 		try {
 			XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();
 			XmlPullParser parser = parserFactory.newPullParser();
@@ -187,6 +190,10 @@ public class BusPaser {
 		//String stId =  binfo.station.stId;  // 스테이션 정류소 아이디
 		String arsId = binfo.station.arsId;
 		//String busRouteId = binfo.route.busRouteId; //노선 아이디
+		
+		
+		//clear 하면 안됨.
+		//binfo.array_ttb.clear();
 		
 		try {
 			XmlPullParserFactory parserFactory = XmlPullParserFactory.newInstance();
