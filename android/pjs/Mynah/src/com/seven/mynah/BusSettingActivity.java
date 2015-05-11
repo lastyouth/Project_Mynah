@@ -2,24 +2,23 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
-import android.content.Context;
 
 public class BusSettingActivity extends Activity {
 	
 	private ImageView ivSearch;
+	private ListView lvBusStop;
 	
 	protected void onCreate(Bundle savedInstanceState) 
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_bus);
         
+        lvBusStop = (ListView)findViewById(R.id.lvBusStop);
         ivSearch = (ImageView)findViewById(R.id.ivSearch);
         ivSearch.setOnClickListener(new OnClickListener() {
         	@Override
