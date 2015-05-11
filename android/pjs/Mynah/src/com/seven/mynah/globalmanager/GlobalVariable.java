@@ -4,6 +4,7 @@ package com.seven.mynah.globalmanager;
 public final class GlobalVariable {
 
 	
+	
 	public final class ShortcutType {
 		
 		public static final int 
@@ -17,6 +18,20 @@ public final class GlobalVariable {
 		typeEmpty = 8,
 		typeVoice = 9,
 		typeSetting = 10;
+		
+	}
+	
+	
+	public final class SubwayConstant {
+		
+	}
+	
+	public final class BusConstant {
+		
+	}
+	
+	public final class WeatherConstant {
+		
 		
 	}
 	

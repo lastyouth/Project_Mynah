@@ -1,11 +1,13 @@
 package com.seven.mynah.custominterface;
 
+
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -20,6 +22,7 @@ import com.seven.mynah.R;
 import com.seven.mynah.ScheduleListActivity;
 
 public class ScheduleShortcutLayout extends CustomButton{
+
 	
 	private static int maxSchedules = 10;
 	private static int maxPreparations = 10;
@@ -78,10 +81,14 @@ public class ScheduleShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
+
 				cbf.startSettingActivity("Schedule");
 				return true;	
+
 			}
 			return true;
 		}
 	}
+	
+	
 }

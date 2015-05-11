@@ -19,6 +19,8 @@ public class MynahDB {
 	
 	public static final String _WEATHER_TABLE_NAME = "weather";
 	public static final String _WEATHER_COL_CITY_CODE = "city_code";
+	public static final String _WEATHER_COL_CITY_TOP_NAME = "top_name";
+	public static final String _WEATHER_COL_CITY_MDL_NAME = "mdl_name";
 	public static final String _WEATHER_COL_CITY_NAME = "city_name";
 	public static final String _WEATHER_COL_CITY_XPOS = "pos_x";
 	public static final String _WEATHER_COL_CITY_YPOS = "pos_y";
@@ -27,8 +29,13 @@ public class MynahDB {
 	public static final String _WEATHER_COL_TEMPER = "temp";
 	public static final String _WEATHER_COL_POP = "pop";
 	public static final String _WEATHER_COL_WFKOR = "wfkor";
+	public static final String _WEATHER_COL_SKY = "sky";
 	
 	public static final String _WEATHER_CITY_TABLE_NAME = "weather_city";
+	
+	public static final String _WEATHER_LOG_TABLE_NAME = "weather_log";
+	public static final String _WEATHER_LOG_SET_TIME = "set_time";
+	
 	
 	
 	public static final String _GAS_TABLE_NAME = "gas";
@@ -40,17 +47,32 @@ public class MynahDB {
 	public static final String _SUBWAY_TABLE_NAME = "subway";
 	public static final String _SUBWAY_COL_STATION_ID = "station_id";
 	public static final String _SUBWAY_COL_STATION_NAME = "station_name";
+	public static final String _SUBWAY_COL_LINE_NUM = "line_num";
 	public static final String _SUBWAY_COL_PASS_TYPE = "pass_type";
-	public static final String _SUBWAY_COL_TIME = "time";
-
+	public static final String _SUBWAY_COL_WEEK_TAG = "week_tag";
+	public static final String _SUBWAY_COL_INOUT_TAG = "inout_tag";
+	public static final String _SUBWAY_COL_ARR_TIME = "arr_time";
+	public static final String _SUBWAY_COL_FL_FLAG = "fl_flag";
+	public static final String _SUBWAY_COL_END_STATION_NAME = "end_station_name";
+	
+	
+	public static final String _SUBWAY_LOG_TABLE_NAME = "subway_log";
+	public static final String _SUBWAY_LOG_SET_TIME = "set_time";
+	
 	
 	public static final String _BUS_TABLE_NAME = "bus";
 	public static final String _BUS_COL_STATION_ID = "station_id";
 	public static final String _BUS_COL_STATION_NAME = "station_name";
-	public static final String _BUS_COL_BUS_ID = "bus_id";
-	public static final String _BUS_COL_BUS_NAME = "bus_name";
-	public static final String _BUS_COL_LINE_ID = "line_id";
-	public static final String _BUS_COL_TIME = "datetime";
+	public static final String _BUS_COL_ROUTE_ID = "route_id";
+	public static final String _BUS_COL_ROUTE_NAME = "route_name";
+	public static final String _BUS_COL_ROUTE_TYPE = "route_type";
+	public static final String _BUS_COL_STATION_ORD = "sta_ord";
+	public static final String _BUS_COL_DIR = "dir";
+	public static final String _BUS_COL_ARR_TIME = "arr_time";
+	
+	
+	public static final String _BUS_LOG_TABLE_NAME = "bus_log";
+	public static final String _BUS_LOG_SET_TIME = "set_time";
 	
 	
 
@@ -67,44 +89,82 @@ public class MynahDB {
 				+ _USER_COL_CERTI_KEY + " text, "
 				+ " primary key(" + _USER_COL_ID + ") ); ";
 		
+		
 		public static final String _CREATE_WEATHER_TABLE = "create table " + _WEATHER_TABLE_NAME
 				+ " (" + _WEATHER_COL_CITY_CODE + " text, "
 				+ _WEATHER_COL_CITY_NAME + " text, "
-				+ _WEATHER_COL_CITY_XPOS + " integer, "
-				+ _WEATHER_COL_CITY_YPOS + " integer, "
+				+ _WEATHER_COL_CITY_TOP_NAME + " text, "
+				+ _WEATHER_COL_CITY_MDL_NAME + " text, "
+				+ _WEATHER_COL_CITY_XPOS + " text, "
+				+ _WEATHER_COL_CITY_YPOS + " text, "
 				+ _WEATHER_COL_DATETIME + " datetime, "
 				+ _WEATHER_COL_TEMPER + " text, "
-				+ _WEATHER_COL_REH + " integer, "
-				+ _WEATHER_COL_POP + " integer, "
+				+ _WEATHER_COL_REH + " text, "
+				+ _WEATHER_COL_POP + " text, "
 				+ _WEATHER_COL_WFKOR + " text, "
+				+ _WEATHER_COL_SKY + " text, "
 				+ " primary key(" + _WEATHER_COL_CITY_CODE + "," 
 				+ _WEATHER_COL_DATETIME + ") ); ";
+		
 		
 		public static final String _CREATE_WEATHER_CITY_TABLE = "create table " + _WEATHER_CITY_TABLE_NAME
 				+ " ( " + _WEATHER_COL_CITY_CODE + " text,"
 				+ _WEATHER_COL_CITY_NAME + " text, "
-				+ _WEATHER_COL_CITY_XPOS + " integer, "
-				+ _WEATHER_COL_CITY_YPOS + " integer, "
+				+ _WEATHER_COL_CITY_TOP_NAME + " text, "
+				+ _WEATHER_COL_CITY_MDL_NAME + " text, "
+				+ _WEATHER_COL_CITY_XPOS + " text, "
+				+ _WEATHER_COL_CITY_YPOS + " text, "
 				+ " primary key(" + _WEATHER_COL_CITY_CODE + ") ); ";
 		
+		
+		public static final String _CREATE_WEATHER_LOG_TABLE = "create table " + _WEATHER_LOG_TABLE_NAME
+				+ " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, "  
+				+ _WEATHER_COL_CITY_CODE + " text,"
+				+ _WEATHER_LOG_SET_TIME + " datetime "
+				+ " );";
+		
+		
 		public static final String _CREATE_BUS_TABLE = "create table " + _BUS_TABLE_NAME
-				+ " ( " + _BUS_COL_BUS_ID + " text not null, "
-				+ _BUS_COL_BUS_NAME + " text, "
-				+ _BUS_COL_LINE_ID + " text not null, "
+				+ " ( " + _BUS_COL_ROUTE_ID + " text not null, "
+				+ _BUS_COL_ROUTE_NAME + " text, "
+				+ _BUS_COL_ROUTE_TYPE + " text, "
 				+ _BUS_COL_STATION_ID + " text not null, "
 				+ _BUS_COL_STATION_NAME + " text, "
-				+ _BUS_COL_TIME + " datetime, "
-				+ " primary key(" + _BUS_COL_STATION_ID + ","
-				+ _BUS_COL_TIME + ") );";
+				+ _BUS_COL_STATION_ORD + " text, "
+				+ _BUS_COL_DIR + " text, "
+				+ _BUS_COL_ARR_TIME + " datetime, "
+				+ " primary key(" + _BUS_COL_STATION_ID + "," 
+				+ _BUS_COL_ROUTE_ID + "," 
+				+ _BUS_COL_ARR_TIME + ") );";
+		
+		public static final String _CREATE_BUS_LOG_TABLE = "create table " + _BUS_LOG_TABLE_NAME
+				+ " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ _BUS_COL_STATION_ID + " text, "
+				+ _BUS_COL_ROUTE_ID + " text, "
+				+ _BUS_COL_STATION_ORD + " text, "
+				+ _BUS_LOG_SET_TIME + " datetime "
+				+ " );";
 
 		public static final String _CREATE_SUBWAY_TABLE = "create table " + _SUBWAY_TABLE_NAME
 				+ " ( " + _SUBWAY_COL_STATION_ID + " text not null, "
 				+ _SUBWAY_COL_STATION_NAME + " text, "
-				+ _SUBWAY_COL_PASS_TYPE + " text, "
-				+ _SUBWAY_COL_TIME + " time, "
+				+ _SUBWAY_COL_LINE_NUM + " text, "
+				+ _SUBWAY_COL_WEEK_TAG + " text, "
+				+ _SUBWAY_COL_INOUT_TAG + " text, "
+				+ _SUBWAY_COL_ARR_TIME + " time, "
 				+ " primary key(" + _SUBWAY_COL_STATION_ID + ","
-				+ _SUBWAY_COL_PASS_TYPE + ","
-				+ _SUBWAY_COL_TIME + ") );";
+				+ _SUBWAY_COL_WEEK_TAG + ","
+				+ _SUBWAY_COL_INOUT_TAG + ","
+				+ _SUBWAY_COL_ARR_TIME + ") );";
+		
+		
+		public static final String _CREATE_SUBWAY_LOG_TABLE = "create table " + _SUBWAY_LOG_TABLE_NAME
+				+ " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ _SUBWAY_COL_STATION_ID + " text, "
+				+ _SUBWAY_COL_INOUT_TAG + " text, "
+				+ _SUBWAY_COL_WEEK_TAG + " text, "
+				+ _SUBWAY_LOG_SET_TIME + " datetime "
+				+ " );";
 		
 		
 		public static final String _CREATE_GAS_TABLE = "create table " + _GAS_TABLE_NAME

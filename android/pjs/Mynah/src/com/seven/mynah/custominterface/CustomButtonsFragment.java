@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings.Global;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.OvershootInterpolator;
 import android.webkit.WebView.FindListener;
 import android.widget.GridLayout;
 import android.widget.GridLayout.Spec;
@@ -169,6 +171,13 @@ public class CustomButtonsFragment extends Fragment {
 		intentActionName = "com.seven.mynah.";
 		intentActionName += type;
 		Intent intent = new Intent(intentActionName);
+		startActivity(intent);
+		
+	}
+	
+	public void startTest()
+	{
+		Intent intent = new Intent(this.getActivity(),ScheduleListActivity.class);
 		startActivity(intent);
 	}
 
