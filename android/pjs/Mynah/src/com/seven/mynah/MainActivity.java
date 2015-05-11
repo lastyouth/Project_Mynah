@@ -23,33 +23,27 @@ import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 
-
-
 public class MainActivity extends Activity {
 
-	
 	private CustomButtonsFragment cbf;
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        //Splash : LoadingActivity
-        //onCreate에서 splash를 하는경우 뒤로가기를 누를시 메인화면으로 돌아옴 > loading을 skip할 수 있다.
-        //startActivity(new Intent(this, LoadingActivity.class));
-        
-        
-        if (savedInstanceState == null) {
-            setDefaultFragment();
-        }
-        testSide();
-    }
-    
-    
 
-    private void setDefaultFragment()
-	{
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		// Splash : LoadingActivity
+		// onCreate에서 splash를 하는경우 뒤로가기를 누를시 메인화면으로 돌아옴 > loading을 skip할 수 있다.
+		// startActivity(new Intent(this, LoadingActivity.class));
+
+		if (savedInstanceState == null) {
+			setDefaultFragment();
+		}
+		// testSide();
+	}
+
+	private void setDefaultFragment() {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
 		cbf = new CustomButtonsFragment();
@@ -57,24 +51,26 @@ public class MainActivity extends Activity {
 		transaction.commit();
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 
     public void testSide()
@@ -144,15 +140,15 @@ public class MainActivity extends Activity {
     	
     }
     
-    public void startSettingActivity_temp(String type)
-    {
-    	String intentActionName = "com.seven.mynah.";
+
+	public void startSettingActivity_temp(String type) 
+	{
+		String intentActionName = "com.seven.mynah.";
 		intentActionName += type;
 		Intent intent = new Intent(intentActionName);
 		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
-		
-    }
-    
-    
+		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+
+	}
+
 }

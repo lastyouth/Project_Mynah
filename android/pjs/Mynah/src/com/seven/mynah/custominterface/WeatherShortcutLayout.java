@@ -127,7 +127,7 @@ public class WeatherShortcutLayout extends CustomButton {
 				WeatherInfo winfo = new WeatherInfo();
 //		    	
 //		    	
-//		    	WeatherParser wp = new WeatherParser();
+		    	WeatherParser wp = new WeatherParser();
 //		    	winfo = wp.getWeatherInfo(winfo);
 //		    	
 //		    	
@@ -166,7 +166,13 @@ public class WeatherShortcutLayout extends CustomButton {
 				
 				DBManager.getManager(cbf.getActivity()).setWeatherLocationDBbyLog(array_location.get(1));
 				
+				winfo.location = DBManager.getManager(cbf.getActivity()).getWeatherDBbyLog().get(0);
+				
+				DBManager.getManager(cbf.getActivity()).setWeatherDB(wp.getWeatherInfo(winfo));
+				
 		    	winfo = DBManager.getManager(cbf.getActivity()).getWeatherDB(winfo);
+		    	
+		    	
 		    	
 		    	setWeatherInfo(winfo);
 			}

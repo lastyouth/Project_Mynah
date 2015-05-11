@@ -185,6 +185,7 @@ public class DBManager {
 		if(c != null && c.getCount() != 0)
 			c.moveToFirst();
 		
+		if(c.getCount() == 0) return winfo;
 		
 		TimeToWeather ttw;
 		

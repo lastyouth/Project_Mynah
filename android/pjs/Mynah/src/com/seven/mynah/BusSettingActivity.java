@@ -2,33 +2,39 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.content.Context;
 
-public class BusSettingActivity extends Activity{
+public class BusSettingActivity extends Activity {
 	
-	private View view;
-	private ListView listView;
-	private CustomAdapter listAdapter;
+	private ImageView ivSearch;
 	
 	protected void onCreate(Bundle savedInstanceState) 
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_bus);
         
-        
-        //listAdapter = new ArrayAdapter<String>(this, R.layout.custom_list_bus_setting);
-        listAdapter = new CustomAdapter();
-        
-        listView = (ListView)findViewById(R.id.lvBusSetting);
-        listView.setAdapter(listAdapter);
-        listView.setDividerHeight(4);
-        
-        listAdapter.add("버스 번호 입력");
-        listAdapter.add("버스 정류장 입력");
+        ivSearch = (ImageView)findViewById(R.id.ivSearch);
+        ivSearch.setOnClickListener(new OnClickListener() {
+        	@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+        		Toast.makeText(getApplicationContext(), "ivSearch Clicked", Toast.LENGTH_SHORT).show();
+        		
+        		
+        		
+			}
+        });    
     }
+	
+	
+
 	
 	private class setBusNameListener implements OnClickListener
 	{
