@@ -6,6 +6,28 @@ var multiparty = require('multiparty');
 var util = require('util');
 var mysql = require('mysql');
 var tts = require('node-google-text-to-speech')
+var gcm = require('node-gcm');
+
+//var gcm_message = new gcm.Message();
+
+var gcm_message = new gcm.Message({
+	collapseKey : 'demo',
+	delayWhileIdle : true,
+	timeToLive : 3,
+	data: {
+		key1 : 'Hello',
+		key2 : 'push demo 죽고싶다'
+	}
+});
+d
+var server_access_key = 'AIzaSyAn_popA7yY_6O8U8yDcDv1Z3_lDGdtGxM';
+var sender = new gcm.Sender(server_access_key);
+
+var registration_ids = [];
+
+var registration_id = 'APA91bFY7kMYOa_DhHqEOrP9QOia_oUI9eH41NcEulVxrxlDY4DdPaPFN8irJeFKIzs7GfTu5Q4-1XQRIThFUcvTSdxFeus4gyQCXylncybCA49FYvPf383ZagEiuYevMY8itcGWHU3b5HP0fu_FGq4snSCEevZvlTtd33ES3KhypCUw0m2u1KI';
+
+registration_ids.push(registration_id);
 
 var connection = mysql.createConnection({
 	host : "192.168.35.75",
@@ -86,10 +108,18 @@ function HttpsEventProcessCallback(req, res) {
 	res.writeHead(200, {
 		'Content-Type' : 'text/plain; charset=utf-8'
 	});
+	
 	//res.write('안녕하세요');
 	var date = new Date();
 	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
 
+	/*
+	//gcm 이용 push 보내
+	sender.send(gcm_message, registration_ids, 4, function(err, result){
+		console.log(result);
+	});
+	*/
+	
 	if (req.method === 'POST') {
 		// use multiparty module
 		// res.end('POST request');
@@ -154,7 +184,7 @@ function HttpsEventProcessCallback(req, res) {
 		res.writeHead(200, {
 			'Content-Type' : 'text/plain; charset=utf-8'
 		});
-		console.log('jal mot jup geun 함');
+		console.log('jal mot jup geun');
 		res.end('한글 wrong request');
 	}
 }
