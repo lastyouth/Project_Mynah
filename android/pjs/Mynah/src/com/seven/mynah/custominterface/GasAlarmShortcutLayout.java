@@ -100,8 +100,8 @@ public class GasAlarmShortcutLayout extends CustomButton{
 				GasAlarmInfo ginfo = new GasAlarmInfo();
 				
 				ginfo.isFired = true;
-				ginfo.last_update = String.valueOf(new Date());
-				ginfo.time = String.valueOf(new Date());
+				//ginfo.last_update = String.valueOf(new Date());
+				//ginfo.time = String.valueOf(new Date());
 				
 				setGasAlarmInfo(ginfo);
 				
@@ -127,7 +127,7 @@ public class GasAlarmShortcutLayout extends CustomButton{
 				//Toast.makeText(getContext(), "가스 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티
-				setuptest();
+				//setuptest();
 				return true;
 			}
 			return true;

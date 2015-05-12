@@ -48,7 +48,7 @@
                     android:gravity="center_vertical"
                     android:text="121"
                     android:textColor="#cfcfcf"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -68,6 +68,7 @@
                 android:layout_weight="1" >
 
                 <EditText
+                    android:id="@+id/etBusName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#180052"
@@ -75,7 +76,8 @@
                     android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:textSize="15sp"
+                    android:inputType="number"/>
             </LinearLayout>
 
             <LinearLayout
@@ -95,12 +97,17 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- empty -->
-
+    <!-- Hidden List View -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" >
+        
+        <ListView
+            android:id="@+id/lvBusStop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        
     </LinearLayout>
 
 </LinearLayout>

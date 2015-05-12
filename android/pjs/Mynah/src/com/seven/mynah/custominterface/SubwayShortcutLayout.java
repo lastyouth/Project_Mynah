@@ -72,12 +72,30 @@ public class SubwayShortcutLayout extends CustomButton{
 		tvSubwayName.setText(sinfo.station.line_num + "龋急 ");
 		tvSubwayStopName.setText(sinfo.station.station_nm);
 		
-		tvSubwayNextTime.setText(sinfo.array_tts.get(0).arr_time
-				+ " " + sinfo.array_tts.get(0).subway_end_name + "青");
-		tvSubwayNextTime2.setText(sinfo.array_tts.get(1).arr_time
-				+ " " + sinfo.array_tts.get(1).subway_end_name + "青");
 		
-		
+		if(sinfo.array_tts.size() == 0)
+		{
+			tvSubwayNextTime.setText("");
+			tvSubwayNextTime2.setText("");
+			
+		}
+		else
+		{
+			tvSubwayNextTime.setText(sinfo.array_tts.get(0).arr_time
+					+ " " + sinfo.array_tts.get(0).subway_end_name + "青");
+			
+			if(sinfo.array_tts.size() == 1)
+			{
+				tvSubwayNextTime2.setText("");
+			}
+			else
+			{
+				tvSubwayNextTime2.setText(sinfo.array_tts.get(1).arr_time
+						+ " " + sinfo.array_tts.get(1).subway_end_name + "青");
+				
+			}
+			
+		}
 		
 	}
 	
@@ -103,6 +121,10 @@ public class SubwayShortcutLayout extends CustomButton{
 		    	sinfo.week_tag  = "1";
 		    	sinfo.station = array_ssinfo.get(0);
 		    	sinfo = sp.getTimeTableByID(sinfo);
+		    	DBManager.getManager(cbf.getActivity()).setSubwayDB(sinfo);
+		    	
+		    	sinfo = DBManager.getManager(cbf.getActivity()).getSubwayDB(sinfo);
+		    	
 		    
 		    	setSubwayInfo(sinfo);
 			}

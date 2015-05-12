@@ -57,12 +57,9 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvPlace2 = (TextView)view.findViewById(R.id.tvWeatherPlace2);
 		tvTemper = (TextView)view.findViewById(R.id.tvWeatherTemper);
 		
-		tvReh = (TextView)view.findViewById(R.id.tvReh);
+		//tvReh = (TextView)view.findViewById(R.id.tvReh);
 		
 		tvPop = (TextView)view.findViewById(R.id.tvPop);
-		tvUpdateTime = (TextView)view.findViewById(R.id.tvUpdateTime);
-		
-		tvHour = (TextView)view.findViewById(R.id.tvHour);
 		
 		
 		//ivWeatherImage.setImageResource(R.drawable.ic_umbrella);
@@ -96,10 +93,10 @@ public class WeatherShortcutLayout extends CustomButton {
 		}
 		
 		tvPlace.setText(winfo.location.city_name);
-		tvPlace2.setText(winfo.location.top_name + " " + winfo.location.mdl_name);
+		tvPlace2.setText(winfo.location.top_name+"\n");
 		tvTemper.setText(winfo.array_ttw.get(0).temp + "°C");
 		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
-		tvReh.setText("습도 : " + winfo.array_ttw.get(0).reh + "%"); 
+		//tvReh.setText("습도 : " + winfo.array_ttw.get(0).reh + "%"); 
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 		
 		try {
@@ -109,7 +106,7 @@ public class WeatherShortcutLayout extends CustomButton {
 			e.printStackTrace();
 		}
 		
-		tvHour.setText(printDateFormat.format(date));
+		//tvHour.setText(printDateFormat.format(date));
 		//tvUpdateTime.setText("업데이트 : " + winfo.last_update);
 		//이미지 타입 넣기
 		setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));

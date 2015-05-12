@@ -168,8 +168,7 @@ public class DBManager {
 		
 	}
 	
-	
-	
+
 	
 	public synchronized WeatherInfo getWeatherDB(WeatherInfo winfo)
 	{
@@ -642,10 +641,10 @@ public class DBManager {
 	{
 		
 		String sql = "select * from " + MynahDB._SUBWAY_TABLE_NAME +
-				" where " + MynahDB._SUBWAY_COL_STATION_ID + "= '" + swinfo.station.station_cd
-				+ "' and " + MynahDB._SUBWAY_COL_WEEK_TAG + "= '" + swinfo.week_tag
-				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + "= '" + swinfo.inout_tag 
-				+ "' and " + MynahDB._SUBWAY_COL_ARR_TIME + "> time('now','localtime');";
+				" where " + MynahDB._SUBWAY_COL_STATION_ID + " = '" + swinfo.station.station_cd
+				+ "' and " + MynahDB._SUBWAY_COL_WEEK_TAG + " = '" + swinfo.week_tag
+				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + " = '" + swinfo.inout_tag 
+				+ "' and " + MynahDB._SUBWAY_COL_ARR_TIME + "  > time('now','localtime');";
 				
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 		
