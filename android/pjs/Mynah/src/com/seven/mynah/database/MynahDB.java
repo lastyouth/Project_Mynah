@@ -145,6 +145,7 @@ public class MynahDB {
 				+ _BUS_LOG_SET_TIME + " datetime "
 				+ " );";
 
+		
 		public static final String _CREATE_SUBWAY_TABLE = "create table " + _SUBWAY_TABLE_NAME
 				+ " ( " + _SUBWAY_COL_STATION_ID + " text not null, "
 				+ _SUBWAY_COL_STATION_NAME + " text, "
@@ -152,6 +153,8 @@ public class MynahDB {
 				+ _SUBWAY_COL_WEEK_TAG + " text, "
 				+ _SUBWAY_COL_INOUT_TAG + " text, "
 				+ _SUBWAY_COL_ARR_TIME + " time, "
+				+ _SUBWAY_COL_END_STATION_NAME + " text, "
+				+ _SUBWAY_COL_FL_FLAG + " text, "
 				+ " primary key(" + _SUBWAY_COL_STATION_ID + ","
 				+ _SUBWAY_COL_WEEK_TAG + ","
 				+ _SUBWAY_COL_INOUT_TAG + ","

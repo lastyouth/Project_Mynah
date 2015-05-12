@@ -162,7 +162,7 @@ public class WeatherShortcutLayout extends CustomButton {
 //		    	array_location2 = DBManager.getManager(cbf.getActivity()).getWeatherDBbyLog();
 //		    	
 //		    	
-				array_location = DBManager.getManager(cbf.getActivity()).getWeatherLocationByName("월계");
+				array_location = DBManager.getManager(cbf.getActivity()).getWeatherLocationByName("청량리");
 				
 				DBManager.getManager(cbf.getActivity()).setWeatherLocationDBbyLog(array_location.get(1));
 				

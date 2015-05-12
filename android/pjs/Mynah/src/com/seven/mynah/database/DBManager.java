@@ -7,6 +7,8 @@ import java.util.Date;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.FamilyInfo;
 import com.seven.mynah.artifacts.SubwayInfo;
+import com.seven.mynah.artifacts.TimeToBus;
+import com.seven.mynah.artifacts.TimeToSubway;
 import com.seven.mynah.artifacts.TimeToWeather;
 import com.seven.mynah.artifacts.UserProfile;
 import com.seven.mynah.artifacts.WeatherInfo;
@@ -82,7 +84,7 @@ public class DBManager {
 				values.put(MynahDB._WEATHER_COL_DATETIME, winfo.array_ttw.get(i).hour);
 				values.put(MynahDB._WEATHER_COL_WFKOR, winfo.array_ttw.get(i).wfKor);
 				values.put(MynahDB._WEATHER_COL_POP, winfo.array_ttw.get(i).pop);
-				values.put(MynahDB._WEATHER_COL_REH, winfo.array_ttw.get(i).temp);
+				values.put(MynahDB._WEATHER_COL_REH, winfo.array_ttw.get(i).reh);
 				values.put(MynahDB._WEATHER_COL_TEMPER, winfo.array_ttw.get(i).temp);
 				values.put(MynahDB._WEATHER_COL_SKY, winfo.array_ttw.get(i).sky);
 				
@@ -202,12 +204,14 @@ public class DBManager {
 		int top_name_index = c.getColumnIndex(MynahDB._WEATHER_COL_CITY_TOP_NAME);
 		int sky_index = c.getColumnIndex(MynahDB._WEATHER_COL_SKY);
 		
-		winfo.location.city_code = c.getString(city_code_index);
-		winfo.location.city_name = c.getString(city_name_index);
-		winfo.location.city_xpos = c.getString(city_x_index);
-		winfo.location.city_ypos = c.getString(city_y_index);
-		winfo.location.top_name = c.getString(top_name_index);
-		winfo.location.mdl_name = c.getString(mdl_name_index);
+		
+		winfo.location = getWeatherLocationByCode(c.getString(city_code_index));
+//		winfo.location.city_code = c.getString(city_code_index);
+//		winfo.location.city_name = c.getString(city_name_index);
+//		winfo.location.city_xpos = c.getString(city_x_index);
+//		winfo.location.city_ypos = c.getString(city_y_index);
+//		winfo.location.top_name = c.getString(top_name_index);
+//		winfo.location.mdl_name = c.getString(mdl_name_index);
 	
 		while(!c.isAfterLast())
 		{
@@ -261,7 +265,9 @@ public class DBManager {
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
 		
 		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME +
-				" where " + MynahDB._WEATHER_COL_CITY_NAME + " like '%" + _name + "%' ;";
+				" where " + MynahDB._WEATHER_COL_CITY_NAME + " like '%" + _name + "%' " +
+						"or " + MynahDB._WEATHER_COL_CITY_MDL_NAME + " like '%" +
+				_name + "%' ;";
 		
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 		
@@ -464,6 +470,7 @@ public class DBManager {
 					+ " from " + MynahDB._BUS_TABLE_NAME +
 					" where " + MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
 					+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '" + binfo.route.busRouteId
+					+ "' and " + MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd 
 					+ "' and " + MynahDB._BUS_COL_ARR_TIME + "= '" + binfo.array_ttb.get(i).time + "';";
 					
 			Cursor c = dbh.mDB.rawQuery(sql, null);
@@ -476,7 +483,7 @@ public class DBManager {
 			{
 				values.put(MynahDB._BUS_COL_ROUTE_ID, binfo.route.busRouteId);
 				values.put(MynahDB._BUS_COL_ROUTE_NAME, binfo.route.busRouteNm);
-				//values.put(MynahDB._BUS_COL_ROUTE_TYPE, binfo.);
+				//values.put(MynahDB._BUS_COL_ROUTE_TYPE, binfo.route.bus);
 				values.put(MynahDB._BUS_COL_STATION_ID, binfo.station.stId);
 				values.put(MynahDB._BUS_COL_STATION_NAME, binfo.station.stNm);
 				values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
@@ -511,35 +518,235 @@ public class DBManager {
 	public synchronized BusInfo getBusDB(BusInfo binfo)
 	{
 		
+		String sql = "select * from " + MynahDB._BUS_TABLE_NAME +
+				" where " + MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
+				+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '" + binfo.route.busRouteId
+				+ "' and " + MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd 
+				+ "' and " + MynahDB._BUS_COL_ARR_TIME + " > datetime('now','localtime') ;";
 		
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+		
+		binfo.array_ttb.clear();
+		
+		if(c != null && c.getCount() != 0)
+			c.moveToFirst();
+		
+		if(c.getCount() == 0) return binfo; //error?
+		
+		TimeToBus ttb;
+		
+		int route_id_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_ID);
+		int route_name_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_NAME);
+		int route_type_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_TYPE);
+		int station_id__index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ID);
+		int station_name_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_NAME);
+		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
+		int dir_index = c.getColumnIndex(MynahDB._BUS_COL_DIR);
+		int arr_time_index = c.getColumnIndex(MynahDB._BUS_COL_ARR_TIME);
+		
+		binfo.route.busRouteId = c.getString(route_id_index);
+		binfo.route.busRouteNm = c.getString(route_name_index);
+		binfo.route.routeType = c.getString(route_type_index);
+		
+		binfo.station.stId = c.getString(station_id__index);
+		binfo.station.stNm = c.getString(station_name_index);
+		
+		binfo.staOrd = c.getString(station_ord_index);
+		binfo.dir = c.getString(dir_index);
+		
+		while(!c.isAfterLast())
+		{
+			ttb = new TimeToBus();
+			ttb.time = c.getString(arr_time_index);
+			
+			binfo.array_ttb.add(ttb);
+			
+			c.moveToNext();
+		}
 		
 		return binfo;
+		
 	}
 	
 	
 	public synchronized void setSubwayDB(SubwayInfo swinfo)
 	{
 		
+		ContentValues values;
+		
+		//delete는 필요없다..? 일단 추후 확인
+//		String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
+//				+ MynahDB._BUS_COL_ARR_TIME + " < datetime('now','localtime');";
+//		dbh.mDB.execSQL(sql);
+		
+		String sql;
+		
+		for(int i = 0; i<swinfo.array_tts.size(); ++i)
+		{
+			
+			sql = "select " + MynahDB._SUBWAY_COL_STATION_ID + "," + MynahDB._SUBWAY_COL_WEEK_TAG + ","
+					+ MynahDB._SUBWAY_COL_INOUT_TAG + "," + MynahDB._BUS_COL_ARR_TIME 
+					+ " from " + MynahDB._SUBWAY_TABLE_NAME +
+					" where " + MynahDB._SUBWAY_COL_STATION_ID + "= '" + swinfo.station.station_cd
+					+ "' and " + MynahDB._SUBWAY_COL_WEEK_TAG + "= '" + swinfo.week_tag
+					+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + "= '" + swinfo.inout_tag 
+					+ "' and " + MynahDB._SUBWAY_COL_ARR_TIME + "= '" + swinfo.array_tts.get(i).arr_time + "';";
+					
+			Cursor c = dbh.mDB.rawQuery(sql, null);
+			
+			values = new ContentValues();
+		
+			
+			if (c.getCount() == 0) 
+			{
+				
+				values.put(MynahDB._SUBWAY_COL_STATION_ID, swinfo.station.station_cd);
+				values.put(MynahDB._SUBWAY_COL_STATION_NAME, swinfo.station.station_nm);
+				values.put(MynahDB._SUBWAY_COL_LINE_NUM, swinfo.station.line_num);
+				values.put(MynahDB._SUBWAY_COL_WEEK_TAG, swinfo.week_tag);
+				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.inout_tag);
+				values.put(MynahDB._SUBWAY_COL_ARR_TIME, swinfo.array_tts.get(i).arr_time);
+				values.put(MynahDB._SUBWAY_COL_END_STATION_NAME, swinfo.array_tts.get(i).subway_end_name);
+				values.put(MynahDB._SUBWAY_COL_FL_FLAG, swinfo.array_tts.get(i).fl_flag);
+				
+				//insert
+				dbh.mDB.insert(MynahDB._SUBWAY_TABLE_NAME, null, values);
+				
+			}
+			else
+			{
+				
+				values.put(MynahDB._SUBWAY_COL_STATION_ID, swinfo.station.station_cd);
+				values.put(MynahDB._SUBWAY_COL_STATION_NAME, swinfo.station.station_nm);
+				values.put(MynahDB._SUBWAY_COL_LINE_NUM, swinfo.station.line_num);
+				values.put(MynahDB._SUBWAY_COL_WEEK_TAG, swinfo.week_tag);
+				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.inout_tag);
+				values.put(MynahDB._SUBWAY_COL_ARR_TIME, swinfo.array_tts.get(i).arr_time);
+				values.put(MynahDB._SUBWAY_COL_END_STATION_NAME, swinfo.array_tts.get(i).subway_end_name);
+				values.put(MynahDB._SUBWAY_COL_FL_FLAG, swinfo.array_tts.get(i).fl_flag);
+				
+				//update
+				dbh.mDB.update(MynahDB._SUBWAY_TABLE_NAME, values, 
+						MynahDB._SUBWAY_COL_STATION_ID + "= '" + swinfo.station.station_cd
+						+ "' and " + MynahDB._SUBWAY_COL_WEEK_TAG + "= '" + swinfo.week_tag
+						+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + "= '" + swinfo.inout_tag 
+						+ "' and " + MynahDB._SUBWAY_COL_ARR_TIME + "= '" + swinfo.array_tts.get(i).arr_time + "'", null);
+				
+			}		
+		}
+		System.out.println("지하철 셋 완료");
 		
 	}
 	
 	public synchronized SubwayInfo getSubwayDB(SubwayInfo swinfo)
 	{
 		
+		String sql = "select * from " + MynahDB._SUBWAY_TABLE_NAME +
+				" where " + MynahDB._SUBWAY_COL_STATION_ID + "= '" + swinfo.station.station_cd
+				+ "' and " + MynahDB._SUBWAY_COL_WEEK_TAG + "= '" + swinfo.week_tag
+				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + "= '" + swinfo.inout_tag 
+				+ "' and " + MynahDB._SUBWAY_COL_ARR_TIME + "> time('now','localtime');";
+				
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+		
+		swinfo.array_tts.clear();
+		
+		if(c != null && c.getCount() != 0)
+			c.moveToFirst();
+		
+		if(c.getCount() == 0) return swinfo; //error?
+		
+		TimeToSubway tts;
+		
+		int station_cd_index = c.getColumnIndex(MynahDB._SUBWAY_COL_STATION_ID);
+		int station_name_index = c.getColumnIndex(MynahDB._SUBWAY_COL_STATION_NAME);
+		int line_num_index = c.getColumnIndex(MynahDB._SUBWAY_COL_LINE_NUM);
+		int week_tag__index = c.getColumnIndex(MynahDB._SUBWAY_COL_WEEK_TAG);
+		int inout_tag_index = c.getColumnIndex(MynahDB._SUBWAY_COL_INOUT_TAG);
+		int arr_time_index = c.getColumnIndex(MynahDB._SUBWAY_COL_ARR_TIME);
+		int end_station_index = c.getColumnIndex(MynahDB._SUBWAY_COL_END_STATION_NAME);
+		int fl_flag_index = c.getColumnIndex(MynahDB._SUBWAY_COL_FL_FLAG);
+		
+		swinfo.station.station_cd = c.getString(station_cd_index);
+		swinfo.station.station_nm = c.getString(station_name_index);
+		swinfo.station.line_num = c.getString(line_num_index);
+		
+		swinfo.week_tag = c.getString(week_tag__index);
+		swinfo.inout_tag = c.getString(inout_tag_index);
+		
+		while(!c.isAfterLast())
+		{
+			tts = new TimeToSubway();
+			tts.arr_time = c.getString(arr_time_index);
+			tts.subway_end_name = c.getString(end_station_index);
+			tts.fl_flag = c.getString(fl_flag_index);
+			
+			swinfo.array_tts.add(tts);
+			
+			c.moveToNext();
+		}
+		
 		return swinfo;
+		
 	}
 	
 	
 	public void setMainUserDB(UserProfile upf)
 	{
+		//default로 넣음.
+		ContentValues values;
+		
+		if(upf.id != null)  return;
+		
+		values = new ContentValues();
+		values.put(MynahDB._USER_COL_ID, upf.id);
+		values.put(MynahDB._USER_COL_PASSWD, upf.passwd);
+		values.put(MynahDB._USER_COL_NAME, upf.name);
+		values.put(MynahDB._USER_COL_TYPE, upf.usertype);
+		values.put(MynahDB._USER_COL_MASTER_TYPE, upf.mastertype);
+		values.put(MynahDB._USER_COL_INOUT, upf.inout);
+		values.put(MynahDB._USER_COL_CERTI_KEY, upf.mac_address);
+		
+		//insert
+		dbh.mDB.insert(MynahDB._USER_TABLE_NAME, null, values);
 		
 	}
 	
 	public UserProfile getMainUserDB()
 	{
+		
 		UserProfile muser = new UserProfile();
 		
+		String sql = "select * from " + MynahDB._USER_TABLE_NAME +
+				" where " + MynahDB._USER_COL_TYPE + "= '" + GlobalVariable.UserType.me
+				+ "' ;";
+				
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+		
+		
+		if(c != null && c.getCount() != 0)
+			c.moveToFirst();
+		
+		if(c.getCount() == 0) return null; //error?
+		
+		int id_index = c.getColumnIndex(MynahDB._USER_COL_ID);
+		int passwd_index = c.getColumnIndex(MynahDB._USER_COL_PASSWD);
+		int name_index = c.getColumnIndex(MynahDB._USER_COL_NAME);
+		int type__index = c.getColumnIndex(MynahDB._USER_COL_TYPE);
+		int master_type_index = c.getColumnIndex(MynahDB._USER_COL_MASTER_TYPE);
+		int inout_index = c.getColumnIndex(MynahDB._USER_COL_INOUT);
+		int certi_index = c.getColumnIndex(MynahDB._USER_COL_CERTI_KEY);
+		
+		muser.id = c.getString(id_index);
+		muser.passwd = c.getString(passwd_index);
+		muser.name = c.getString(name_index);
+		muser.usertype = c.getInt(type__index);
+		muser.mastertype = c.getInt(master_type_index);
+		muser.inout = c.getInt(inout_index);
+		muser.mac_address = c.getString(certi_index);
+		
 		return muser;
+		
 	}
 	
 	

@@ -99,8 +99,8 @@ public class SubwayShortcutLayout extends CustomButton{
 				//하나의 경로 정보를 얻기 위한 최소 단위
 		    	SubwayPaser sp = new SubwayPaser();
 		    	array_ssinfo =  sp.getStationInfoByName("석계");
-		    	sinfo.inout_tag = 1;
-		    	sinfo.week_tag  = 1;
+		    	sinfo.inout_tag = "1";
+		    	sinfo.week_tag  = "1";
 		    	sinfo.station = array_ssinfo.get(0);
 		    	sinfo = sp.getTimeTableByID(sinfo);
 		    
