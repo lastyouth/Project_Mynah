@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class DBHelper {
 
 	private static final String DATABASE_NAME = "mynah.db";
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 1;
 	public static SQLiteDatabase mDB;
 	private DatabaseHelper mDBHelper;
 	private Context mCtx;

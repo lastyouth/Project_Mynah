@@ -42,6 +42,13 @@ public final class GlobalVariable {
 		
 	}
 	
+	public final class GCMConstant {
+		
+		public static final String 
+		PROJECT_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
+		
+	}
+	
 	public final class WeatherConstant {
 		
 		public static final int 

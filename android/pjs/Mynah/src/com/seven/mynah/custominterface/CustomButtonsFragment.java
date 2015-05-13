@@ -127,16 +127,16 @@ public class CustomButtonsFragment extends Fragment {
 			cb = new WeatherShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeGasAlarmShortcut:
-			cb = new GasAlarmShortcutLayout(this.getActivity());
+			cb = new GasAlarmShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeFamilyShortcut:
-			cb = new FamilyShortcutLayout(this.getActivity());
+			cb = new FamilyShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeRefrash:
-			cb = new RefreshShortcutLayout(this.getActivity());
+			cb = new RefreshShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeVoice:
-			cb = new VoiceShortcutLayout(this.getActivity());
+			cb = new VoiceShortcutLayout(this.getActivity(), this);
 			break;
 		case GlobalVariable.ShortcutType.typeSetting:
 			cb = new SettingShortcutLayout(this.getActivity(), this);
@@ -175,6 +175,7 @@ public class CustomButtonsFragment extends Fragment {
 		
 	}
 	
+	
 	public void startTest()
 	{
 		Intent intent = new Intent(this.getActivity(),ScheduleListActivity.class);
@@ -204,5 +205,12 @@ public class CustomButtonsFragment extends Fragment {
 		ma.startSettingActivity_temp(type);
 
 	}
+	
+	public void startBluetoothList_temp() {
+		MainActivity ma = (MainActivity) this.getActivity();
+		ma.startBluetoothActivity_temp();
+		
+	}
+	
 
 }
