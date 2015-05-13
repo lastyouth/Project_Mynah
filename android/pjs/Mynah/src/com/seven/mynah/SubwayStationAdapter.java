@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.seven.mynah.artifacts.SubwayStationInfo;
+import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
@@ -57,26 +58,14 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 		} else {
 			viewHolder = (ViewHolder) v.getTag();
 		}
-		//GlobalVariable.SubwayConstant.K
+
+		String code = getItem(position).line_num;
+		String stationName = GlobalFunction.SubwayDecode(code);
 		
-		
-		viewHolder.tvSubwayStationListRow.setText(getItem(position).line_num);
+		viewHolder.tvSubwayStationListRow.setText(stationName);
 		viewHolder.subwayStationInfo = infoList.get(position);
 		
 		return v;
 	}
-	/*
-	public String getStationName(String str)
-	{
-		switch(str)
-		{
-			case:K
-			
-		}
-		
-			
-		
-		return str;
-	}*/
 	
 }

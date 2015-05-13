@@ -16,6 +16,7 @@ import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.SubwayStationInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 
@@ -71,8 +72,8 @@ public class SubwaySettingActivity extends Activity{
             	SubwayInfo sinfo = new SubwayInfo();
             	ViewHolder vh = (ViewHolder)view.getTag();
                 sinfo.station = vh.subwayStationInfo;
-            	sinfo.inout_tag = "1"; //惑青
-            	sinfo.week_tag = "1"; //乞老
+            	sinfo.inout_tag = GlobalVariable.SubwayConstant.up_in_line; //惑青
+            	sinfo.week_tag = GlobalVariable.SubwayConstant.week_normal; //乞老
                 
                 DBManager.getManager(getApplicationContext()).setSubwayDBbyLog(sinfo);
                 
