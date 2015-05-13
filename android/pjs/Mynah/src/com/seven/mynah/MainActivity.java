@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		if (savedInstanceState == null) {
 			setDefaultFragment();
 		}
-		// testSide();
+		//testSide();
 	}
 
 	private void setDefaultFragment() {
@@ -141,14 +141,13 @@ public class MainActivity extends Activity {
     }
     
 
-	public void startSettingActivity_temp(String type) 
+	public void startSettingActivity(String type) 
 	{
 		String intentActionName = "com.seven.mynah.";
 		intentActionName += type;
 		Intent intent = new Intent(intentActionName);
 		startActivity(intent);
 		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-
 	}
 
 }

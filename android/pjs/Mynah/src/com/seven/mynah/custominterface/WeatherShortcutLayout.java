@@ -213,8 +213,7 @@ public class WeatherShortcutLayout extends CustomButton {
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				//cbf.startSettingActivity("Weather");
-				//cbf.startSettingActivity_temp("Weather");
+				cbf.startSettingActivity("Weather");
 				setuptest();
 				return true;
 			}

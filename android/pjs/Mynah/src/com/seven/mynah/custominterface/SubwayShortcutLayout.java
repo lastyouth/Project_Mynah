@@ -131,9 +131,7 @@ public class SubwayShortcutLayout extends CustomButton{
 		});
 		
 	}
-	
-	
-	
+
 	private final class SubwayTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			
@@ -145,8 +143,8 @@ public class SubwayShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				//cbf.startSettingActivity("Subway");
-				setuptest();
+				cbf.startSettingActivity("Subway");
+				//setuptest();
 				
 				return true;
 			}

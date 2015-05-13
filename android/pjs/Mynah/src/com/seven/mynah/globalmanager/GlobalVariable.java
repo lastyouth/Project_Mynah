@@ -33,7 +33,8 @@ public final class GlobalVariable {
 			up_in_line = 1, //상행/내선
 			down_out_line =2; //하행/외선
 		
-		
+		public static final String
+			K = "중앙선";
 	}
 	
 	public final class BusConstant {

@@ -1,3 +1,5 @@
+//Æó±â > BusStationAdapter·Î º¯°æ
+
 package com.seven.mynah;
 
 import java.util.ArrayList;
@@ -19,7 +21,6 @@ public class BusRouteAdapter extends ArrayAdapter<BusRouteInfo>{
 		super(context, resource, objects);
 		// TODO Auto-generated constructor stub
 		array_bsinfo = new ArrayList<BusRouteInfo>();
-		
 		
 	}
 

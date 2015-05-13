@@ -9,17 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.seven.mynah.artifacts.BusStationInfo;
+import com.seven.mynah.artifacts.SubwayStationInfo;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
-public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
+public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 
 	private ViewHolder viewHolder = null;
 	private LayoutInflater inflater = null;
-	private ArrayList<BusStationInfo> infoList = null;
+	private ArrayList<SubwayStationInfo> infoList = null;
 	private Context mContext = null;
 
-	public BusStationAdapter(Context c, int textViewResourceId,
-			ArrayList<BusStationInfo> arrays) {
+	public SubwayStationAdapter(Context c, int textViewResourceId, 
+			ArrayList<SubwayStationInfo> arrays) {
 		super(c, textViewResourceId, arrays);
 		this.inflater = LayoutInflater.from(c);
 		this.mContext = c;
@@ -32,7 +33,7 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 	}
 
 	@Override
-	public BusStationInfo getItem(int position) {
+	public SubwayStationInfo getItem(int position) {
 		return super.getItem(position);
 	}
 
@@ -49,17 +50,33 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 		if (v == null) {
 			viewHolder = new ViewHolder();
 			v = inflater.inflate(R.layout.list_row, null);
-			viewHolder.tvBusStopNameListRow = (TextView) v.findViewById(R.id.tvListRow);
+			viewHolder.tvSubwayStationListRow = (TextView) v.findViewById(R.id.tvListRow);
 
 			v.setTag(viewHolder);
 
 		} else {
 			viewHolder = (ViewHolder) v.getTag();
 		}
-
-		viewHolder.tvBusStopNameListRow.setText(getItem(position).stNm);
-		viewHolder.busStationInfo = infoList.get(position);
+		//GlobalVariable.SubwayConstant.K
+		
+		
+		viewHolder.tvSubwayStationListRow.setText(getItem(position).line_num);
+		viewHolder.subwayStationInfo = infoList.get(position);
 		
 		return v;
 	}
+	/*
+	public String getStationName(String str)
+	{
+		switch(str)
+		{
+			case:K
+			
+		}
+		
+			
+		
+		return str;
+	}*/
+	
 }

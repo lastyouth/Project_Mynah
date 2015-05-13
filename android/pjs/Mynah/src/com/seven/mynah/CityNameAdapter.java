@@ -9,17 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.seven.mynah.artifacts.BusStationInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
 
-public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
+public class CityNameAdapter extends ArrayAdapter<WeatherLocationInfo> {
 
 	private ViewHolder viewHolder = null;
 	private LayoutInflater inflater = null;
-	private ArrayList<BusStationInfo> infoList = null;
+	private ArrayList<WeatherLocationInfo> infoList = null;
 	private Context mContext = null;
 
-	public BusStationAdapter(Context c, int textViewResourceId,
-			ArrayList<BusStationInfo> arrays) {
+	public CityNameAdapter(Context c, int textViewResourceId, 
+			ArrayList<WeatherLocationInfo> arrays) {
 		super(c, textViewResourceId, arrays);
 		this.inflater = LayoutInflater.from(c);
 		this.mContext = c;
@@ -32,7 +32,7 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 	}
 
 	@Override
-	public BusStationInfo getItem(int position) {
+	public WeatherLocationInfo getItem(int position) {
 		return super.getItem(position);
 	}
 
@@ -49,7 +49,7 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 		if (v == null) {
 			viewHolder = new ViewHolder();
 			v = inflater.inflate(R.layout.list_row, null);
-			viewHolder.tvBusStopNameListRow = (TextView) v.findViewById(R.id.tvListRow);
+			viewHolder.tvCityNameListRow = (TextView) v.findViewById(R.id.tvListRow);
 
 			v.setTag(viewHolder);
 
@@ -57,8 +57,9 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 			viewHolder = (ViewHolder) v.getTag();
 		}
 
-		viewHolder.tvBusStopNameListRow.setText(getItem(position).stNm);
-		viewHolder.busStationInfo = infoList.get(position);
+		viewHolder.tvCityNameListRow.setText(getItem(position).top_name + " "
+				+ getItem(position).mdl_name + " " + getItem(position).city_name);
+		viewHolder.weatherLocationInfo = infoList.get(position);
 		
 		return v;
 	}

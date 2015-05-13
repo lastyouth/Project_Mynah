@@ -86,7 +86,7 @@
                 android:layout_weight="6" >
 
                 <ImageView
-                    android:id="@+id/ivSearch"
+                    android:id="@+id/ivBusNameSearch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center" 
