@@ -141,6 +141,8 @@ public class SubwayPaser {
 		int start = 1;
 		int end = 200;
 		int i = 0;
+		boolean done = false;
+		String temp;
 		
 		try {
 			
@@ -149,7 +151,7 @@ public class SubwayPaser {
 			
 			String _station_nm =  URLEncoder.encode(station_nm, "utf-8");
 			
-			while(i < end)
+			while(i < end && !done)
 			{
 				String str = open_Url + serviceKey + "/xml/SearchInfoBySubwayNameService/"
 						+ String.valueOf(start) + "/" + String.valueOf(end) + "/"
@@ -168,8 +170,8 @@ public class SubwayPaser {
 				
 				int eventType = parser.getEventType();
 	 
-	            boolean done = false;
 	            SubwayStationInfo station = null;
+	            SubwayStationInfo station2 = null;
 				
 	            while (eventType != XmlPullParser.END_DOCUMENT && !done){
 	            	String name = null;
@@ -183,16 +185,34 @@ public class SubwayPaser {
 	                        name = parser.getName();
 	                        if (name.equalsIgnoreCase("row")){
 	                            station = new SubwayStationInfo();
+	                            station2 = new SubwayStationInfo();
 	                            i++;
+	                        }else if (name.equalsIgnoreCase("MESSAGE")){
+	                        	temp = parser.nextText();
+	                        	if(temp.equalsIgnoreCase("해당하는 데이터가 없습니다."))
+	                        	{
+	                        		done = true;
+	                        	}
 	                        }else if (name.equalsIgnoreCase("STATION_CD")){
-	                        	station.station_cd = parser.nextText();
+	                        	temp = parser.nextText();
+	                        	station.station_cd = temp;
+	                        	station2.station_cd = temp;
 	                        }else if (name.equalsIgnoreCase("STATION_NM")){
-	                        	station.station_nm = parser.nextText();
+	                        	temp = parser.nextText();
+	                        	station.station_nm = temp;
+	                        	station2.station_nm = temp;
 	                        }else if (name.equalsIgnoreCase("LINE_NUM")){
-	                        	station.line_num = parser.nextText();
+	                        	temp = parser.nextText();
+	                        	station.line_num = temp;
+	                        	station2.line_num = temp;
 	                        }else if (name.equalsIgnoreCase("FR_CODE")){
-	                        	station.fr_code = parser.nextText();
+	                        	temp = parser.nextText();
+	                        	station.fr_code = temp;
+	                        	station2.fr_code = temp;
+	                        	station.inout_tag = "1";
+	                        	station2.inout_tag = "2";
 	                        	array_station.add(station);
+	                        	array_station.add(station2);
 	                        }else if (name.equalsIgnoreCase("list_total_count")){
 	                        	end = Integer.valueOf(parser.nextText());
 	                        }

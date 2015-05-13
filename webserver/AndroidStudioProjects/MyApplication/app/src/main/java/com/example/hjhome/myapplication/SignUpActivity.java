@@ -1,8 +1,8 @@
 package com.example.hjhome.myapplication;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -26,7 +25,6 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -39,60 +37,27 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends ActionBarActivity {
+/**
+ * Created by HJHOME on 2015-05-11.
+ */
+public class SignUpActivity extends ActionBarActivity {
 
-    Button sendToServerButton;
-    EditText idInputTextfield;
-    EditText passwdInputTextfield;
-    Button loginButton;
-
-    EditText ttsSentenseTextfield;
-    Button sendTTSButton;
-
-    Button signUpActButton;
-
+    EditText signUpIdTextfield;
+    Button signUpButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sign_up_activity);
 
-        System.out.println("Run");
-
-
-
-        sendToServerButton = (Button) findViewById(R.id.send_to_server_button);
-        sendToServerButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton = (Button) findViewById(R.id.sign_up_button);
+        signUpButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                System.out.println("click Send To Server Button");
-            }
-        });
+                signUpIdTextfield = (EditText)findViewById(R.id.sign_up_id_textfield);
+                final String signUpIdStr = signUpIdTextfield.getText() + "";
 
-        signUpActButton = (Button) findViewById(R.id.sign_up_act_button);
-        signUpActButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        loginButton = (Button) findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                idInputTextfield = (EditText) findViewById(R.id.id_input_textfield);
-                passwdInputTextfield = (EditText) findViewById(R.id.passwd_input_textfield);
-
-                final String idInputStr = idInputTextfield.getText()+"";
-                final String passwdInputStr = passwdInputTextfield.getText()+"";
-
-
-                System.out.println("family_id : " + idInputStr + " / password : " + passwdInputStr);
+                System.out.println("sign up input id : " + signUpIdStr);
                 Thread thread = new Thread(){
                     @Override
                     public void run() {
@@ -108,76 +73,16 @@ public class MainActivity extends ActionBarActivity {
 
                             JSONObject jobj = new JSONObject();
                             try{
-                                jobj.put("messagetype", "login");
-                                jobj.put("family_id", idInputStr);
-                                jobj.put("password", passwdInputStr);
-                            }
-                            catch(JSONException e) {
-                                e.printStackTrace();
-                            }
-                            /*
-                            List<BasicNameValuePair> nameValuePairs = new ArrayList<BasicNameValuePair>(2);
-                            nameValuePairs.add(new BasicNameValuePair("id", idInputStr));
-                            nameValuePairs.add(new BasicNameValuePair("passwd", passwdInputStr));
-                            */
-
-                            String encodedJSON = Base64.encodeToString(jobj.toString().getBytes(), 0);
-                            StringEntity entity = new StringEntity(encodedJSON, "UTF-8");
-                            System.out.println("send : " + jobj.toString());
-                            System.out.println("encoded : " + encodedJSON);
-                            entity.setContentType("application/json");
-
-                            httpPost.setEntity(entity);
-
-                            HttpResponse response = httpClient.execute(httpPost);
-                            String responseString = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                            System.out.println(responseString);
-
-                        }
-                        catch(URISyntaxException e) {
-                            System.out.println("1");
-                            e.printStackTrace();
-                        }
-
-                        catch (ClientProtocolException e) {
-                            System.out.println("2");
-                            e.printStackTrace();
-                        }
-
-                        catch (IOException e) {
-                            System.out.println("3");
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                thread.start();
-            }
-        });
-
-        sendTTSButton = (Button) findViewById(R.id.send_tts_button);
-        sendTTSButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                ttsSentenseTextfield = (EditText) findViewById(R.id.tts_sentence_textfield);
-                final String ttsSentense = ttsSentenseTextfield.getText() + "";
-                System.out.println("sentense : " + ttsSentense);
-                Thread thread = new Thread(){
-                    @Override
-                    public void run() {
-                        HttpClient httpClient = getHttpClient();
-                        //HttpClient httpClient = new DefaultHttpClient();
-
-                        String urlString = "https://192.168.35.75";
-                        try {
-                            URI url = new URI(urlString);
-
-                            HttpPost httpPost = new HttpPost(urlString);
-                            //httpPost.setURI(url);
-
-                            JSONObject jobj = new JSONObject();
-                            try{
-                                jobj.put("messagetype", "send_tts");
-                                jobj.put("sentense", ttsSentense);
+                                jobj.put("messagetype", "signup");
+                                jobj.put("product_id", "product2");
+                                jobj.put("family_id", "family02");
+                                jobj.put("user_id", signUpIdStr);
+                                jobj.put("registration_id", "23QWE323EW3");
+                                jobj.put("user_name", signUpIdStr+"_name");
+                                jobj.put("RRN", "123456-0987654");
+                                jobj.put("gender_flag", "1");
+                                jobj.put("representative_flag", "0");
+                                jobj.put("in_home_flag", "1");
                             }
                             catch(JSONException e) {
                                 e.printStackTrace();
@@ -249,27 +154,20 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

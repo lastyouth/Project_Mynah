@@ -622,7 +622,7 @@ public class DBManager {
 		Date date = new Date();
 
 		values.put(MynahDB._SUBWAY_COL_STATION_ID, sinfo.station.station_cd);
-		values.put(MynahDB._SUBWAY_COL_INOUT_TAG, sinfo.inout_tag);
+		values.put(MynahDB._SUBWAY_COL_INOUT_TAG, sinfo.station.inout_tag);
 		values.put(MynahDB._SUBWAY_COL_WEEK_TAG, sinfo.week_tag);
 		values.put(MynahDB._SUBWAY_LOG_SET_TIME, defaultDateFormat.format(date));
 
@@ -656,7 +656,7 @@ public class DBManager {
 			sinfo = new SubwayInfo();
 
 			sinfo.station.station_cd = c.getString(station_id_index);
-			sinfo.inout_tag = c.getString(inout_tag_index);
+			sinfo.station.inout_tag = c.getString(inout_tag_index);
 			sinfo.week_tag = c.getString(week_tag_index);
 
 			array_sinfo.add(sinfo);
@@ -689,7 +689,7 @@ public class DBManager {
 					+ swinfo.station.station_cd + "' and "
 					+ MynahDB._SUBWAY_COL_WEEK_TAG + "= '" + swinfo.week_tag
 					+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + "= '"
-					+ swinfo.inout_tag + "' and "
+					+ swinfo.station.inout_tag + "' and "
 					+ MynahDB._SUBWAY_COL_ARR_TIME + "= '"
 					+ swinfo.array_tts.get(i).arr_time + "';";
 
@@ -706,7 +706,7 @@ public class DBManager {
 				values.put(MynahDB._SUBWAY_COL_LINE_NUM,
 						swinfo.station.line_num);
 				values.put(MynahDB._SUBWAY_COL_WEEK_TAG, swinfo.week_tag);
-				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.inout_tag);
+				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.station.inout_tag);
 				values.put(MynahDB._SUBWAY_COL_ARR_TIME,
 						swinfo.array_tts.get(i).arr_time);
 				values.put(MynahDB._SUBWAY_COL_END_STATION_NAME,
@@ -726,7 +726,7 @@ public class DBManager {
 				values.put(MynahDB._SUBWAY_COL_LINE_NUM,
 						swinfo.station.line_num);
 				values.put(MynahDB._SUBWAY_COL_WEEK_TAG, swinfo.week_tag);
-				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.inout_tag);
+				values.put(MynahDB._SUBWAY_COL_INOUT_TAG, swinfo.station.inout_tag);
 				values.put(MynahDB._SUBWAY_COL_ARR_TIME,
 						swinfo.array_tts.get(i).arr_time);
 				values.put(MynahDB._SUBWAY_COL_END_STATION_NAME,
@@ -741,7 +741,7 @@ public class DBManager {
 								+ MynahDB._SUBWAY_COL_WEEK_TAG + "= '"
 								+ swinfo.week_tag + "' and "
 								+ MynahDB._SUBWAY_COL_INOUT_TAG + "= '"
-								+ swinfo.inout_tag + "' and "
+								+ swinfo.station.inout_tag + "' and "
 								+ MynahDB._SUBWAY_COL_ARR_TIME + "= '"
 								+ swinfo.array_tts.get(i).arr_time + "'", null);
 
@@ -758,7 +758,7 @@ public class DBManager {
 				+ swinfo.station.station_cd + "' and "
 				+ MynahDB._SUBWAY_COL_WEEK_TAG + " = '" + swinfo.week_tag
 				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + " = '"
-				+ swinfo.inout_tag + "' and " + MynahDB._SUBWAY_COL_ARR_TIME
+				+ swinfo.station.inout_tag + "' and " + MynahDB._SUBWAY_COL_ARR_TIME
 				+ "  > time('now','localtime');";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
@@ -789,7 +789,7 @@ public class DBManager {
 		swinfo.station.line_num = c.getString(line_num_index);
 
 		swinfo.week_tag = c.getString(week_tag__index);
-		swinfo.inout_tag = c.getString(inout_tag_index);
+		swinfo.station.inout_tag = c.getString(inout_tag_index);
 
 		while (!c.isAfterLast()) {
 			tts = new TimeToSubway();
