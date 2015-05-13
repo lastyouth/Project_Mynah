@@ -27,8 +27,14 @@ public class BluetoothService {
 	private static final int REQUEST_ENABLE_BT = 2;
 
 	// RFCOMM Protocol
-	private static final UUID MY_UUID = UUID
+	private static final UUID SMARTPHONE_UUID = UUID
 			.fromString("00000003-0000-1000-8000-00805F9B34FB");
+	
+	
+	// Standard SerialPortService ID
+	private static final UUID RPi_UUID = UUID
+			.fromString("94f39d29-7d6d-437d-973b-fba39e49daae"); 
+	
 
 	private BluetoothAdapter btAdapter;
 
@@ -282,7 +288,7 @@ public class BluetoothService {
 
 			// 디바이스 정보를 얻어서 BluetoothSocket 생성
 			try {
-				tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+				tmp = device.createRfcommSocketToServiceRecord(SMARTPHONE_UUID);
 			} catch (IOException e) {
 				Log.e(TAG, "create() failed", e);
 			}

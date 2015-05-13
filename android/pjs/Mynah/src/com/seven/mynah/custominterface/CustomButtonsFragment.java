@@ -166,14 +166,6 @@ public class CustomButtonsFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 	}
-
-	public void startSettingActivity(String type) {
-		intentActionName = "com.seven.mynah.";
-		intentActionName += type;
-		Intent intent = new Intent(intentActionName);
-		startActivity(intent);
-		
-	}
 	
 	
 	public void startTest()
@@ -199,10 +191,10 @@ public class CustomButtonsFragment extends Fragment {
 		return statusHeight;
 	}
 
-	public void startSettingActivity_temp(String type) {
+	public void startSettingActivity(String type) {
 
 		MainActivity ma = (MainActivity) this.getActivity();
-		ma.startSettingActivity_temp(type);
+		ma.startSettingActivity(type);
 
 	}
 	

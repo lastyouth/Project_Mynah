@@ -60,7 +60,7 @@ public class BusShortcutLayout extends CustomButton {
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				cbf.startSettingActivity_temp("Bus");
+				cbf.startSettingActivity("Bus");
 				return true;
 			}
 			return true;

@@ -34,7 +34,7 @@ public class SubwayPaser {
 		
 		String station_cd =  sinfo.station.station_cd;
 		String week_tag = String.valueOf(sinfo.week_tag);
-		String inout_tag = String.valueOf(sinfo.inout_tag);
+		String inout_tag = String.valueOf(sinfo.station.inout_tag);
 		
 		int start = 1;
 		int end = 200;

@@ -23,6 +23,7 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 		super(c, textViewResourceId, arrays);
 		this.inflater = LayoutInflater.from(c);
 		this.mContext = c;
+		infoList = arrays;
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 		if (v == null) {
 			viewHolder = new ViewHolder();
 			v = inflater.inflate(R.layout.list_row, null);
-			viewHolder.tvBusStopNameListRow = (TextView) v.findViewById(R.id.tvBusStopNameListRow);
+			viewHolder.tvBusStopNameListRow = (TextView) v.findViewById(R.id.tvListRow);
 
 			v.setTag(viewHolder);
 
@@ -57,7 +58,8 @@ public class BusStationAdapter extends ArrayAdapter<BusStationInfo> {
 		}
 
 		viewHolder.tvBusStopNameListRow.setText(getItem(position).stNm);
-
+		viewHolder.busStationInfo = infoList.get(position);
+		
 		return v;
 	}
 }

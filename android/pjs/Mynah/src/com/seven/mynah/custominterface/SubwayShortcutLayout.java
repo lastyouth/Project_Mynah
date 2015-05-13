@@ -3,6 +3,7 @@ package com.seven.mynah.custominterface;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.GasAlarmInfo;
@@ -14,6 +15,7 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 
+import android.R.array;
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -100,6 +102,11 @@ public class SubwayShortcutLayout extends CustomButton{
 	}
 	
 	
+	public void refresh()
+	{
+		
+	}
+	
 	public void setuptest()
 	{
 		
@@ -110,19 +117,29 @@ public class SubwayShortcutLayout extends CustomButton{
 				// TODO Auto-generated method stub
 				SubwayInfo sinfo = new SubwayInfo();
 		    	
+				ArrayList<SubwayStationInfo> array_ssinfo;
+				ArrayList<SubwayInfo> array_sinfo;
 				
-				ArrayList<SubwayStationInfo> array_ssinfo = new ArrayList<SubwayStationInfo>();
-				
-				
-				//하나의 경로 정보를 얻기 위한 최소 단위
-		    	SubwayPaser sp = new SubwayPaser();
-		    	array_ssinfo =  sp.getStationInfoByName("석계");
-		    	sinfo.inout_tag = "1";
-		    	sinfo.week_tag  = "1";
-		    	sinfo.station = array_ssinfo.get(0);
-		    	sinfo = sp.getTimeTableByID(sinfo);
-		    	DBManager.getManager(cbf.getActivity()).setSubwayDB(sinfo);
+				SubwayPaser sp = new SubwayPaser();
 		    	
+				array_sinfo = DBManager.getManager(cbf.getActivity()).getSubwayDBbyLog();
+				
+				if(array_sinfo.size() != 0)
+				{
+					sinfo = array_sinfo.get(0);
+				}
+				else
+				{
+					array_ssinfo =  sp.getStationInfoByName("석계");
+			    	sinfo.week_tag  = "1";
+			    	sinfo.station = array_ssinfo.get(0);
+			    	sinfo.station.inout_tag = "1";
+			    	
+				}
+				
+				sinfo = sp.getTimeTableByID(sinfo);
+		    	DBManager.getManager(cbf.getActivity()).setSubwayDB(sinfo);
+				//이미 저장되어 있으면 불러옴..
 		    	sinfo = DBManager.getManager(cbf.getActivity()).getSubwayDB(sinfo);
 		    	
 		    
@@ -131,9 +148,7 @@ public class SubwayShortcutLayout extends CustomButton{
 		});
 		
 	}
-	
-	
-	
+
 	private final class SubwayTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			
@@ -145,8 +160,8 @@ public class SubwayShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				//cbf.startSettingActivity("Subway");
-				setuptest();
+				cbf.startSettingActivity("Subway");
+				//setuptest();
 				
 				return true;
 			}

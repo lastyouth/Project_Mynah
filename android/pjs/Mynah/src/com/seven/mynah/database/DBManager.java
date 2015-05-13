@@ -623,6 +623,7 @@ public class DBManager {
 
 		values.put(MynahDB._SUBWAY_COL_STATION_ID, sinfo.station.station_cd);
 		values.put(MynahDB._SUBWAY_COL_INOUT_TAG, sinfo.station.inout_tag);
+
 		values.put(MynahDB._SUBWAY_COL_WEEK_TAG, sinfo.week_tag);
 		values.put(MynahDB._SUBWAY_LOG_SET_TIME, defaultDateFormat.format(date));
 
