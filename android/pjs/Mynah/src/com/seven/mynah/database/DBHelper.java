@@ -15,6 +15,7 @@ public class DBHelper {
 
 	private static final String DATABASE_NAME = "mynah.db";
 	private static final int DATABASE_VERSION = 1;
+
 	public static SQLiteDatabase mDB;
 	private DatabaseHelper mDBHelper;
 	private Context mCtx;
@@ -32,10 +33,6 @@ public class DBHelper {
 	public void close(){
 		mDB.close();
 	}
-	
-	
-	
-	
 	
 	private class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -55,6 +52,10 @@ public class DBHelper {
 			db.execSQL(MynahDB.CreateDB._CREATE_BUS_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_TABLE);
 			
+			db.execSQL(MynahDB.CreateDB._CREATE_WEATHER_LOG_TABLE);
+			db.execSQL(MynahDB.CreateDB._CREATE_BUS_LOG_TABLE);
+			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_LOG_TABLE);
+			
 
 		}
 
@@ -62,11 +63,15 @@ public class DBHelper {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			
-			db.execSQL("DROP TABLE IF EXISTS "+MynahDB.CreateDB._CREATE_USER_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS "+MynahDB.CreateDB._CREATE_BUS_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS "+MynahDB.CreateDB._CREATE_SUBWAY_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS "+MynahDB.CreateDB._CREATE_WEATHER_TABLE);
-			//db.execSQL("DROP TABLE IF EXISTS "+MynahDB.CreateDB._CREATE_WEATHER_CITY_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._USER_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._WEATHER_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._WEATHER_CITY_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._BUS_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SUBWAY_TABLE_NAME);
+			
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._WEATHER_LOG_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._BUS_LOG_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SUBWAY_LOG_TABLE_NAME);
 			onCreate(db);
 		}
 	}

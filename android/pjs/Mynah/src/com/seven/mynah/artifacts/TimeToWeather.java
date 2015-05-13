@@ -8,10 +8,12 @@ public class TimeToWeather {
 	public String reh; //습도
 	public String wfKor; //날씨상태
 	public String pop; //강수확률
+	public String sky; //날씨 타입 이름
 	
 	public TimeToWeather() {
 		
 	}
+	
 	
 	
 }

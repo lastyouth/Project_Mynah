@@ -7,7 +7,25 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
-
+    
+    <!-- deafualt permission -->
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    
+    <!-- GCM 받기 -->
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.seven.mynah.permission.C2D_MESSAGE" />
+	<permission android:name="com.seven.mynah.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    
+	
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -74,10 +92,25 @@
 			</intent-filter>
         </activity>
         
+        <activity
+            android:name=".BluetoothListActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Bluetooth" />
+                    
+                <category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+        </activity>
+        
+        
         <service
             android:name="com.seven.mynah.backgroundservice.GetInformationService">
-            
         </service>
+        
+        <!-- GCM 리시버에서 돌리는 서비스 -->
+		<service 
+		    android:name="com.seven.mynah.backgroundservice.GCMIntentService">
+        </service>
+        
         
         <!-- 안드로이드 실행시 서비스 실행을 위해 -->
         <receiver android:name="com.seven.mynah.backgroundservice.WakeonReceiver"
@@ -89,15 +122,24 @@
 	       	</intent-filter>
 		</receiver>
         
+        
+        
+        <!-- 구글 GCM 서비스 실행을 위해 -->
+        <receiver
+            android:name="com.seven.mynah.backgroundservice.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="com.seven.mynah" />
+            </intent-filter>
+        </receiver>
+        
+        
     </application>
-    
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    
-    
+  
+   
+
     
 
 </manifest>

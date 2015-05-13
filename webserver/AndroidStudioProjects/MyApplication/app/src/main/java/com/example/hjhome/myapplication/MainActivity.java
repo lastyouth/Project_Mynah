@@ -1,5 +1,6 @@
 package com.example.hjhome.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -51,6 +52,8 @@ public class MainActivity extends ActionBarActivity {
     EditText ttsSentenseTextfield;
     Button sendTTSButton;
 
+    Button signUpActButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +67,18 @@ public class MainActivity extends ActionBarActivity {
         sendToServerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               System.out.println("click Send To Server Button");
+                System.out.println("click Send To Server Button");
             }
         });
 
+        signUpActButton = (Button) findViewById(R.id.sign_up_act_button);
+        signUpActButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         loginButton = (Button) findViewById(R.id.login_button);
@@ -81,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
                 final String passwdInputStr = passwdInputTextfield.getText()+"";
 
 
-                System.out.println("id : " + idInputStr + " / passwd : " + passwdInputStr);
+                System.out.println("family_id : " + idInputStr + " / password : " + passwdInputStr);
                 Thread thread = new Thread(){
                     @Override
                     public void run() {
@@ -98,8 +109,8 @@ public class MainActivity extends ActionBarActivity {
                             JSONObject jobj = new JSONObject();
                             try{
                                 jobj.put("messagetype", "login");
-                                jobj.put("id", idInputStr);
-                                jobj.put("passwd", passwdInputStr);
+                                jobj.put("family_id", idInputStr);
+                                jobj.put("password", passwdInputStr);
                             }
                             catch(JSONException e) {
                                 e.printStackTrace();
@@ -234,6 +245,8 @@ public class MainActivity extends ActionBarActivity {
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
+
+
     }
 
 
