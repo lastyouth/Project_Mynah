@@ -1,11 +1,13 @@
 package com.seven.mynah.custominterface;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.seven.mynah.R;
 
@@ -13,6 +15,7 @@ public class RefreshShortcutLayout extends CustomButton{
 	
 	private View view;
 	private TextView tvRefreshTime;
+	private Date date;
 	
 	public RefreshShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
@@ -26,8 +29,8 @@ public class RefreshShortcutLayout extends CustomButton{
 		view = inflate(getContext(), R.layout.layout_button_refresh, null);
 		
 		tvRefreshTime = (TextView)view.findViewById(R.id.tvRefreshTime);
-		tvRefreshTime.setText("05/07 15:32");
 		
+		setCurrentTime();
 		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new RefreshTouchListener());
@@ -45,13 +48,29 @@ public class RefreshShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "refresh 버튼이 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
-				
+				refreshAll();
 				return true;
 			}
 			return true;
 		}
+	}
+	
+	public void refreshAll()
+	{
+		cbf.refresh("Bus");
+		cbf.refresh("Subway");
+		cbf.refresh("Weather");
+		
+		setCurrentTime();
+	}
+	
+	public void setCurrentTime()
+	{
+		SimpleDateFormat date_format = new SimpleDateFormat("MM/dd hh:mm");
+		date = new Date();
+		
+		tvRefreshTime.setText(date_format.format(date));
 	}
 }

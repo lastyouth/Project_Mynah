@@ -80,11 +80,9 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
 
-		// tvHour.setText(printDateFormat.format(date));
-		// tvUpdateTime.setText("업데이트 : " + winfo.last_update);
+
 		// 이미지 타입 넣기
-		//setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
-		setWeatherImage(3);
+		setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
 		Log.d(TAG, "setWeatherInfo End");
 	}
 
@@ -117,18 +115,18 @@ public class WeatherShortcutLayout extends CustomButton {
 
 		switch (type) {
 		case 1:
-
+			ivWeatherImage.setImageResource(R.drawable.ic_sunny);
 			break;
 		case 2:
-
+			ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
 			break;
 
 		case 3:
-			ivWeatherImage.setImageResource(R.drawable.ic_umbrella);
+			ivWeatherImage.setImageResource(R.drawable.ic_cloud2);
 			break;
 
 		case 4:
-			ivWeatherImage.setImageResource(R.drawable.ic_umbrella);
+			ivWeatherImage.setImageResource(R.drawable.ic_cloud3);
 			break;
 
 		default:
