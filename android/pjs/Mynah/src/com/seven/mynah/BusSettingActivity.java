@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -36,6 +38,8 @@ public class BusSettingActivity extends Activity {
    
    private boolean mIsBackKeyPressed = false;
    
+   private String TAG = "BusSettingActivity";
+   
    protected void onCreate(Bundle savedInstanceState) 
    {
         super.onCreate(savedInstanceState);
@@ -48,14 +52,18 @@ public class BusSettingActivity extends Activity {
         busArrayList = new ArrayList<BusInfo>();
         busArrayList = DBManager.getManager(getApplicationContext()).getBusDBbyLog();
         
-        binfo = busArrayList.get(0);
-        binfo = DBManager.getManager(getApplicationContext()).getBusDB(binfo);
         
-        BusPaser bp = new BusPaser();
-        binfo = bp.getBusArrInfoByRoute(binfo);
-        
-        
-        tvCurrentBusRoute.setText(binfo.route.busRouteNm);
+        if(busArrayList.size() != 0)
+        {
+        	binfo = busArrayList.get(0);
+            binfo = DBManager.getManager(getApplicationContext()).getBusDB(binfo);
+            
+            //BusPaser bp = new BusPaser();
+            //binfo = bp.getBusArrInfoByRoute(binfo);
+           
+            tvCurrentBusRoute.setText(binfo.route.busRouteNm);
+            
+        }
         
         
         
@@ -65,8 +73,6 @@ public class BusSettingActivity extends Activity {
          public void onClick(View v) {
             // TODO Auto-generated method stub
               String bus_route = etBusName.getText().toString().trim();
-              
-              Toast.makeText(getApplicationContext(), "ivSearch Clicked: " + bus_route, Toast.LENGTH_SHORT).show();
               
               BusPaser bp = new BusPaser();
               ArrayList<BusRouteInfo> array_route = new ArrayList<BusRouteInfo>();
@@ -96,8 +102,6 @@ public class BusSettingActivity extends Activity {
                 binfo.station = vh.busStationInfo;
                 
                 String stNm = vh.tvBusStopNameListRow.getText().toString();
-                Toast.makeText(getApplicationContext(), stNm, Toast.LENGTH_LONG).show();
-                
                 DBManager.getManager(getApplicationContext()).setBusDBbyLog(binfo);
                 
                 finish();
@@ -117,6 +121,8 @@ public class BusSettingActivity extends Activity {
          mIsBackKeyPressed = true;
          finish();
          overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+         
+         Log.d(TAG, "onBackPressed");
       }
    }
    

@@ -48,8 +48,11 @@ public class WeatherSettingActivity extends Activity{
         weatherArrayList = new ArrayList<WeatherLocationInfo>();
         weatherArrayList = DBManager.getManager(getApplicationContext()).getWeatherDBbyLog();
         
-        wlinfo = weatherArrayList.get(0);
-        tvCurrentWeatherLocation.setText(wlinfo.city_name);
+        if(weatherArrayList.size() != 0)
+        {
+        	wlinfo = weatherArrayList.get(0);
+            tvCurrentWeatherLocation.setText(wlinfo.city_name);
+        }
         
         
         ivCityNameSearch.setOnClickListener(new OnClickListener() {
@@ -60,8 +63,6 @@ public class WeatherSettingActivity extends Activity{
 				// TODO Auto-generated method stub
         		String cityName = etCityName.getText().toString().trim();        		
         		
-        		Toast.makeText(getApplicationContext(), "ivSearch Clicked: " + cityName, Toast.LENGTH_SHORT).show();
-
         		//DB Transaction
         		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
         		array_location = DBManager.getManager(getApplicationContext()).getWeatherLocationByName(cityName);
@@ -84,8 +85,6 @@ public class WeatherSettingActivity extends Activity{
             	ViewHolder vh = (ViewHolder)view.getTag();
                 
             	DBManager.getManager(getApplicationContext()).setWeatherLocationDBbyLog(vh.weatherLocationInfo);
-                
-                Toast.makeText(getApplicationContext(), "item Clicked: " + vh.tvCityNameListRow.getText().toString(), Toast.LENGTH_SHORT).show();
                 
                 finish();
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);

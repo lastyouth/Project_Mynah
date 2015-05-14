@@ -28,6 +28,7 @@ public class WeatherShortcutLayout extends CustomButton {
 	private TextView tvTemper;
 	private TextView tvReh; // 습도
 	private TextView tvPop; // 강수확률
+	private TextView tvPopName;
 	private TextView tvUpdateTime;
 	private TextView tvHour;
 	
@@ -55,7 +56,7 @@ public class WeatherShortcutLayout extends CustomButton {
 		// tvReh = (TextView)view.findViewById(R.id.tvReh);
 
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
-
+		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
 		refresh();
 		// 추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new WeatherTouchListener());
@@ -69,6 +70,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		if (winfo == null) {
 			// 초기화
 			tvPlace2.setText("터치해서 정보를 입력하세요");
+			tvPopName.setText("");
+			setWeatherImage(3);
 			return;
 		}
 		
@@ -76,6 +79,7 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvPlace2.setText(winfo.location.mdl_name + "\n");
 		tvTemper.setText(winfo.array_ttw.get(0).temp + "°C");
 		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
+		tvPopName.setText("강수 확률:");
 		// tvReh.setText("습도 : " + winfo.array_ttw.get(0).reh + "%");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 

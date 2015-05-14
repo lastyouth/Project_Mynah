@@ -54,6 +54,7 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime = (TextView) view.findViewById(R.id.tvBusNextTime);
 		tvBusNextTime2 = (TextView) view.findViewById(R.id.tvBusNextTime2);
 		tvBusDirName = (TextView) view.findViewById(R.id.tvBusDirName);
+
 		refresh();
 		// 추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new BusTouchListener());
@@ -156,6 +157,7 @@ public class BusShortcutLayout extends CustomButton {
 		return view;
 	}
 
+	
 	private final class BusTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 
@@ -174,4 +176,5 @@ public class BusShortcutLayout extends CustomButton {
 			return true;
 		}
 	}
+	
 }

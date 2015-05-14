@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        android:padding="5dp"/>
+        android:padding="10dp"/>
 
 </LinearLayout>
 

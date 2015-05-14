@@ -220,3 +220,4 @@ public class SubwayShortcutLayout extends CustomButton {
 	}
 
 }
+

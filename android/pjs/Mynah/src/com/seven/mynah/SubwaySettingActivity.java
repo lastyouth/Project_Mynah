@@ -46,22 +46,22 @@ public class SubwaySettingActivity extends Activity {
 		
 		subwayArrayList = new ArrayList<SubwayInfo>();
 		subwayArrayList = DBManager.getManager(getApplicationContext()).getSubwayDBbyLog();
-		sinfo = subwayArrayList.get(0);
-		sinfo = DBManager.getManager(getApplicationContext()).getSubwayDB(sinfo);
-		SubwayPaser sp = new SubwayPaser();
-		sinfo = sp.getTimeTableByID(sinfo);
 		
-		tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + sinfo.station.line_num + "호선");
+		if(subwayArrayList.size() != 0)
+		{
+			sinfo = subwayArrayList.get(0);
+			sinfo = DBManager.getManager(getApplicationContext()).getSubwayDB(sinfo);
+			//SubwayPaser sp = new SubwayPaser();
+			//sinfo = sp.getTimeTableByID(sinfo);
+			tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + sinfo.station.line_num + "호선");
+			
+		}
 		
 		ivSubwayStationSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String subwayName = etSubwayStation.getText().toString().trim();
-
-				Toast.makeText(getApplicationContext(),
-						"ivSearch Clicked: " + subwayName, Toast.LENGTH_SHORT)
-						.show();
 
 				// DB Transaction
 				ArrayList<SubwayStationInfo> array_line = new ArrayList<SubwayStationInfo>();
@@ -93,13 +93,6 @@ public class SubwaySettingActivity extends Activity {
 
 						DBManager.getManager(getApplicationContext())
 								.setSubwayDBbyLog(sinfo);
-
-						Toast.makeText(
-								getApplicationContext(),
-								"item Clicked: "
-										+ vh.tvSubwayStationListRow.getText()
-												.toString(), Toast.LENGTH_SHORT)
-								.show();
 
 						finish();
 						overridePendingTransition(R.anim.slide_in_from_left,
