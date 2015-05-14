@@ -28,6 +28,8 @@ public class CustomButtonsFragment extends Fragment {
 	private int mNumRows = 5;
 	private int mNumButtons = 0;
 
+	private static String TAG = "CustomButtonsFragment";
+	
 	public HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
 	private DisplayMetrics metrics;
 	private int padding_5dp;
@@ -67,6 +69,8 @@ public class CustomButtonsFragment extends Fragment {
 
 	// 디폴트 모양 결정(추후 원하는 대로 변환)
 	public void setGridLayoutDefault() {
+		
+		Log.d(TAG,"setGridLayoutDefault 시작");
 		// onCreateView에서 호출
 		mainGridLayout.setOrientation(GridLayout.HORIZONTAL);
 		mainGridLayout.setRowCount(mNumRows);
@@ -82,6 +86,8 @@ public class CustomButtonsFragment extends Fragment {
 		addButton(GlobalVariable.ShortcutType.typeRefrash, 4, 0, 2);
 		addButton(GlobalVariable.ShortcutType.typeVoice, 4, 2, 1);
 		addButton(GlobalVariable.ShortcutType.typeSetting, 4, 3, 1);
+		
+		Log.d(TAG,"setGridLayoutDefault 끝");
 	}
 
 	public void addButton(int type, int row, int col, int colspan) {
@@ -192,6 +198,16 @@ public class CustomButtonsFragment extends Fragment {
 			return;
 		}
 		cb.refresh();
+	}
+	
+	public View getBusView()
+	{
+		View view;
+		int shortcutType = GlobalVariable.ShortcutType.typeBusShortcut;
+		BusShortcutLayout cb = (BusShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+		view = cb.getBusView();
+		
+		return view;
 	}
 	
 

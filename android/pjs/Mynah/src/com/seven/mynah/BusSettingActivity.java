@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seven.mynah.artifacts.BusInfo;
@@ -23,9 +24,15 @@ public class BusSettingActivity extends Activity {
    private ImageView ivBusNameSearch;
    private ListView lvBusStop;
    private EditText etBusName;
+   private TextView tvCurrentBusRoute;
    private BusStationAdapter adapter;
    
+  
    private BusRouteInfo busRouteInfo;
+   
+   //for tvCurrentBusRoute
+   private BusInfo binfo;
+   private ArrayList<BusInfo> busArrayList;
    
    private boolean mIsBackKeyPressed = false;
    
@@ -36,6 +43,21 @@ public class BusSettingActivity extends Activity {
         
         etBusName = (EditText)findViewById(R.id.etBusName);
         lvBusStop = (ListView)findViewById(R.id.lvBusStop);
+        tvCurrentBusRoute = (TextView)findViewById(R.id.tvCurrentBusRoute);
+        
+        busArrayList = new ArrayList<BusInfo>();
+        busArrayList = DBManager.getManager(getApplicationContext()).getBusDBbyLog();
+        
+        binfo = busArrayList.get(0);
+        binfo = DBManager.getManager(getApplicationContext()).getBusDB(binfo);
+        
+        BusPaser bp = new BusPaser();
+        binfo = bp.getBusArrInfoByRoute(binfo);
+        
+        
+        tvCurrentBusRoute.setText(binfo.route.busRouteNm);
+        
+        
         
         ivBusNameSearch = (ImageView)findViewById(R.id.ivBusNameSearch);
         ivBusNameSearch.setOnClickListener(new OnClickListener() {
