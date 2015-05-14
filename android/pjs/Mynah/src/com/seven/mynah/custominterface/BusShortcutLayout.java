@@ -3,11 +3,11 @@ package com.seven.mynah.custominterface;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.text.format.Time;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.BusInfo;
@@ -35,6 +35,7 @@ public class BusShortcutLayout extends CustomButton {
 		super(context);
 		// TODO Auto-generated constructor stub
 		cbf = _cbf;
+		//refresh();
 		initView();
 	}
 
@@ -49,60 +50,76 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime = (TextView) view.findViewById(R.id.tvBusNextTime);
 		tvBusNextTime2 = (TextView) view.findViewById(R.id.tvBusNextTime2);
 
-		// get current saved information from DB
-		busArrayList = new ArrayList<BusInfo>();
-		busArrayList = DBManager.getManager(getContext()).getBusDBbyLog();
-
-		if (busArrayList.size() == 0) 
-		{
-			// 초기화
-			bRoute = "";
-			bStation = "정류장";
-			time1 = "";
-			time2 = "";
-		} 
-		else 
-		{
-			BusInfo binfo = busArrayList.get(0);
-			binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-
-			if(binfo.array_ttb.size()==0)
-			{
-				BusPaser bp = new BusPaser();
-				binfo = bp.getBusArrInfoByRoute(binfo);
-				DBManager.getManager(getContext()).setBusDB(binfo);
-				binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-			}
-			
-			
-			bRoute = binfo.route.busRouteNm;
-			bStation = binfo.station.stNm;
-
-			if (binfo.array_ttb.size() == 0) 
-			{
-				time1 = "차가 없음";
-				time2 = "";
-			}else if(binfo.array_ttb.size() == 1)
-			{
-				time1 = binfo.array_ttb.get(0).time;
-			}
-			else
-			{
-				time1 = binfo.array_ttb.get(0).time;
-				time2 = binfo.array_ttb.get(1).time;
-			}
-		}
-
-		ivBusImage.setImageResource(R.drawable.ic_bus);
-		tvBusRoute.setText(bRoute + " 버스");
-		// tvCurrentBusRoute.setText(bRoute);
-		tvBusStopName.setText(bStation + "\n");
-		tvBusNextTime.setText(time1);
-		tvBusNextTime2.setText(time2);
-
+		setBusInfo(null);
 		// 추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new BusTouchListener());
 		addView(view);
+	}
+
+	private void setBusInfo(BusInfo binfo) {
+		if (binfo == null) {
+			// 초기화
+			bRoute = "초기값 없음";
+			bStation = "초기값 없음";
+			time1 = "X";
+			time2 = "X";
+		} else {
+			bRoute = binfo.route.busRouteNm + " 버스";
+			bStation = binfo.station.stNm + " " + binfo.dir + "행";
+
+			if (binfo.array_ttb.size() == 0) {
+				time1 = "차가 없음";
+				time2 = "";
+			} else if (binfo.array_ttb.size() == 1) {
+				time1 = binfo.array_ttb.get(0).time + " "
+						+ binfo.array_ttb.get(0).sectNm;
+			} else {
+				time1 = binfo.array_ttb.get(0).time + " "
+						+ binfo.array_ttb.get(0).sectNm;
+				time2 = binfo.array_ttb.get(1).time + " "
+						+ binfo.array_ttb.get(1).sectNm;
+			}
+		}
+		ivBusImage.setImageResource(R.drawable.ic_bus);
+		tvBusRoute.setText(bRoute);
+		tvBusStopName.setText(bStation);
+		tvBusNextTime.setText(time1);
+		tvBusNextTime2.setText(time2);
+	}
+
+	public void refresh() {
+		Toast.makeText(getContext(), "Bus onRestart()", 1).show();
+		
+		cbf.getActivity().runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// get current saved information from DB
+				busArrayList = new ArrayList<BusInfo>();
+				
+				//Error!
+				busArrayList = DBManager.getManager(getContext())
+						.getBusDBbyLog();
+
+				if (busArrayList.size() == 0) {
+
+				} else {
+					BusInfo binfo = busArrayList.get(0);
+					binfo = DBManager.getManager(getContext()).getBusDB(binfo);
+
+					if (binfo.array_ttb.size() == 0) {
+						BusPaser bp = new BusPaser();
+						binfo = bp.getBusArrInfoByRoute(binfo);
+						DBManager.getManager(getContext()).setBusDB(binfo);
+						binfo = DBManager.getManager(getContext()).getBusDB(
+								binfo);
+					}
+					setBusInfo(binfo);
+				}
+				
+			}
+		});
+
 	}
 
 	private final class BusTouchListener implements OnTouchListener {
@@ -116,6 +133,7 @@ public class BusShortcutLayout extends CustomButton {
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				// 원하는 실행 엑티비티!
+				// refresh();
 				cbf.startSettingActivity("Bus");
 				return true;
 			}

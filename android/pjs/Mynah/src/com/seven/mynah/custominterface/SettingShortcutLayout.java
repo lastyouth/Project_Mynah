@@ -46,4 +46,8 @@ private View view;
 			return true;
 		}
 	}
+	
+	public void refresh() {
+		Toast.makeText(getContext(), "Setting onRestart()", 1).show();
+	}
 }

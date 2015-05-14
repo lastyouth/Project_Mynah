@@ -19,12 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.bluetooth.DeviceListActivity;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.infoparser.WeatherParser;
@@ -97,12 +99,20 @@ public class MainActivity extends Activity {
         
 		//testSide();
 	}
+
 	@Override
-	public void onRestart()
+	protected void onRestart()
 	{
+		super.onRestart();
+		//Toast.makeText(this, "onRestart()", 1).show();
+		
+		//refresh
+		//get kind of intent from activity called finished()
+		//switch
+		cbf.refresh("Bus");
 		
 	}
-
+	
 	private void setDefaultFragment() {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
@@ -110,8 +120,6 @@ public class MainActivity extends Activity {
 		transaction.add(R.id.container, cbf);
 		transaction.commit();
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -203,9 +211,10 @@ public class MainActivity extends Activity {
 	
 	public void startBluetoothActivity_temp()
 	{
-		Intent intent = new Intent("com.seven.mynah.Bluetooh");
+		Intent intent = new Intent("com.seven.mynah.Bluetooth");
+		//Intent intent = new Intent(this,DeviceListActivity.class);
 		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 	}
 	
 	

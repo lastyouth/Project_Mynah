@@ -2,35 +2,24 @@ package com.seven.mynah.custominterface;
 
 import java.util.HashMap;
 
+import android.app.Fragment;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.GridLayout.Spec;
+
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 import com.seven.mynah.ScheduleListActivity;
 import com.seven.mynah.globalmanager.GlobalVariable;
-
-import android.os.Bundle;
-import android.provider.Settings.Global;
-import android.support.annotation.Nullable;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.graphics.Point;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.MeasureSpec;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.animation.OvershootInterpolator;
-import android.webkit.WebView.FindListener;
-import android.widget.GridLayout;
-import android.widget.GridLayout.Spec;
-import android.widget.LinearLayout;
 
 public class CustomButtonsFragment extends Fragment {
 
@@ -39,7 +28,7 @@ public class CustomButtonsFragment extends Fragment {
 	private int mNumRows = 5;
 	private int mNumButtons = 0;
 
-	private HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
+	public HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
 	private DisplayMetrics metrics;
 	private int padding_5dp;
 	private int padding_5dp_toPixel;
@@ -157,9 +146,54 @@ public class CustomButtonsFragment extends Fragment {
 
 		cb.setLayoutParams(lp);
 		mainGridLayout.addView(cb);
-		HashButtons.put("", cb);
+		HashButtons.put(String.valueOf(type), cb);
 
 	}
+	
+	public void refresh(String str)
+	{
+		int shortcutType = 0;
+		CustomButton cb = null;
+		switch(str)
+		{
+		case "Schedule":
+			shortcutType = GlobalVariable.ShortcutType.typeScheduleShortcut;
+			cb = (ScheduleShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Bus":
+			shortcutType = GlobalVariable.ShortcutType.typeBusShortcut;
+			cb = (BusShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Subway":
+			shortcutType = GlobalVariable.ShortcutType.typeSubwayShortcut;
+			cb = (SubwayShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Weather":
+			shortcutType = GlobalVariable.ShortcutType.typeWeatherShortcut;
+			cb = (WeatherShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Gas":
+			shortcutType = GlobalVariable.ShortcutType.typeGasAlarmShortcut;
+			cb = (GasAlarmShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Family":
+			shortcutType = GlobalVariable.ShortcutType.typeFamilyShortcut;
+			cb = (FamilyShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Refresh":
+			shortcutType = GlobalVariable.ShortcutType.typeRefrash;
+			cb = (RefreshShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		case "Setting":
+			shortcutType = GlobalVariable.ShortcutType.typeSetting;
+			cb = (SettingShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
+		default:
+			return;
+		}
+		cb.refresh();
+	}
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

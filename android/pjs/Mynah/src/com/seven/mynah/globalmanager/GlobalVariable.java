@@ -15,9 +15,8 @@ public final class GlobalVariable {
 		typeGasAlarmShortcut = 5,
 		typeFamilyShortcut= 6,
 		typeRefrash = 7,
-		typeEmpty = 8,
-		typeVoice = 9,
-		typeSetting = 10;
+		typeVoice = 8,
+		typeSetting = 9;
 		
 	}
 	

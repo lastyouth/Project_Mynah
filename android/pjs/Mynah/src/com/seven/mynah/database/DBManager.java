@@ -471,10 +471,13 @@ public class DBManager {
 			if (c.getCount() == 0) {
 				values.put(MynahDB._BUS_COL_ROUTE_ID, binfo.route.busRouteId);
 				values.put(MynahDB._BUS_COL_ROUTE_NAME, binfo.route.busRouteNm);
-				// values.put(MynahDB._BUS_COL_ROUTE_TYPE, binfo.route.bus);
+				//values.put(MynahDB._BUS_COL_ROUTE_TYPE, binfo.route.bus);
 				values.put(MynahDB._BUS_COL_STATION_ID, binfo.station.stId);
 				values.put(MynahDB._BUS_COL_STATION_NAME, binfo.station.stNm);
+				values.put(MynahDB._BUS_COL_STATION_ASRID, binfo.station.arsId);
 				values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
+				values.put(MynahDB._BUS_COL_NOW_STATION_NAME, binfo.array_ttb.get(i).sectNm);
+				values.put(MynahDB._BUS_COL_DIR, binfo.dir);
 				values.put(MynahDB._BUS_COL_ARR_TIME,
 						binfo.array_ttb.get(i).time);
 
@@ -488,7 +491,10 @@ public class DBManager {
 				// values.put(MynahDB._BUS_COL_ROUTE_TYPE, binfo.);
 				values.put(MynahDB._BUS_COL_STATION_ID, binfo.station.stId);
 				values.put(MynahDB._BUS_COL_STATION_NAME, binfo.station.stNm);
+				values.put(MynahDB._BUS_COL_STATION_ASRID, binfo.station.arsId);
 				values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
+				values.put(MynahDB._BUS_COL_NOW_STATION_NAME, binfo.array_ttb.get(i).sectNm);
+				values.put(MynahDB._BUS_COL_DIR, binfo.dir);
 				values.put(MynahDB._BUS_COL_ARR_TIME,
 						binfo.array_ttb.get(i).time);
 
@@ -522,7 +528,9 @@ public class DBManager {
 		int route_id_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_ID);
 		int station_id__index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ID);
 		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
-
+		int station_arsid_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ASRID);
+		
+		
 		int counter = 0;
 
 		while (!c.isAfterLast()) {
@@ -533,7 +541,8 @@ public class DBManager {
 			binfo.route.busRouteId = c.getString(route_id_index);
 			binfo.station.stId = c.getString(station_id__index);
 			binfo.staOrd = c.getString(station_ord_index);
-
+			binfo.station.arsId = c.getString(station_arsid_index);
+			
 			array_binfo.add(binfo);
 			c.moveToNext();
 			counter++;
@@ -553,6 +562,7 @@ public class DBManager {
 		values.put(MynahDB._BUS_COL_ROUTE_ID, binfo.route.busRouteId);
 		values.put(MynahDB._BUS_COL_STATION_ID, binfo.station.stId);
 		values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
+		values.put(MynahDB._BUS_COL_STATION_ASRID, binfo.station.arsId);
 		values.put(MynahDB._BUS_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._BUS_LOG_TABLE_NAME, null, values);
@@ -588,23 +598,26 @@ public class DBManager {
 		int station_name_index = c
 				.getColumnIndex(MynahDB._BUS_COL_STATION_NAME);
 		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
+		int station_arsid_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ASRID);
 		int dir_index = c.getColumnIndex(MynahDB._BUS_COL_DIR);
 		int arr_time_index = c.getColumnIndex(MynahDB._BUS_COL_ARR_TIME);
+		int station_now_name_index = c.getColumnIndex(MynahDB._BUS_COL_NOW_STATION_NAME);
 
 		binfo.route.busRouteId = c.getString(route_id_index);
 		binfo.route.busRouteNm = c.getString(route_name_index);
 		binfo.route.routeType = c.getString(route_type_index);
-
+		
 		binfo.station.stId = c.getString(station_id__index);
 		binfo.station.stNm = c.getString(station_name_index);
-
+		binfo.station.arsId = c.getString(station_arsid_index);
+		
 		binfo.staOrd = c.getString(station_ord_index);
 		binfo.dir = c.getString(dir_index);
 
 		while (!c.isAfterLast()) {
 			ttb = new TimeToBus();
 			ttb.time = c.getString(arr_time_index);
-
+			ttb.sectNm = c.getString(station_now_name_index);
 			binfo.array_ttb.add(ttb);
 
 			c.moveToNext();

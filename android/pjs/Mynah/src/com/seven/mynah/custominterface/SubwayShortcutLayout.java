@@ -102,9 +102,8 @@ public class SubwayShortcutLayout extends CustomButton{
 	}
 	
 	
-	public void refresh()
-	{
-		
+	public void refresh() {
+		Toast.makeText(getContext(), "Subway onRestart()", 1).show();
 	}
 	
 	public void setuptest()

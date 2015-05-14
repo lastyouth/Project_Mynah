@@ -72,11 +72,14 @@ public class BusPaser {
 	public BusInfo getBusArrInfoByRoute(BusInfo binfo)
 	{
 		
+		binfo = getStationByUid(binfo);
+		
 		String stId =  binfo.station.stId;  // 스테이션 정류소 아이디
 		//String arsId = binfo.station.arsId;
 		String busRouteId = binfo.route.busRouteId; //노선 아이디
 		String ord = binfo.staOrd;
-		SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREA);
+		//SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREA);
+		SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.KOREA);
 		
 		
 		binfo.array_ttb.clear();
@@ -143,12 +146,15 @@ public class BusPaser {
                         		ttb2.time = CurDateFormat.format(date);
                         		//ttb2.time = temp;
                         	}
-                        		
+                        }else if (name.equalsIgnoreCase("rtNm")){
+                        	binfo.route.busRouteNm = parser.nextText();
+                        }else if (name.equalsIgnoreCase("stNm")){
+                        	binfo.station.stNm = parser.nextText();
                         }else if (name.equalsIgnoreCase("mkTm")){
                         	binfo.last_update = parser.nextText();
-                        }else if (name.equalsIgnoreCase("sectOrd1")){
+                        }else if (name.equalsIgnoreCase("stationNm1")){
                         	if(ttb1!=null) ttb1.sectNm = parser.nextText();
-                        }else if (name.equalsIgnoreCase("sectOrd2")){
+                        }else if (name.equalsIgnoreCase("stationNm2")){
                         	if(ttb2!=null) ttb2.sectNm = parser.nextText();
                         }else if (name.equalsIgnoreCase("vehId1")){
                         	if(ttb1!=null) ttb1.vehId = parser.nextText();
