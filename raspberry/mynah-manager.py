@@ -71,8 +71,9 @@ class ClientProcessThread(threading.Thread):
                 cid = raw_data["id"];
                 ctype = raw_data["type"];
                 cdata = raw_data["data"];
+                crssi = int(raw_data["rssi"]);
 
-                print "id : ",cid," type : ",ctype," data : ",cdata
+                print "id : ",cid," type : ",ctype," data : ",cdata," rssi : ",crssi
 
                 if ctype == "init":
                     self.cid = cid
@@ -80,7 +81,7 @@ class ClientProcessThread(threading.Thread):
                 elif ctype =="rssi":
                     print "rssi"
                 elif ctype == "tts":
-                    g_messagelist.append(cdata)
+                    g_messagelist.append([crssi,cdata])
                     print g_messagelist
                     print "tts"
                 else:
@@ -165,14 +166,24 @@ class MynahManager:
                     self.t = 0
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                     global g_messagelist
+                    global g_clientlist
                     g_messagelist = []
                     broadcastCurrentClient()
-                    while len(g_messagelist) == 0:
+                    targetlen = len(g_clientlist)
+                    print "target len : ",targetlen;
+                    while len(g_messagelist) < targetlen:
                         time.sleep(0.1)
-                    msg = g_messagelist[0]
+                    brssi = -200
+                    msg = ""
+                    for rssi,data in g_messagelist:
+                        print "rssi : ",rssi," data : ",data
+                        if brssi < rssi:
+                            brssi = rssi
+                            msg = data
+
+                    print "Best rssi measure : ",brssi
+                    #msg = g_messagelist[0]
                     print "first message : ",msg
-                    #os.system('omxplayer -o local --vol -2000 /home/pi/share/chams.mp3')
-                    #os.system('wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q=안녕하세요!! 서보훈님! 좋은하루되세요..!! 화이팅...!"')
                     query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
                     query += msg
                     query += '"'
@@ -183,7 +194,15 @@ class MynahManager:
 
                     print "To Out Processing"
                 else:
-                    os.system('omxplayer -o local --vol -2000 /home/pi/share/allforyou.mp3')
+                    #os.system('omxplayer -o local --vol -1000 /home/pi/share/chams.mp3')
+                    msg = '어서오세요. 오늘 하루도 수고하셨습니다. hello"'
+                    query = 'wget -q -U Mozilla -O welcome.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
+                    query+=msg
+                    print "query : ",query
+                    os.system(query)
+                    os.system('omxplayer -o local welcome.mp3 --vol 1000')
+                    os.remove('welcome.mp3')
+
                     print "To In Processing"
                 self.s1Activated = False
                 self.s2Activated = False
@@ -202,9 +221,9 @@ class MynahManager:
         self.check()
 
 class DistanceSensor(threading.Thread):
-    DETECT_THRESHOLD_VALUE = 0.4
+    DETECT_THRESHOLD_VALUE = 0.30
     MAX_WAIT_VALUE = 10000
-    MAX_RE_CAPTURE_TIME = 0.08
+    MAX_RE_CAPTURE_TIME = 0.07
 
     def __init__(self,sensortype):
         threading.Thread.__init__(self)
