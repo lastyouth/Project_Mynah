@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # file: mynah-manager.py
 # auth: sbh 
 
@@ -6,6 +7,8 @@ import threading
 import RPi.GPIO as GPIO
 import time
 import Queue
+import signal
+import os
 
 
 # global variables
@@ -69,11 +72,18 @@ class MynahManager:
     def __init__(self):
         self.s1Activated = False
         self.s2Activated = False
-
+        self.t = 0
         #self.detectThreshold = 0.00
         self.directionFlag = self.DIRECTION_TYPE_NONE
 
-    def sigHandler(signum, frame):
+    def sigHandler(self):
+        g_lock.acquire()
+        self.s1Activated = False
+        self.s2Activated = False
+        self.directionFlag = self.DIRECTION_TYPE_NONE
+        print "Timeout";
+        self.t = 0
+        g_lock.release()
         return 0;
 
     def check(self):
@@ -81,15 +91,29 @@ class MynahManager:
         g_lock.acquire()
         if self.directionFlag == self.DIRECTION_TYPE_NONE:
             if self.s1Activated == True:
-                self.directionFlag == self.DIRECTION_TYPE_TO_OUT
+                self.directionFlag = self.DIRECTION_TYPE_TO_OUT
 
             elif self.s2Activated == True:
-                self.directionFlag == self.DIRECTION_TYPE_TO_IN
+                self.directionFlag = self.DIRECTION_TYPE_TO_IN
+            if self.t == 0:
+                self.t = threading.Timer(5.0,self.sigHandler);
+                self.t.start()
         else:
-            if self.s1Activated == True and self.s2Activated:
+            if self.s1Activated == True and self.s2Activated == True:
+                if self.t != 0:
+                    self.t.cancel()
+                    print "Timer Cancelled"
+                    self.t = 0
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+                    #os.system('omxplayer -o local --vol -2000 /home/pi/share/chams.mp3')
+                    os.system('wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q=안녕하세요!! 서보훈님! 좋은하루되세요..!! 화이팅...!"')
+                    os.system('omxplayer -o local hello_ko.mp3')
+
+                    os.remove('hello_ko.mp3')
+
                     print "To Out Processing"
                 else:
+                    os.system('omxplayer -o local --vol -2000 /home/pi/share/er.mp3')
                     print "To In Processing"
                 self.s1Activated = False
                 self.s2Activated = False
@@ -99,36 +123,39 @@ class MynahManager:
 
     def callbackFromS1(self):
         self.s1Activated = True
+        print "callbackFromS1"
         self.check()
 
     def callbackFromS2(self):
         self.s2Activated = True
+        print "callbackFromS2"
         self.check()
 
 class DistanceSensor(threading.Thread):
-    DETECT_THRESHOLD_VALUE = 0.5
+    DETECT_THRESHOLD_VALUE = 0.4
     MAX_WAIT_VALUE = 10000
-    MAX_RE_CAPTURE_TIME = 0.5
+    MAX_RE_CAPTURE_TIME = 0.10
 
     def __init__(self,sensortype):
         threading.Thread.__init__(self)
         self.distance_sum = 0
         self.distance_cnt = 0
         self.seq_queue = Queue.Queue()
+        self.sensortype = sensortype
 
         if sensortype == 1:
             self.ECHO = 26
             self.TRIG = 22
             self.validate = True
         elif sensortype == 2:
-            self.ECHO = 16
-            self.TRIG = 23
+            self.ECHO = 21
+            self.TRIG = 20
             self.validate = True
         else:
             self.ECHO = self.TRIG = -1
             self.validate = False
 
-        print "sensortype : ",sensortype,"validate",self.validate,"ECHO: ",self.ECHO,"TRIG",self.TRIG
+        #print "sensortype : ",sensortype,"validate",self.validate,"ECHO: ",self.ECHO,"TRIG",self.TRIG
 
     def ready(self):
         if self.validate == False:
@@ -145,34 +172,39 @@ class DistanceSensor(threading.Thread):
         time.sleep(0.00001)
         GPIO.output(self.TRIG,False)
 
-        ttp = 0;
-        while GPIO.input(self.ECHO) == 0:
-            pulse_start = time.time()
-            ttp+=1
-            if ttp >= self.MAX_WAIT_VALUE:
-                return -1
+        try:
+            ttp = 0;
+            while GPIO.input(self.ECHO) == 0:
+                pulse_start = time.time()
+                ttp+=1
+                if ttp >= self.MAX_WAIT_VALUE:
+                    return -1
 
-        ttp = 0
+            ttp = 0
 
-        while GPIO.input(self.ECHO) == 1:
-            pulse_end = time.time()
-            ttp+=1
-            if ttp >= self.MAX_WAIT_VALUE:
-                return -1
+            while GPIO.input(self.ECHO) == 1:
+                pulse_end = time.time()
+                ttp+=1
+                if ttp >= self.MAX_WAIT_VALUE:
+                    return -1
 
-        pulse_duration = pulse_end - pulse_start
+            pulse_duration = pulse_end - pulse_start
 
-        distance = pulse_duration*17150
+            distance = pulse_duration*17150
 
-        distance = round(distance,2)
-        return distance
+            distance = round(distance,2)
+            return distance
+        except:
+            return -1
 
 
     def run(self):
         while True:
             time.sleep(self.MAX_RE_CAPTURE_TIME)
+            g_lock.acquire()
             dist = self.trigger()
-            print "dist : ",dist
+            g_lock.release()
+            #print "dist : ",dist
             if dist != -1:
                 if self.distance_cnt < 5:
                     self.distance_cnt+=1
@@ -182,7 +214,11 @@ class DistanceSensor(threading.Thread):
                     avg = self.distance_sum / self.distance_cnt
 
                     if dist < (avg*self.DETECT_THRESHOLD_VALUE):
-                        print "Detect person"
+                        print "sensor ",self.sensortype," Detect person : ",dist
+                        if self.sensortype == 1:
+                            g_Mynah.callbackFromS1()
+                        else:
+                            g_Mynah.callbackFromS2()
                     else:
                         dmin = avg*0.9
                         dmax = avg*1.1
@@ -192,7 +228,7 @@ class DistanceSensor(threading.Thread):
                             self.seq_queue.put(dist)
                             self.distance_sum += dist
 
-                            print "Distance : ",dist,"cm Avg :",avg
+                            #print "Sensor",self.sensortype," Distance : ",dist,"cm Avg :",avg
 
 
 g_Mynah = MynahManager()
@@ -206,7 +242,13 @@ g_sensor1.ready()
 g_sensor1.daemon = True
 g_sensor1.start()
 
+g_sensor2 = DistanceSensor(2)
+g_sensor2.ready()
+g_sensor2.daemon = True
+g_sensor2.start()
+
 while True:
+    time.sleep(100000)
     i=1
 
 GPIO.cleanup()
