@@ -63,6 +63,11 @@ public class CustomButton extends FrameLayout{
 		//this.addView(child);
 	}
 	
+	public void refresh()
+	{
+		
+	}
+	
 	
 	public void test()
 	{

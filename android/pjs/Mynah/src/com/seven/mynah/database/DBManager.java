@@ -11,16 +11,20 @@ import android.R.array;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class DBManager {
 
 	private static DBManager instance;
 
 	private DBHelper dbh;
+	private static String TAG = "DBManager";
 
 	private static SimpleDateFormat defaultDateFormat;
 	private static SimpleDateFormat printDateFormat;
 
+	
+	//db version 아님!  max 카운터임
 	private static int log_get_max_counter = 5;
 
 	// android 생성자
@@ -36,6 +40,7 @@ public class DBManager {
 			defaultDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			printDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		}
+		Log.d(TAG, "instace complete");
 		return instance;
 	}
 
@@ -110,7 +115,7 @@ public class DBManager {
 
 			}
 		}
-		System.out.println("날씨 셋 완료");
+		Log.d(TAG, "setWeatherDB 완료");
 	}
 
 	// 현재 기준으로 가장 최근의 로그 테이블의 설정치로 location 반환함(최근껄로)
@@ -139,7 +144,8 @@ public class DBManager {
 			c.moveToNext();
 			counter++;
 		}
-
+		
+		Log.d(TAG,"getWeatherDBbyLog 완료");
 		return array_location;
 
 	}
@@ -158,7 +164,7 @@ public class DBManager {
 				defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._WEATHER_LOG_TABLE_NAME, null, values);
-
+		Log.d(TAG,"setWeatherLocationDBbyLog 완료");
 	}
 
 	public synchronized WeatherInfo getWeatherDB(WeatherInfo winfo) {
@@ -220,6 +226,8 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+		
+		Log.d(TAG,"getWeatherDB 완료");
 		return winfo;
 
 	}
@@ -252,12 +260,26 @@ public class DBManager {
 
 			dbh.mDB.insert(MynahDB._WEATHER_CITY_TABLE_NAME, null, values);
 		}
+		Log.d(TAG,"setWeatherLocationAll 완료");
 
+	}
+	
+	public synchronized boolean isSetWeatherLocation()
+	{
+		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME
+				+ " ;";
+
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+
+		if (c != null && c.getCount() != 0)
+			return true;
+		else return false;
+		
 	}
 
 	public synchronized ArrayList<WeatherLocationInfo> getWeatherLocationByName(
 			String _name) {
-
+	
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
 		
 		
@@ -298,6 +320,7 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+		Log.d(TAG,"getWeatherLocationByName 완료");
 		return array_location;
 
 	}
@@ -337,6 +360,7 @@ public class DBManager {
 		location.top_name = c.getString(top_name_index);
 		location.mdl_name = c.getString(mdl_name_index);
 
+		Log.d(TAG,"getWeatherLocationByCode 완료");
 		return location;
 
 	}
@@ -347,12 +371,14 @@ public class DBManager {
 				+ String.valueOf(GlobalVariable.UserType.me) + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
-
+		
+		Log.d(TAG,"isInitialUser 완료");
 		if (c != null && c.getCount() != 0) {
 			return true;
 		} else {
 			return false;
 		}
+		
 	}
 
 	public synchronized FamilyInfo getFamilyDB() {
@@ -386,7 +412,8 @@ public class DBManager {
 
 			c.moveToNext();
 		}
-
+		
+		Log.d(TAG,"getFamilyDB 완료");
 		return finfo;
 	}
 
@@ -434,6 +461,7 @@ public class DBManager {
 				}
 			}
 		}
+		Log.d(TAG,"setMemberDB 완료");
 	}
 
 	public synchronized void deleteFamilyExceptMe() {
@@ -441,10 +469,12 @@ public class DBManager {
 				+ MynahDB._USER_COL_TYPE + "<>" + GlobalVariable.UserType.me
 				+ " ;";
 		dbh.mDB.execSQL(sql);
+		Log.d(TAG,"deleteFamilyExceptMe 완료");
 	}
 
 	public synchronized void setBusDB(BusInfo binfo) {
-
+		
+		Log.d(TAG,"setBusDB 시작");
 		ContentValues values;
 
 		String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
@@ -452,6 +482,18 @@ public class DBManager {
 		dbh.mDB.execSQL(sql);
 
 		for (int i = 0; i < binfo.array_ttb.size(); ++i) {
+//			sql = "select " + MynahDB._BUS_COL_STATION_ID + ","
+//					+ MynahDB._BUS_COL_ROUTE_ID + ","
+//					+ MynahDB._BUS_COL_ARR_TIME + ","
+//					+ MynahDB._BUS_COL_STATION_ORD + " from "
+//					+ MynahDB._BUS_TABLE_NAME + " where "
+//					+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
+//					+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '"
+//					+ binfo.route.busRouteId + "' and "
+//					+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
+//					+ "' and " + MynahDB._BUS_COL_ARR_TIME + "= '"
+//					+ binfo.array_ttb.get(i).time + "';";
+			
 			sql = "select " + MynahDB._BUS_COL_STATION_ID + ","
 					+ MynahDB._BUS_COL_ROUTE_ID + ","
 					+ MynahDB._BUS_COL_ARR_TIME + ","
@@ -461,8 +503,8 @@ public class DBManager {
 					+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '"
 					+ binfo.route.busRouteId + "' and "
 					+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
-					+ "' and " + MynahDB._BUS_COL_ARR_TIME + "= '"
-					+ binfo.array_ttb.get(i).time + "';";
+					+ "' and " + MynahDB._BUS_COL_BUS_ID + "= '"
+					+ binfo.array_ttb.get(i).vehId + "';";
 
 			Cursor c = dbh.mDB.rawQuery(sql, null);
 
@@ -477,6 +519,7 @@ public class DBManager {
 				values.put(MynahDB._BUS_COL_STATION_ASRID, binfo.station.arsId);
 				values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
 				values.put(MynahDB._BUS_COL_NOW_STATION_NAME, binfo.array_ttb.get(i).sectNm);
+				values.put(MynahDB._BUS_COL_BUS_ID, binfo.array_ttb.get(i).vehId);
 				values.put(MynahDB._BUS_COL_DIR, binfo.dir);
 				values.put(MynahDB._BUS_COL_ARR_TIME,
 						binfo.array_ttb.get(i).time);
@@ -494,22 +537,32 @@ public class DBManager {
 				values.put(MynahDB._BUS_COL_STATION_ASRID, binfo.station.arsId);
 				values.put(MynahDB._BUS_COL_STATION_ORD, binfo.staOrd);
 				values.put(MynahDB._BUS_COL_NOW_STATION_NAME, binfo.array_ttb.get(i).sectNm);
+				values.put(MynahDB._BUS_COL_BUS_ID, binfo.array_ttb.get(i).vehId);
 				values.put(MynahDB._BUS_COL_DIR, binfo.dir);
 				values.put(MynahDB._BUS_COL_ARR_TIME,
 						binfo.array_ttb.get(i).time);
 
 				// update
-				dbh.mDB.update(MynahDB._WEATHER_TABLE_NAME, values,
+//				dbh.mDB.update(MynahDB._BUS_TABLE_NAME, values,
+//						MynahDB._BUS_COL_STATION_ID + "= '"
+//								+ binfo.station.stId + "' and "
+//								+ MynahDB._BUS_COL_ROUTE_ID + "= '"
+//								+ binfo.route.busRouteId + "' and "
+//								+ MynahDB._BUS_COL_ARR_TIME + "= '"
+//								+ binfo.array_ttb.get(i).time + "'", null);
+				
+				dbh.mDB.update(MynahDB._BUS_TABLE_NAME, values,
 						MynahDB._BUS_COL_STATION_ID + "= '"
 								+ binfo.station.stId + "' and "
 								+ MynahDB._BUS_COL_ROUTE_ID + "= '"
 								+ binfo.route.busRouteId + "' and "
-								+ MynahDB._BUS_COL_ARR_TIME + "= '"
-								+ binfo.array_ttb.get(i).time + "'", null);
+								+ MynahDB._BUS_COL_BUS_ID + "= '"
+								+ binfo.array_ttb.get(i).vehId + "'", null);
 
 			}
 		}
-		System.out.println("버스 셋 완료");
+		Log.d(TAG, "setBusDB 완료");
+		
 	}
 
 	public synchronized ArrayList<BusInfo> getBusDBbyLog() {
@@ -548,6 +601,8 @@ public class DBManager {
 			counter++;
 		}
 
+		
+		Log.d(TAG,"getBusDBbyLog 완료");
 		return array_binfo;
 
 	}
@@ -566,18 +621,21 @@ public class DBManager {
 		values.put(MynahDB._BUS_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._BUS_LOG_TABLE_NAME, null, values);
+		Log.d(TAG,"setBusDBbyLog 완료");
 
 	}
 
 	public synchronized BusInfo getBusDB(BusInfo binfo) {
-
+		
+		Log.d(TAG,"getBusDB 시작");
 		String sql = "select * from " + MynahDB._BUS_TABLE_NAME + " where "
 				+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
 				+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '"
 				+ binfo.route.busRouteId + "' and "
 				+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
 				+ "' and " + MynahDB._BUS_COL_ARR_TIME
-				+ " > datetime('now','localtime') ;";
+				+ " > datetime('now','localtime') order by "
+				+ MynahDB._BUS_COL_ARR_TIME + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 
@@ -602,6 +660,7 @@ public class DBManager {
 		int dir_index = c.getColumnIndex(MynahDB._BUS_COL_DIR);
 		int arr_time_index = c.getColumnIndex(MynahDB._BUS_COL_ARR_TIME);
 		int station_now_name_index = c.getColumnIndex(MynahDB._BUS_COL_NOW_STATION_NAME);
+		int bus_id_index = c.getColumnIndex(MynahDB._BUS_COL_BUS_ID);
 
 		binfo.route.busRouteId = c.getString(route_id_index);
 		binfo.route.busRouteNm = c.getString(route_name_index);
@@ -618,17 +677,20 @@ public class DBManager {
 			ttb = new TimeToBus();
 			ttb.time = c.getString(arr_time_index);
 			ttb.sectNm = c.getString(station_now_name_index);
+			ttb.vehId = c.getString(bus_id_index);
 			binfo.array_ttb.add(ttb);
 
 			c.moveToNext();
 		}
 
+		Log.d(TAG,"getBusDB 완료");
 		return binfo;
 
 	}
 
 	public synchronized void setSubwayDBbyLog(SubwayInfo sinfo) {
 
+		Log.d(TAG,"setSubwayDBbyLog 시작");
 		ContentValues values;
 
 		values = new ContentValues();
@@ -641,11 +703,13 @@ public class DBManager {
 		values.put(MynahDB._SUBWAY_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._SUBWAY_LOG_TABLE_NAME, null, values);
+		Log.d(TAG,"setSubwayDBbyLog 완료");
 
 	}
 
 	public synchronized ArrayList<SubwayInfo> getSubwayDBbyLog() {
 
+		Log.d(TAG,"getSubwayDBbyLog 시작");
 		ArrayList<SubwayInfo> array_sinfo = new ArrayList<SubwayInfo>();
 
 		String sql = "select * from " + MynahDB._SUBWAY_LOG_TABLE_NAME
@@ -678,11 +742,14 @@ public class DBManager {
 			counter++;
 		}
 
+		Log.d(TAG,"getSubwayDBbyLog 끝");
 		return array_sinfo;
 	}
 
 	public synchronized void setSubwayDB(SubwayInfo swinfo) {
 
+		
+		Log.d(TAG,"setSubwayDB 시작");
 		ContentValues values;
 
 		// delete는 필요없다..? 일단 추후 확인
@@ -697,7 +764,7 @@ public class DBManager {
 			sql = "select " + MynahDB._SUBWAY_COL_STATION_ID + ","
 					+ MynahDB._SUBWAY_COL_WEEK_TAG + ","
 					+ MynahDB._SUBWAY_COL_INOUT_TAG + ","
-					+ MynahDB._BUS_COL_ARR_TIME + " from "
+					+ MynahDB._SUBWAY_COL_ARR_TIME + " from "
 					+ MynahDB._SUBWAY_TABLE_NAME + " where "
 					+ MynahDB._SUBWAY_COL_STATION_ID + "= '"
 					+ swinfo.station.station_cd + "' and "
@@ -761,19 +828,20 @@ public class DBManager {
 
 			}
 		}
-		System.out.println("지하철 셋 완료");
+		Log.d(TAG,"setSubwayDB 끝");
 
 	}
 
 	public synchronized SubwayInfo getSubwayDB(SubwayInfo swinfo) {
 
+		Log.d(TAG,"getSubwayDB 시작");
 		String sql = "select * from " + MynahDB._SUBWAY_TABLE_NAME + " where "
 				+ MynahDB._SUBWAY_COL_STATION_ID + " = '"
 				+ swinfo.station.station_cd + "' and "
 				+ MynahDB._SUBWAY_COL_WEEK_TAG + " = '" + swinfo.week_tag
 				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + " = '"
 				+ swinfo.station.inout_tag + "' and " + MynahDB._SUBWAY_COL_ARR_TIME
-				+ "  > time('now','localtime');";
+				+ "  > time('now','localtime') order by " + MynahDB._SUBWAY_COL_ARR_TIME + ";";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 
@@ -816,15 +884,18 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+		Log.d(TAG,"getSubwayDB 끝");
 		return swinfo;
 
 	}
 
 	public void setMainUserDB(UserProfile upf) {
+		
+		Log.d(TAG,"setMainUserDB 시작");
 		// default로 넣음.
 		ContentValues values;
 
-		if (upf.id != null)
+		if (upf.id == null)
 			return;
 
 		values = new ContentValues();
@@ -838,6 +909,7 @@ public class DBManager {
 
 		// insert
 		dbh.mDB.insert(MynahDB._USER_TABLE_NAME, null, values);
+		Log.d(TAG, "setMainUserDB 끝");
 
 	}
 

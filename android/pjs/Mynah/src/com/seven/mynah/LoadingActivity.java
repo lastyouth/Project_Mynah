@@ -1,6 +1,7 @@
 package com.seven.mynah;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import android.app.Activity;
@@ -21,8 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seven.mynah.R;
+import com.seven.mynah.artifacts.UserProfile;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.backgroundservice.GetInformationService;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
+import com.seven.mynah.infoparser.WeatherParser;
 
 public class LoadingActivity extends Activity{
 	
@@ -46,7 +51,9 @@ public class LoadingActivity extends Activity{
 	public void Loading()
 	{
 		
+		createTempUser();
 		checkInitUser();
+		loadWeatherLocation();
 		
 		Handler handler = new Handler()
 		{
@@ -64,9 +71,11 @@ public class LoadingActivity extends Activity{
 	
 	private void checkInitUser()
 	{
+		
 		if (DBManager.getManager(this).isInitialUser())
 		{
-			Toast.makeText(this, "유저정보 확인되었음", 1).show();
+			UserProfile up =  DBManager.getManager(this).getMainUserDB();
+			Toast.makeText(this, up.name + "님 환영합니다.", 1).show();
 		}
 		else 
 		{
@@ -75,14 +84,37 @@ public class LoadingActivity extends Activity{
 			
 	}
 	
-	//사전 구동에 필요한 내용을 로드하는 함수.
-	public void loadInitialSetup() {
+	private void createTempUser()
+	{
+		UserProfile up = new UserProfile();
+		up.id = "pika";
+		up.passwd = "";
+		up.name = "피카츄";
+		up.inout = 1;
+		up.mac_address = "";
+		up.usertype = 1;
+		up.usertype = GlobalVariable.UserType.me;
+		up.mastertype = GlobalVariable.UserType.master;
+		
+		DBManager.getManager(this).setMainUserDB(up);
 		
 		
-		//모두 로드하고 난 뒤에. 상황에 맞게 로드.
-		//Intent intent = new Intent(LogoActivity.this, );
-		//startActivity(intent);
-		finish();
+	}
+	
+	private void loadWeatherLocation()
+	{
+		if(DBManager.getManager(this).isSetWeatherLocation())
+		{
+			//지역정보 설정되어 있음.
+		}
+		else
+		{
+			WeatherParser wp = new WeatherParser();
+	    	ArrayList<WeatherLocationInfo> array_location; 
+	    	array_location = wp.getAllLocationInfo();
+	    	DBManager.getManager(this).setWeatherLocationAll(array_location);
+		}
+		
 	}
 	
 	

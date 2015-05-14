@@ -86,12 +86,13 @@ public class BusSettingActivity extends Activity {
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             }
         });
+        
     }
    
    @Override
    public void onBackPressed() {
       // TODO Auto-generated method stub
-      //super.onBackPressed();
+      super.onBackPressed();
       
       if(mIsBackKeyPressed == false)
       {
@@ -102,6 +103,17 @@ public class BusSettingActivity extends Activity {
          Log.d(TAG, "onBackPressed");
       }
    }
+   
+   
+   /*
+   @Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		finish();
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+
+	}*/
    
    
 

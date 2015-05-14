@@ -29,6 +29,7 @@ public class BusPaser {
 	//현재 2개 다 키는 발급되어 있는데 인증이 안됨요...
 	//여기에 들어가는게 3가지임.
 	
+	private static String TAG = "BusPaser";
 	
 	private final String serviceKey = "0x3MtlITSbQrDntCBFU0A%2FKeCpVidWB9jeKt8acPuZ0ZHSTW%2FaMiRmuCAsifYUWyYn5jBZN0xEReaIKPMSJSWQ%3D%3D"; 
 	private final String open_Url = "http://ws.bus.go.kr/api/rest";
@@ -97,21 +98,23 @@ public class BusPaser {
 			URL url = new URL(str);
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
             boolean done = false;
             TimeToBus ttb1 = null;
 			TimeToBus ttb2 = null;
-            
+            boolean bus1 = true;
+            boolean bus2 = true;
+			
             while (eventType != XmlPullParser.END_DOCUMENT && !done){
                 String name = null;
                 String temp = null;
@@ -160,7 +163,18 @@ public class BusPaser {
                         	if(ttb1!=null) ttb1.vehId = parser.nextText();
                         }else if (name.equalsIgnoreCase("vehId2")){
                         	if(ttb2!=null) ttb2.vehId = parser.nextText();
+                        }else if (name.equalsIgnoreCase("isLast1")){
+                        	temp = parser.nextText();
+                        	if(temp.equalsIgnoreCase("-2")){
+                        		bus1 = false;
+                        	}
+                        }else if (name.equalsIgnoreCase("isLast2")){
+                        	temp = parser.nextText();
+                        	if(temp.equalsIgnoreCase("-2")){
+                        		bus2 = false;
+                        	}
                         }
+                        
                         break;
                     
                 }
@@ -168,8 +182,8 @@ public class BusPaser {
                 
             }
             
-            if(ttb1!=null) binfo.array_ttb.add(ttb1);
-            if(ttb2!=null) binfo.array_ttb.add(ttb2);
+            if(ttb1!=null && bus1) binfo.array_ttb.add(ttb1);
+            if(ttb2!=null && bus2) binfo.array_ttb.add(ttb2);
             
             
 		} catch (XmlPullParserException e) {
@@ -183,7 +197,7 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
-		
+		Log.d(TAG,"getBusArrInfoByRoute 완료");
 		return binfo;
 		
 	}
@@ -212,14 +226,14 @@ public class BusPaser {
 			URL url = new URL(str);
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -266,6 +280,7 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
+		Log.d(TAG,"getStationByUid 완료");
 		return binfo;
 		
 	}
@@ -290,14 +305,14 @@ public class BusPaser {
 			
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -359,7 +374,7 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
-		
+		Log.d(TAG,"getRouteByStationList 완료");
 		return array_rinfo;
 	}
 	
@@ -384,14 +399,14 @@ public class BusPaser {
 			
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -454,6 +469,7 @@ public class BusPaser {
 		}
 		
 		
+		Log.d(TAG,"getBusRouteList 완료");
 		return array_rinfo;
 	}
 	
@@ -477,14 +493,14 @@ public class BusPaser {
 			
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -547,6 +563,7 @@ public class BusPaser {
 		}
 		
 		
+		Log.d(TAG,"getStaionsByRouteList 완료");
 		return array_sinfo;
 	}
 	
@@ -571,14 +588,14 @@ public class BusPaser {
 			
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -641,6 +658,7 @@ public class BusPaser {
 		}
 		
 		
+		Log.d(TAG,"getStationByNameList 완료");
 		return array_sinfo;
 		
 	}
@@ -665,14 +683,14 @@ public class BusPaser {
 			
 			ReceiveXml rx = new ReceiveXml(url);
 			
-			System.out.println(url.toString());
+			//System.out.println(url.toString());
 			
 			rx.start();
 			rx.join();
 			
 			parser.setInput(new StringReader(rx.getXml()));
 			
-			System.out.println(rx.getXml());
+			//System.out.println(rx.getXml());
 			
 			int eventType = parser.getEventType();
  
@@ -734,6 +752,8 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
+		
+		Log.d(TAG,"getStaionsByPosList 완료");
 		
 		return array_sinfo;
 		

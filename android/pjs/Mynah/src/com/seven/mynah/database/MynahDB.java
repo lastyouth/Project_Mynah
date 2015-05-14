@@ -68,6 +68,7 @@ public class MynahDB {
 	public static final String _BUS_COL_ROUTE_NAME = "route_name";
 	public static final String _BUS_COL_ROUTE_TYPE = "route_type";
 	public static final String _BUS_COL_STATION_ORD = "sta_ord";
+	public static final String _BUS_COL_BUS_ID = "bus_id";
 	public static final String _BUS_COL_DIR = "dir";
 	public static final String _BUS_COL_ARR_TIME = "arr_time";
 	public static final String _BUS_COL_NOW_STATION_NAME = "now_station_name";
@@ -136,10 +137,11 @@ public class MynahDB {
 				+ _BUS_COL_STATION_ASRID + " text, "
 				+ _BUS_COL_NOW_STATION_NAME + " text,"
 				+ _BUS_COL_DIR + " text, "
+				+ _BUS_COL_BUS_ID + " text,"
 				+ _BUS_COL_ARR_TIME + " datetime, "
 				+ " primary key(" + _BUS_COL_STATION_ID + "," 
 				+ _BUS_COL_ROUTE_ID + "," 
-				+ _BUS_COL_ARR_TIME + ") );";
+				+ _BUS_COL_BUS_ID + ") );";
 		
 		public static final String _CREATE_BUS_LOG_TABLE = "create table " + _BUS_LOG_TABLE_NAME
 				+ " ( _id INTEGER PRIMARY KEY AUTOINCREMENT, "

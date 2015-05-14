@@ -18,30 +18,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
-import com.seven.mynah.artifacts.BusInfo;
-import com.seven.mynah.artifacts.BusRouteInfo;
-import com.seven.mynah.artifacts.BusStationInfo;
-import com.seven.mynah.artifacts.SubwayInfo;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.bluetooth.DeviceListActivity;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.infoparser.BusPaser;
-import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
-
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 
 public class MainActivity extends Activity {
 
 	private CustomButtonsFragment cbf;
+	private View view;
 	
 	private static final String TAG = "MainActivity";
 	
@@ -94,16 +88,39 @@ public class MainActivity extends Activity {
 //            Log.i(TAG, "No valid Google Play Services APK found.");
 //        }
         
-        gcm = GoogleCloudMessaging.getInstance(this);
-        regid = getRegistrationId(mContext);
-
-        if (regid.equals("")) {
-            registerInBackground();
-        }
-        Toast.makeText(this, "등록 id = " + regid, 1).show();
-        Log.d(TAG,regid);
+//        gcm = GoogleCloudMessaging.getInstance(this);
+//        regid = getRegistrationId(mContext);
+//
+//        if (regid.equals("")) {
+//            registerInBackground();
+//        }
+//        Toast.makeText(this, "등록 id = " + regid, 1).show();
+//        Log.d(TAG,regid);
         
-		//testSide();
+		
+		
+	}
+
+	@Override
+	protected void onRestart()
+	{
+		super.onRestart();
+    	Log.d(TAG, "onRestart");
+		//Toast.makeText(this, "onRestart()", 1).show();
+		
+		//refresh
+		//get kind of intent from activity called finished()
+		//switch
+    	runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				cbf.refresh("Bus");
+				
+			}
+		});
+    	
 	}
 	
 	private void setDefaultFragment() {
@@ -113,9 +130,6 @@ public class MainActivity extends Activity {
 		transaction.add(R.id.container, cbf);
 		transaction.commit();
 	}
-	
-	
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,65 +150,6 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
-    public void testSide()
-    {
-    	//날씨부분 
-    	WeatherInfo winfo = new WeatherInfo();
-    	
-    	
-    	WeatherParser wp = new WeatherParser();
-    	winfo = wp.getWeatherInfo(winfo);
-    	
-    	
-    	ArrayList<WeatherLocationInfo> array_location; 
-    	
-    	//불러오기부분
-    	array_location = wp.getAllLocationInfo();
-    	//db 저장
-    	DBManager.getManager(this).setWeatherLocationAll(array_location);
-    	
-    	array_location = DBManager.getManager(this).getWeatherLocationByName("월계");
-    	
-    	
-//    	winfo.location = array_location.get(0);
-//    	
-//    	winfo = wp.getWeatherInfo(winfo);
-//    	
-//    	BusInfo binfo = new BusInfo();
-//    	BusPaser bp = new BusPaser();
-//    	
-//    	ArrayList<BusRouteInfo> array_rinfo;
-//    	ArrayList<BusStationInfo> array_sinfo;
-//    	
-//    	array_rinfo = bp.getBusRouteList("121");
-//    	
-//    	array_sinfo = bp.getStaionsByRouteList(array_rinfo.get(1).busRouteId);
-//    	
-//    	//array_sinfo = bp.getStationByNameList("광운대");
-//    	
-//    	binfo.route = array_rinfo.get(1);
-//    	binfo.station = array_sinfo.get(5);
-//    	
-//    	binfo = bp.getStationByUid(binfo);
-//    	bp.getBusArrInfoByRoute(binfo);
-//    	
-//    	SubwayPaser sp = new SubwayPaser();
-//    	
-//    	SubwayInfo sinfo = new SubwayInfo();
-//    	
-//    	sinfo.inout_tag = 2;
-//    	sinfo.station.station_cd = "1006";
-//    	sinfo.week_tag = 1;
-//    	
-//    	//sp.getTimeTableByID(sinfo);
-//    	
-//    	sp.getStationInfoByName("청량리");
-//    	
-//    	//bp.parseBus_XML(binfo);
-    	
-    }
-    
 
 	public void startSettingActivity(String type) 
 	{
@@ -319,8 +274,6 @@ public class MainActivity extends Activity {
         }.execute(null, null, null);
     }
 	
-	
-
     /**
      * @return Application's version code from the {@code PackageManager}.
      */
@@ -334,9 +287,8 @@ public class MainActivity extends Activity {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
-
 	
-	 /**
+	/**
      * @return Application's {@code SharedPreferences}.
      */
     private SharedPreferences getGcmPreferences(Context context) {
@@ -345,6 +297,7 @@ public class MainActivity extends Activity {
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
+    
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
      * messages to your app. Not needed for this demo since the device sends upstream messages
@@ -355,14 +308,6 @@ public class MainActivity extends Activity {
     }
     
     
-    @Override
-    protected void onRestart() {
-    	// TODO Auto-generated method stub
-    	super.onRestart();
-    	
-    	Log.d(TAG, "onRestart");
-    	
-    }
 
     @Override
     protected void onResume() {

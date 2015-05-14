@@ -90,6 +90,10 @@ public class SubwayPaser {
 	                        	{
 	                        		done = true;
 	                        	}
+	                        }else if (name.equalsIgnoreCase("STATION_NM")){
+	                        	sinfo.station.station_nm = parser.nextText();
+	                        }else if (name.equalsIgnoreCase("LINE_NUM")){
+	                        	sinfo.station.line_num = parser.nextText();	
 	                        }else if (name.equalsIgnoreCase("TRAIN_NO")){
 	                        	tts.train_no = parser.nextText();
 	                        }else if (name.equalsIgnoreCase("LEFTTIME")){

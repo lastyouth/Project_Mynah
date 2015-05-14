@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.WeatherInfo;
@@ -103,7 +104,8 @@ public class WeatherShortcutLayout extends CustomButton {
 	}
 
 	public void refresh() {
-
+		Toast.makeText(getContext(), "Weather onRestart()", 1).show();
+		
 		cbf.getActivity().runOnUiThread(new Runnable() {
 
 			@Override
@@ -207,7 +209,7 @@ public class WeatherShortcutLayout extends CustomButton {
 				view.setAlpha((float) 1.0);
 				// 원하는 실행 엑티비티!
 				cbf.startSettingActivity("Weather");
-				refresh();
+				//refresh();
 				return true;
 			}
 			return true;

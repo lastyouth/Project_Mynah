@@ -3,11 +3,11 @@ package com.seven.mynah.custominterface;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.text.format.Time;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.BusInfo;
@@ -35,6 +35,7 @@ public class BusShortcutLayout extends CustomButton {
 		super(context);
 		// TODO Auto-generated constructor stub
 		cbf = _cbf;
+		//refresh();
 		initView();
 	}
 
@@ -43,15 +44,15 @@ public class BusShortcutLayout extends CustomButton {
 
 		ivBusImage = (ImageView) view.findViewById(R.id.ivBusImage);
 		tvBusRoute = (TextView) view.findViewById(R.id.tvBusRoute);
-		// tvCurrentBusRoute =
+
 		// (TextView)view.findViewById(R.id.tvCurrentBusRoute);
 		tvBusStopName = (TextView) view.findViewById(R.id.tvBusStopName);
 		tvBusNextTime = (TextView) view.findViewById(R.id.tvBusNextTime);
 		tvBusNextTime2 = (TextView) view.findViewById(R.id.tvBusNextTime2);
 
-		setBusInfo(null);
+		refresh();
 		// 추후 이부분은 다 xml로 넘길것
-		view.setOnTouchListener(new ScheduleTouchListener());
+		view.setOnTouchListener(new BusTouchListener());
 		addView(view);
 	}
 
@@ -87,38 +88,31 @@ public class BusShortcutLayout extends CustomButton {
 	}
 
 	public void refresh() {
+		// get current saved information from DB
+		busArrayList = new ArrayList<BusInfo>();
+		
+		//Error!
+		busArrayList = DBManager.getManager(getContext())
+				.getBusDBbyLog();
 
-		cbf.getActivity().runOnUiThread(new Runnable() {
+		if (busArrayList.size() == 0) {
+			setBusInfo(null);
+		} else {
+			BusInfo binfo = busArrayList.get(0);
+			binfo = DBManager.getManager(getContext()).getBusDB(binfo);
 
-			@Override
-			public void run() {
-				// get current saved information from DB
-				busArrayList = new ArrayList<BusInfo>();
-				busArrayList = DBManager.getManager(getContext())
-						.getBusDBbyLog();
-
-				if (busArrayList.size() == 0) {
-
-				} else {
-					BusInfo binfo = busArrayList.get(0);
-					binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-
-					if (binfo.array_ttb.size() == 0) {
-						BusPaser bp = new BusPaser();
-						binfo = bp.getBusArrInfoByRoute(binfo);
-						DBManager.getManager(getContext()).setBusDB(binfo);
-						binfo = DBManager.getManager(getContext()).getBusDB(
-								binfo);
-					}
-					setBusInfo(binfo);
-				}
-				
+			if (binfo.array_ttb.size() == 0) {
+				BusPaser bp = new BusPaser();
+				binfo = bp.getBusArrInfoByRoute(binfo);
+				DBManager.getManager(getContext()).setBusDB(binfo);
+				binfo = DBManager.getManager(getContext()).getBusDB(
+						binfo);
 			}
-		});
-
+			setBusInfo(binfo);
+		}
 	}
 
-	private final class ScheduleTouchListener implements OnTouchListener {
+	private final class BusTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
