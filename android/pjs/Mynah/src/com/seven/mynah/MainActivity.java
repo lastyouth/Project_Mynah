@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,7 +29,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
-import com.seven.mynah.bluetooth.DeviceListActivity;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.RPiBluetoothConnectionManager;
@@ -134,15 +134,15 @@ public class MainActivity extends Activity {
 		//Toast.makeText(this, "onRestart()", 1).show();
 		
 		//refresh
-		//get kind of intent from activity called finished()
-		//switch
-    	runOnUiThread(new Runnable() {
+
+		//get kind of intent from activity called finished()?
+		runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				cbf.refresh("Bus");
-				
+				cbf.refresh("Subway");
+				cbf.refresh("Weather");
 			}
 		});
     	
@@ -154,7 +154,7 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 		
 		BTmanager.stopBTConnection();
-		
+
 	}
 	
 	private void setDefaultFragment() {

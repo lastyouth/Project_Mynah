@@ -3,11 +3,13 @@ package com.seven.mynah.globalmanager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.array;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -34,7 +36,7 @@ public class RPiBluetoothConnectionManager {
 	private String deviceID;
 	
 	
-	private String TTS;
+	private ArrayList<String> array_TTS;
 	
 	// sendtype
 	
@@ -74,7 +76,11 @@ public class RPiBluetoothConnectionManager {
 						
 						if(str.equals("tts"))
 						{
-							sendTo(SEND_TYPE_TTS, TTS);
+							if(array_TTS.size() != 0)
+							{
+								sendTo(SEND_TYPE_TTS, array_TTS.get(0));
+							}
+							
 						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -149,7 +155,8 @@ public class RPiBluetoothConnectionManager {
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		this.deviceID = deviceID;
 		isInitialize = false;
-		TTS = "요약 정보가 준비되지 않았습니다.";
+		array_TTS = new ArrayList<String>();
+		array_TTS.add("요약 정보가 준비되지 않았습니다.");
 	}
 	
 	public int initializeBTConnection()
@@ -254,9 +261,9 @@ public class RPiBluetoothConnectionManager {
 		return this.isInitialize;
 	}
 	
-	public void setTTS(String tts)
+	public void setTTS(ArrayList<String> tts)
 	{
-		TTS = tts;
+		array_TTS = tts;
 	}
 	
 	

@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
         android:gravity="center"
-        android:text="mynah"
+        android:text="Mynah"
         android:textColor="#FFFFFF"
         android:textSize="30sp" />
 
