@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.audiofx.BassBoost.Settings;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +31,7 @@ import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.bluetooth.DeviceListActivity;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.RPiBluetoothConnectionManager;
 import com.seven.mynah.infoparser.WeatherParser;
 
 
@@ -42,6 +45,9 @@ public class MainActivity extends Activity {
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context mContext;
+    
+    
+    RPiBluetoothConnectionManager BTmanager;
 
 	
     //GCM 
@@ -98,6 +104,25 @@ public class MainActivity extends Activity {
 //        Log.d(TAG,regid);
         
 		
+		//블루투스 초기화
+		
+		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
+		BTmanager = new RPiBluetoothConnectionManager(deviceID);
+		int ret = BTmanager.initializeBTConnection();
+		if(ret==RPiBluetoothConnectionManager.SUCCESS_INITIALIZE)
+		{
+			
+		}
+		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
+		{
+			Toast.makeText(this, "블루투스를 지원하지 않습니다.", Toast.LENGTH_SHORT).show();
+		}
+		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
+		{
+			Toast.makeText(this, "블루투스를 등록하세요.", Toast.LENGTH_SHORT).show();
+		}
+		
+		
 		
 	}
 
@@ -121,6 +146,15 @@ public class MainActivity extends Activity {
 			}
 		});
     	
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		BTmanager.stopBTConnection();
+		
 	}
 	
 	private void setDefaultFragment() {
