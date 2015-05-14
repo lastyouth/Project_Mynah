@@ -26,10 +26,11 @@ public class FamilyShortcutLayout extends CustomButton{
 	//가족 구성원수
 	private int numOfFamily = 2;
 	
-	public FamilyShortcutLayout(Context context) 
+	public FamilyShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
+		cbf = _cbf;
 		initView();
 	}
 	

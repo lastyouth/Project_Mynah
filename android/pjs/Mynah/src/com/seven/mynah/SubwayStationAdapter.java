@@ -19,6 +19,8 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 	private LayoutInflater inflater = null;
 	private ArrayList<SubwayStationInfo> infoList = null;
 	private Context mContext = null;
+	
+	private boolean isFirst = true;
 
 	public SubwayStationAdapter(Context c, int textViewResourceId, 
 			ArrayList<SubwayStationInfo> arrays) {
@@ -58,9 +60,21 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 		} else {
 			viewHolder = (ViewHolder) v.getTag();
 		}
-
+		
+		
 		String code = getItem(position).line_num;
 		String stationName = GlobalFunction.SubwayDecode(code);
+		
+		if(isFirst)
+		{
+			stationName += " 상행";
+			isFirst = false;
+		}
+		else
+		{
+			stationName += " 하행";
+			isFirst = true;
+		}
 		
 		viewHolder.tvSubwayStationListRow.setText(stationName);
 		viewHolder.subwayStationInfo = infoList.get(position);

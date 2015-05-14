@@ -14,10 +14,11 @@ public class RefreshShortcutLayout extends CustomButton{
 	private View view;
 	private TextView tvRefreshTime;
 	
-	public RefreshShortcutLayout(Context context) 
+	public RefreshShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
+		cbf = _cbf;
 		initView();
 	}
 	

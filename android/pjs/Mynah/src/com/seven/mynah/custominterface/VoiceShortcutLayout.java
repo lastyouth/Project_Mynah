@@ -12,10 +12,11 @@ import com.seven.mynah.R;
 public class VoiceShortcutLayout extends CustomButton{
 private View view;
 	
-	public VoiceShortcutLayout(Context context) 
+	public VoiceShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
+		cbf = _cbf;
 		initView();
 	}
 	

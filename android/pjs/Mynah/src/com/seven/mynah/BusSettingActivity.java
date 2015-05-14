@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.BusRouteInfo;
 import com.seven.mynah.artifacts.BusStationInfo;
+import com.seven.mynah.database.DBManager;
 import com.seven.mynah.infoparser.BusPaser;
 
 public class BusSettingActivity extends Activity {
@@ -66,15 +67,17 @@ public class BusSettingActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 
                 // TODO 아이템 클릭시에 구현할 내용은 여기에.
-                BusInfo busInfo = new BusInfo();
+                BusInfo binfo = new BusInfo();
                 
                 ViewHolder vh = (ViewHolder)view.getTag();
                 
-                busInfo.route = busRouteInfo;
-                busInfo.station = vh.busStationInfo;
+                binfo.route = busRouteInfo;
+                binfo.station = vh.busStationInfo;
                 
                 String stNm = vh.tvBusStopNameListRow.getText().toString();
                 Toast.makeText(getApplicationContext(), stNm, Toast.LENGTH_LONG).show();
+                
+                DBManager.getManager(getApplicationContext()).setBusDBbyLog(binfo);
                 
                 finish();
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);

@@ -72,8 +72,10 @@ public class SubwaySettingActivity extends Activity{
             	SubwayInfo sinfo = new SubwayInfo();
             	ViewHolder vh = (ViewHolder)view.getTag();
                 sinfo.station = vh.subwayStationInfo;
-            	sinfo.inout_tag = GlobalVariable.SubwayConstant.up_in_line; //상행
+
+            	sinfo.station.inout_tag = GlobalVariable.SubwayConstant.up_in_line; //상행
             	sinfo.week_tag = GlobalVariable.SubwayConstant.week_normal; //평일
+
                 
                 DBManager.getManager(getApplicationContext()).setSubwayDBbyLog(sinfo);
                 

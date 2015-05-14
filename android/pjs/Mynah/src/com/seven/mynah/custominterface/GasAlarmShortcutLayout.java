@@ -1,5 +1,6 @@
 package com.seven.mynah.custominterface;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,10 +27,11 @@ public class GasAlarmShortcutLayout extends CustomButton{
 	private TextView tvGasTemperature;
 	
 	
-	public GasAlarmShortcutLayout(Context context) 
-	{
+
+	public GasAlarmShortcutLayout(Context context, CustomButtonsFragment _cbf) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		cbf = _cbf;
 		initView();
 	}
 	
@@ -128,6 +130,8 @@ public class GasAlarmShortcutLayout extends CustomButton{
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티
 				//setuptest();
+				cbf.startBluetoothList_temp();
+				
 				return true;
 			}
 			return true;
