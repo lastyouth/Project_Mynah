@@ -106,4 +106,9 @@ public class FamilyShortcutLayout extends CustomButton{
 			return true;
 		}
 	}
+	
+	
+	public void refresh() {
+		Toast.makeText(getContext(), "Family onRestart()", 1).show();
+	}
 }

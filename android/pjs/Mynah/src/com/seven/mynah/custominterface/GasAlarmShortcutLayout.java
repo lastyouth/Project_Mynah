@@ -137,5 +137,9 @@ public class GasAlarmShortcutLayout extends CustomButton{
 			return true;
 		}
 	}
+	
+	public void refresh() {
+		//Toast.makeText(getContext(), "Gas onRestart()", 1).show();
+	}
 
 }

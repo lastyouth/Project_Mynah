@@ -90,5 +90,9 @@ public class ScheduleShortcutLayout extends CustomButton{
 		}
 	}
 	
+	public void refresh() {
+		Toast.makeText(getContext(), "Schedule onRestart()", 1).show();
+	}
+	
 	
 }

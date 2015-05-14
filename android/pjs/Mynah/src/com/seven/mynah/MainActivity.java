@@ -18,31 +18,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
-
-import com.seven.mynah.artifacts.BusInfo;
-import com.seven.mynah.artifacts.BusRouteInfo;
-import com.seven.mynah.artifacts.BusStationInfo;
-import com.seven.mynah.artifacts.SubwayInfo;
-import com.seven.mynah.artifacts.WeatherInfo;
-import com.seven.mynah.artifacts.WeatherLocationInfo;
-import com.seven.mynah.bluetooth.BluetoothListActivity;
-import com.seven.mynah.bluetooth.DeviceListActivity;
-import com.seven.mynah.custominterface.CustomButtonsFragment;
-import com.seven.mynah.database.DBManager;
-import com.seven.mynah.infoparser.BusPaser;
-import com.seven.mynah.infoparser.SubwayPaser;
-import com.seven.mynah.infoparser.WeatherParser;
-
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.bluetooth.DeviceListActivity;
+import com.seven.mynah.custominterface.CustomButtonsFragment;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.infoparser.WeatherParser;
 
 
 public class MainActivity extends Activity {
 
 	private CustomButtonsFragment cbf;
+	private View view;
 	
 	private static final String TAG = "MainActivity";
 	
@@ -95,18 +88,31 @@ public class MainActivity extends Activity {
 //            Log.i(TAG, "No valid Google Play Services APK found.");
 //        }
         
-        gcm = GoogleCloudMessaging.getInstance(this);
-        regid = getRegistrationId(mContext);
-
-        if (regid.equals("")) {
-            registerInBackground();
-        }
-        Toast.makeText(this, "등록 id = " + regid, 1).show();
-        Log.d(TAG,regid);
+//        gcm = GoogleCloudMessaging.getInstance(this);
+//        regid = getRegistrationId(mContext);
+//
+//        if (regid.equals("")) {
+//            registerInBackground();
+//        }
+//        Toast.makeText(this, "등록 id = " + regid, 1).show();
+//        Log.d(TAG,regid);
         
 		//testSide();
 	}
 
+	@Override
+	protected void onRestart()
+	{
+		super.onRestart();
+		//Toast.makeText(this, "onRestart()", 1).show();
+		
+		//refresh
+		//get kind of intent from activity called finished()
+		//switch
+		cbf.refresh("Bus");
+		
+	}
+	
 	private void setDefaultFragment() {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
@@ -114,8 +120,6 @@ public class MainActivity extends Activity {
 		transaction.add(R.id.container, cbf);
 		transaction.commit();
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -207,9 +211,10 @@ public class MainActivity extends Activity {
 	
 	public void startBluetoothActivity_temp()
 	{
-		Intent intent = new Intent("com.seven.mynah.Bluetooh");
+		Intent intent = new Intent("com.seven.mynah.Bluetooth");
+		//Intent intent = new Intent(this,DeviceListActivity.class);
 		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 	}
 	
 	

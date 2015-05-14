@@ -15,26 +15,26 @@ public final class GlobalVariable {
 		typeGasAlarmShortcut = 5,
 		typeFamilyShortcut= 6,
 		typeRefrash = 7,
-		typeEmpty = 8,
-		typeVoice = 9,
-		typeSetting = 10;
+		typeVoice = 8,
+		typeSetting = 9;
 		
 	}
 	
 	
 	public final class SubwayConstant {
 		
-		public static final int
-			week_normal = 1, //평일
-			week_saturday = 2, //토요일
-			week_holiday_sunday = 3; //휴일/일요일
-		
-		public static final int
-			up_in_line = 1, //상행/내선
-			down_out_line =2; //하행/외선
+		public static final String
+			week_normal = "1", //평일
+			week_saturday = "2", //토요일
+			week_holiday_sunday = "3"; //휴일/일요일
 		
 		public static final String
-			K = "중앙선";
+			up_in_line = "1", //상행/내선
+			down_out_line ="2"; //하행/외선
+		
+		public static final String
+			tpye_I = "I",
+			type_K = "K";
 	}
 	
 	public final class BusConstant {
