@@ -9,12 +9,43 @@ import time
 import Queue
 import signal
 import os
-
+import json
+import base64
 
 # global variables
 
 g_lock = threading.Lock()
+
+g_clientlock = threading.Lock()
+
 GPIO.setmode(GPIO.BCM)
+
+g_clientlist = {}
+
+g_messagelist = []
+
+def addClient(obj):
+    g_clientlock.acquire()
+    if obj.cid not in g_clientlist.keys():
+        print "addClient id : ",obj.cid
+        g_clientlist[obj.cid] = obj;
+        print g_clientlist
+    g_clientlock.release()
+
+def removeClient(obj):
+    g_clientlock.acquire()
+    if obj.cid in g_clientlist.keys():
+        print "removeClient id : ",obj.cid
+        g_clientlist.pop(obj.cid,None)
+        print g_clientlist
+    g_clientlock.release()
+
+def broadcastCurrentClient():
+    g_clientlock.acquire()
+    for key, value in g_clientlist.iteritems():
+        print "broadcast Key : ",key
+        value.sendTo()
+    g_clientlock.release()
 
 class ClientProcessThread(threading.Thread):
     def __init__(self,sock,client_info):
@@ -22,15 +53,43 @@ class ClientProcessThread(threading.Thread):
         self.sock = sock
         self.client_info = client_info
 
+    def sendTo(self):
+        data = "tts"
+        try:
+            self.sock.send(data)
+        except IOError:
+            pass
     def run(self):
         try:
             while True:
                 data = self.sock.recv(1024);
                 if len(data) == 0: break;
-                print self.client_info, ": received [%s]" % data
+                #print self.client_info, ": received [%s]" % data
+                res = base64.decodestring(data)
+
+                raw_data = json.loads(res)
+                cid = raw_data["id"];
+                ctype = raw_data["type"];
+                cdata = raw_data["data"];
+
+                print "id : ",cid," type : ",ctype," data : ",cdata
+
+                if ctype == "init":
+                    self.cid = cid
+                    addClient(self)
+                elif ctype =="rssi":
+                    print "rssi"
+                elif ctype == "tts":
+                    g_messagelist.append(cdata)
+                    print g_messagelist
+                    print "tts"
+                else:
+                    print "bad"
+
         except IOError:
             pass
         self.sock.close()
+        removeClient(self)
         print self.client_info, ": disconnected"
 
 
@@ -105,15 +164,26 @@ class MynahManager:
                     print "Timer Cancelled"
                     self.t = 0
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+                    global g_messagelist
+                    g_messagelist = []
+                    broadcastCurrentClient()
+                    while len(g_messagelist) == 0:
+                        time.sleep(0.1)
+                    msg = g_messagelist[0]
+                    print "first message : ",msg
                     #os.system('omxplayer -o local --vol -2000 /home/pi/share/chams.mp3')
-                    os.system('wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q=안녕하세요!! 서보훈님! 좋은하루되세요..!! 화이팅...!"')
-                    os.system('omxplayer -o local hello_ko.mp3')
-
+                    #os.system('wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q=안녕하세요!! 서보훈님! 좋은하루되세요..!! 화이팅...!"')
+                    query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
+                    query += msg
+                    query += '"'
+                    print "query : ",query
+                    os.system(query.encode('utf-8'))
+                    os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
                     os.remove('hello_ko.mp3')
 
                     print "To Out Processing"
                 else:
-                    os.system('omxplayer -o local --vol -2000 /home/pi/share/er.mp3')
+                    os.system('omxplayer -o local --vol -2000 /home/pi/share/allforyou.mp3')
                     print "To In Processing"
                 self.s1Activated = False
                 self.s2Activated = False
@@ -134,7 +204,7 @@ class MynahManager:
 class DistanceSensor(threading.Thread):
     DETECT_THRESHOLD_VALUE = 0.4
     MAX_WAIT_VALUE = 10000
-    MAX_RE_CAPTURE_TIME = 0.10
+    MAX_RE_CAPTURE_TIME = 0.08
 
     def __init__(self,sensortype):
         threading.Thread.__init__(self)
@@ -248,7 +318,8 @@ g_sensor2.daemon = True
 g_sensor2.start()
 
 while True:
-    time.sleep(100000)
+    time.sleep(10000)
+    #broadcastCurrentClient()
     i=1
 
 GPIO.cleanup()
