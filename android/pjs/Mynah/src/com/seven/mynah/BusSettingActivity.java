@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -29,6 +30,8 @@ public class BusSettingActivity extends Activity {
    private BusRouteInfo busRouteInfo;
    
    private boolean mIsBackKeyPressed = false;
+   
+   private String TAG = "BusSettingActivity";
    
    protected void onCreate(Bundle savedInstanceState) 
    {
@@ -95,6 +98,8 @@ public class BusSettingActivity extends Activity {
          mIsBackKeyPressed = true;
          finish();
          overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+         
+         Log.d(TAG, "onBackPressed");
       }
    }
    

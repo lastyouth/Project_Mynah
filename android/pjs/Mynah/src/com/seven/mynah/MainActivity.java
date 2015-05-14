@@ -353,5 +353,23 @@ public class MainActivity extends Activity {
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
     }
+    
+    
+    @Override
+    protected void onRestart() {
+    	// TODO Auto-generated method stub
+    	super.onRestart();
+    	
+    	Log.d(TAG, "onRestart");
+    	
+    }
 
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	
+    	Log.d(TAG,"onResume");
+    }
+    
 }
