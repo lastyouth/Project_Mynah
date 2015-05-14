@@ -63,12 +63,14 @@ public class MynahDB {
 	public static final String _BUS_TABLE_NAME = "bus";
 	public static final String _BUS_COL_STATION_ID = "station_id";
 	public static final String _BUS_COL_STATION_NAME = "station_name";
+	public static final String _BUS_COL_STATION_ASRID = "station_arsid";
 	public static final String _BUS_COL_ROUTE_ID = "route_id";
 	public static final String _BUS_COL_ROUTE_NAME = "route_name";
 	public static final String _BUS_COL_ROUTE_TYPE = "route_type";
 	public static final String _BUS_COL_STATION_ORD = "sta_ord";
 	public static final String _BUS_COL_DIR = "dir";
 	public static final String _BUS_COL_ARR_TIME = "arr_time";
+	public static final String _BUS_COL_NOW_STATION_NAME = "now_station_name";
 	
 	
 	public static final String _BUS_LOG_TABLE_NAME = "bus_log";
@@ -131,6 +133,8 @@ public class MynahDB {
 				+ _BUS_COL_STATION_ID + " text not null, "
 				+ _BUS_COL_STATION_NAME + " text, "
 				+ _BUS_COL_STATION_ORD + " text, "
+				+ _BUS_COL_STATION_ASRID + " text, "
+				+ _BUS_COL_NOW_STATION_NAME + " text,"
 				+ _BUS_COL_DIR + " text, "
 				+ _BUS_COL_ARR_TIME + " datetime, "
 				+ " primary key(" + _BUS_COL_STATION_ID + "," 
@@ -142,6 +146,7 @@ public class MynahDB {
 				+ _BUS_COL_STATION_ID + " text, "
 				+ _BUS_COL_ROUTE_ID + " text, "
 				+ _BUS_COL_STATION_ORD + " text, "
+				+ _BUS_COL_STATION_ASRID + " text, "
 				+ _BUS_LOG_SET_TIME + " datetime "
 				+ " );";
 

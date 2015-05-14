@@ -39,7 +39,7 @@ public class CustomButtonsFragment extends Fragment {
 	private int mNumRows = 5;
 	private int mNumButtons = 0;
 
-	private HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
+	public HashMap<String, CustomButton> HashButtons = new HashMap<String, CustomButton>();
 	private DisplayMetrics metrics;
 	private int padding_5dp;
 	private int padding_5dp_toPixel;
@@ -157,9 +157,17 @@ public class CustomButtonsFragment extends Fragment {
 
 		cb.setLayoutParams(lp);
 		mainGridLayout.addView(cb);
-		HashButtons.put("", cb);
+		HashButtons.put(String.valueOf(type), cb);
 
 	}
+	
+	public void refreshBus()
+	{
+		BusShortcutLayout cl = 
+		(BusShortcutLayout)HashButtons.get(String.valueOf(GlobalVariable.ShortcutType.typeBusShortcut));
+		cl.refresh();
+	}
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {

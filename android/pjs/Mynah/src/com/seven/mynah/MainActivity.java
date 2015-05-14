@@ -26,7 +26,6 @@ import com.seven.mynah.artifacts.BusStationInfo;
 import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
-import com.seven.mynah.bluetooth.BluetoothListActivity;
 import com.seven.mynah.bluetooth.DeviceListActivity;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.database.DBManager;
@@ -106,7 +105,7 @@ public class MainActivity extends Activity {
         
 		//testSide();
 	}
-
+	
 	private void setDefaultFragment() {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
@@ -114,7 +113,8 @@ public class MainActivity extends Activity {
 		transaction.add(R.id.container, cbf);
 		transaction.commit();
 	}
-
+	
+	
 
 
 	@Override
@@ -207,9 +207,10 @@ public class MainActivity extends Activity {
 	
 	public void startBluetoothActivity_temp()
 	{
-		Intent intent = new Intent("com.seven.mynah.Bluetooh");
+		Intent intent = new Intent("com.seven.mynah.Bluetooth");
+		//Intent intent = new Intent(this,DeviceListActivity.class);
 		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 	}
 	
 	
