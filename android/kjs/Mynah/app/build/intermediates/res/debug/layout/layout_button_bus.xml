@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    android:background="#00a500"
+    android:clickable="true" >
+    
+     <LinearLayout
+        android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:layout_weight="1"
+		android:padding="5dp">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:layout_weight="1">
+			
+            <ImageView
+            android:id="@+id/ivBusImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+            
+        </LinearLayout>
+       	
+    	<LinearLayout
+    	    android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:layout_weight="2">
+    	   
+    	   	<TextView
+            android:id="@+id/tvBusRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    	   	
+    	</LinearLayout>
+    </LinearLayout>
+
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:layout_weight="1"
+		android:orientation="vertical"
+		android:padding="5dp">
+        
+        <TextView
+            android:id="@+id/tvBusStopName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="12sp"/>
+        
+        <TextView
+            android:id="@+id/tvBusDirName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="10sp"/>
+        
+        <TextView
+            android:id="@+id/tvBusNextTime"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+
+            android:textSize="12sp"/>
+        
+        <TextView 
+            android:id="@+id/tvBusNextTime2"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="#ffffff"
+
+            android:textSize="12sp"/>
+          
+    </LinearLayout>	
+
+</LinearLayout>
+<!-- From: file:/D:/git/Mynah/app/src/main/res/layout/layout_button_bus.xml -->
