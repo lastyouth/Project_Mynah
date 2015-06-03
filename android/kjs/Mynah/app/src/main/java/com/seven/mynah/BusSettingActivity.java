@@ -3,6 +3,8 @@ package com.seven.mynah;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -57,12 +59,18 @@ public class BusSettingActivity extends Activity {
         {
         	binfo = busArrayList.get(0);
             binfo = DBManager.getManager(getApplicationContext()).getBusDB(binfo);
-            
-            //BusPaser bp = new BusPaser();
-            //binfo = bp.getBusArrInfoByRoute(binfo);
+
+            if (binfo.array_ttb.size() == 0)
+            {
+                BusPaser bp = new BusPaser();
+                binfo = bp.getBusArrInfoByRoute(binfo);
+                DBManager.getManager(getApplicationContext()).setBusDB(binfo);
+                binfo = DBManager.getManager(getApplicationContext()).getBusDB(binfo);
+            }
+            String str = binfo.route.busRouteNm;
            
-            tvCurrentBusRoute.setText(binfo.route.busRouteNm);
-            
+            tvCurrentBusRoute.setText(str);
+
         }
         
         
@@ -73,20 +81,32 @@ public class BusSettingActivity extends Activity {
          public void onClick(View v) {
             // TODO Auto-generated method stub
               String bus_route = etBusName.getText().toString().trim();
-              
+
+               if(bus_route.equals(""))
+               {
+                   bus_route = tvCurrentBusRoute.getText().toString();
+               }
+
               BusPaser bp = new BusPaser();
               ArrayList<BusRouteInfo> array_route = new ArrayList<BusRouteInfo>();
               ArrayList<BusStationInfo> array_station = new ArrayList<BusStationInfo>();
               array_route = bp.getBusRouteList(bus_route);
-              
-              busRouteInfo = array_route.get(0);
-              array_station = bp.getStaionsByRouteList(busRouteInfo.busRouteId);
-              
-              adapter = new BusStationAdapter(getApplicationContext(), R.layout.list_row, array_station);
-              lvBusStop.setAdapter(adapter);
-              adapter.notifyDataSetChanged();
-              
-         }
+
+              //if there is no such bus route
+              if(array_route.size() == 0)
+              {
+                  showSearchError();
+              }
+              else
+              {
+                  busRouteInfo = array_route.get(0);
+                  array_station = bp.getStaionsByRouteList(busRouteInfo.busRouteId);
+
+                  adapter = new BusStationAdapter(getApplicationContext(), R.layout.list_row, array_station);
+                  lvBusStop.setAdapter(adapter);
+                  adapter.notifyDataSetChanged();
+              }
+           }
         });
         
         lvBusStop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -126,7 +146,23 @@ public class BusSettingActivity extends Activity {
       }
    }
    
-   
+   public void showSearchError()
+   {
+       String bus_route = etBusName.getText().toString();
+       AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+       alertDialog.setTitle("");
+       alertDialog.setMessage(bus_route + "버스를 찾을수 없습니다.");
+       alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "확인", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int which)
+           {
+               etBusName.setText("");
+               dialog.dismiss();
+           }
+       });
+
+       alertDialog.show();
+   }
+
    /*
    @Override
 	protected void onDestroy() {
@@ -137,23 +173,7 @@ public class BusSettingActivity extends Activity {
 
 	}*/
    
-   
 
-   
-   private class setBusNameListener implements OnClickListener
-   {
-
-      @Override
-      public void onClick(View v) {
-         // TODO Auto-generated method stub
-         /*Call Dialog
-         FragmentManager fm = getFragmentManager();
-         BusNameDialogFragment dialogFragment = new BusNameDialogFragment();
-         dialogFragment.show(fm, "dialogFragment");
-         */
-      }
-      
-   }
 }
 
 

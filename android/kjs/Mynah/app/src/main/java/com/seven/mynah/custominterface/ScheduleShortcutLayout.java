@@ -82,7 +82,8 @@ public class ScheduleShortcutLayout extends CustomButton{
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
 
-				cbf.startSettingActivity("Schedule");
+				//cbf.startSettingActivity("Schedule");
+				cbf.startSettingActivity("Calendar");
 				return true;	
 
 			}

@@ -26,6 +26,9 @@
         android:name="com.seven.mynah.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
+    <!-- google calendar -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_mynah"
@@ -52,6 +55,13 @@
         <activity android:name="com.seven.mynah.ScheduleListActivity" >
             <intent-filter>
                 <action android:name="com.seven.mynah.Schedule" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.CalendarActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Calendar" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

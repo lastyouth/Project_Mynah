@@ -15,6 +15,7 @@ import com.seven.mynah.artifacts.SubwayStationInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
@@ -76,7 +77,8 @@ public class SubwayShortcutLayout extends CustomButton {
 			tvSubwayDirName.setText("터치해서 정보를 입력하세요");
 			return;
 		}
-		tvSubwayName.setText(sinfo.station.line_num + "호선 ");
+		String line_num = sinfo.station.line_num;
+		tvSubwayName.setText(GlobalFunction.SubwayDecode(line_num));
 		tvSubwayStopName.setText(sinfo.station.station_nm + "\n");
 		
 		

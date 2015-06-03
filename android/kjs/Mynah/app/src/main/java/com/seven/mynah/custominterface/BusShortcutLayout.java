@@ -61,7 +61,7 @@ public class BusShortcutLayout extends CustomButton {
 		addView(view);
 	}
 
-	private void setBusInfo(BusInfo binfo) {
+	private void setBusInfo(BusInfo binfo)  {
 		if (binfo == null) {
 			// √ ±‚»≠
 			bRoute = "";

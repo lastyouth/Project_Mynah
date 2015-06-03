@@ -18,5 +18,9 @@ public class ViewHolder {
 	//Subway
 	public TextView tvSubwayStationListRow;
 	public SubwayStationInfo subwayStationInfo;
+
+	//Calendar
+	public TextView tvScheduleName;
+	public TextView tvScheduleTime;
 	
 }
