@@ -15,7 +15,7 @@ public class DBHelper {
 
 	private static final String DATABASE_NAME = "mynah.db";
 
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 10;
 
 
 	public static SQLiteDatabase mDB;
