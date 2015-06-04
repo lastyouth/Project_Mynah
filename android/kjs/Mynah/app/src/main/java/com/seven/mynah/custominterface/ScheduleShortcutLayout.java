@@ -1,7 +1,9 @@
 package com.seven.mynah.custominterface;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,10 +21,10 @@ import android.widget.Toast;
 import com.seven.mynah.LoadingActivity;
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
-import com.seven.mynah.ScheduleListActivity;
+import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.calender.CalendarManager;
 
 public class ScheduleShortcutLayout extends CustomButton{
-
 	
 	private static int maxSchedules = 10;
 	private static int maxPreparations = 10;
@@ -31,7 +33,10 @@ public class ScheduleShortcutLayout extends CustomButton{
 	private LinearLayout layoutPreparation;
 	private TextView tvSchedules[];
 	private TextView tvPreparation;
-	
+
+	private CalendarManager calendarManager;
+	private ArrayList<ScheduleInfo> scheduleInfo;
+
 	public ScheduleShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
 		super(context);
@@ -47,7 +52,8 @@ public class ScheduleShortcutLayout extends CustomButton{
 		layoutPreparation = (LinearLayout)view.findViewById(R.id.layoutPreparation);
 		tvSchedules = new TextView[maxSchedules];
 		tvPreparation = new TextView(context);
-		
+
+		/*
 		for(int i = 0; i < 2; i++)
 		{
 			tvSchedules[i] = new TextView(context);
@@ -57,14 +63,13 @@ public class ScheduleShortcutLayout extends CustomButton{
 		}
 		tvSchedules[0].setText("09:00 외주업체 미팅");
 		tvSchedules[1].setText("12:30 점심약속");
-		
-		
-		
+
 		tvPreparation.setText("준비물 : USB, 보고서");
 		tvPreparation.setTextColor(Color.parseColor("#ffffff"));
 		tvPreparation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 		layoutPreparation.addView(tvPreparation);
-		
+		*/
+
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
@@ -91,9 +96,35 @@ public class ScheduleShortcutLayout extends CustomButton{
 		}
 	}
 	
-	public void refresh() {
-		Toast.makeText(getContext(), "Schedule onRestart()", 1).show();
+	public void refresh(Activity activity) {
+		/*
+		calendarManager = new CalendarManager(activity);
+		calendarManager.getCredential();
+		calendarManager.startManager();
+
+		setInfo();*/
 	}
-	
+
+	public void setInfo()
+	{
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		String strDate = sdf.format(date);
+
+		scheduleInfo = new ArrayList<ScheduleInfo>();
+		scheduleInfo = calendarManager.getScheduleOnDate(strDate);
+
+		int size = scheduleInfo.size();
+		for(int i = 0; i < size; i++)
+		{
+			tvSchedules[i] = new TextView(context);
+			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
+			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+			layoutSchedule.addView(tvSchedules[i]);
+
+			String str = scheduleInfo.get(i).scheduleDate + scheduleInfo.get(i).scheduleName;
+			tvSchedules[i].setText(str);
+		}
+	}
 	
 }

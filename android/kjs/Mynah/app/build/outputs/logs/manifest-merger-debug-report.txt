@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
 	package
 		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
@@ -11,8 +13,6 @@ ADDED from AndroidManifest.xml:2:1
 		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
-	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
 MERGED from com.android.support:support-v4:22.1.1:20:5
@@ -281,112 +281,102 @@ category#android.intent.category.DEFAULT
 ADDED from AndroidManifest.xml:56:17
 	android:name
 		ADDED from AndroidManifest.xml:56:27
-activity#com.seven.mynah.ScheduleListActivity
+activity#com.seven.mynah.CalendarActivity
 ADDED from AndroidManifest.xml:61:9
 	android:name
 		ADDED from AndroidManifest.xml:62:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Schedule
+intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Calendar
 ADDED from AndroidManifest.xml:63:13
-action#com.seven.mynah.Schedule
+action#com.seven.mynah.Calendar
 ADDED from AndroidManifest.xml:64:17
 	android:name
 		ADDED from AndroidManifest.xml:64:25
-activity#com.seven.mynah.CalendarActivity
-ADDED from AndroidManifest.xml:70:9
-	android:name
-		ADDED from AndroidManifest.xml:71:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Calendar
-ADDED from AndroidManifest.xml:72:13
-action#com.seven.mynah.Calendar
-ADDED from AndroidManifest.xml:73:17
-	android:name
-		ADDED from AndroidManifest.xml:73:25
 activity#com.seven.mynah.BusSettingActivity
+ADDED from AndroidManifest.xml:72:9
+	android:name
+		ADDED from AndroidManifest.xml:73:13
+intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Bus
+ADDED from AndroidManifest.xml:74:13
+action#com.seven.mynah.Bus
+ADDED from AndroidManifest.xml:75:17
+	android:name
+		ADDED from AndroidManifest.xml:75:25
+activity#com.seven.mynah.SubwaySettingActivity
 ADDED from AndroidManifest.xml:81:9
 	android:name
 		ADDED from AndroidManifest.xml:82:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Bus
+intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Subway
 ADDED from AndroidManifest.xml:83:13
-action#com.seven.mynah.Bus
+action#com.seven.mynah.Subway
 ADDED from AndroidManifest.xml:84:17
 	android:name
 		ADDED from AndroidManifest.xml:84:25
-activity#com.seven.mynah.SubwaySettingActivity
+activity#com.seven.mynah.WeatherSettingActivity
 ADDED from AndroidManifest.xml:90:9
 	android:name
 		ADDED from AndroidManifest.xml:91:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Subway
+intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Weather
 ADDED from AndroidManifest.xml:92:13
-action#com.seven.mynah.Subway
+action#com.seven.mynah.Weather
 ADDED from AndroidManifest.xml:93:17
 	android:name
 		ADDED from AndroidManifest.xml:93:25
-activity#com.seven.mynah.WeatherSettingActivity
+activity#com.seven.mynah.GlobalSettingActivity
 ADDED from AndroidManifest.xml:99:9
 	android:name
 		ADDED from AndroidManifest.xml:100:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Weather
+intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Setting
 ADDED from AndroidManifest.xml:101:13
-action#com.seven.mynah.Weather
+action#com.seven.mynah.Setting
 ADDED from AndroidManifest.xml:102:17
 	android:name
 		ADDED from AndroidManifest.xml:102:25
-activity#com.seven.mynah.GlobalSettingActivity
-ADDED from AndroidManifest.xml:108:9
-	android:name
-		ADDED from AndroidManifest.xml:109:13
-intent-filter#android.intent.category.DEFAULT+com.seven.mynah.Setting
-ADDED from AndroidManifest.xml:110:13
-action#com.seven.mynah.Setting
-ADDED from AndroidManifest.xml:111:17
-	android:name
-		ADDED from AndroidManifest.xml:111:25
 service#com.seven.mynah.backgroundservice.GetInformationService
-ADDED from AndroidManifest.xml:118:9
+ADDED from AndroidManifest.xml:109:9
 	android:name
-		ADDED from AndroidManifest.xml:119:13
+		ADDED from AndroidManifest.xml:110:13
 service#com.seven.mynah.backgroundservice.GCMIntentService
-ADDED from AndroidManifest.xml:123:3
+ADDED from AndroidManifest.xml:114:3
 	android:name
-		ADDED from AndroidManifest.xml:124:7
+		ADDED from AndroidManifest.xml:115:7
 receiver#com.seven.mynah.backgroundservice.WakeonReceiver
-ADDED from AndroidManifest.xml:129:9
-	android:enabled
-		ADDED from AndroidManifest.xml:130:43
+ADDED from AndroidManifest.xml:120:9
 	android:label
-		ADDED from AndroidManifest.xml:130:10
+		ADDED from AndroidManifest.xml:121:10
+	android:enabled
+		ADDED from AndroidManifest.xml:121:43
 	android:permission
-		ADDED from AndroidManifest.xml:131:10
+		ADDED from AndroidManifest.xml:122:10
 	android:name
-		ADDED from AndroidManifest.xml:129:19
+		ADDED from AndroidManifest.xml:120:19
 intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:132:10
+ADDED from AndroidManifest.xml:123:10
 action#android.intent.action.BOOT_COMPLETED
-ADDED from AndroidManifest.xml:133:16
+ADDED from AndroidManifest.xml:124:16
 	android:name
-		ADDED from AndroidManifest.xml:133:24
+		ADDED from AndroidManifest.xml:124:24
 receiver#com.seven.mynah.backgroundservice.GCMBroadcastReceiver
-ADDED from AndroidManifest.xml:141:9
+ADDED from AndroidManifest.xml:132:9
 	android:permission
-		ADDED from AndroidManifest.xml:143:13
+		ADDED from AndroidManifest.xml:134:13
 	android:name
-		ADDED from AndroidManifest.xml:142:13
+		ADDED from AndroidManifest.xml:133:13
 intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.seven.mynah
-ADDED from AndroidManifest.xml:144:13
+ADDED from AndroidManifest.xml:135:13
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:145:17
+ADDED from AndroidManifest.xml:136:17
 	android:name
-		ADDED from AndroidManifest.xml:145:25
+		ADDED from AndroidManifest.xml:136:25
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from AndroidManifest.xml:146:17
+ADDED from AndroidManifest.xml:137:17
 	android:name
-		ADDED from AndroidManifest.xml:146:25
+		ADDED from AndroidManifest.xml:137:25
 category#com.seven.mynah
-ADDED from AndroidManifest.xml:147:17
+ADDED from AndroidManifest.xml:138:17
 	android:name
-		ADDED from AndroidManifest.xml:147:27
+		ADDED from AndroidManifest.xml:138:27
 meta-data#com.google.android.gms.version
-ADDED from AndroidManifest.xml:151:9
+ADDED from AndroidManifest.xml:142:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
@@ -414,7 +404,7 @@ MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
-	android:value
-		ADDED from AndroidManifest.xml:153:13
 	android:name
-		ADDED from AndroidManifest.xml:152:13
+		ADDED from AndroidManifest.xml:143:13
+	android:value
+		ADDED from AndroidManifest.xml:144:13

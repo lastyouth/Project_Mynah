@@ -2,10 +2,12 @@ package com.seven.mynah;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -13,27 +15,35 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.audiofx.BassBoost.Settings;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.seven.mynah.artifacts.WeatherInfo;
-import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.calender.ApiAsyncTask;
+import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
-import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.RPiBluetoothConnectionManager;
-import com.seven.mynah.infoparser.WeatherParser;
 
+//Google Calendar
+import com.google.android.gms.common.ConnectionResult;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.util.ExponentialBackOff;
+
+import com.google.api.services.calendar.CalendarScopes;
 
 public class MainActivity extends Activity {
 
@@ -58,11 +68,14 @@ public class MainActivity extends Activity {
     
     //GCM project key
 	private static final String SENDER_ID = "803082977332";
-	//GCM µî·Ï¿ë Å°(ÇÚµåÆù ±âÁØ 1°³)
+	//GCM ï¿½ï¿½Ï¿ï¿½ Å°(ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½)
     String regid;
 
-	
-	@Override
+
+    //Google Calendar
+    private CalendarManager calendarManager;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -70,14 +83,16 @@ public class MainActivity extends Activity {
 		mContext = getApplicationContext();
 		
 		// Splash : LoadingActivity
-		// onCreate¿¡¼­ splash¸¦ ÇÏ´Â°æ¿ì µÚ·Î°¡±â¸¦ ´©¸¦½Ã ¸ÞÀÎÈ­¸éÀ¸·Î µ¹¾Æ¿È > loadingÀ» skipÇÒ ¼ö ÀÖ´Ù.
+		// onCreateï¿½ï¿½ï¿½ï¿½ splashï¿½ï¿½ ï¿½Ï´Â°ï¿½ï¿½ ï¿½Ú·Î°ï¿½ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ > loadingï¿½ï¿½ skipï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 		// startActivity(new Intent(this, LoadingActivity.class));
 
 		if (savedInstanceState == null) {
 			setDefaultFragment();
 		}
 
-		
+        //Google Calendar Manager
+        //startCalendarManager();
+
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
 //        if (checkPlayServices()) {
 //            gcm = GoogleCloudMessaging.getInstance(this);
@@ -86,10 +101,10 @@ public class MainActivity extends Activity {
 //            if (regid.equals("")) {
 //                registerInBackground();
 //            }
-//            Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
+//            Toast.makeText(this, "ï¿½ï¿½ï¿½ id = " + regid, 1).show();
 //            Log.d(TAG,regid);
 //            
-//            //Åä½ºÆ®¿¡¼­ ¾Ë·ÁÁÖÀÚ!
+//            //ï¿½ä½ºÆ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½!
 //        } else {
 //            Log.i(TAG, "No valid Google Play Services APK found.");
 //        }
@@ -100,11 +115,11 @@ public class MainActivity extends Activity {
 //        if (regid.equals("")) {
 //            registerInBackground();
 //        }
-//        Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
+//        Toast.makeText(this, "ï¿½ï¿½ï¿½ id = " + regid, 1).show();
 //        Log.d(TAG,regid);
         
 		
-		//ºí·çÅõ½º ÃÊ±âÈ­
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 		/*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 		BTmanager = new RPiBluetoothConnectionManager(deviceID);
@@ -115,17 +130,17 @@ public class MainActivity extends Activity {
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
 		{
-			Toast.makeText(this, "ºí·çÅõ½º¸¦ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.", Toast.LENGTH_SHORT).show();
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
 		{
-			Toast.makeText(this, "ºí·çÅõ½º¸¦ µî·ÏÇÏ¼¼¿ä.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.", Toast.LENGTH_SHORT).show();
 		}
 		
 		ArrayList<String> st = new ArrayList<String>();
 		
-		st.add("¼­º¸ÈÆ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 147 ¹ö½º 3ºÐÀü. Ã»·®¸®¿ª »óÇà 5ºÐÀü. ¹ßÇ¥³ëÆ® Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
-		//st.add("¹Ú»óÁØ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 121 ¹ö½º 5ºÐÀü. Ã»·®¸®¿ª ÇÏÇà 10ºÐÀü. ³ëÆ®ºÏ Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
+		st.add("ï¿½ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å¸². 147 ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½. Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Ç¥ï¿½ï¿½Æ® Ã¬ï¿½ï¿½Ã±ï¿½ ï¿½Ù¶ï¿½Ï´ï¿½. hello");
+		//st.add("ï¿½Ú»ï¿½ï¿½Ø´ï¿½ ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å¸². 121 ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½. Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Æ®ï¿½ï¿½ Ã¬ï¿½ï¿½Ã±ï¿½ ï¿½Ù¶ï¿½Ï´ï¿½. hello");
 		BTmanager.setTTS(st);*/
 		
 	}
@@ -140,13 +155,15 @@ public class MainActivity extends Activity {
 		//refresh
 
 		//get kind of intent from activity called finished()?
+
 		runOnUiThread(new Runnable() {
-			
 			@Override
 			public void run() {
 				cbf.refresh("Bus");
 				cbf.refresh("Subway");
 				cbf.refresh("Weather");
+
+                //cbf.refresh("Schedule", MainActivity.this);
 			}
 		});
     	
@@ -188,7 +205,6 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	public void startSettingActivity(String type) 
 	{
 		String intentActionName = "com.seven.mynah.";
@@ -205,9 +221,7 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 		//this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 	}
-	
-	
-	
+
 	/**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -351,8 +365,24 @@ public class MainActivity extends Activity {
     protected void onResume() {
     	// TODO Auto-generated method stub
     	super.onResume();
-    	
+
+        //For Google Calendar
+        //calendarManager.startManager();
+        //GlobalGoogleCalendarManager.calendarManager = calendarManager;
+
     	Log.d(TAG,"onResume");
     }
-    
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        calendarManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }*/
+
+    public void startCalendarManager()
+    {
+        calendarManager = new CalendarManager(this);
+        calendarManager.getCredential();
+    }
 }

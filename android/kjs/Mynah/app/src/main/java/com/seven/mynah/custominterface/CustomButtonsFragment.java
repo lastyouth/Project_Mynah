@@ -2,7 +2,9 @@ package com.seven.mynah.custominterface;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,7 +20,6 @@ import android.widget.GridLayout.Spec;
 
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
-import com.seven.mynah.ScheduleListActivity;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 public class CustomButtonsFragment extends Fragment {
@@ -38,6 +39,9 @@ public class CustomButtonsFragment extends Fragment {
 	private View rootView;
 	private GridLayout mainGridLayout;
 	private String intentActionName;
+
+	private Activity activity;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -87,7 +91,7 @@ public class CustomButtonsFragment extends Fragment {
 		addButton(GlobalVariable.ShortcutType.typeVoice, 4, 2, 1);
 		addButton(GlobalVariable.ShortcutType.typeSetting, 4, 3, 1);
 		
-		Log.d(TAG,"setGridLayoutDefault ³¡");
+		Log.d(TAG, "setGridLayoutDefault ³¡");
 	}
 
 	public void addButton(int type, int row, int col, int colspan) {
@@ -163,9 +167,8 @@ public class CustomButtonsFragment extends Fragment {
 		switch(str)
 		{
 		case "Schedule":
-			shortcutType = GlobalVariable.ShortcutType.typeScheduleShortcut;
-			cb = (ScheduleShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
-			break;
+
+			return;
 		case "Bus":
 			shortcutType = GlobalVariable.ShortcutType.typeBusShortcut;
 			cb = (BusShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
@@ -199,6 +202,14 @@ public class CustomButtonsFragment extends Fragment {
 		}
 		cb.refresh();
 	}
+
+	public void refresh(String str, Activity activity)
+	{
+		CustomButton cb = null;
+		int shortcutType = GlobalVariable.ShortcutType.typeScheduleShortcut;
+		cb = (ScheduleShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+		cb.refresh(activity);
+	}
 	
 	public View getBusView()
 	{
@@ -215,13 +226,6 @@ public class CustomButtonsFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-	}
-	
-	
-	public void startTest()
-	{
-		Intent intent = new Intent(this.getActivity(),ScheduleListActivity.class);
-		startActivity(intent);
 	}
 
 	public int getStatusBarHeight() {

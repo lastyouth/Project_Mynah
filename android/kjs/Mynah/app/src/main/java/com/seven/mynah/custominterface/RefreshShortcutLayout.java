@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 
 public class RefreshShortcutLayout extends CustomButton{
