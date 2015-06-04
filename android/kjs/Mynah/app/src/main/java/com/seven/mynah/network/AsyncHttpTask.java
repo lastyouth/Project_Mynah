@@ -24,15 +24,18 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.seven.mynah.globalmanager.GlobalVariable;
+import com.seven.mynah.globalmanager.JsonParser;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.JsonWriter;
 import android.util.Log;
 
 
@@ -49,7 +52,16 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 	JSONObject _jobj;
 	
 	private static String TAG = "AsyncHttpTask";
-	
+
+	/**
+	 *
+	 * @param context
+	 * @param urls
+	 * @param handler
+	 * @param jobj
+	 * @param hnum
+	 * @param Data
+	 */
 	public AsyncHttpTask(Context context, String urls, Handler handler,
 			JSONObject jobj, int hnum, int Data) {
 		
@@ -63,12 +75,9 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
 		super.execute();
 	}
-	
-
 
 	@Override
 	protected String doInBackground(Void... urls) {
-
 		// urls[0]의 URL부터 데이터를 읽어와 String으로 리턴
 		// Log.i("URL", url);
 		return Task(_url,_jobj);
@@ -83,7 +92,8 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected void onPostExecute(String responseData) {
-		
+		//이 주석 풀어야돼. 임의로 해놓은거
+
 		Log.d(TAG, "Handle Type : " + handlernum);
 		Log.d(TAG, "Data Type : " + DataContent);
 		
@@ -93,9 +103,10 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 		msg.obj = responseString;
 		msg.arg1 = DataContent;
 		mhandler.sendMessage(msg);
-		
+
+
 		Log.d(TAG,"Return Data : " + responseString);
-		
+
 	}
 
 	public String Task(String urlString, JSONObject jobj) {
@@ -105,6 +116,7 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 		try {
             URI _url = new URI(urlString);
 
+			JSONObject resJobj;
             HttpPost httpPost = new HttpPost(_url);
 
             String encodedJSON = Base64.encodeToString(jobj.toString().getBytes(), 0);
@@ -119,9 +131,12 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
             HttpResponse response = httpClient.execute(httpPost);
             responseString = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-            System.out.println(responseString);
+            //System.out.println(responseString);
 
-        }
+			resJobj = new JSONObject(responseString);
+
+			System.out.println("to jobj : " + resJobj);
+		}
         catch(URISyntaxException e) {
             System.out.println("1");
             e.printStackTrace();
@@ -134,8 +149,12 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
         catch (IOException e) {
             System.out.println("3");
-            e.printStackTrace();
+			e.printStackTrace();
         }
+		catch(JSONException e) {
+			System.out.println("4");
+			e.printStackTrace();
+		}
 
 		return null;
 

@@ -78,34 +78,36 @@ public class MainActivity extends Activity {
 		}
 
 		
-        // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
-//        if (checkPlayServices()) {
-//            gcm = GoogleCloudMessaging.getInstance(this);
-//            regid = getRegistrationId(mContext);
-//
-//            if (regid.equals("")) {
-//                registerInBackground();
-//            }
-//            Toast.makeText(this, "등록 id = " + regid, 1).show();
-//            Log.d(TAG,regid);
-//            
-//            //토스트에서 알려주자!
-//        } else {
-//            Log.i(TAG, "No valid Google Play Services APK found.");
-//        }
+         //Check device for Play Services APK. If check succeeds, proceed with GCM registration.
+        /*
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(mContext);
+
+            if (regid.equals("")) {
+                registerInBackground();
+            }
+            Toast.makeText(this, "등록 id = " + regid, 1).show();
+            Log.d(TAG,regid);
+
+            //토스트에서 알려주자!
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
+        }
         
-//        gcm = GoogleCloudMessaging.getInstance(this);
-//        regid = getRegistrationId(mContext);
-//
-//        if (regid.equals("")) {
-//            registerInBackground();
-//        }
-//        Toast.makeText(this, "등록 id = " + regid, 1).show();
-//        Log.d(TAG,regid);
-        
+        gcm = GoogleCloudMessaging.getInstance(this);
+        regid = getRegistrationId(mContext);
+
+        if (regid.equals("")) {
+            registerInBackground();
+        }
+        Toast.makeText(this, "등록 id = " + regid, Toast.LENGTH_SHORT).show();
+        Log.d(TAG,regid);
+        */
 		
 		//블루투스 초기화
-		/*
+
+        /*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 		BTmanager = new RPiBluetoothConnectionManager(deviceID);
 		int ret = BTmanager.initializeBTConnection();
@@ -126,8 +128,8 @@ public class MainActivity extends Activity {
 		
 		st.add("서보훈님 안녕하세요. 오늘 날씨는 흐림. 147 버스 3분전. 청량리역 상행 5분전. 발표노트 챙기시기 바랍니다. hello");
 		//st.add("박상준님 안녕하세요. 오늘 날씨는 흐림. 121 버스 5분전. 청량리역 하행 10분전. 노트북 챙기시기 바랍니다. hello");
-		BTmanager.setTTS(st);*/
-		
+		BTmanager.setTTS(st);
+		*/
 	}
 
 	@Override
@@ -157,7 +159,7 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		
-		BTmanager.stopBTConnection();
+		//BTmanager.stopBTConnection();
 
 	}
 	

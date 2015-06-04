@@ -160,6 +160,7 @@ public class CustomButtonsFragment extends Fragment {
 	{
 		int shortcutType = 0;
 		CustomButton cb = null;
+
 		switch(str)
 		{
 		case "Schedule":

@@ -48,9 +48,7 @@ public final class GlobalVariable {
 	
 	public final class GCMConstant {
 		
-		public static final String 
-		PROJECT_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
-		
+		public static final String PROJECT_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
 	}
 	
 	

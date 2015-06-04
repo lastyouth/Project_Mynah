@@ -23,7 +23,9 @@
     <uses-permission android:name="com.seven.mynah.permission.C2D_MESSAGE" />
 	<permission android:name="com.seven.mynah.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    
+
+    <!-- WAKE_LOCK 추가 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 	
     
     <application
@@ -39,6 +41,24 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LogInActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SignUpActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Signup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         

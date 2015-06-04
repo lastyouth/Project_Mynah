@@ -29,6 +29,8 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.infoparser.WeatherParser;
 
+import javax.security.auth.login.LoginException;
+
 public class LoadingActivity extends Activity{
 	
 	RelativeLayout rlayout;
@@ -59,8 +61,9 @@ public class LoadingActivity extends Activity{
 		{
 			public void handleMessage(Message msg)
 			{
-				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+				//Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 				//Intent intent = new Intent(getApplicationContext(), ScheduleListActivity.class);
+				Intent intent = new Intent(getApplicationContext(), LogInActivity.class); //로그인화면 임시
 				startActivity(intent);
 				finish();
 			}
