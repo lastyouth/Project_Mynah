@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
 public class ScheduleShortcutLayout extends CustomButton{
 	
@@ -69,7 +71,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 		tvPreparation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 		layoutPreparation.addView(tvPreparation);
 		*/
-
+		//setInfo();
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
@@ -107,6 +109,8 @@ public class ScheduleShortcutLayout extends CustomButton{
 
 	public void setInfo()
 	{
+		calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		String strDate = sdf.format(date);

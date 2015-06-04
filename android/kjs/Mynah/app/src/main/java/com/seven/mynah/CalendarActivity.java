@@ -121,5 +121,6 @@ public class CalendarActivity extends Activity {
     protected void onResume() {
         super.onResume();
         calendarManager.startManager();
+        GlobalGoogleCalendarManager.calendarManager = calendarManager;
     }
 }
