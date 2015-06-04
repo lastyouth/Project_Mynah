@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.seven.mynah"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
+
+    <!-- deafualt permission -->
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <!-- GCM 받기 -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.seven.mynah.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.seven.mynah.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+<<<<<<< HEAD
+    <!-- WAKE_LOCK 추가 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+=======
+    <!-- google calendar -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+>>>>>>> 93d1a800616a08d1a135712cb03ff14804d2045a
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_mynah"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.seven.mynah.LoadingActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.LogInActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.SignUpActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Signup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.MainActivity" >
+        </activity>
+        <activity android:name="com.seven.mynah.bluetooth.DeviceListActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Bluetooth" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.ScheduleListActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Schedule" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.CalendarActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Calendar" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.BusSettingActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Bus" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.SubwaySettingActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Subway" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.WeatherSettingActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Weather" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.GlobalSettingActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Setting" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.seven.mynah.backgroundservice.GetInformationService" >
+        </service>
+
+        <!-- GCM 리시버에서 돌리는 서비스 -->
+        <service android:name="com.seven.mynah.backgroundservice.GCMIntentService" >
+        </service>
+
+        <!-- 안드로이드 실행시 서비스 실행을 위해 -->
+        <receiver
+            android:name="com.seven.mynah.backgroundservice.WakeonReceiver"
+            android:enabled="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 구글 GCM 서비스 실행을 위해 -->
+        <receiver
+            android:name="com.seven.mynah.backgroundservice.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.seven.mynah" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

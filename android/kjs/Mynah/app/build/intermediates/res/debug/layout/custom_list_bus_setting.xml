@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:background="#00a500">
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_bus" />
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+        <TextView 
+            android:id="@+id/tvCustomListName"
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:textColor="#FFFFFF"
+        	android:gravity="center_vertical"
+        	android:textSize="20sp"/>
+        
+    </LinearLayout>
+	
+	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+        
+	    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_right_arrow" />
+        
+        
+    </LinearLayout>
+</LinearLayout>
+<!-- From: file:/C:/Users/HJHOME/workspace_android/kjs/Mynah/app/src/main/res/layout/custom_list_bus_setting.xml -->

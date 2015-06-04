@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:bottom="1px">
+        <shape
+            android:padding="5dp"
+            android:shape="rectangle" >
+            <solid android:color="#180052" />
+
+            <stroke
+                android:width="1dip"
+                android:color="#A1A7AE" />
+
+            <corners
+                android:bottomLeftRadius="5dp"
+                android:bottomRightRadius="5dp"
+ />
+        </shape>
+    </item>
+
+</layer-list><!-- From: file:/C:/Users/HJHOME/workspace_android/kjs/Mynah/app/src/main/res/drawable/multitext_bottom.xml -->

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+	android:padding="5dp"
+	android:layout_margin="5dp"
+    android:background="#5435af">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:layout_weight="1"
+		android:padding="5dp">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:layout_weight="1">
+			
+            <ImageView
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:src="@drawable/ic_refresh" />
+            
+        </LinearLayout>
+       	
+    	<LinearLayout
+    	    android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:layout_weight="2">
+    	   
+    	   	<TextView
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:text="새로 고침" 
+	        	android:textColor="#ffffff"
+	        	android:textSize="12sp"/>
+    	</LinearLayout>
+    </LinearLayout>
+
+    
+	<LinearLayout
+        android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:layout_weight="1"
+		android:padding="5dp">
+    	
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:text="최종 업데이트 시간\n" 
+	        android:textColor="#ffffff"
+	        android:gravity="center"
+	        android:textSize="12sp"/>
+
+    	<TextView
+	        android:id="@+id/tvRefreshTime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+
+	        android:textColor="#ffffff"
+	        android:gravity="center"
+	        android:textSize="12sp"/>
+    </LinearLayout>
+    
+   
+
+
+    
+    
+
+</LinearLayout>

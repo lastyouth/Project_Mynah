@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    
+    <color name="logo_background">#FF8224</color>
+    <color name="main_gridLayout">#180052</color>
+    <color name="status_secret_color">#EDEDED</color>
+    <color name="stroke">#dddddd</color>
+    <color name="text_light">#66000000</color>
+    <color name="card_text">#ff8d8d8d</color>
+    <color name="card_title_text">#ff707070</color>
+    <color name="card_light_text">#ffb5b5b5</color>
+    <color name="card_grid_text">#ff707070</color>
+    <color name="card_separator">#ffe5e5e5</color>
+    <color name="card_border">#ffdedede</color>
+    <color name="weather_background">#66cccc</color>
+    <color name="subway_background">#993399</color>
+    <color name="family_background">#339900</color>
+    <color name="gasalarm_background">#cc0000</color>
+    <color name="schedule_background">#669900</color>
+    <color name="refresh_background">#99cc99</color>
+    <color name="bus_background">#993399</color>
+    <color name="drawer_profile_background">#FFA648</color>
+    <color name="black_translucent">#50000000</color>
+    
+
+
+</resources>

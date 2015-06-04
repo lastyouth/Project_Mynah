@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
         
 		
 		//블루투스 초기화
-		
+		/*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 		BTmanager = new RPiBluetoothConnectionManager(deviceID);
 		int ret = BTmanager.initializeBTConnection();
@@ -124,9 +124,9 @@ public class MainActivity extends Activity {
 		
 		ArrayList<String> st = new ArrayList<String>();
 		
-		st.add("김진성님 안녕하세요. Hello");
-		
-		BTmanager.setTTS(st);
+		st.add("서보훈님 안녕하세요. 오늘 날씨는 흐림. 147 버스 3분전. 청량리역 상행 5분전. 발표노트 챙기시기 바랍니다. hello");
+		//st.add("박상준님 안녕하세요. 오늘 날씨는 흐림. 121 버스 5분전. 청량리역 하행 10분전. 노트북 챙기시기 바랍니다. hello");
+		BTmanager.setTTS(st);*/
 		
 	}
 
