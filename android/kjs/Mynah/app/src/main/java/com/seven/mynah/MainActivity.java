@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
     
     //GCM project key
 	private static final String SENDER_ID = "803082977332";
-	//GCM ��Ͽ� Ű(�ڵ��� ���� 1��)
+    //GCM 등록용 키(핸드폰 기준 1개)
     String regid;
 
 
@@ -81,67 +81,69 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		mContext = getApplicationContext();
-		
-		// Splash : LoadingActivity
-		// onCreate���� splash�� �ϴ°�� �ڷΰ��⸦ ������ ����ȭ������ ���ƿ� > loading�� skip�� �� �ִ�.
-		// startActivity(new Intent(this, LoadingActivity.class));
 
-		if (savedInstanceState == null) {
-			setDefaultFragment();
-		}
+        // Splash : LoadingActivity
+        // onCreate에서 splash를 하는경우 뒤로가기를 누를시 메인화면으로 돌아옴 > loading을 skip할 수 있다.
+        // startActivity(new Intent(this, LoadingActivity.class));
 
-        //Google Calendar Manager
-        //startCalendarManager();
+        if (savedInstanceState == null) {
+            setDefaultFragment();
+        }
 
-        // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
-//        if (checkPlayServices()) {
-//            gcm = GoogleCloudMessaging.getInstance(this);
-//            regid = getRegistrationId(mContext);
-//
-//            if (regid.equals("")) {
-//                registerInBackground();
-//            }
-//            Toast.makeText(this, "��� id = " + regid, 1).show();
-//            Log.d(TAG,regid);
-//            
-//            //�佺Ʈ���� �˷�����!
-//        } else {
-//            Log.i(TAG, "No valid Google Play Services APK found.");
-//        }
-        
-//        gcm = GoogleCloudMessaging.getInstance(this);
-//        regid = getRegistrationId(mContext);
-//
-//        if (regid.equals("")) {
-//            registerInBackground();
-//        }
-//        Toast.makeText(this, "��� id = " + regid, 1).show();
-//        Log.d(TAG,regid);
-        
-		
-		//������� �ʱ�ȭ
-		/*
+
+        //Check device for Play Services APK. If check succeeds, proceed with GCM registration.
+        /*
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(mContext);
+
+            if (regid.equals("")) {
+                registerInBackground();
+            }
+            Toast.makeText(this, "등록 id = " + regid, 1).show();
+            Log.d(TAG,regid);
+
+            //토스트에서 알려주자!
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
+        }
+
+        gcm = GoogleCloudMessaging.getInstance(this);
+        regid = getRegistrationId(mContext);
+
+        if (regid.equals("")) {
+            registerInBackground();
+        }
+        Toast.makeText(this, "등록 id = " + regid, Toast.LENGTH_SHORT).show();
+        Log.d(TAG,regid);
+        */
+
+
+        //블루투스 초기화
+
+        /*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 		BTmanager = new RPiBluetoothConnectionManager(deviceID);
 		int ret = BTmanager.initializeBTConnection();
 		if(ret==RPiBluetoothConnectionManager.SUCCESS_INITIALIZE)
 		{
-			
+
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
 		{
-			Toast.makeText(this, "��������� �������� �ʽ��ϴ�.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "블루투스를 지원하지 않습니다.", Toast.LENGTH_SHORT).show();
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
 		{
-			Toast.makeText(this, "��������� ����ϼ���.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "블루투스를 등록하세요.", Toast.LENGTH_SHORT).show();
 		}
-		
+
 		ArrayList<String> st = new ArrayList<String>();
-		
-		st.add("�����ƴ� �ȳ��ϼ���. ���� ������ �帲. 147 ���� 3����. û������ ���� 5����. ��ǥ��Ʈ ì��ñ� �ٶ�ϴ�. hello");
-		//st.add("�ڻ��ش� �ȳ��ϼ���. ���� ������ �帲. 121 ���� 5����. û������ ���� 10����. ��Ʈ�� ì��ñ� �ٶ�ϴ�. hello");
-		BTmanager.setTTS(st);*/
+
+		st.add("서보훈님 안녕하세요. 오늘 날씨는 흐림. 147 버스 3분전. 청량리역 상행 5분전. 발표노트 챙기시기 바랍니다. hello");
+		//st.add("박상준님 안녕하세요. 오늘 날씨는 흐림. 121 버스 5분전. 청량리역 하행 10분전. 노트북 챙기시기 바랍니다. hello");
+		BTmanager.setTTS(st);
+		*/
 		
 	}
 

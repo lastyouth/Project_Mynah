@@ -29,6 +29,9 @@
     <!-- google calendar -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <!-- WAKE_LOCK 추가 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_mynah"
@@ -41,6 +44,20 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.LogInActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.seven.mynah.SignUpActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.Signup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.seven.mynah.MainActivity" >
