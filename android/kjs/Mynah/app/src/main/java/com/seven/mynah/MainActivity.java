@@ -158,8 +158,13 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+<<<<<<< HEAD
 		
 		//BTmanager.stopBTConnection();
+=======
+
+        //BTmanager.stopBTConnection();
+>>>>>>> 93d1a800616a08d1a135712cb03ff14804d2045a
 
 	}
 	

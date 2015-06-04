@@ -24,9 +24,14 @@
 	<permission android:name="com.seven.mynah.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
+<<<<<<< HEAD
     <!-- WAKE_LOCK 추가 -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 	
+=======
+    <!-- google calendar -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+>>>>>>> 93d1a800616a08d1a135712cb03ff14804d2045a
     
     <application
         android:allowBackup="true"
@@ -85,6 +90,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
         </activity>
+
+        <activity
+            android:name=".CalendarActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.Calendar" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         
         <activity
             android:name=".BusSettingActivity">
@@ -155,12 +171,9 @@
                 <category android:name="com.seven.mynah" />
             </intent-filter>
         </receiver>
-        
-        
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
-  
-   
-
-    
-
 </manifest>

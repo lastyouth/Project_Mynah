@@ -3,6 +3,8 @@ package com.seven.mynah;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +34,8 @@ public class WeatherSettingActivity extends Activity{
 	private WeatherInfo winfo;
 	
 	private boolean mIsBackKeyPressed = false;
-	
+	private String cityName;
+
 	private static String TAG = "WeatherSettingActivity";
 	
 	protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +54,8 @@ public class WeatherSettingActivity extends Activity{
         if(weatherArrayList.size() != 0)
         {
         	wlinfo = weatherArrayList.get(0);
-            tvCurrentWeatherLocation.setText(wlinfo.city_name);
+			cityName = wlinfo.city_name;
+            tvCurrentWeatherLocation.setText(cityName);
         }
         
         
@@ -61,16 +65,27 @@ public class WeatherSettingActivity extends Activity{
         		Log.d(TAG, "onClick Start");
         		
 				// TODO Auto-generated method stub
-        		String cityName = etCityName.getText().toString().trim();        		
-        		
+        		cityName = etCityName.getText().toString().trim();
+
+				if(cityName.equals(""))
+				{
+					cityName = wlinfo.city_name;
+				}
         		//DB Transaction
         		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
         		array_location = DBManager.getManager(getApplicationContext()).getWeatherLocationByName(cityName);
-        		
-        		adapter = new CityNameAdapter(getApplicationContext(), R.layout.list_row, array_location);
-        		lvCityName.setAdapter(adapter);
-        		adapter.notifyDataSetChanged();
-        		
+
+				if(array_location.size() == 0)
+				{
+					showSearchError();
+				}
+				else
+				{
+					adapter = new CityNameAdapter(getApplicationContext(), R.layout.list_row, array_location);
+					lvCityName.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
+				}
+
         		Log.d(TAG, "onClick End");
 			}
         });
@@ -105,6 +120,22 @@ public class WeatherSettingActivity extends Activity{
 			finish();
 			overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 		}
+	}
+
+	public void showSearchError()
+	{
+		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.setTitle("");
+		alertDialog.setMessage(cityName + "을(를) 찾을수 없습니다.");
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "확인", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which)
+			{
+				etCityName.setText("");
+				dialog.dismiss();
+			}
+		});
+
+		alertDialog.show();
 	}
 
 }
