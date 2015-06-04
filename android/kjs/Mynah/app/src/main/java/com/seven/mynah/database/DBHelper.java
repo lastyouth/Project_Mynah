@@ -57,7 +57,9 @@ public class DBHelper {
 			db.execSQL(MynahDB.CreateDB._CREATE_WEATHER_LOG_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_BUS_LOG_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_LOG_TABLE);
-			
+
+			//캘린더부분
+			db.execSQL(MynahDB.CreateDB._CREATE_SCHEDULE_TABLE);
 
 		}
 
@@ -74,6 +76,9 @@ public class DBHelper {
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._WEATHER_LOG_TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._BUS_LOG_TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SUBWAY_LOG_TABLE_NAME);
+
+			//캘린더 지우기
+			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
 			onCreate(db);
 		}
 	}

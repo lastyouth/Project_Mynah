@@ -949,4 +949,73 @@ public class DBManager {
 
 	}
 
+	//스케쥴 받아오기 관련 쿼리
+
+	// 스케쥴 객체를 schedule 테이블에 insert하는 함수
+	public synchronized void setScheduleDB(ScheduleInfo scheduleInfo) {
+
+		ContentValues values;
+
+		values = new ContentValues();
+		Date date = new Date();
+
+		values.put(MynahDB._SCHEDULE_COL_SUMMARY, scheduleInfo.scheduleName);
+		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_DATE, scheduleInfo.scheduleDate);
+		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_TIME, scheduleInfo.scheduleTime);
+
+		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
+		Log.d(TAG,"setScheduleDB 완료");
+	}
+
+	//여러개의 스케쥴 한번에 때려박
+	public synchronized void setSchedulesOnDateDB(SchedulesOnDateInfo schedulesOnDateInfo){
+		for(ScheduleInfo sInfo : schedulesOnDateInfo.scheduleList){
+			setScheduleDB(sInfo);
+		}
+		Log.d(TAG,"setSchedulesOnDateDB 완료");
+	}
+
+	//스케쥴에 날짜 찾아서 싸그리 딜리트 하는거
+	public synchronized void deleteSchedulesByDate(String date) {
+		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
+				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + "<>" + date.trim()
+				+ " ;";
+		dbh.mDB.execSQL(sql);
+		Log.d(TAG,"deleteSchedulesByDate 완료");
+	}
+
+	//날짜로 스케쥴 조나 받아오기
+	public synchronized SchedulesOnDateInfo getSchedulesByDateTimeDB(String date) {
+		SchedulesOnDateInfo schedulesOnDateInfo = new SchedulesOnDateInfo();
+		ScheduleInfo scheduleInfo;
+
+		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
+				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " = "
+				+ " order by "
+				+ date.trim()
+				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " ; ";
+
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+
+		int date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_DATE);
+		int time_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_TIME);
+		int summary_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SUMMARY);
+
+		while (!c.isAfterLast()) {
+			scheduleInfo = new ScheduleInfo();
+			scheduleInfo.scheduleName = c.getString(summary_index);
+			scheduleInfo.scheduleDate = c.getString(date_index);
+			scheduleInfo.scheduleTime = c.getString(time_index);
+
+			schedulesOnDateInfo.scheduleList.add(scheduleInfo);
+
+			c.moveToNext();
+		}
+
+		Log.d(TAG,"getSchedulesByDateTimeDB 완료");
+		return schedulesOnDateInfo;
+	}
+
+
+
 }

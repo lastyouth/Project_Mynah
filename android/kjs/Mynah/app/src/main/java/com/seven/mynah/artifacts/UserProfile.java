@@ -3,7 +3,7 @@ package com.seven.mynah.artifacts;
 
 
 public class UserProfile {
-	
+
 	public String name;
 	public String secondname;
 	public String id;
@@ -12,9 +12,9 @@ public class UserProfile {
 	public int usertype;
 	public int inout;
 	public int mastertype;
-	
+
 	public UserProfile() {
-		
+
 	}
-	
+
 }
