@@ -18,6 +18,7 @@ import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.*;
@@ -38,6 +39,7 @@ public class CalendarActivity extends Activity {
     Multimap<String, ScheduleInfo> scheduleByDate;
 
     private CalendarManager calendarManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

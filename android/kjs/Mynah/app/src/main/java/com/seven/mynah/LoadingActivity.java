@@ -59,8 +59,8 @@ public class LoadingActivity extends Activity{
 		{
 			public void handleMessage(Message msg)
 			{
-				//Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-				Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+				//Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
 				startActivity(intent);
 				finish();
 			}

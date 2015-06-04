@@ -38,6 +38,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 
 	private CalendarManager calendarManager;
 	private ArrayList<ScheduleInfo> scheduleInfo;
+	private String today;
 
 	public ScheduleShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
@@ -55,6 +56,15 @@ public class ScheduleShortcutLayout extends CustomButton{
 		tvSchedules = new TextView[maxSchedules];
 		tvPreparation = new TextView(context);
 
+		calendarManager = GlobalGoogleCalendarManager.calendarManager;
+		if(calendarManager == null)
+		{
+
+		}
+		else
+		{
+			setInfo();
+		}
 		/*
 		for(int i = 0; i < 2; i++)
 		{
@@ -98,13 +108,8 @@ public class ScheduleShortcutLayout extends CustomButton{
 		}
 	}
 	
-	public void refresh(Activity activity) {
-		/*
-		calendarManager = new CalendarManager(activity);
-		calendarManager.getCredential();
-		calendarManager.startManager();
-
-		setInfo();*/
+	public void refresh() {
+		setInfo();
 	}
 
 	public void setInfo()
@@ -112,7 +117,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 		calendarManager = GlobalGoogleCalendarManager.calendarManager;
 
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strDate = sdf.format(date);
 
 		scheduleInfo = new ArrayList<ScheduleInfo>();
@@ -124,11 +129,10 @@ public class ScheduleShortcutLayout extends CustomButton{
 			tvSchedules[i] = new TextView(context);
 			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			layoutSchedule.addView(tvSchedules[i]);
-
-			String str = scheduleInfo.get(i).scheduleDate + scheduleInfo.get(i).scheduleName;
+			String str = scheduleInfo.get(i).scheduleTime + " " + scheduleInfo.get(i).scheduleName;
 			tvSchedules[i].setText(str);
+			layoutSchedule.addView(tvSchedules[i]);
 		}
+
 	}
-	
 }

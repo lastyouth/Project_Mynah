@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.UserHandle;
-import android.support.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -60,6 +59,7 @@ public class LogInActivity extends Activity{
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
 
+            //시발아
             //여기서는 이런식으로 what에 헨들링 넘버 넣어놨으니까 그거에 맞는 동작하면 됨.
             System.out.println("in handler");
             if (msg.what == -1) {
