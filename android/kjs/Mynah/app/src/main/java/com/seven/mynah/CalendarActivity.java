@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.artifacts.SchedulesOnDateInfo;
 import com.seven.mynah.calender.CalendarManager;
+import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
 import java.text.SimpleDateFormat;
@@ -39,7 +42,7 @@ public class CalendarActivity extends Activity {
     Multimap<String, ScheduleInfo> scheduleByDate;
 
     private CalendarManager calendarManager;
-
+    private SchedulesOnDateInfo schedulesOnDateInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +88,6 @@ public class CalendarActivity extends Activity {
                 }
                 date = year + "-" + strMonth + "-" + strDay;
 
-
                 lvSchedule = (ListView) findViewById(R.id.lvSchedule);
 
                 //Collection<ScheduleInfo> list = (ArrayList<ScheduleInfo>)scheduleByDate.get(date);
@@ -93,8 +95,19 @@ public class CalendarActivity extends Activity {
 
                 //List list = (List<ScheduleInfo>) scheduleByDate.get(date);
                 //arrayList = new ArrayList<ScheduleInfo>(list);
-                arrayList = calendarManager.getScheduleOnDate(date);
+
+                //arrayList = calendarManager.getScheduleOnDate(date);
+
+                arrayList = DBManager.getManager(getApplicationContext()).getSchedulesByDateTimeDB(date).scheduleList;
+                //ScheduleInfo lastInfo = new ScheduleInfo();
+                //lastInfo.scheduleDate = "last";
+                //lastInfo.scheduleTime = "last";
+                //arrayList.add(lastInfo);
                 adapter = new ScheduleAdapter(getApplicationContext(), R.layout.list_row_schedule, arrayList);
+
+                //View header = getLayoutInflater().inflate(R.layout.list_row_add, null, false);
+                //lvSchedule.addHeaderView(header);
+
                 lvSchedule.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
@@ -124,5 +137,21 @@ public class CalendarActivity extends Activity {
         super.onResume();
         calendarManager.startManager();
         GlobalGoogleCalendarManager.calendarManager = calendarManager;
+
+
+        //Delete All Schedule List in DB
+        //DBManager.getManager(getApplicationContext()).deleteSchedulesAll();
+
+        //Insert All Schedule List into DB
+        //schedulesOnDateInfo = new SchedulesOnDateInfo();
+        //schedulesOnDateInfo.scheduleList = calendarManager.getTotalScheduleList();
+        //DBManager.getManager(getApplicationContext()).setSchedulesOnDateDB(schedulesOnDateInfo);
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.calendar, menu);
+        return true;
+    }
+
 }

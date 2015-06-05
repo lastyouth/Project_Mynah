@@ -56,9 +56,7 @@ public class MainActivity extends Activity {
     AtomicInteger msgId = new AtomicInteger();
     Context mContext;
 
-
     RPiBluetoothConnectionManager BTmanager;
-
 
     //GCM
     public static final String EXTRA_MESSAGE = "message";

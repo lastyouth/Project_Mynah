@@ -76,7 +76,13 @@ public class MynahDB {
 	
 	public static final String _BUS_LOG_TABLE_NAME = "bus_log";
 	public static final String _BUS_LOG_SET_TIME = "set_time";
-	
+
+	//달력 db 관련
+	public static final String _SCHEDULE_TABLE_NAME ="schedule";
+	public static final String _SCHEDULE_COL_SCHEDULE_DATE = "schedule_date";
+	public static final String _SCHEDULE_COL_SCHEDULE_TIME = "schedule_time";
+	public static final String _SCHEDULE_COL_SUMMARY = "summary";
+
 	
 
 	//디비 생성용
@@ -183,8 +189,14 @@ public class MynahDB {
 				+ _GAS_COL_ON_OFF + " text,"
 				+ " primary key(" + _GAS_COL_ID + ","
 				+ _GAS_COL_DATETIME + ") );";
-		
+
+
+		public static final String _CREATE_SCHEDULE_TABLE = "create table "+_SCHEDULE_TABLE_NAME
+				+ " (" + _SCHEDULE_COL_SCHEDULE_DATE + " text, "
+				+ _SCHEDULE_COL_SCHEDULE_TIME + " text, "
+				+ _SCHEDULE_COL_SUMMARY + " text "
+				+ " );";
+
+
 	}
-	
-	
 }
