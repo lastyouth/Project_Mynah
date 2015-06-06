@@ -10,6 +10,7 @@ public class ScheduleInfo {
     public String scheduleName;
     public String scheduleTime;
     public String scheduleDate;
+    public String scheduleCreatedDate;
 
     public boolean isCorrectDate(String date)
     {

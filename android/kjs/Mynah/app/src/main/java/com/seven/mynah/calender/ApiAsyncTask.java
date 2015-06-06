@@ -24,16 +24,17 @@ import java.util.List;
  * Placing the API calls in their own task ensures the UI stays responsive.
  */
 public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
-    private CalendarManager mActivity;
+    private CalendarManager mManager;
     private ScheduleInfo scheduleInfo;
 
+    private List<Event> items;
     /**
      * Constructor.
      *
      * @param activity MainActivity that spawned this task.
      */
     ApiAsyncTask(CalendarManager activity) {
-        this.mActivity = activity;
+        this.mManager = activity;
     }
 
     /**
@@ -44,20 +45,21 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         try {
-            mActivity.clearResultsText();
-            mActivity.updateResultsText(getDataFromApi());
-            mActivity.updateDB();
+            mManager.clearResultsText();
+            mManager.updateResultsText(getDataFromApi());
+            mManager.setEventId(items);
+            mManager.updateDB();
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
-            mActivity.showGooglePlayServicesAvailabilityErrorDialog(
+            mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
 
         } catch (UserRecoverableAuthIOException userRecoverableException) {
-            mActivity.getActivity().startActivityForResult(
+            mManager.getActivity().startActivityForResult(
                     userRecoverableException.getIntent(),
-                    mActivity.REQUEST_AUTHORIZATION);
+                    mManager.REQUEST_AUTHORIZATION);
 
         } catch (IOException e) {
-            mActivity.updateStatus("The following error occurred: " +
+            mManager.updateStatus("The following error occurred: " +
                     e.getMessage());
         }
         return null;
@@ -73,14 +75,14 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
         // List the next 10 events from the primary calendar.
         DateTime now = new DateTime(System.currentTimeMillis());
         ArrayList<ScheduleInfo> eventList = new ArrayList<ScheduleInfo>();
-        Events events = mActivity.mService.events().list("primary")
+        Events events = mManager.mService.events().list("primary")
                 .setMaxResults(20)
                 //.setTimeMin(now)
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute();
-        List<Event> items = events.getItems();
-
+        //List<Event> items = events.getItems();
+        items = events.getItems();
         for (Event event : items) {
             DateTime start = event.getStart().getDateTime();
             if (start == null) {
@@ -98,9 +100,13 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             scheduleInfo.scheduleName = event.getSummary();
             scheduleInfo.scheduleDate = date;
             scheduleInfo.scheduleTime = time;
+            scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
             eventList.add(scheduleInfo);
             //eventStrings.add(
             //        String.format("%s (%s)", event.getSummary(), start));
+
+            //mManager.setEventId(items);
+
         }
         return eventList;
     }

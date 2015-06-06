@@ -67,16 +67,6 @@
         <activity
             android:name=".MainActivity">            
         </activity>
-        
-        
-        <activity
-            android:name=".bluetooth.DeviceListActivity">
-            <intent-filter>
-                <action android:name="com.seven.mynah.Bluetooth" />
-                    
-                <category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-        </activity>
 
 
         <activity
@@ -129,7 +119,7 @@
         <activity
             android:name=".ScheduleManageActivity">
             <intent-filter>
-                <action android:name="com.seven.mynah.Setting" />
+                <action android:name="com.seven.mynah.ScheduleManage" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

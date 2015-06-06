@@ -49,24 +49,11 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleInfo> {
 
 		if (v == null) {
 			viewHolder = new ViewHolder();
-			/*
-			if(getItem(position).scheduleTime.equals("last") && getItem(position).scheduleDate.equals("last"))
-			{
-				v = inflater.inflate(R.layout.list_row_add, null);
-				v.setTag(viewHolder);
-				return v;
-			}
-			else
-			{
-				v = inflater.inflate(R.layout.list_row_schedule, null);
-				viewHolder.tvScheduleName = (TextView) v.findViewById(R.id.tvListRowScheduleName);
-				viewHolder.tvScheduleTime = (TextView) v.findViewById(R.id.tvListRowScheduleTime);
-				v.setTag(viewHolder);
-			}*/
-			viewHolder = new ViewHolder();
 			v = inflater.inflate(R.layout.list_row_schedule, null);
 			viewHolder.tvScheduleName = (TextView) v.findViewById(R.id.tvListRowScheduleName);
 			viewHolder.tvScheduleTime = (TextView) v.findViewById(R.id.tvListRowScheduleTime);
+			viewHolder.createdDate = getItem(position).scheduleCreatedDate;
+			viewHolder.scheduleDate = getItem(position).scheduleDate;
 			v.setTag(viewHolder);
 
 		} else {
@@ -75,6 +62,7 @@ public class ScheduleAdapter extends ArrayAdapter<ScheduleInfo> {
 
 		viewHolder.tvScheduleName.setText(getItem(position).scheduleName);
 		viewHolder.tvScheduleTime.setText(getItem(position).scheduleTime);
+
 		
 		return v;
 	}

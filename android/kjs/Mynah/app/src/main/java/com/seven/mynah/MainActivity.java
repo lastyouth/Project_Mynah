@@ -2,48 +2,37 @@ package com.seven.mynah;
 
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.seven.mynah.calender.ApiAsyncTask;
+import com.seven.mynah.backgroundservice.GetInformationService;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
-import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
-import com.seven.mynah.globalmanager.RPiBluetoothConnectionManager;
+import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
 
 //Google Calendar
-import com.google.android.gms.common.ConnectionResult;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.util.ExponentialBackOff;
 
-import com.google.api.services.calendar.CalendarScopes;
 
 public class MainActivity extends Activity {
 
@@ -53,6 +42,25 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
 
     GoogleCloudMessaging gcm;
+    // for bk service connection
+    GetInformationService infoService;
+    boolean isServiceConnected = false;
+    ServiceConnection mBkServiceConnection = new ServiceConnection(){
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            GetInformationService.LocalBinder tb = (GetInformationService.LocalBinder)service;
+
+            infoService = tb.getService();
+            isServiceConnected = true;
+            infoService.setBindStatus(true);
+            infoService.doTest("Test from Activity");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isServiceConnected = false;
+        }
+    };
     AtomicInteger msgId = new AtomicInteger();
     Context mContext;
 
@@ -69,12 +77,9 @@ public class MainActivity extends Activity {
     //GCM 등록용 키(핸드폰 기준 1개)
     String regid;
 
-
-    //Google Calendar
-    private CalendarManager calendarManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG,"onCreate Start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -83,7 +88,9 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             setDefaultFragment();
         }
-
+        //Toast.makeText(this,"hithere",Toast.LENGTH_SHORT).show();
+        Intent t = new Intent(this,GetInformationService.class);
+        bindService(t,mBkServiceConnection,Context.BIND_AUTO_CREATE);
 
         //Check device for Play Services APK. If check succeeds, proceed with GCM registration.
         /*
@@ -139,6 +146,7 @@ public class MainActivity extends Activity {
 		BTmanager.setTTS(st);
 		*/
 
+        Log.d(TAG,"onCreate Finish");
     }
 
     @Override
@@ -168,6 +176,9 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
+        Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
+        infoService.setBindStatus(false);
+        unbindService(mBkServiceConnection);
 
         //BTmanager.stopBTConnection();
 
@@ -359,13 +370,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
+        Log.d(TAG,"onResume Start");
         super.onResume();
 
         //For Google Calendar
         //calendarManager.startManager();
         //GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume Finish");
     }
 /*
     @Override
@@ -374,10 +386,4 @@ public class MainActivity extends Activity {
         calendarManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }*/
-
-    public void startCalendarManager()
-    {
-        calendarManager = new CalendarManager(this);
-        calendarManager.init();
-    }
 }

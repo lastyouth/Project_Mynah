@@ -23,7 +23,7 @@ public class DBManager {
 	private static SimpleDateFormat defaultDateFormat;
 	private static SimpleDateFormat printDateFormat;
 
-	
+
 	//db version 아님!  max 카운터임
 	private static int log_get_max_counter = 5;
 
@@ -124,7 +124,7 @@ public class DBManager {
 
 		String sql = "select * from " + MynahDB._WEATHER_LOG_TABLE_NAME
 				+ " order by set_time desc;";
-		
+
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 		if (c != null && c.getCount() != 0)
 			c.moveToFirst();
@@ -144,7 +144,7 @@ public class DBManager {
 			c.moveToNext();
 			counter++;
 		}
-		
+
 		Log.d(TAG,"getWeatherDBbyLog 완료");
 		return array_location;
 
@@ -221,12 +221,13 @@ public class DBManager {
 			ttw.wfKor = c.getString(wfkor_index);
 			ttw.sky = c.getString(sky_index);
 
+
 			winfo.array_ttw.add(ttw);
 
 			c.moveToNext();
 		}
 
-		
+
 		Log.d(TAG,"getWeatherDB 완료");
 		return winfo;
 
@@ -263,7 +264,7 @@ public class DBManager {
 		Log.d(TAG,"setWeatherLocationAll 완료");
 
 	}
-	
+
 	public synchronized boolean isSetWeatherLocation()
 	{
 		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME
@@ -274,16 +275,16 @@ public class DBManager {
 		if (c != null && c.getCount() != 0)
 			return true;
 		else return false;
-		
+
 	}
 
 	public synchronized ArrayList<WeatherLocationInfo> getWeatherLocationByName(
 			String _name) {
-	
+
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
-		
-		
-		
+
+
+
 		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME
 				+ " where " + MynahDB._WEATHER_COL_CITY_NAME + " like '%"
 				+ _name + "%' " + " or " + MynahDB._WEATHER_COL_CITY_MDL_NAME
@@ -371,14 +372,14 @@ public class DBManager {
 				+ String.valueOf(GlobalVariable.UserType.me) + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
-		
+
 		Log.d(TAG,"isInitialUser 완료");
 		if (c != null && c.getCount() != 0) {
 			return true;
 		} else {
 			return false;
 		}
-		
+
 	}
 
 	public synchronized FamilyInfo getFamilyDB() {
@@ -412,7 +413,7 @@ public class DBManager {
 
 			c.moveToNext();
 		}
-		
+
 		Log.d(TAG,"getFamilyDB 완료");
 		return finfo;
 	}
@@ -473,7 +474,7 @@ public class DBManager {
 	}
 
 	public synchronized void setBusDB(BusInfo binfo) {
-		
+
 		Log.d(TAG,"setBusDB 시작");
 		ContentValues values;
 
@@ -493,7 +494,7 @@ public class DBManager {
 //					+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
 //					+ "' and " + MynahDB._BUS_COL_ARR_TIME + "= '"
 //					+ binfo.array_ttb.get(i).time + "';";
-			
+
 			sql = "select " + MynahDB._BUS_COL_STATION_ID + ","
 					+ MynahDB._BUS_COL_ROUTE_ID + ","
 					+ MynahDB._BUS_COL_ARR_TIME + ","
@@ -550,7 +551,7 @@ public class DBManager {
 //								+ binfo.route.busRouteId + "' and "
 //								+ MynahDB._BUS_COL_ARR_TIME + "= '"
 //								+ binfo.array_ttb.get(i).time + "'", null);
-				
+
 				dbh.mDB.update(MynahDB._BUS_TABLE_NAME, values,
 						MynahDB._BUS_COL_STATION_ID + "= '"
 								+ binfo.station.stId + "' and "
@@ -562,7 +563,7 @@ public class DBManager {
 			}
 		}
 		Log.d(TAG, "setBusDB 완료");
-		
+
 	}
 
 	public synchronized ArrayList<BusInfo> getBusDBbyLog() {
@@ -582,8 +583,8 @@ public class DBManager {
 		int station_id__index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ID);
 		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
 		int station_arsid_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ASRID);
-		
-		
+
+
 		int counter = 0;
 
 		while (!c.isAfterLast()) {
@@ -595,13 +596,13 @@ public class DBManager {
 			binfo.station.stId = c.getString(station_id__index);
 			binfo.staOrd = c.getString(station_ord_index);
 			binfo.station.arsId = c.getString(station_arsid_index);
-			
+
 			array_binfo.add(binfo);
 			c.moveToNext();
 			counter++;
 		}
 
-		
+
 		Log.d(TAG,"getBusDBbyLog 완료");
 		return array_binfo;
 
@@ -626,7 +627,7 @@ public class DBManager {
 	}
 
 	public synchronized BusInfo getBusDB(BusInfo binfo) {
-		
+
 		Log.d(TAG,"getBusDB 시작");
 		String sql = "select * from " + MynahDB._BUS_TABLE_NAME + " where "
 				+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
@@ -665,11 +666,11 @@ public class DBManager {
 		binfo.route.busRouteId = c.getString(route_id_index);
 		binfo.route.busRouteNm = c.getString(route_name_index);
 		binfo.route.routeType = c.getString(route_type_index);
-		
+
 		binfo.station.stId = c.getString(station_id__index);
 		binfo.station.stNm = c.getString(station_name_index);
 		binfo.station.arsId = c.getString(station_arsid_index);
-		
+
 		binfo.staOrd = c.getString(station_ord_index);
 		binfo.dir = c.getString(dir_index);
 
@@ -748,7 +749,7 @@ public class DBManager {
 
 	public synchronized void setSubwayDB(SubwayInfo swinfo) {
 
-		
+
 		Log.d(TAG,"setSubwayDB 시작");
 		ContentValues values;
 
@@ -890,7 +891,7 @@ public class DBManager {
 	}
 
 	public void setMainUserDB(UserProfile upf) {
-		
+
 		Log.d(TAG,"setMainUserDB 시작");
 		// default로 넣음.
 		ContentValues values;
@@ -962,6 +963,7 @@ public class DBManager {
 		values.put(MynahDB._SCHEDULE_COL_SUMMARY, scheduleInfo.scheduleName);
 		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_DATE, scheduleInfo.scheduleDate);
 		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_TIME, scheduleInfo.scheduleTime);
+		values.put(MynahDB._SCHEDULE_COL_CREATED_DATE, scheduleInfo.scheduleCreatedDate);
 
 		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
 		Log.d(TAG,"setScheduleDB 완료");
@@ -974,6 +976,17 @@ public class DBManager {
 		}
 		Log.d(TAG,"setSchedulesOnDateDB 완료");
 	}
+
+
+	//스케쥴에서 created date 찾아서 딜리트 하는거
+	public synchronized  void deleteSchedulesByCreatedDate(String createdDate){
+		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
+				+ MynahDB._SCHEDULE_COL_CREATED_DATE + "<> '" + createdDate.trim()
+				+ "' ;";
+		dbh.mDB.execSQL(sql);
+		Log.d(TAG,"deleteSchedulesByCreatedDate 완료");
+	}
+
 
 	//스케쥴에 날짜 찾아서 싸그리 딜리트 하는거
 	public synchronized void deleteSchedulesByDate(String date) {
@@ -992,6 +1005,7 @@ public class DBManager {
 		Log.d(TAG,"deleteSchedulesAll 완료");
 	}
 
+
 	//스케줄 테이블의 레코드 개수
 	public synchronized int getSchedulesCount(){
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME+ " ;";
@@ -1007,6 +1021,7 @@ public class DBManager {
 		return c.getCount();
 	}
 
+
 	//날짜로 스케쥴 조나 받아오기
 	public synchronized SchedulesOnDateInfo getSchedulesByDateTimeDB(String date) {
 		SchedulesOnDateInfo schedulesOnDateInfo = new SchedulesOnDateInfo();
@@ -1014,7 +1029,7 @@ public class DBManager {
 
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " = "
-				+ "'" + date.trim() + "'"
+				+ "'" + date.trim()+ "'"
 				//+ " order by "
 				//+ MynahDB._SCHEDULE_COL_SCHEDULE_TIME
 				+ " ; ";
@@ -1030,6 +1045,7 @@ public class DBManager {
 		int date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_DATE);
 		int time_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_TIME);
 		int summary_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SUMMARY);
+		int created_date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_CREATED_DATE);
 
 
 		while (!c.isAfterLast()) {
@@ -1037,6 +1053,7 @@ public class DBManager {
 			scheduleInfo.scheduleName = c.getString(summary_index);
 			scheduleInfo.scheduleDate = c.getString(date_index);
 			scheduleInfo.scheduleTime = c.getString(time_index);
+			scheduleInfo.scheduleCreatedDate = c.getString(created_date_index);
 
 			schedulesOnDateInfo.scheduleList.add(scheduleInfo);
 
@@ -1047,6 +1064,83 @@ public class DBManager {
 		return schedulesOnDateInfo;
 	}
 
+
+	//세션 갖는 유져를 세션테이블이 저장
+	public synchronized void setSessionUserDB(SessionUserInfo suInfo) {
+
+		ContentValues values;
+
+		values = new ContentValues();
+		Date date = new Date();
+
+		values.put(MynahDB._SESSION_USER_COL_USER_ID, suInfo.userId);
+		values.put(MynahDB._SESSION_USER_COL_PRODUCT_ID, suInfo.productId);
+		values.put(MynahDB._SESSION_USER_COL_REGISTRATION_ID, suInfo.registrationId);
+		values.put(MynahDB._SESSION_USER_COL_USER_NAME, suInfo.userName);
+		values.put(MynahDB._SESSION_USER_COL_GENDER_FLAG, suInfo.genderFlag);
+		values.put(MynahDB._SESSION_USER_COL_REPRESENTATIVE_FLAG, suInfo.representativeFlag);
+		values.put(MynahDB._SESSION_USER_COL_IN_HOME_FLAG, suInfo.inHomeFlag);
+		values.put(MynahDB._SESSION_USER_COL_DEVICE_ID, suInfo.deviceId);
+		values.put(MynahDB._SESSION_USER_COL_PASSWORD, suInfo.password);
+		values.put(MynahDB._SESSION_USER_COL_INOUT_TIME, suInfo.inoutTime);
+
+		dbh.mDB.insert(MynahDB._SESSION_USER_TABLE_NAME, null, values);
+		Log.d(TAG,"setSessionUserDB 완료");
+	}
+
+
+	//현재 세션테이블에 있는 애새끼 불러오기
+	public synchronized SessionUserInfo getSessionUserDB(){
+		SessionUserInfo sessionUserInfo = new SessionUserInfo();
+
+		String sql = "select * from " + MynahDB._SESSION_USER_TABLE_NAME + " limit 1 ; ";
+
+		Cursor c = dbh.mDB.rawQuery(sql, null);
+
+		if (c != null && c.getCount() != 0)
+			c.moveToFirst();
+
+		if (c.getCount() == 0)
+			return sessionUserInfo; // error?
+
+		int date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_DATE);
+		int time_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_TIME);
+		int summary_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SUMMARY);
+
+		int user_id_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_USER_ID);
+		int product_id_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_PRODUCT_ID);
+		int registration_id_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_REGISTRATION_ID);
+		int user_name_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_USER_NAME);
+		int gender_flag_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_GENDER_FLAG);
+		int representative_flag_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_REPRESENTATIVE_FLAG);
+		int in_home_flag_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_IN_HOME_FLAG);
+		int device_id_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_DEVICE_ID);
+		int password_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_PASSWORD);
+		int inout_time_index = c.getColumnIndex(MynahDB._SESSION_USER_COL_INOUT_TIME);
+
+		sessionUserInfo.userId = c.getString(user_id_index);
+		sessionUserInfo.productId = c.getString(product_id_index);
+		sessionUserInfo.registrationId = c.getString(registration_id_index);
+		sessionUserInfo.userName = c.getString(user_name_index);
+		sessionUserInfo.genderFlag = c.getString(gender_flag_index);
+		sessionUserInfo.representativeFlag = c.getString(representative_flag_index);
+		sessionUserInfo.inHomeFlag = c.getString(in_home_flag_index);
+		sessionUserInfo.deviceId = c.getString(device_id_index);
+		sessionUserInfo.password = c.getString(password_index);
+		sessionUserInfo.inoutTime = c.getString(inout_time_index);
+
+		Log.d(TAG,"getSessionUserDB 완료");
+		return sessionUserInfo;
+	}
+
+
+	//세션 끊기면 테이블 아예 비워버려
+	public synchronized void deleteSessionUser() {
+		String sql = "delete from " + MynahDB._SESSION_USER_TABLE_NAME
+				+ " ;";
+		dbh.mDB.execSQL(sql);
+		Log.d(TAG,"deleteSessionUser 완료");
+	}
 
 
 }

@@ -10,6 +10,7 @@ import com.google.api.client.util.DateTime;
 
 import com.google.api.services.calendar.model.*;
 import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.calender.CalendarManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
     private ScheduleListActivity mActivity_tmp;
-    private CalendarActivity mActivity;
+    private CalendarManager mActivity;
     private ScheduleInfo scheduleInfo;
 
     /**
@@ -33,7 +34,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
         this.mActivity_tmp = activity;
     }
 
-    ApiAsyncTask(CalendarActivity activity) {
+    ApiAsyncTask(CalendarManager activity) {
         this.mActivity = activity;
     }
 
@@ -53,7 +54,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
                     availabilityException.getConnectionStatusCode());
 
         } catch (UserRecoverableAuthIOException userRecoverableException) {
-            mActivity.startActivityForResult(
+            mActivity.getActivity().startActivityForResult(
                     userRecoverableException.getIntent(),
                     ScheduleListActivity.REQUEST_AUTHORIZATION);
 

@@ -3,50 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Schedule Name-->
     <LinearLayout
+        android:id="@+id/layoutScheduleList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/tvListRowScheduleName"
+        <!-- Schedule Name-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:padding="5dp"/>
+            android:layout_weight="1">
 
+            <TextView
+                android:id="@+id/tvListRowScheduleName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Schedule time-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvListRowScheduleTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Schedule time-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <TextView
-                android:id="@+id/tvListRowScheduleTime"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:padding="5dp"
-                android:gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/abc_ic_clear_mtrl_alpha"/>
-        </LinearLayout>
+        android:layout_weight="5">
 
+        <ImageView
+            android:id="@+id/ivDeleteSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha" />
     </LinearLayout>
+
 
 </LinearLayout>
 
