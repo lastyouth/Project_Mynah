@@ -1,9 +1,12 @@
 package com.seven.mynah;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.Layout;
 import android.view.Menu;
 import android.view.View;
@@ -15,7 +18,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.seven.mynah.artifacts.ScheduleInfo;
@@ -24,6 +37,7 @@ import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -47,6 +61,7 @@ public class CalendarActivity extends Activity {
 
     private CalendarManager calendarManager;
     private SchedulesOnDateInfo schedulesOnDateInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +69,7 @@ public class CalendarActivity extends Activity {
 
         //Google Calendar
         calendarManager = new CalendarManager(this, CalendarActivity.this);
-        calendarManager.getCredential();
+        calendarManager.init();
         //calendarManager = GlobalGoogleCalendarManager.calendarManager;
 
         //get calendar view and set month color white
@@ -98,8 +113,10 @@ public class CalendarActivity extends Activity {
         layoutScheduleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleManageActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), ScheduleManageActivity.class);
+                //startActivity(intent);
+
+                //insertSchedule();
             }
         });
     }
@@ -152,6 +169,39 @@ public class CalendarActivity extends Activity {
 
     public void insertSchedule()
     {
+        calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
+        long now = System.currentTimeMillis();
+
+        final Event event = new Event()
+                .setSummary("Test")
+                .setLocation("800 Howard St., San Francisco, CA 94103");
+
+        DateTime startDateTime = new DateTime("2015-06-06T10:00:00+09:00");
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime)
+                .setTimeZone("Korea/Seoul");
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime("2015-06-06T12:00:00+09:00");
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime)
+                .setTimeZone("Korea/Seoul");
+        event.setEnd(end);
+        final String calendarId = "primary";
+
+        runOnUiThread(new Runnable() {
+            Event _event = event;
+            String _calendarId = calendarId;
+            @Override
+            public void run() {
+                try {
+                    _event = calendarManager.getCalendarService().events().insert(_calendarId, event).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 

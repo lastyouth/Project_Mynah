@@ -60,7 +60,7 @@ public class CalendarManager{
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { CalendarScopes.CALENDAR_READONLY };
+    private static final String[] SCOPES = { CalendarScopes.CALENDAR };
     // !Google Calendar
 
     //By Js
@@ -97,7 +97,7 @@ public class CalendarManager{
         init();
     }*/
 
-    public void getCredential()
+    public void init()
     {
         // Initialize credentials and service object.
         SharedPreferences settings = activity.getPreferences(Context.MODE_PRIVATE);
@@ -108,7 +108,7 @@ public class CalendarManager{
 
         mService = new com.google.api.services.calendar.Calendar.Builder(
                 transport, jsonFactory, credential)
-                .setApplicationName("Google Calendar API Android Quickstart")
+                .setApplicationName("Mynah")
                 .build();
     }
 
@@ -351,5 +351,16 @@ public class CalendarManager{
         schedulesOnDateInfo.scheduleList = calendarManager.getTotalScheduleList();
         DBManager.getManager(mContext).setSchedulesOnDateDB(schedulesOnDateInfo);
     }
+
+    public com.google.api.services.calendar.Calendar getCalendarService()
+    {
+        return mService;
+    }
+
+    public GoogleAccountCredential getCalendarCredential()
+    {
+        return credential;
+    }
+
 
 }

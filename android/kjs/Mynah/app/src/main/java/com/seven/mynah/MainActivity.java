@@ -378,6 +378,6 @@ public class MainActivity extends Activity {
     public void startCalendarManager()
     {
         calendarManager = new CalendarManager(this);
-        calendarManager.getCredential();
+        calendarManager.init();
     }
 }
