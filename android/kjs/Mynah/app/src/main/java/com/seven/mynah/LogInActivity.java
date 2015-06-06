@@ -26,7 +26,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.UserHandle;
-import android.support.annotation.Nullable;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;

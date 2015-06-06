@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -21,6 +20,8 @@ import android.widget.GridLayout.Spec;
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 import com.seven.mynah.globalmanager.GlobalVariable;
+
+import javax.annotation.Nullable;
 
 public class CustomButtonsFragment extends Fragment {
 
@@ -167,8 +168,9 @@ public class CustomButtonsFragment extends Fragment {
 		switch(str)
 		{
 		case "Schedule":
-
-			return;
+			shortcutType = GlobalVariable.ShortcutType.typeScheduleShortcut;
+			cb = (ScheduleShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
+			break;
 		case "Bus":
 			shortcutType = GlobalVariable.ShortcutType.typeBusShortcut;
 			cb = (BusShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
@@ -202,14 +204,14 @@ public class CustomButtonsFragment extends Fragment {
 		}
 		cb.refresh();
 	}
-
+/*
 	public void refresh(String str, Activity activity)
 	{
 		CustomButton cb = null;
 		int shortcutType = GlobalVariable.ShortcutType.typeScheduleShortcut;
 		cb = (ScheduleShortcutLayout)HashButtons.get(String.valueOf(shortcutType));
 		cb.refresh(activity);
-	}
+	}*/
 	
 	public View getBusView()
 	{

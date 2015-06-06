@@ -68,10 +68,6 @@ public class CustomButton extends FrameLayout{
 		
 	}
 
-	public void refresh(Activity activity)
-	{
-
-	}
 	
 	
 	public void test()

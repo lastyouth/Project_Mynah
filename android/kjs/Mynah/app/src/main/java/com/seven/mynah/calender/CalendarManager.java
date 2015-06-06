@@ -18,6 +18,9 @@ import com.google.common.collect.Multimap;
 import com.seven.mynah.CalendarActivity;
 import com.seven.mynah.MainActivity;
 import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.artifacts.SchedulesOnDateInfo;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -65,7 +68,9 @@ public class CalendarManager{
     private Activity activity;
 
     private ArrayList<ScheduleInfo> totalScheduleList;
-    Multimap<String, ScheduleInfo> scheduleByDate;
+    private Multimap<String, ScheduleInfo> scheduleByDate;
+    private CalendarManager calendarManager;
+    private SchedulesOnDateInfo schedulesOnDateInfo;
 
     public CalendarManager(Context _mContext, Activity _activity) {
         mContext = _mContext;
@@ -220,7 +225,6 @@ public class CalendarManager{
                     totalScheduleList = dataList;
                     scheduleByDate = ArrayListMultimap.create();
                     scheduleByDate = setHashmapFromScheduleInfo(totalScheduleList);
-                    int a = 0;
 //                    mStatusText.setText("Data retrieved using" + " the Google Calendar API:");
 //                    mResultsText.setText(TextUtils.join("\n\n", dataStrings));
                 }
@@ -330,6 +334,22 @@ public class CalendarManager{
     public Activity getActivity()
     {
         return activity;
+    }
+    public ArrayList<ScheduleInfo> getTotalScheduleList()
+    {
+        return totalScheduleList;
+    }
+
+    public void updateDB()
+    {
+        //Delete All Schedule List in DB
+        DBManager.getManager(mContext).deleteSchedulesAll();
+
+        //Insert All Schedule List into DB
+        schedulesOnDateInfo = new SchedulesOnDateInfo();
+        calendarManager = GlobalGoogleCalendarManager.calendarManager;
+        schedulesOnDateInfo.scheduleList = calendarManager.getTotalScheduleList();
+        DBManager.getManager(mContext).setSchedulesOnDateDB(schedulesOnDateInfo);
     }
 
 }

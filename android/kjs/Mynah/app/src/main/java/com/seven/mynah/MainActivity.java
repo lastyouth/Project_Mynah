@@ -47,28 +47,26 @@ import com.google.api.services.calendar.CalendarScopes;
 
 public class MainActivity extends Activity {
 
-	private CustomButtonsFragment cbf;
-	private View view;
-	
-	private static final String TAG = "MainActivity";
-	
+    private CustomButtonsFragment cbf;
+    private View view;
+
+    private static final String TAG = "MainActivity";
+
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context mContext;
-    
-    
+
     RPiBluetoothConnectionManager BTmanager;
 
-	
-    //GCM 
+    //GCM
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    
+
     //GCM project key
-	private static final String SENDER_ID = "803082977332";
-    //GCM ë“±ë¡ìš© í‚¤(í•¸ë“œí° ê¸°ì¤€ 1ê°œ)
+    private static final String SENDER_ID = "803082977332";
+    //GCM µî·Ï¿ë Å°(ÇÚµåÆù ±âÁØ 1°³)
     String regid;
 
 
@@ -76,15 +74,11 @@ public class MainActivity extends Activity {
     private CalendarManager calendarManager;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		mContext = getApplicationContext();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        // Splash : LoadingActivity
-        // onCreateì—ì„œ splashë¥¼ í•˜ëŠ”ê²½ìš° ë’¤ë¡œê°€ê¸°ë¥¼ ëˆ„ë¥¼ì‹œ ë©”ì¸í™”ë©´ìœ¼ë¡œ ëŒì•„ì˜´ > loadingì„ skipí•  ìˆ˜ ìˆë‹¤.
-        // startActivity(new Intent(this, LoadingActivity.class));
+        mContext = getApplicationContext();
 
         if (savedInstanceState == null) {
             setDefaultFragment();
@@ -100,10 +94,10 @@ public class MainActivity extends Activity {
             if (regid.equals("")) {
                 registerInBackground();
             }
-            Toast.makeText(this, "ë“±ë¡ id = " + regid, 1).show();
+            Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
             Log.d(TAG,regid);
 
-            //í† ìŠ¤íŠ¸ì—ì„œ ì•Œë ¤ì£¼ì!
+            //Åä½ºÆ®¿¡¼­ ¾Ë·ÁÁÖÀÚ!
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -114,12 +108,12 @@ public class MainActivity extends Activity {
         if (regid.equals("")) {
             registerInBackground();
         }
-        Toast.makeText(this, "ë“±ë¡ id = " + regid, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "µî·Ï id = " + regid, Toast.LENGTH_SHORT).show();
         Log.d(TAG,regid);
         */
 
 
-        //ë¸”ë£¨íˆ¬ìŠ¤ ì´ˆê¸°í™”
+        //ºí·çÅõ½º ÃÊ±âÈ­
 
         /*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
@@ -131,100 +125,99 @@ public class MainActivity extends Activity {
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
 		{
-			Toast.makeText(this, "ë¸”ë£¨íˆ¬ìŠ¤ë¥¼ ì§€ì›í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ºí·çÅõ½º¸¦ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù.", Toast.LENGTH_SHORT).show();
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
 		{
-			Toast.makeText(this, "ë¸”ë£¨íˆ¬ìŠ¤ë¥¼ ë“±ë¡í•˜ì„¸ìš”.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ºí·çÅõ½º¸¦ µî·ÏÇÏ¼¼¿ä.", Toast.LENGTH_SHORT).show();
 		}
 
 		ArrayList<String> st = new ArrayList<String>();
 
-		st.add("ì„œë³´í›ˆë‹˜ ì•ˆë…•í•˜ì„¸ìš”. ì˜¤ëŠ˜ ë‚ ì”¨ëŠ” íë¦¼. 147 ë²„ìŠ¤ 3ë¶„ì „. ì²­ëŸ‰ë¦¬ì—­ ìƒí–‰ 5ë¶„ì „. ë°œí‘œë…¸íŠ¸ ì±™ê¸°ì‹œê¸° ë°”ëë‹ˆë‹¤. hello");
-		//st.add("ë°•ìƒì¤€ë‹˜ ì•ˆë…•í•˜ì„¸ìš”. ì˜¤ëŠ˜ ë‚ ì”¨ëŠ” íë¦¼. 121 ë²„ìŠ¤ 5ë¶„ì „. ì²­ëŸ‰ë¦¬ì—­ í•˜í–‰ 10ë¶„ì „. ë…¸íŠ¸ë¶ ì±™ê¸°ì‹œê¸° ë°”ëë‹ˆë‹¤. hello");
+		st.add("¼­º¸ÈÆ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 147 ¹ö½º 3ºĞÀü. Ã»·®¸®¿ª »óÇà 5ºĞÀü. ¹ßÇ¥³ëÆ® Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
+		//st.add("¹Ú»óÁØ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 121 ¹ö½º 5ºĞÀü. Ã»·®¸®¿ª ÇÏÇà 10ºĞÀü. ³ëÆ®ºÏ Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
 		BTmanager.setTTS(st);
 		*/
-		
-	}
 
-	@Override
-	protected void onRestart()
-	{
-		super.onRestart();
-    	Log.d(TAG, "onRestart");
-		//Toast.makeText(this, "onRestart()", 1).show();
-		
-		//refresh
+    }
 
-		//get kind of intent from activity called finished()?
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        Log.d(TAG, "onRestart");
+        //Toast.makeText(this, "onRestart()", 1).show();
 
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				cbf.refresh("Bus");
-				cbf.refresh("Subway");
-				cbf.refresh("Weather");
+        //refresh
 
-                //cbf.refresh("Schedule", MainActivity.this);
-			}
-		});
-    	
-	}
-	
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
+        //get kind of intent from activity called finished()?
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                cbf.refresh("Bus");
+                cbf.refresh("Subway");
+                cbf.refresh("Weather");
+                cbf.refresh("Schedule");
+            }
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
 
         //BTmanager.stopBTConnection();
 
-	}
-	
-	private void setDefaultFragment() {
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction transaction = fm.beginTransaction();
-		cbf = new CustomButtonsFragment();
-		transaction.add(R.id.container, cbf);
-		transaction.commit();
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    private void setDefaultFragment() {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        cbf = new CustomButtonsFragment();
+        transaction.add(R.id.container, cbf);
+        transaction.commit();
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-	public void startSettingActivity(String type) 
-	{
-		String intentActionName = "com.seven.mynah.";
-		intentActionName += type;
-		Intent intent = new Intent(intentActionName);
-		startActivity(intent);
-		this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-	}
-	
-	public void startBluetoothActivity_temp()
-	{
-		Intent intent = new Intent("com.seven.mynah.Bluetooth");
-		//Intent intent = new Intent(this,DeviceListActivity.class);
-		startActivity(intent);
-		//this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-	/**
+    public void startSettingActivity(String type)
+    {
+        String intentActionName = "com.seven.mynah.";
+        intentActionName += type;
+        Intent intent = new Intent(intentActionName);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    }
+
+    public void startBluetoothActivity_temp()
+    {
+        Intent intent = new Intent("com.seven.mynah.Bluetooth");
+        //Intent intent = new Intent(this,DeviceListActivity.class);
+        startActivity(intent);
+        //this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    }
+
+    /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
      * the Google Play Store or enable it in the device's system settings.
@@ -289,8 +282,8 @@ public class MainActivity extends Activity {
         return registrationId;
     }
 
-	
-	private void registerInBackground() {
+
+    private void registerInBackground() {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -327,7 +320,7 @@ public class MainActivity extends Activity {
             }
         }.execute(null, null, null);
     }
-	
+
     /**
      * @return Application's version code from the {@code PackageManager}.
      */
@@ -341,8 +334,8 @@ public class MainActivity extends Activity {
             throw new RuntimeException("Could not get package name: " + e);
         }
     }
-	
-	/**
+
+    /**
      * @return Application's {@code SharedPreferences}.
      */
     private SharedPreferences getGcmPreferences(Context context) {
@@ -351,7 +344,7 @@ public class MainActivity extends Activity {
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
-    
+
     /**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
      * messages to your app. Not needed for this demo since the device sends upstream messages
@@ -360,19 +353,19 @@ public class MainActivity extends Activity {
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
     }
-    
-    
+
+
 
     @Override
     protected void onResume() {
-    	// TODO Auto-generated method stub
-    	super.onResume();
+        // TODO Auto-generated method stub
+        super.onResume();
 
         //For Google Calendar
         //calendarManager.startManager();
         //GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
-    	Log.d(TAG,"onResume");
+        Log.d(TAG,"onResume");
     }
 /*
     @Override

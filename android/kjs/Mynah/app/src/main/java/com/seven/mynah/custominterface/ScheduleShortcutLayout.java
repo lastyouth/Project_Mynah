@@ -10,8 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +25,8 @@ import com.seven.mynah.MainActivity;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 
 public class ScheduleShortcutLayout extends CustomButton{
 	
@@ -36,6 +40,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 
 	private CalendarManager calendarManager;
 	private ArrayList<ScheduleInfo> scheduleInfo;
+	private String today;
 
 	public ScheduleShortcutLayout(Context context, CustomButtonsFragment _cbf) 
 	{
@@ -53,6 +58,25 @@ public class ScheduleShortcutLayout extends CustomButton{
 		tvSchedules = new TextView[maxSchedules];
 		tvPreparation = new TextView(context);
 
+		calendarManager = GlobalGoogleCalendarManager.calendarManager;
+		int tableCount = DBManager.getManager(getContext()).getSchedulesCount();
+
+		//DBManager.getManager(context).deleteSchedulesAll();
+		if(tableCount == 0)
+		{
+			layoutSchedule.removeAllViews();
+			tvSchedules[0] = new TextView(context);
+			tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
+			tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+			tvSchedules[0].setText("터치하여 구글캘린더와 연동을 시작하세요.");
+
+			layoutSchedule.setGravity(Gravity.CENTER);
+			layoutSchedule.addView(tvSchedules[0]);
+		}
+		else
+		{
+			setInfo();
+		}
 		/*
 		for(int i = 0; i < 2; i++)
 		{
@@ -69,7 +93,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 		tvPreparation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 		layoutPreparation.addView(tvPreparation);
 		*/
-
+		//setInfo();
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
@@ -96,35 +120,46 @@ public class ScheduleShortcutLayout extends CustomButton{
 		}
 	}
 	
-	public void refresh(Activity activity) {
-		/*
-		calendarManager = new CalendarManager(activity);
-		calendarManager.getCredential();
-		calendarManager.startManager();
-
-		setInfo();*/
+	public void refresh() {
+		setInfo();
 	}
 
 	public void setInfo()
 	{
+		//calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strDate = sdf.format(date);
 
 		scheduleInfo = new ArrayList<ScheduleInfo>();
-		scheduleInfo = calendarManager.getScheduleOnDate(strDate);
+		//scheduleInfo = calendarManager.getScheduleOnDate(strDate);
+		scheduleInfo = DBManager.getManager(getContext()).getSchedulesByDateTimeDB(strDate).scheduleList;
 
 		int size = scheduleInfo.size();
+		layoutSchedule.removeAllViews();
+		if(size == 0)
+		{
+			layoutSchedule.removeAllViews();
+			layoutSchedule.setGravity(Gravity.NO_GRAVITY);
+			tvSchedules[0] = new TextView(context);
+			tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
+			tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+			tvSchedules[0].setText("등록된 스케줄이 없습니다.");
+
+			layoutSchedule.setGravity(Gravity.CENTER);
+			layoutSchedule.addView(tvSchedules[0]);
+		}
+
 		for(int i = 0; i < size; i++)
 		{
 			tvSchedules[i] = new TextView(context);
 			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			layoutSchedule.addView(tvSchedules[i]);
-
-			String str = scheduleInfo.get(i).scheduleDate + scheduleInfo.get(i).scheduleName;
+			String str = scheduleInfo.get(i).scheduleTime + " " + scheduleInfo.get(i).scheduleName;
 			tvSchedules[i].setText(str);
+			layoutSchedule.addView(tvSchedules[i]);
 		}
+
 	}
-	
 }

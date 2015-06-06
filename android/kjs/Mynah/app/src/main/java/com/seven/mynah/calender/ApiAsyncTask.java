@@ -46,6 +46,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
         try {
             mActivity.clearResultsText();
             mActivity.updateResultsText(getDataFromApi());
+            mActivity.updateDB();
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mActivity.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
@@ -92,6 +93,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             String date = str[0];
             // hh-mm-ss
             String time = str[1].split("\\.")[0];
+            time = time.substring(0, 5);
             scheduleInfo = new ScheduleInfo();
             scheduleInfo.scheduleName = event.getSummary();
             scheduleInfo.scheduleDate = date;

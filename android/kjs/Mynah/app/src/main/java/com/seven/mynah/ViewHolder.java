@@ -1,5 +1,6 @@
 package com.seven.mynah;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seven.mynah.artifacts.BusStationInfo;
@@ -22,5 +23,6 @@ public class ViewHolder {
 	//Calendar
 	public TextView tvScheduleName;
 	public TextView tvScheduleTime;
+	public ImageView ivAdd;
 	
 }
