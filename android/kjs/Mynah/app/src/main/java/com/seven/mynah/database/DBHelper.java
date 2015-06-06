@@ -61,6 +61,9 @@ public class DBHelper {
 			//캘린더부분
 			db.execSQL(MynahDB.CreateDB._CREATE_SCHEDULE_TABLE);
 
+			//세션유져부분
+			db.execSQL(MynahDB.CreateDB._CREATE_SESSION_USER_TABLE);
+
 		}
 
 		// 버전이 업데이트 되었을 경우 DB를 다시 만들어 준다.
@@ -79,6 +82,10 @@ public class DBHelper {
 
 			//캘린더 지우기
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
+
+			//세션유져 테이블 지우기기
+		db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
+
 			onCreate(db);
 		}
 	}

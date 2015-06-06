@@ -89,7 +89,12 @@ public class LogInActivity extends Activity{
                         }
                         else if(result.equals("LOGIN_SUCCESS")) {
                             Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                            //성공했으니 서버로부터 계정 정보 받아와서
+                            //내부 세션 유지 테이블에 insert 해야될거같애여
+
+
+                           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -125,6 +130,8 @@ public class LogInActivity extends Activity{
         etUserPassword = (EditText) findViewById(R.id.etUserPassword);
 
         //new AsyncHttpTask(this, "192.168.35.75", mHandler, jobj, 1, 0);
+
+        //세션 데이터 지우는 부분 들어가야 할 것 같아
 
         //login button listener
         btn = (Button) findViewById(R.id.btnLogin);

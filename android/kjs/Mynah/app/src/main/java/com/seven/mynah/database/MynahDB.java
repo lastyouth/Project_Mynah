@@ -83,6 +83,19 @@ public class MynahDB {
 	public static final String _SCHEDULE_COL_SCHEDULE_TIME = "schedule_time";
 	public static final String _SCHEDULE_COL_SUMMARY = "summary";
 
+
+	//로그인된 유져 세션을 위한 테이블
+	public static final String _SESSION_USER_TABLE_NAME = "session_user";
+	public static final String _SESSION_USER_COL_USER_ID = "user_id";
+	public static final String _SESSION_USER_COL_PRODUCT_ID = "product_id";
+	public static final String _SESSION_USER_COL_REGISTRATION_ID = "registration_id";
+	public static final String _SESSION_USER_COL_USER_NAME = "user_name";
+	public static final String _SESSION_USER_COL_GENDER_FLAG = "gender_flag";
+	public static final String _SESSION_USER_COL_REPRESENTATIVE_FLAG = "representative_flag";
+	public static final String _SESSION_USER_COL_IN_HOME_FLAG = "in_home_flag";
+	public static final String _SESSION_USER_COL_DEVICE_ID = "device_id";
+	public static final String _SESSION_USER_COL_PASSWORD = "password";
+	public static final String _SESSION_USER_COL_INOUT_TIME = "inout_time";
 	
 
 	//디비 생성용
@@ -191,11 +204,27 @@ public class MynahDB {
 				+ _GAS_COL_DATETIME + ") );";
 
 
+		//스케줄 관련 테이블
 		public static final String _CREATE_SCHEDULE_TABLE = "create table "+_SCHEDULE_TABLE_NAME
 				+ " (" + _SCHEDULE_COL_SCHEDULE_DATE + " text, "
 				+ _SCHEDULE_COL_SCHEDULE_TIME + " text, "
 				+ _SCHEDULE_COL_SUMMARY + " text "
 				+ " );";
+
+
+		//세션 유지를 위해 만든 세션사용자 테이블
+		public static final String _CREATE_SESSION_USER_TABLE = "create table " + _SESSION_USER_TABLE_NAME
+				+ " (" + _SESSION_USER_COL_USER_ID + " text, "
+				+ _SESSION_USER_COL_PRODUCT_ID + " text, "
+				+ _SESSION_USER_COL_REGISTRATION_ID + " text, "
+				+ _SESSION_USER_COL_USER_NAME + " text, "
+				+ _SESSION_USER_COL_GENDER_FLAG + " text, "
+				+ _SESSION_USER_COL_REPRESENTATIVE_FLAG + " text, "
+				+ _SESSION_USER_COL_IN_HOME_FLAG + " text, "
+				+ _SESSION_USER_COL_DEVICE_ID + " text, "
+				+ _SESSION_USER_COL_PASSWORD + " text, "
+				+ _SESSION_USER_COL_INOUT_TIME + " datetime, "
+				+ " primary key(" + _SESSION_USER_COL_USER_ID + ") ); ";
 
 
 	}
