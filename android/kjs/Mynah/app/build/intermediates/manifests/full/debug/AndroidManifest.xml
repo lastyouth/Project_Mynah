@@ -62,13 +62,6 @@
         </activity>
         <activity android:name="com.seven.mynah.MainActivity" >
         </activity>
-        <activity android:name="com.seven.mynah.bluetooth.DeviceListActivity" >
-            <intent-filter>
-                <action android:name="com.seven.mynah.Bluetooth" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name="com.seven.mynah.CalendarActivity" >
             <intent-filter>
                 <action android:name="com.seven.mynah.Calendar" />

@@ -51,7 +51,7 @@ public class CalendarManager{
      * Note: Do not confuse this class with API library's model classes, which
      * represent specific data structures.
      */
-    com.google.api.services.calendar.Calendar mService;
+    public com.google.api.services.calendar.Calendar mService;
     GoogleAccountCredential credential;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -149,8 +149,8 @@ public class CalendarManager{
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, "Retrieving data¡¦", Toast.LENGTH_SHORT).show();
-//                mStatusText.setText("Retrieving data¡¦");
+                Toast.makeText(mContext, "Retrieving dataï¿½ï¿½", Toast.LENGTH_SHORT).show();
+//                mStatusText.setText("Retrieving dataï¿½ï¿½");
 //                mResultsText.setText("");
             }
         });
@@ -291,7 +291,7 @@ public class CalendarManager{
      * @param connectionStatusCode code describing the presence (or lack of)
      *     Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    public void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         activity.runOnUiThread(new Runnable() {
             @Override
