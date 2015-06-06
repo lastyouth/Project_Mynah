@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 
     //GCM project key
     private static final String SENDER_ID = "803082977332";
-    //GCM ï¿½ï¿½Ï¿ï¿½ Å°(ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½)
+    //GCM µî·Ï¿ë Å°(ÇÚµåÆù ±âÁØ 1°³)
     String regid;
 
 
@@ -79,10 +79,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mContext = getApplicationContext();
-
-        // Splash : LoadingActivity
-        // onCreateï¿½ï¿½ï¿½ï¿½ splashï¿½ï¿½ ï¿½Ï´Â°ï¿½ï¿½ ï¿½Ú·Î°ï¿½ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ > loadingï¿½ï¿½ skipï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
-        // startActivity(new Intent(this, LoadingActivity.class));
 
         if (savedInstanceState == null) {
             setDefaultFragment();
@@ -98,10 +94,10 @@ public class MainActivity extends Activity {
             if (regid.equals("")) {
                 registerInBackground();
             }
-            Toast.makeText(this, "ï¿½ï¿½ï¿½ id = " + regid, 1).show();
+            Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
             Log.d(TAG,regid);
 
-            //ï¿½ä½ºÆ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½!
+            //Åä½ºÆ®¿¡¼­ ¾Ë·ÁÁÖÀÚ!
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -112,12 +108,12 @@ public class MainActivity extends Activity {
         if (regid.equals("")) {
             registerInBackground();
         }
-        Toast.makeText(this, "ï¿½ï¿½ï¿½ id = " + regid, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "µî·Ï id = " + regid, Toast.LENGTH_SHORT).show();
         Log.d(TAG,regid);
         */
 
 
-        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+        //ºí·çÅõ½º ÃÊ±âÈ­
 
         /*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
@@ -129,17 +125,17 @@ public class MainActivity extends Activity {
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
 		{
-			Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ºí·çÅõ½º¸¦ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù.", Toast.LENGTH_SHORT).show();
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
 		{
-			Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ºí·çÅõ½º¸¦ µî·ÏÇÏ¼¼¿ä.", Toast.LENGTH_SHORT).show();
 		}
 
 		ArrayList<String> st = new ArrayList<String>();
 
-		st.add("ï¿½ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å¸². 147 ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½. Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Ç¥ï¿½ï¿½Æ® Ã¬ï¿½ï¿½Ã±ï¿½ ï¿½Ù¶ï¿½Ï´ï¿½. hello");
-		//st.add("ï¿½Ú»ï¿½ï¿½Ø´ï¿½ ï¿½È³ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å¸². 121 ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½. Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 10ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Æ®ï¿½ï¿½ Ã¬ï¿½ï¿½Ã±ï¿½ ï¿½Ù¶ï¿½Ï´ï¿½. hello");
+		st.add("¼­º¸ÈÆ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 147 ¹ö½º 3ºÐÀü. Ã»·®¸®¿ª »óÇà 5ºÐÀü. ¹ßÇ¥³ëÆ® Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
+		//st.add("¹Ú»óÁØ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 121 ¹ö½º 5ºÐÀü. Ã»·®¸®¿ª ÇÏÇà 10ºÐÀü. ³ëÆ®ºÏ Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
 		BTmanager.setTTS(st);
 		*/
 
