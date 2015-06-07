@@ -963,6 +963,7 @@ public class DBManager {
 		values.put(MynahDB._SCHEDULE_COL_SUMMARY, scheduleInfo.scheduleName);
 		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_DATE, scheduleInfo.scheduleDate);
 		values.put(MynahDB._SCHEDULE_COL_SCHEDULE_TIME, scheduleInfo.scheduleTime);
+		values.put(MynahDB._SCHEDULE_COL_CREATED_DATE, scheduleInfo.scheduleCreatedDate);
 
 		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
 		Log.d(TAG,"setScheduleDB 완료");
@@ -975,6 +976,17 @@ public class DBManager {
 		}
 		Log.d(TAG,"setSchedulesOnDateDB 완료");
 	}
+
+
+	//스케쥴에서 created date 찾아서 딜리트 하는거
+	public synchronized  void deleteSchedulesByCreatedDate(String createdDate){
+		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
+				+ MynahDB._SCHEDULE_COL_CREATED_DATE + "<> '" + createdDate.trim()
+				+ "' ;";
+		dbh.mDB.execSQL(sql);
+		Log.d(TAG,"deleteSchedulesByCreatedDate 완료");
+	}
+
 
 	//스케쥴에 날짜 찾아서 싸그리 딜리트 하는거
 	public synchronized void deleteSchedulesByDate(String date) {
@@ -993,10 +1005,7 @@ public class DBManager {
 		Log.d(TAG,"deleteSchedulesAll 완료");
 	}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 69f29c24b412cad068077caecd4717d903a2f088
 	//스케줄 테이블의 레코드 개수
 	public synchronized int getSchedulesCount(){
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME+ " ;";
@@ -1012,10 +1021,7 @@ public class DBManager {
 		return c.getCount();
 	}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 69f29c24b412cad068077caecd4717d903a2f088
 	//날짜로 스케쥴 조나 받아오기
 	public synchronized SchedulesOnDateInfo getSchedulesByDateTimeDB(String date) {
 		SchedulesOnDateInfo schedulesOnDateInfo = new SchedulesOnDateInfo();
@@ -1023,11 +1029,7 @@ public class DBManager {
 
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " = "
-<<<<<<< HEAD
 				+ "'" + date.trim()+ "'"
-=======
-				+ "'" + date.trim() + "'"
->>>>>>> 69f29c24b412cad068077caecd4717d903a2f088
 				//+ " order by "
 				//+ MynahDB._SCHEDULE_COL_SCHEDULE_TIME
 				+ " ; ";
@@ -1043,6 +1045,7 @@ public class DBManager {
 		int date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_DATE);
 		int time_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_TIME);
 		int summary_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SUMMARY);
+		int created_date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_CREATED_DATE);
 
 
 		while (!c.isAfterLast()) {
@@ -1050,6 +1053,7 @@ public class DBManager {
 			scheduleInfo.scheduleName = c.getString(summary_index);
 			scheduleInfo.scheduleDate = c.getString(date_index);
 			scheduleInfo.scheduleTime = c.getString(time_index);
+			scheduleInfo.scheduleCreatedDate = c.getString(created_date_index);
 
 			schedulesOnDateInfo.scheduleList.add(scheduleInfo);
 
@@ -1089,7 +1093,7 @@ public class DBManager {
 	public synchronized SessionUserInfo getSessionUserDB(){
 		SessionUserInfo sessionUserInfo = new SessionUserInfo();
 
-		String sql = "select * from " + MynahDB._SESSION_USER_TABLE_NAME + " ; ";
+		String sql = "select * from " + MynahDB._SESSION_USER_TABLE_NAME + " limit 1 ; ";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 
@@ -1097,7 +1101,7 @@ public class DBManager {
 			c.moveToFirst();
 
 		if (c.getCount() == 0)
-			return null; // error?
+			return sessionUserInfo; // error?
 
 		int date_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_DATE);
 		int time_index = c.getColumnIndex(MynahDB._SCHEDULE_COL_SCHEDULE_TIME);

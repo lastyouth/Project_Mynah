@@ -82,6 +82,7 @@ public class MynahDB {
 	public static final String _SCHEDULE_COL_SCHEDULE_DATE = "schedule_date";
 	public static final String _SCHEDULE_COL_SCHEDULE_TIME = "schedule_time";
 	public static final String _SCHEDULE_COL_SUMMARY = "summary";
+	public static final String _SCHEDULE_COL_CREATED_DATE = "created_date";
 
 
 	//로그인된 유져 세션을 위한 테이블
@@ -208,7 +209,8 @@ public class MynahDB {
 		public static final String _CREATE_SCHEDULE_TABLE = "create table "+_SCHEDULE_TABLE_NAME
 				+ " (" + _SCHEDULE_COL_SCHEDULE_DATE + " text, "
 				+ _SCHEDULE_COL_SCHEDULE_TIME + " text, "
-				+ _SCHEDULE_COL_SUMMARY + " text "
+				+ _SCHEDULE_COL_SUMMARY + " text, "
+				+ _SCHEDULE_COL_CREATED_DATE + " text "
 				+ " );";
 
 

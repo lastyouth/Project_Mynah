@@ -15,7 +15,7 @@ public class DBHelper {
 
 	private static final String DATABASE_NAME = "mynah.db";
 
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 
 
 	public static SQLiteDatabase mDB;
@@ -84,7 +84,7 @@ public class DBHelper {
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
 
 			//세션유져 테이블 지우기기
-		db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SESSION_USER_TABLE_NAME);
 
 			onCreate(db);
 		}

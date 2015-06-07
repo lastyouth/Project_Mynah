@@ -9,9 +9,8 @@ public class WakeonReceiver extends BroadcastReceiver{
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
-		// 실행하고 싶은 서비스 시작시키기
-		// 서비스에서 서비스 실행하기 확인...
-		
+		Intent service = new Intent(context, GetInformationService.class);
+		context.startService(service);
 	}
 
 	
