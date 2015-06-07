@@ -46,7 +46,6 @@ public class MainActivity extends Activity {
     GetInformationService infoService;
     boolean isServiceConnected = false;
     ServiceConnection mBkServiceConnection = new ServiceConnection(){
-
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             GetInformationService.LocalBinder tb = (GetInformationService.LocalBinder)service;
@@ -78,12 +77,9 @@ public class MainActivity extends Activity {
     //GCM 등록용 키(핸드폰 기준 1개)
     String regid;
 
-
-    //Google Calendar
-    private CalendarManager calendarManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG,"onCreate Start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -150,6 +146,7 @@ public class MainActivity extends Activity {
 		BTmanager.setTTS(st);
 		*/
 
+        Log.d(TAG,"onCreate Finish");
     }
 
     @Override
@@ -373,13 +370,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
+        Log.d(TAG,"onResume Start");
         super.onResume();
 
         //For Google Calendar
         //calendarManager.startManager();
         //GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume Finish");
     }
 /*
     @Override
@@ -388,10 +386,4 @@ public class MainActivity extends Activity {
         calendarManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }*/
-
-    public void startCalendarManager()
-    {
-        calendarManager = new CalendarManager(this);
-        calendarManager.getCredential();
-    }
 }

@@ -99,7 +99,7 @@
         </activity>
         <activity android:name="com.seven.mynah.ScheduleManageActivity" >
             <intent-filter>
-                <action android:name="com.seven.mynah.Setting" />
+                <action android:name="com.seven.mynah.ScheduleManage" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

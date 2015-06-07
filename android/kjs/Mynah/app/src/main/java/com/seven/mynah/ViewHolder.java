@@ -24,5 +24,7 @@ public class ViewHolder {
 	public TextView tvScheduleName;
 	public TextView tvScheduleTime;
 	public ImageView ivAdd;
+	public String createdDate;
+	public String scheduleDate;
 	
 }

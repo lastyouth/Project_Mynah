@@ -46,7 +46,6 @@ public class LoadingActivity extends Activity{
 	{
 		Intent service = new Intent(this, GetInformationService.class);
 		startService(service);
-		 
 	}
 	public void Loading()
 	{
@@ -75,11 +74,11 @@ public class LoadingActivity extends Activity{
 		if (DBManager.getManager(this).isInitialUser())
 		{
 			UserProfile up =  DBManager.getManager(this).getMainUserDB();
-			Toast.makeText(this, "김진성님 환영합니다.", 1).show();
+			Toast.makeText(this, "김진성님 환영합니다.", Toast.LENGTH_SHORT).show();
 		}
 		else 
 		{
-			Toast.makeText(this, "등록된 유저가 없습니다.", 1).show();
+			Toast.makeText(this, "등록된 유저가 없습니다.", Toast.LENGTH_SHORT).show();
 		}
 			
 	}
@@ -97,8 +96,6 @@ public class LoadingActivity extends Activity{
 		up.mastertype = GlobalVariable.UserType.master;
 		
 		DBManager.getManager(this).setMainUserDB(up);
-		
-		
 	}
 	
 	private void loadWeatherLocation()

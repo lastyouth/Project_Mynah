@@ -23,7 +23,7 @@ public class DBManager {
 	private static SimpleDateFormat defaultDateFormat;
 	private static SimpleDateFormat printDateFormat;
 
-	
+
 	//db version 아님!  max 카운터임
 	private static int log_get_max_counter = 5;
 
@@ -124,7 +124,7 @@ public class DBManager {
 
 		String sql = "select * from " + MynahDB._WEATHER_LOG_TABLE_NAME
 				+ " order by set_time desc;";
-		
+
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 		if (c != null && c.getCount() != 0)
 			c.moveToFirst();
@@ -144,7 +144,7 @@ public class DBManager {
 			c.moveToNext();
 			counter++;
 		}
-		
+
 		Log.d(TAG,"getWeatherDBbyLog 완료");
 		return array_location;
 
@@ -227,7 +227,7 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		
+
 		Log.d(TAG,"getWeatherDB 완료");
 		return winfo;
 
@@ -264,7 +264,7 @@ public class DBManager {
 		Log.d(TAG,"setWeatherLocationAll 완료");
 
 	}
-	
+
 	public synchronized boolean isSetWeatherLocation()
 	{
 		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME
@@ -275,16 +275,16 @@ public class DBManager {
 		if (c != null && c.getCount() != 0)
 			return true;
 		else return false;
-		
+
 	}
 
 	public synchronized ArrayList<WeatherLocationInfo> getWeatherLocationByName(
 			String _name) {
-	
+
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
-		
-		
-		
+
+
+
 		String sql = "select * from " + MynahDB._WEATHER_CITY_TABLE_NAME
 				+ " where " + MynahDB._WEATHER_COL_CITY_NAME + " like '%"
 				+ _name + "%' " + " or " + MynahDB._WEATHER_COL_CITY_MDL_NAME
@@ -372,14 +372,14 @@ public class DBManager {
 				+ String.valueOf(GlobalVariable.UserType.me) + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
-		
+
 		Log.d(TAG,"isInitialUser 완료");
 		if (c != null && c.getCount() != 0) {
 			return true;
 		} else {
 			return false;
 		}
-		
+
 	}
 
 	public synchronized FamilyInfo getFamilyDB() {
@@ -413,7 +413,7 @@ public class DBManager {
 
 			c.moveToNext();
 		}
-		
+
 		Log.d(TAG,"getFamilyDB 완료");
 		return finfo;
 	}
@@ -474,7 +474,7 @@ public class DBManager {
 	}
 
 	public synchronized void setBusDB(BusInfo binfo) {
-		
+
 		Log.d(TAG,"setBusDB 시작");
 		ContentValues values;
 
@@ -494,7 +494,7 @@ public class DBManager {
 //					+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
 //					+ "' and " + MynahDB._BUS_COL_ARR_TIME + "= '"
 //					+ binfo.array_ttb.get(i).time + "';";
-			
+
 			sql = "select " + MynahDB._BUS_COL_STATION_ID + ","
 					+ MynahDB._BUS_COL_ROUTE_ID + ","
 					+ MynahDB._BUS_COL_ARR_TIME + ","
@@ -551,7 +551,7 @@ public class DBManager {
 //								+ binfo.route.busRouteId + "' and "
 //								+ MynahDB._BUS_COL_ARR_TIME + "= '"
 //								+ binfo.array_ttb.get(i).time + "'", null);
-				
+
 				dbh.mDB.update(MynahDB._BUS_TABLE_NAME, values,
 						MynahDB._BUS_COL_STATION_ID + "= '"
 								+ binfo.station.stId + "' and "
@@ -563,7 +563,7 @@ public class DBManager {
 			}
 		}
 		Log.d(TAG, "setBusDB 완료");
-		
+
 	}
 
 	public synchronized ArrayList<BusInfo> getBusDBbyLog() {
@@ -583,8 +583,8 @@ public class DBManager {
 		int station_id__index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ID);
 		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
 		int station_arsid_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ASRID);
-		
-		
+
+
 		int counter = 0;
 
 		while (!c.isAfterLast()) {
@@ -596,13 +596,13 @@ public class DBManager {
 			binfo.station.stId = c.getString(station_id__index);
 			binfo.staOrd = c.getString(station_ord_index);
 			binfo.station.arsId = c.getString(station_arsid_index);
-			
+
 			array_binfo.add(binfo);
 			c.moveToNext();
 			counter++;
 		}
 
-		
+
 		Log.d(TAG,"getBusDBbyLog 완료");
 		return array_binfo;
 
@@ -627,7 +627,7 @@ public class DBManager {
 	}
 
 	public synchronized BusInfo getBusDB(BusInfo binfo) {
-		
+
 		Log.d(TAG,"getBusDB 시작");
 		String sql = "select * from " + MynahDB._BUS_TABLE_NAME + " where "
 				+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
@@ -666,11 +666,11 @@ public class DBManager {
 		binfo.route.busRouteId = c.getString(route_id_index);
 		binfo.route.busRouteNm = c.getString(route_name_index);
 		binfo.route.routeType = c.getString(route_type_index);
-		
+
 		binfo.station.stId = c.getString(station_id__index);
 		binfo.station.stNm = c.getString(station_name_index);
 		binfo.station.arsId = c.getString(station_arsid_index);
-		
+
 		binfo.staOrd = c.getString(station_ord_index);
 		binfo.dir = c.getString(dir_index);
 
@@ -749,7 +749,7 @@ public class DBManager {
 
 	public synchronized void setSubwayDB(SubwayInfo swinfo) {
 
-		
+
 		Log.d(TAG,"setSubwayDB 시작");
 		ContentValues values;
 
@@ -891,7 +891,7 @@ public class DBManager {
 	}
 
 	public void setMainUserDB(UserProfile upf) {
-		
+
 		Log.d(TAG,"setMainUserDB 시작");
 		// default로 넣음.
 		ContentValues values;
