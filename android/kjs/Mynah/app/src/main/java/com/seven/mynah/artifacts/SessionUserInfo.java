@@ -5,7 +5,7 @@ package com.seven.mynah.artifacts;
  * 주의사항 :
  * 코딩 잘 못하겠어서 Boolean 변수여야 정상적인 변수들이 있는데
  * 걔네들 String으로 했어.
- * "true", "false"로 equals 구별해야할듯 ㅠㅠ
+ * "1", "0"로 equals 구별해야할듯 ㅠㅠ
  */
 
 public class SessionUserInfo {
@@ -13,9 +13,9 @@ public class SessionUserInfo {
     public String productId;
     public String registrationId;
     public String userName;
-    public String genderFlag; //boolean 남 true 여 false
-    public String representativeFlag; //boolean 대표 true 안대표 false
-    public String inHomeFlag; //boolean 대표 true 안대표 false
+    public String genderFlag; //boolean 남 1 여 0
+    public String representativeFlag; //boolean 대표 1 안대표 0
+    public String inHomeFlag; //boolean 대표 1 안대표 0
     public String deviceId;
     public String password;
     public String inoutTime; //datetime

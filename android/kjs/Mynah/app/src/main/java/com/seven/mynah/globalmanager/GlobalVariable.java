@@ -4,7 +4,8 @@ package com.seven.mynah.globalmanager;
 public final class GlobalVariable {
 
 	
-	public static final String WEB_SERVER_IP = "https://192.168.35.75";
+	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //우리집 내부아이피 테스트용
+	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //외부아이피. 유동이라 가끔 바뀌네 시발
     public static final int HTTP_PORT = 13337;
     public static final int HTTPS_PORT = 13337;
 	public static boolean isScheduleDBUpdated = false;

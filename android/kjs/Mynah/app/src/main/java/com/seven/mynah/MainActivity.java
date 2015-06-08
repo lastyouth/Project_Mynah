@@ -175,13 +175,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         // TODO Auto-generated method stub
+        Log.d(TAG, "onDestroy Start");
         super.onDestroy();
         Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
         infoService.setBindStatus(false);
         unbindService(mBkServiceConnection);
 
         //BTmanager.stopBTConnection();
-
+        Log.d(TAG, "onDestroy Start");
     }
 
     private void setDefaultFragment() {

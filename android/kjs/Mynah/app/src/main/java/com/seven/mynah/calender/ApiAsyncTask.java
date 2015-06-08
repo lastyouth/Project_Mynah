@@ -53,9 +53,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             mManager.clearResultsText();
             mManager.updateResultsText(getDataFromApi());
             mManager.setEventId(items);
-            GlobalVariable.isScheduleDBUpdated = false;
             mManager.updateDB();
-            GlobalVariable.isScheduleDBUpdated = true;
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());

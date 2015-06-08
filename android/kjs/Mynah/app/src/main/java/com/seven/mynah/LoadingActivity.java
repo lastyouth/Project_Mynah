@@ -40,7 +40,6 @@ public class LoadingActivity extends Activity{
 		setContentView(R.layout.activity_logo);
 		startService();
 		Loading();
-		
 	}
 	public void startService()
 	{
@@ -53,7 +52,7 @@ public class LoadingActivity extends Activity{
 		createTempUser();
 		checkInitUser();
 		loadWeatherLocation();
-		
+
 		Handler handler = new Handler()
 		{
 			public void handleMessage(Message msg)
@@ -66,6 +65,7 @@ public class LoadingActivity extends Activity{
 		};
 		
 		handler.sendEmptyMessageDelayed(0, 1000);
+
 	}
 	
 	private void checkInitUser()

@@ -32,6 +32,8 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -127,7 +129,8 @@ public class CalendarManager {
         } else {
             if (isDeviceOnline()) {
                 Log.d(TAG, "ApiAsyncTask execute start");
-                new ApiAsyncTask(this).execute();
+                //new ApiAsyncTask(this).execute();
+                ApiAsyncTaskExecute();
                 Log.d(TAG, "ApiAsyncTask execute finish");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
@@ -370,7 +373,8 @@ public class CalendarManager {
         } else {
             if (isDeviceOnline()) {
                 Log.d(TAG, "InsertAsyncTask Start");
-                new InsertAsyncTask(this, event).execute();
+                //new InsertAsyncTask(this, event).execute();
+                InsertAsyncTaskExecute(event);
                 Log.d(TAG, "InsertAsyncTask Finish");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
@@ -387,7 +391,8 @@ public class CalendarManager {
         } else {
             if (isDeviceOnline()) {
                 Log.d(TAG, "DeleteAsyncTask Start");
-                new DeleteAsyncTask(this, eventId).execute();
+                //new DeleteAsyncTask(this, eventId).execute();
+               DeleteAsyncTaskExecute(eventId);
                 Log.d(TAG, "DeleteAsyncTask Start");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
@@ -407,13 +412,55 @@ public class CalendarManager {
                 }
             }
         });
-
     }
 
     public String getEventIdFromCreatedDate(String createdDate) {
         String id = eventIdMap.get(createdDate);
         return id;
     }
+
+
+    //http://stackoverflow.com/questions/9119627/android-sdk-asynctask-doinbackground-not-running-subclass
+    // AsyncTask.execute() is NOT WORKED in OLD API version
+    // So use AsyncTask.executeOnExecutor instead depend on API version
+    private void ApiAsyncTaskExecute()
+    {
+        ApiAsyncTask refreshTask = new ApiAsyncTask(this);
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.HONEYCOMB)
+        {
+            refreshTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else
+        {
+            refreshTask.execute();
+        }
+    }
+
+    private void InsertAsyncTaskExecute(Event event)
+    {
+        InsertAsyncTask insertTask = new InsertAsyncTask(this, event);
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.HONEYCOMB)
+        {
+            insertTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else
+        {
+            insertTask.execute();
+        }
+    }
+
+    private void DeleteAsyncTaskExecute(String eventId)
+    {
+        DeleteAsyncTask deleteTask = new DeleteAsyncTask(this, eventId);
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.HONEYCOMB) {
+            deleteTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else
+        {
+            deleteTask.execute();
+        }
+    }
+
 
 
 }

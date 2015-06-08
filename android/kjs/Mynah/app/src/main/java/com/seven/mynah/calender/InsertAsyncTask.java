@@ -34,9 +34,7 @@ public class InsertAsyncTask extends AsyncTask<Void, Void, Void>{
         try {
             mManager.clearResultsText();
             insertDataToApi();
-            GlobalVariable.isScheduleDBUpdated = false;
             mManager.updateDB();
-            GlobalVariable.isScheduleDBUpdated = true;
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());

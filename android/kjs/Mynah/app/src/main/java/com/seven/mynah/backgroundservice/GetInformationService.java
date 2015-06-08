@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 public class GetInformationService extends Service
@@ -14,11 +15,15 @@ public class GetInformationService extends Service
     private boolean isBindWithActivity = false;
     RPiBluetoothConnectionManager mBluetoothManager;
 
+    private String TAG = "GetInformationService";
+
 	@Override
     public void onCreate() 
 	{
-		Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onCreate Start");
+		//Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
 		super.onCreate();
+        Log.d(TAG, "onCreate Finish");
     }
 
     public class LocalBinder extends Binder {
@@ -32,8 +37,10 @@ public class GetInformationService extends Service
     public int onStartCommand(Intent intent, int flags, int startId) 
     {
         // TODO Auto-generated method stub
-    	Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
-    	return START_STICKY;
+    	//Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onStartCommand Start");
+        Log.d(TAG, "onStartCommand Finish");
+        return START_STICKY;
     	//return super.onStartCommand(intent, flags, startId);
     }
     
@@ -41,8 +48,11 @@ public class GetInformationService extends Service
     public IBinder onBind(Intent intent) 
     {
         // TODO Auto-generated method stub
+        Log.d(TAG, "onBind Start");
+        Log.d(TAG, "onBind Finish");
     	return mServicePointer;
     }
+
     public void doTest(String target)
     {
         Toast.makeText(this,target,Toast.LENGTH_SHORT).show();
@@ -51,10 +61,13 @@ public class GetInformationService extends Service
     {
         isBindWithActivity = status;
     }
-    public void onDestroy() 
+
+    public void onDestroy()
     {
         // TODO Auto-generated method stub
     	Toast.makeText(this, "Service onDestroy", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onDestroy Start");
+        Log.d(TAG, "onDestroy Finish");
     	super.onDestroy();
     }
 }
