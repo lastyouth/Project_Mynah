@@ -358,19 +358,11 @@ ADDED from AndroidManifest.xml:134:3
 	android:name
 		ADDED from AndroidManifest.xml:135:7
 receiver#com.seven.mynah.backgroundservice.WakeonReceiver
-<<<<<<< HEAD
-ADDED from AndroidManifest.xml:150:9
-	android:enabled
-		ADDED from AndroidManifest.xml:151:43
-	android:label
-		ADDED from AndroidManifest.xml:151:10
-=======
 ADDED from AndroidManifest.xml:140:9
 	android:enabled
 		ADDED from AndroidManifest.xml:141:43
 	android:label
 		ADDED from AndroidManifest.xml:141:10
->>>>>>> sbh
 	android:permission
 		ADDED from AndroidManifest.xml:142:10
 	android:name
@@ -431,12 +423,6 @@ MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 	android:value
-<<<<<<< HEAD
-		ADDED from AndroidManifest.xml:174:13
-	android:name
-		ADDED from AndroidManifest.xml:173:13
-=======
 		ADDED from AndroidManifest.xml:164:13
 	android:name
 		ADDED from AndroidManifest.xml:163:13
->>>>>>> sbh

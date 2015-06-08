@@ -2,53 +2,18 @@
 <items version="2" >
 
     <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.20.0\93d82db2bca534960253f43424b2ba9d7638b4d2\google-http-client-1.20.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-c5553029712bb6f06f6b6c2942404411271cbf1a.jar" />
+        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-1.20.0-c5a422868154affd7a1c6f1853d1fd621af83e47.jar" />
     </item>
     <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-android\1.20.0\313dc99a7963523871495897ca11aa8472b3c6fd\google-http-client-android-1.20.0.jar"
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-android-1.20.0-7cdc44c5d7897da988a01edaa54d6fd80318ff5a.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-6f04823e9e3ab8032f32f946f68b31aa4138fec5.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-38e0f25d5a38e12d0a212f52f3a4321aa89cac54.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-gson\1.20.0\ace1924800ca8c256f6a3f63e72ee13e1b458d36\google-api-client-gson-1.20.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="ace1924800ca8c256f6a3f63e72ee13e1b458d36">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-client-gson-1.20.0-15d35679e19dd3c3251e402584a0de1b886d09da.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-677f2998acad447f4ce2b31f92d7c48ff29cfc39.jar" />
-    </item>
-    <item
-        jar="D:\android\androidsdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-b3a264d8ee0f20ed0d3d0f7ae009233173a20397.jar" />
+        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-cdceadb250d0dd0f1bf351e5ae147eade3ff5fca.jar" />
     </item>
     <item
         jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.1.3\f6c3aed1cdfa21b5c1737c915186ea93a95a58bd\jackson-core-2.1.3.jar"
@@ -58,18 +23,39 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\jackson-core-2.1.3-c1d18bd4855ff2afdf102f5aee6dd10e46d641f3.jar" />
     </item>
     <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\jsr305-1.3.9-14610d43267c3b3f98ca021c458955a7ad3eed9a.jar" />
-    </item>
-    <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-7685513276d209522d2d8a7491ef5573731056b0.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.1\2e66da15851f9f5b5079228f856c2f090ba98c38\gson-2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2e66da15851f9f5b5079228f856c2f090ba98c38">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\gson-2.1-f08f3535daac82b22beffdf463a383d4af44ddac.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-android\1.20.0\5673179575c32b69a474334255c3044adf18d40\google-api-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="05673179575c32b69a474334255c3044adf18d40">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-client-android-1.20.0-e013a63e8f5ed6401a84bc4daadaba9f9de92542.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-72fde6a4cce346c16fb08200d04abf404e4d16a5.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-32705186d5416a55f61377b73fceabbdc8bbcf1b.jar" />
     </item>
     <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.3.0\jars\classes.jar"
@@ -86,32 +72,11 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-services-calendar-v3-rev125-1.20.0-2d18252d829830cd531017dabc72b750c3f31b21.jar" />
     </item>
     <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.3.0\jars\classes.jar"
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.20.0\1d086ac5756475ddf451af2e2df6e288d18608ca\google-oauth-client-1.20.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-7ce227e50c0db6c4affa17f4d1b1b15d6dcfddaa.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-a1442ed67a1e18a4049d2073501b569f76d8398d.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-72fde6a4cce346c16fb08200d04abf404e4d16a5.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\guava-jdk5-13.0-5b52890c69359362075f6fefa01a81a350642865.jar" />
+        sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-oauth-client-1.20.0-8e7bcf18130b9f42307d423bbcbb6325c2c2d326.jar" />
     </item>
     <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.3.0\jars\classes.jar"
@@ -121,74 +86,11 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-9d5cb41b32bdcbc563592b44a5e6cf6a7b027cda.jar" />
     </item>
     <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.3.0\jars\classes.jar"
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-e7d03854493a403df566b6d09c26d28352a59866.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.20.0\1d086ac5756475ddf451af2e2df6e288d18608ca\google-oauth-client-1.20.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-oauth-client-1.20.0-8e7bcf18130b9f42307d423bbcbb6325c2c2d326.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.20.0\93d82db2bca534960253f43424b2ba9d7638b4d2\google-http-client-1.20.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-1.20.0-c5a422868154affd7a1c6f1853d1fd621af83e47.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-cdceadb250d0dd0f1bf351e5ae147eade3ff5fca.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-2bd4169cdd793b3a8e287567a5b470af596293c3.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.20.0\2408070b2abec043624d35b35e30450f1b663858\google-http-client-jackson2-1.20.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2408070b2abec043624d35b35e30450f1b663858">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.20.0-3a67fb4c8c0bb0808058840f763b611a11c3b805.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-6defb2c676c5b77e54dd4e44dee6432385e340f8.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-33cd4a373fae88e9b3796775b55642210dd5b8f9.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-32705186d5416a55f61377b73fceabbdc8bbcf1b.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-android\1.20.0\5673179575c32b69a474334255c3044adf18d40\google-api-client-android-1.20.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="05673179575c32b69a474334255c3044adf18d40">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-client-android-1.20.0-e013a63e8f5ed6401a84bc4daadaba9f9de92542.jar" />
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-58c20d039a0cc5ca503ccd132946a1b5961cb2f2.jar" />
     </item>
     <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
@@ -198,39 +100,18 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-e75efd5266174b39b04767ae7b1ca26bf4628989.jar" />
     </item>
     <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-android\1.20.0\313dc99a7963523871495897ca11aa8472b3c6fd\google-http-client-android-1.20.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-58c20d039a0cc5ca503ccd132946a1b5961cb2f2.jar" />
+        sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-android-1.20.0-7cdc44c5d7897da988a01edaa54d6fd80318ff5a.jar" />
     </item>
     <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.3.0\jars\classes.jar"
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-b04f5d4b4ffbd7843d96e219a945761c445867d9.jar" />
-    </item>
-    <item
-        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.1\2e66da15851f9f5b5079228f856c2f090ba98c38\gson-2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2e66da15851f9f5b5079228f856c2f090ba98c38">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\gson-2.1-f08f3535daac82b22beffdf463a383d4af44ddac.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-acbc76205a4a72277be8b31865ea20702585ecca.jar" />
-    </item>
-    <item
-        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.3.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
-        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-88c9f9239ee1166911d9dcc318e58f8df7765793.jar" />
+        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-a1442ed67a1e18a4049d2073501b569f76d8398d.jar" />
     </item>
     <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.3.0\jars\classes.jar"
@@ -240,11 +121,74 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-de0de06a6b0e3be0d21890bfccd195f05f4163ae.jar" />
     </item>
     <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-6f04823e9e3ab8032f32f946f68b31aa4138fec5.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.20.0\2408070b2abec043624d35b35e30450f1b663858\google-http-client-jackson2-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2408070b2abec043624d35b35e30450f1b663858">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.20.0-3a67fb4c8c0bb0808058840f763b611a11c3b805.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-38e0f25d5a38e12d0a212f52f3a4321aa89cac54.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-b04f5d4b4ffbd7843d96e219a945761c445867d9.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\jsr305-1.3.9-14610d43267c3b3f98ca021c458955a7ad3eed9a.jar" />
+    </item>
+    <item
+        jar="D:\android\androidsdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-b3a264d8ee0f20ed0d3d0f7ae009233173a20397.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-2bd4169cdd793b3a8e287567a5b470af596293c3.jar" />
+    </item>
+    <item
         jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-da4deeb5a790487fee0f1fdddefdbd7222b16215.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-677f2998acad447f4ce2b31f92d7c48ff29cfc39.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-c5553029712bb6f06f6b6c2942404411271cbf1a.jar" />
     </item>
     <item
         jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.20.0\d3e66209ae9e749b2d6833761e7885f60f285564\google-api-client-1.20.0.jar"
@@ -254,11 +198,67 @@
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-client-1.20.0-74926870a802b1644e67c20ca9aa75718ab5544e.jar" />
     </item>
     <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-e7d03854493a403df566b6d09c26d28352a59866.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-88c9f9239ee1166911d9dcc318e58f8df7765793.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-33cd4a373fae88e9b3796775b55642210dd5b8f9.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-6defb2c676c5b77e54dd4e44dee6432385e340f8.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-acbc76205a4a72277be8b31865ea20702585ecca.jar" />
+    </item>
+    <item
         jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-gson\1.20.0\9204765f39000f6109c927ac66c7963bf9c7df19\google-http-client-gson-1.20.0.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9204765f39000f6109c927ac66c7963bf9c7df19">
         <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-http-client-gson-1.20.0-0c8ca0f19bfffd235a068040ea39f84e4e23bc9f.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-gson\1.20.0\ace1924800ca8c256f6a3f63e72ee13e1b458d36\google-api-client-gson-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ace1924800ca8c256f6a3f63e72ee13e1b458d36">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\google-api-client-gson-1.20.0-15d35679e19dd3c3251e402584a0de1b886d09da.jar" />
+    </item>
+    <item
+        jar="C:\Users\sbh\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\guava-jdk5-13.0-5b52890c69359362075f6fefa01a81a350642865.jar" />
+    </item>
+    <item
+        jar="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
+        <dex dex="D:\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-7ce227e50c0db6c4affa17f4d1b1b15d6dcfddaa.jar" />
     </item>
 
 </items>

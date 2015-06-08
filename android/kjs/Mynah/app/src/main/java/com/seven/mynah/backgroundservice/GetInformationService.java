@@ -1,9 +1,12 @@
 package com.seven.mynah.backgroundservice;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 public class GetInformationService extends Service
@@ -13,11 +16,27 @@ public class GetInformationService extends Service
     private final IBinder mServicePointer = new LocalBinder();
     private boolean isBindWithActivity = false;
     RPiBluetoothConnectionManager mBluetoothManager;
+    Context mCtx;
 
 	@Override
     public void onCreate() 
 	{
 		Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
+        mCtx = this;
+        new Thread(){
+            public void run()
+            {
+                //Looper.prepare();
+                while(true) {
+                    Log.d("GetInformationService", "Service is On");
+                    try {
+                        Thread.sleep(2500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
 		super.onCreate();
     }
 
