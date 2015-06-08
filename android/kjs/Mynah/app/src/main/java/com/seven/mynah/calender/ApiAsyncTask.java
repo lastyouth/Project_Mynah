@@ -6,6 +6,7 @@ package com.seven.mynah.calender;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -14,6 +15,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import java.util.List;
 public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
     private CalendarManager mManager;
     private ScheduleInfo scheduleInfo;
+    private String TAG = "ApiAsyncTask";
 
     private List<Event> items;
     /**
@@ -44,11 +48,14 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
      */
     @Override
     protected Void doInBackground(Void... params) {
+        Log.d(TAG, "doInBackground Start");
         try {
             mManager.clearResultsText();
             mManager.updateResultsText(getDataFromApi());
             mManager.setEventId(items);
+            GlobalVariable.isScheduleDBUpdated = false;
             mManager.updateDB();
+            GlobalVariable.isScheduleDBUpdated = true;
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
@@ -62,6 +69,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             mManager.updateStatus("The following error occurred: " +
                     e.getMessage());
         }
+        Log.d(TAG, "doInBackground Finish");
         return null;
     }
 
@@ -108,6 +116,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             //mManager.setEventId(items);
 
         }
+        GlobalGoogleCalendarManager.calendarManager = mManager;
         return eventList;
     }
 

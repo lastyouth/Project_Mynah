@@ -1,12 +1,14 @@
 package com.seven.mynah;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.CalendarContract;
 import android.text.Layout;
 import android.util.Log;
@@ -39,6 +41,7 @@ import com.seven.mynah.artifacts.SchedulesOnDateInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,12 +63,15 @@ public class CalendarActivity extends Activity {
     private LinearLayout layoutScheduleAdd;
     private LinearLayout layoutScheduleList;
     private ImageView ivDeleteEvent;
+    private CalendarView cv;
 
     private ArrayList<ScheduleInfo> totalScheduleList;
     Multimap<String, ScheduleInfo> scheduleByDate;
 
     private CalendarManager calendarManager;
     private SchedulesOnDateInfo schedulesOnDateInfo;
+
+    private String selectedDate;
 
     private String TAG = "CalendarActivity";
 
@@ -79,10 +85,12 @@ public class CalendarActivity extends Activity {
         //Google Calendar
         calendarManager = new CalendarManager(this, CalendarActivity.this);
         calendarManager.init();
-        //calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
+        calendarManager.asyncSchedule();
+        GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
         //get calendar view and set month color white
-        CalendarView cv = (CalendarView) this.findViewById(R.id.calendarView);
+        cv = (CalendarView) this.findViewById(R.id.calendarView);
         ViewGroup vg = (ViewGroup) cv.getChildAt(0);
         View month_name = vg.getChildAt(0);
         //View day_name = vg.getChildAt(1);
@@ -129,9 +137,29 @@ public class CalendarActivity extends Activity {
     protected void onResume() {
         Log.d(TAG, "onResume Start");
         super.onResume();
-        calendarManager.asyncSchedule();
-        GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
+        //progree dialog
+        //SystemClock.sleep(2000);
+
+        /*while(GlobalVariable.isScheduleDBUpdated == false)
+        {
+            long finish = System.currentTimeMillis();
+            if(finish - start > 3000) {
+                Log.d(TAG, "DB Update Complete ...");
+                GlobalVariable.isScheduleDBUpdated = false;
+                break;
+            }
+        }*/
+        //pd.dismiss();
+        Date selected = new Date(cv.getDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        selectedDate = sdf.format(selected);
+
+
+        //ProgressDialog pd = ProgressDialog.show(CalendarActivity.this, "", "일정을 불러오는 중입니다 ...", true);
+        //pd.dismiss();
+
+        setListView(selectedDate);
         // get Current focused date from calendar
 
         // set List View
@@ -142,6 +170,10 @@ public class CalendarActivity extends Activity {
     public void setListView(String date)
     {
         Log.d(TAG, "setListView Start");
+
+        calendarManager.asyncSchedule();
+        GlobalGoogleCalendarManager.calendarManager = calendarManager;
+
         lvSchedule = (ListView) findViewById(R.id.lvSchedule);
 
         arrayList = new ArrayList<ScheduleInfo>();

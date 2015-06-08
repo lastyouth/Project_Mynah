@@ -2,9 +2,11 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -178,11 +181,15 @@ public class ScheduleManageActivity extends Activity {
                 final String calendarId = "primary";
 
                 calendarManager = GlobalGoogleCalendarManager.calendarManager;
+                Log.d(TAG, "calendarManager.insertEvent Start");
                 calendarManager.insertEvent(event);
+                Log.d(TAG, "calendarManager.insertEvent Finish");
 
                 finish();
             }
         }));
+
+        Log.d(TAG, "onCreate Finish");
     }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {

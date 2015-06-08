@@ -966,7 +966,7 @@ public class DBManager {
 		values.put(MynahDB._SCHEDULE_COL_CREATED_DATE, scheduleInfo.scheduleCreatedDate);
 
 		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
-		Log.d(TAG,"setScheduleDB 완료");
+		//Log.d(TAG,"setScheduleDB 완료");
 	}
 
 	//여러개의 스케쥴 한번에 때려박

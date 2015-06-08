@@ -37,6 +37,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,6 +75,8 @@ public class CalendarManager {
     public HashMap<String, String> eventIdMap;
     private CalendarManager calendarManager;
     private SchedulesOnDateInfo schedulesOnDateInfo;
+
+    private String TAG = "CalendarManager";
 
     public CalendarManager(Context _mContext, Activity _activity) {
         mContext = _mContext;
@@ -118,16 +121,20 @@ public class CalendarManager {
      * user can pick an account.
      */
     private void refreshResults() {
+        Log.d(TAG, "refreshResults Start");
         if (credential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
             if (isDeviceOnline()) {
+                Log.d(TAG, "ApiAsyncTask execute start");
                 new ApiAsyncTask(this).execute();
+                Log.d(TAG, "ApiAsyncTask execute finish");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
 //                mStatusText.setText("No network connection available.");
             }
         }
+        Log.d(TAG, "refreshResults Finish");
     }
 
     public void clearResultsText() {
@@ -323,11 +330,17 @@ public class CalendarManager {
         return totalScheduleList;
     }
 
+    public void insertTotalScheduleList(ScheduleInfo sinfo)
+    {
+        totalScheduleList.add(sinfo);
+    }
+
     public void updateDB() {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //Delete All Schedule List in DB
+                Log.d(TAG, "updateDB start");
                 DBManager.getManager(mContext).deleteSchedulesAll();
 
                 //Insert All Schedule List into DB
@@ -335,6 +348,8 @@ public class CalendarManager {
                 calendarManager = GlobalGoogleCalendarManager.calendarManager;
                 schedulesOnDateInfo.scheduleList = calendarManager.getTotalScheduleList();
                 DBManager.getManager(mContext).setSchedulesOnDateDB(schedulesOnDateInfo);
+
+                Log.d(TAG, "updateDB finish");
             }
         });
 
@@ -349,29 +364,37 @@ public class CalendarManager {
     }
 
     public void insertEvent(Event event) {
+        Log.d(TAG, "insertEvent Start");
         if (credential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
             if (isDeviceOnline()) {
+                Log.d(TAG, "InsertAsyncTask Start");
                 new InsertAsyncTask(this, event).execute();
+                Log.d(TAG, "InsertAsyncTask Finish");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
 //                mStatusText.setText("No network connection available.");
             }
         }
+        Log.d(TAG, "insertEvent Finish");
     }
 
     public void deleteEvent(String eventId) {
+        Log.d(TAG, "deleteEvent Start");
         if (credential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
             if (isDeviceOnline()) {
+                Log.d(TAG, "DeleteAsyncTask Start");
                 new DeleteAsyncTask(this, eventId).execute();
+                Log.d(TAG, "DeleteAsyncTask Start");
             } else {
                 Toast.makeText(mContext, "No network connection available.", Toast.LENGTH_SHORT).show();
 //                mStatusText.setText("No network connection available.");
             }
         }
+        Log.d(TAG, "deleteEvent Finish");
     }
 
     public void setEventId(List<Event> _items) {
