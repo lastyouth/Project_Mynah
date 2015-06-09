@@ -112,7 +112,6 @@ public class BusSettingActivity extends Activity {
         lvBusStop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
                 // TODO 아이템 클릭시에 구현할 내용은 여기에.
                 BusInfo binfo = new BusInfo();
                 
@@ -151,7 +150,10 @@ public class BusSettingActivity extends Activity {
        String bus_route = etBusName.getText().toString();
        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
        alertDialog.setTitle("");
+
        alertDialog.setMessage(bus_route + "버스를 찾을수 없습니다.");
+       alertDialog.setMessage(bus_route + "버스를 찾을 수 없습니다.");
+
        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "확인", new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int which)
            {

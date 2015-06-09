@@ -21,26 +21,26 @@ public class SettingShortcutLayout extends CustomButton{
 	GetInformationService infoService;
 	boolean isServiceConnected = false;
 
-	public SettingShortcutLayout(Context context, CustomButtonsFragment _cbf) 
+	public SettingShortcutLayout(Context context, CustomButtonsFragment _cbf)
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
 		cbf = _cbf;
 		initView();
 	}
-	
-	private void initView() 
+
+	private void initView()
 	{
 		view = inflate(getContext(), R.layout.layout_button_setting, null);
-		
+
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new SettingTouchListener());
 		addView(view);
 	}
-	
+
 	private final class SettingTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
+
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				view.setAlpha((float) 0.8);
 				return true;
@@ -66,7 +66,6 @@ public class SettingShortcutLayout extends CustomButton{
 	public void doBindService()
 	{
 		//bind
-
 	}
 
 	private final ServiceConnection mBkServiceConnection = new ServiceConnection(){

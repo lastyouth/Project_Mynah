@@ -47,13 +47,13 @@ public class SignUpActivity extends Activity {
 
     //GCM project key
     private static final String SENDER_ID = "803082977332";
-    //GCM µî·Ï¿ë Å°(ÇÚµåÆù ±âÁØ 1°³)
+    //GCM ë“±ë¡ìš© í‚¤(í•¸ë“œí° ê¸°ì¤€ 1ê°œ)
     String regid;
 
     //device id
     String deviceID;
 
-    //activity °ü·Ã
+    //activity ê´€ë ¨
     Button btn;
     EditText etProductId;
     EditText etNewUserId;
@@ -63,12 +63,12 @@ public class SignUpActivity extends Activity {
     Boolean productCheck;
     Boolean idDupCheck;
 
-    //Å¬·¡½º ¾È¿¡ ¼±¾ğÇØ³õÀ» °Í
+    //í´ë˜ìŠ¤ ì•ˆì— ì„ ì–¸í•´ë†“ì„ ê²ƒ
     protected Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
 
-            //¿©±â¼­´Â ÀÌ·±½ÄÀ¸·Î what¿¡ Çîµé¸µ ³Ñ¹ö ³Ö¾î³ùÀ¸´Ï±î ±×°Å¿¡ ¸Â´Â µ¿ÀÛÇÏ¸é µÊ.
+            //ì—¬ê¸°ì„œëŠ” ì´ëŸ°ì‹ìœ¼ë¡œ whatì— í—¨ë“¤ë§ ë„˜ë²„ ë„£ì–´ë†¨ìœ¼ë‹ˆê¹Œ ê·¸ê±°ì— ë§ëŠ” ë™ì‘í•˜ë©´ ë¨.
             System.out.println("in handler");
             if (msg.what == -1) {
                 //   BreakTimeout();
@@ -77,7 +77,7 @@ public class SignUpActivity extends Activity {
 
 
             if (msg.what == 1) {
-                //ÇÚµé¸µ 1ÀÏ¶§ ÇÒ °Í product Á¸Àç È®ÀÎ
+                //í•¸ë“¤ë§ 1ì¼ë•Œ í•  ê²ƒ product ì¡´ì¬ í™•ì¸
                 System.out.println("response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
@@ -112,7 +112,7 @@ public class SignUpActivity extends Activity {
             }
 
             if (msg.what == 2) {
-                //ÇÚµé¸µ 2ÀÏ¶§ ÇÒ °Í id Áßº¹È®ÀÎ
+                //í•¸ë“¤ë§ 2ì¼ë•Œ í•  ê²ƒ id ì¤‘ë³µí™•ì¸
                 System.out.println("response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
@@ -124,14 +124,14 @@ public class SignUpActivity extends Activity {
 
                     if(messageType.equals("id_duplicate_check")){
                         if(result.equals("ID_DUPLICATE")){
-                            Toast.makeText(getApplicationContext(), "id Áßº¹¿©", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "id ì¤‘ë³µì—¬", Toast.LENGTH_SHORT).show();
                         }
                         else if(result.equals("ID_NOT_DUPLICATE")) {
-                            Toast.makeText(getApplicationContext(), "id ¾ÈÁßº¹ ½áµµ µÅ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "id ì•ˆì¤‘ë³µ ì¨ë„ ë¼", Toast.LENGTH_SHORT).show();
                             idDupCheck = true;
                         }
                         else if(result.equals("ID_DUPLICATE_ERROR")) {
-                            Toast.makeText(getApplicationContext(), "Áßº¹Ã¼Å© ¿¡·¯", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "ì¤‘ë³µì²´í¬ ì—ëŸ¬", Toast.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Wrong ID Duplicate Check Attempt", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class SignUpActivity extends Activity {
             }
 
             if (msg.what == 3) {
-                //ÇÚµé¸µ 2ÀÏ¶§ ÇÒ °Í È¸¿ø°¡ÀÔ ¼­ºê¹Ô
+                //í•¸ë“¤ë§ 2ì¼ë•Œ í•  ê²ƒ íšŒì›ê°€ì… ì„œë¸Œë°‹
                 System.out.println("response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
@@ -159,10 +159,10 @@ public class SignUpActivity extends Activity {
 
                     if(messageType.equals("signup")){
                         if(result.equals("SIGNUP_FAIL")){
-                            Toast.makeText(getApplicationContext(), "È¸¿ø°¡ÀÔ ½ÇÆĞ ¿¡·¯", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "íšŒì›ê°€ì… ì‹¤íŒ¨ ì—ëŸ¬", Toast.LENGTH_SHORT).show();
                         }
                         else if(result.equals("SIGNUP_SUCCESS")) {
-                            Toast.makeText(getApplicationContext(), "È¸¿ø°¡ÀÔ ¼º°øÀÎµí", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "íšŒì›ê°€ì… ì„±ê³µì¸ë“¯", Toast.LENGTH_SHORT).show();
                             finish();
                             //idDupCheck = true;
                         }
@@ -195,10 +195,10 @@ public class SignUpActivity extends Activity {
             if (regid.equals("")) {
                 registerInBackground();
             }
-            Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
+            Toast.makeText(this, "ë“±ë¡ id = " + regid, 1).show();
             Log.d(TAG,regid);
 
-            //Åä½ºÆ®¿¡¼­ ¾Ë·ÁÁÖÀÚ!
+            //í† ìŠ¤íŠ¸ì—ì„œ ì•Œë ¤ì£¼ì!
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -209,25 +209,25 @@ public class SignUpActivity extends Activity {
         if (regid.equals("")) {
             registerInBackground();
         }
-        Toast.makeText(this, "µî·Ï id = " + regid, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ë“±ë¡ id = " + regid, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "REG ID : " + regid);
 
-        //device id ¹Ş¾Æ¿À±â
+        //device id ë°›ì•„ì˜¤ê¸°
         deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
         Log.d(TAG, "DEVICE ID : " + deviceID);
 
 
-        //activity °ü·Ã
+        //activity ê´€ë ¨
         etProductId = (EditText)findViewById(R.id.etProductId);
         etNewUserId = (EditText)findViewById(R.id.etNewUserId);
         etNewUserPassword = (EditText)findViewById(R.id.etNewUserPassword);
         etNewUserRePassword = (EditText)findViewById(R.id.etNewUserRePassword);
         etNewUserName = (EditText)findViewById(R.id.etNewUserName);
 
-        productCheck = false; //±â°è Á¸ÀçÀ¯¹« È®ÀÎ
-        idDupCheck = false; //id Áßº¹ È®ÀÎ
+        productCheck = false; //ê¸°ê³„ ì¡´ì¬ìœ ë¬´ í™•ì¸
+        idDupCheck = false; //id ì¤‘ë³µ í™•ì¸
 
-        //¶óÁîº£¸®ÆÄÀÌ id ÀÎÁõ ¹öÆ°
+        //ë¼ì¦ˆë² ë¦¬íŒŒì´ id ì¸ì¦ ë²„íŠ¼
         btn = (Button) findViewById(R.id.btnProductPermission);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -247,7 +247,7 @@ public class SignUpActivity extends Activity {
             }
         });
 
-        //¾ÆÀÌµğ Áßº¹ °Ë»ç ¹öÆ°
+        //ì•„ì´ë”” ì¤‘ë³µ ê²€ì‚¬ ë²„íŠ¼
         btn = (Button) findViewById(R.id.btnIdDupCheck);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -267,7 +267,7 @@ public class SignUpActivity extends Activity {
             }
         });
 
-        //È¸¿ø°¡ÀÔ Ä¿¹Ô
+        //íšŒì›ê°€ì… ì»¤ë°‹
         btn = (Button) findViewById(R.id.btnNewSignup);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -284,13 +284,13 @@ public class SignUpActivity extends Activity {
                 final Boolean isInHome = true;
 
                 if(!productCheck){
-                    Toast.makeText(getApplicationContext(), "±â°è È®ÀÎ ¾È‰ç¾î", 1).show();
+                    Toast.makeText(getApplicationContext(), "ê¸°ê³„ í™•ì¸ ì•ˆë¬ì–´", 1).show();
                 }
                 else if(!idDupCheck){
-                    Toast.makeText(getApplicationContext(), "id Áßº¹È®ÀÎ ¾È‰ç¾î", 1).show();
+                    Toast.makeText(getApplicationContext(), "id ì¤‘ë³µí™•ì¸ ì•ˆë¬ì–´", 1).show();
                 }
                 else if(!strNewUserPassword.equals(strNewUserRePassword)){
-                    Toast.makeText(getApplicationContext(), "ºñ¹Ğ¹øÈ£ °°Àº°É·Î ÀÔ·ÂÇØ¾ßÇØ", 1).show();
+                    Toast.makeText(getApplicationContext(), "ë¹„ë°€ë²ˆí˜¸ ê°™ì€ê±¸ë¡œ ì…ë ¥í•´ì•¼í•´", 1).show();
                 }
                 else {
                     JSONObject jobj = new JSONObject();

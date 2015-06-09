@@ -2,10 +2,8 @@ package com.seven.mynah.globalmanager;
 
 
 public final class GlobalVariable {
-
-	
-	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //¿ì¸®Áı ³»ºÎ¾ÆÀÌÇÇ Å×½ºÆ®¿ë
-	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //¿ÜºÎ¾ÆÀÌÇÇ. À¯µ¿ÀÌ¶ó °¡²û ¹Ù²î³× ½Ã¹ß
+	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //ìš°ë¦¬ì§‘ ë‚´ë¶€ì•„ì´í”¼ í…ŒìŠ¤íŠ¸ìš©
+	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //ì™¸ë¶€ì•„ì´í”¼. ìœ ë™ì´ë¼ ê°€ë” ë°”ë€Œë„¤ ì‹œë°œ
     public static final int HTTP_PORT = 13337;
     public static final int HTTPS_PORT = 13337;
 	public static boolean isScheduleDBUpdated = false;
@@ -29,13 +27,13 @@ public final class GlobalVariable {
 	public final class SubwayConstant {
 		
 		public static final String
-			week_normal = "1", //ÆòÀÏ
-			week_saturday = "2", //Åä¿äÀÏ
-			week_holiday_sunday = "3"; //ÈŞÀÏ/ÀÏ¿äÀÏ
+			week_normal = "1", //å ì™ì˜™å ì™ì˜™
+			week_saturday = "2", //å ì™ì˜™å ì™ì˜™å ï¿½
+			week_holiday_sunday = "3"; //å ì™ì˜™å ì™ì˜™/å ì‹¹ìš¸ì˜™å ì™ì˜™
 		
 		public static final String
-			up_in_line = "1", //»óÇà/³»¼±
-			down_out_line ="2"; //ÇÏÇà/¿Ü¼±
+			up_in_line = "1", //å ì™ì˜™å ì™ì˜™/å ì™ì˜™å ì™ì˜™
+			down_out_line ="2"; //å ì™ì˜™å ì™ì˜™/å ìŒ¤ì‡½ì˜™
 		
 		public static final String
 			tpye_I = "I",
@@ -59,10 +57,10 @@ public final class GlobalVariable {
 	public final class WeatherConstant {
 		
 		public static final int 
-			sky_clear = 1, //¸¼À½
-			sky_partly_cloudy = 2, //±¸¸§Á¶±İ
-			sky_mostly_cloudy = 3, //±¸¸§ ¸¹À½
-			sky_cloudy = 4; //Èå¸²
+			sky_clear = 1, //å ì™ì˜™å ì™ì˜™
+			sky_partly_cloudy = 2, //å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™
+			sky_mostly_cloudy = 3, //å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+			sky_cloudy = 4; //å ì²ë¦¼
 		
 		public static final int 
 			pty_clear = 0,
@@ -78,13 +76,13 @@ public final class GlobalVariable {
 	public final class UserType {
 		
 		public static final int
-		me = 1, // ³ª
-		other = 2; //³ª Á¦¿Ü
+		me = 1, // å ì™ì˜™
+		other = 2; //å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 		
-		//master type check¿ë
+		//master type checkå ì™ì˜™
 		public static final int 
-		master = 3, //°¡Á·Áß¿¡¼­ ¸ŞÀÎ ¾ÆÀÌµğÀÎ °æ¿ì
-		normal = 4; //°¡Á·Áß¿¡¼­ ¼­ºê ¾ÆÀÌµğÀÎ °æ¿ì
+		master = 3, //å ì™ì˜™å ì™ì˜™å ìŒ©ìš¸ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹±ë“¸ì˜™å ì™ì˜™ å ì™ì˜™å ï¿½
+		normal = 4; //å ì™ì˜™å ì™ì˜™å ìŒ©ìš¸ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹±ë“¸ì˜™å ì™ì˜™ å ì™ì˜™å ï¿½
 	}
 
 

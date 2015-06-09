@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 public class CustomButtonsFragment extends Fragment {
 
-	// ÀÏ´Ü Å×½ºÆ®¿ë ³»ºÎ ¸ğ½À
+	// ì¼ë‹¨ í…ŒìŠ¤íŠ¸ìš© ë‚´ë¶€ ëª¨ìŠµ
 	private int mNumColumns = 4;
 	private int mNumRows = 5;
 	private int mNumButtons = 0;
@@ -66,17 +66,17 @@ public class CustomButtonsFragment extends Fragment {
 
 		Log.d(this.getClass().getSimpleName(), "This deview pixels X:"
 				+ metrics.widthPixels + " Y:" + metrics.heightPixels);
-		Log.d(this.getClass().getSimpleName(), "setGrid Á÷Àü");
+		Log.d(this.getClass().getSimpleName(), "setGrid ì§ì „");
 		setGridLayoutDefault();
 
 		return rootView;
 	}
 
-	// µğÆúÆ® ¸ğ¾ç °áÁ¤(ÃßÈÄ ¿øÇÏ´Â ´ë·Î º¯È¯)
+	// ë””í´íŠ¸ ëª¨ì–‘ ê²°ì •(ì¶”í›„ ì›í•˜ëŠ” ëŒ€ë¡œ ë³€í™˜)
 	public void setGridLayoutDefault() {
 		
-		Log.d(TAG,"setGridLayoutDefault ½ÃÀÛ");
-		// onCreateView¿¡¼­ È£Ãâ
+		Log.d(TAG,"setGridLayoutDefault ì‹œì‘");
+		// onCreateViewì—ì„œ í˜¸ì¶œ
 		mainGridLayout.setOrientation(GridLayout.HORIZONTAL);
 		mainGridLayout.setRowCount(mNumRows);
 		mainGridLayout.setColumnCount(mNumColumns);
@@ -92,7 +92,7 @@ public class CustomButtonsFragment extends Fragment {
 		addButton(GlobalVariable.ShortcutType.typeVoice, 4, 2, 1);
 		addButton(GlobalVariable.ShortcutType.typeSetting, 4, 3, 1);
 		
-		Log.d(TAG, "setGridLayoutDefault ³¡");
+		Log.d(TAG, "setGridLayoutDefault ë");
 	}
 
 	public void addButton(int type, int row, int col, int colspan) {
@@ -108,7 +108,7 @@ public class CustomButtonsFragment extends Fragment {
 		int screenHeight = metrics.heightPixels - getStatusBarHeight()
 				- gridmargin * 2;
 
-		// MeasureSpec.EXACTLY : fill_parent, match_parent ·Î ¿ÜºÎ¿¡¼­ ¹Ì¸® Å©±â°¡ ÁöÁ¤µÇ¾ú´Ù.
+		// MeasureSpec.EXACTLY : fill_parent, match_parent ë¡œ ì™¸ë¶€ì—ì„œ ë¯¸ë¦¬ í¬ê¸°ê°€ ì§€ì •ë˜ì—ˆë‹¤.
 		// mainGridLayout.measure(MeasureSpec.EXACTLY, MeasureSpec.EXACTLY);
 		// int screenWidth = mainGridLayout.getMeasuredWidth();
 		// int screenHeight = mainGridLayout.getMeasuredHeight();

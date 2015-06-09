@@ -69,7 +69,7 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 	@Override
 	protected String doInBackground(Void... urls) {
 
-		// urls[0]ÀÇ URLºÎÅÍ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Í StringÀ¸·Î ¸®ÅÏ
+		// urls[0]ì˜ URLë¶€í„° ë°ì´í„°ë¥¼ ì½ì–´ì™€ Stringìœ¼ë¡œ ë¦¬í„´
 		// Log.i("URL", url);
 		return Task(_url,_jobj);
 

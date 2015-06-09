@@ -113,8 +113,8 @@ public class FamilyShortcutLayout extends CustomButton{
 
 	//가족 구성원수
 	private int numOfFamily = 2;
-	
-	public FamilyShortcutLayout(Context context, CustomButtonsFragment _cbf) 
+
+	public FamilyShortcutLayout(Context context, CustomButtonsFragment _cbf)
 	{
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -173,13 +173,13 @@ public class FamilyShortcutLayout extends CustomButton{
 			}
 		}
 	}
-	
-	private void initView() 
+
+	private void initView()
 	{
 		view = inflate(getContext(), R.layout.layout_button_family, null);
-		
+
 		getFamilyInOutStatus();
-		
+
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new FamilyTouchListener());
 		addView(view);
@@ -207,10 +207,10 @@ public class FamilyShortcutLayout extends CustomButton{
 
 		new AsyncHttpTask(getContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj, 1, 0);
 	}
-	
+
 	private final class FamilyTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
+
 			Log.d("Touch", "motionEvent.getAction()" + motionEvent.getAction());
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				view.setAlpha((float) 0.8);
@@ -230,8 +230,8 @@ public class FamilyShortcutLayout extends CustomButton{
 			return true;
 		}
 	}
-	
-	
+
+
 	public void refresh() {
 		Toast.makeText(getContext(), "Family onRestart()", 1).show();
 	}
