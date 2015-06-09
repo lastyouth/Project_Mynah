@@ -66,6 +66,7 @@ public class SettingShortcutLayout extends CustomButton{
 	public void doBindService()
 	{
 		//bind
+
 	}
 
 	private final ServiceConnection mBkServiceConnection = new ServiceConnection(){

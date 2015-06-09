@@ -70,4 +70,10 @@ public class GetInformationService extends Service
         Log.d(TAG, "onDestroy Finish");
     	super.onDestroy();
     }
+
+    public int getNumber()
+    {
+        int n = 100;
+        return n;
+    }
 }
