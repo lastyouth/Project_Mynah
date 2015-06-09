@@ -428,7 +428,20 @@ MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
 MERGED from com.google.android.gms:play-services-base:7.3.0:21:9
+<<<<<<< HEAD
 	android:name
 		ADDED from AndroidManifest.xml:163:13
 	android:value
 		ADDED from AndroidManifest.xml:164:13
+meta-data#com.google.android.calendar.v2.API_KEY
+ADDED from AndroidManifest.xml:165:9
+	android:name
+		ADDED from AndroidManifest.xml:165:20
+	android:value
+		ADDED from AndroidManifest.xml:165:74
+=======
+	android:name
+		ADDED from AndroidManifest.xml:163:13
+	android:value
+		ADDED from AndroidManifest.xml:164:13
+>>>>>>> sbh

@@ -35,16 +35,15 @@
 		android:padding="5dp">
         
         <TextView 
-            android:id="@+id/tvGasOnOff"
+            android:id="@+id/tvGasTemperature"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
 
             android:textSize="30sp"
             android:textColor="#ffffff"/>
-        
         <TextView 
-            android:id="@+id/tvGasTemperature"
+            android:id="@+id/tvGasOnOff"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"

@@ -33,7 +33,7 @@ public class RefreshShortcutLayout extends CustomButton{
 		
 		setCurrentTime();
 		
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		//ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new RefreshTouchListener());
 		addView(view);
 	}
@@ -50,7 +50,7 @@ public class RefreshShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				refreshAll();
 				return true;
 			}
@@ -63,7 +63,7 @@ public class RefreshShortcutLayout extends CustomButton{
 		cbf.refresh("Bus");
 		cbf.refresh("Subway");
 		cbf.refresh("Weather");
-		
+		cbf.refresh("Schedule");
 		setCurrentTime();
 	}
 	

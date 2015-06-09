@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class BusInfo {
 	
-	//Á¤·ùÀåÀ» ±âÁØÀ¸·Î Æ¯Á¤ ½Ã°£ÀÇ ¹ö½º µµÂø ¸ñ·ÏÀ» ¾Ë·ÁÁÜ.
-	//°íÀ¯ÀÇ Á¤º¸ ÇÏ³ª¾¿À» °¡Áö°í ÀÖÀ½.
-	public String staOrd; // Á¤·ù¼Ò ¼ø¹ø (Á¤·ù¼Ò¿Í °£¼± Á¤º¸¸¦ ¸ğµÎ ¾Ë°í ÀÖ¾î¾ßÇÔ)
-	public String dir; //¾îµğÇà(±¹¹Î´ëÇà)
+	//ì •ë¥˜ì¥ì„ ê¸°ì¤€ìœ¼ë¡œ íŠ¹ì • ì‹œê°„ì˜ ë²„ìŠ¤ ë„ì°© ëª©ë¡ì„ ì•Œë ¤ì¤Œ.
+	//ê³ ìœ ì˜ ì •ë³´ í•˜ë‚˜ì”©ì„ ê°€ì§€ê³  ìˆìŒ.
+	public String staOrd; // ì •ë¥˜ì†Œ ìˆœë²ˆ (ì •ë¥˜ì†Œì™€ ê°„ì„  ì •ë³´ë¥¼ ëª¨ë‘ ì•Œê³  ìˆì–´ì•¼í•¨)
+	public String dir; //ì–´ë””í–‰(êµ­ë¯¼ëŒ€í–‰)
 	public BusRouteInfo route;
 	public BusStationInfo station;
 	public ArrayList<TimeToBus> array_ttb;

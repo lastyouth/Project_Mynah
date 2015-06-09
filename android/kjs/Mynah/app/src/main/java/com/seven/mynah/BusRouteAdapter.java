@@ -1,4 +1,4 @@
-//Æó±â > BusStationAdapter·Î º¯°æ
+//íê¸° > BusStationAdapterë¡œ ë³€ê²½
 
 package com.seven.mynah;
 

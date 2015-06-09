@@ -16,7 +16,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +29,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.backgroundservice.GetInformationService;
-import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 
 //Google Calendar
 
@@ -41,26 +43,33 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
 
+    public static final int SIGNAL_UI_UPDATE = 0x10001001;
+
+    public class SendMassgeHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case SIGNAL_UI_UPDATE:
+                    Log.d(TAG, "UI UPDATE");
+                    cbf.refresh("Bus");
+                    cbf.refresh("Subway");
+                    cbf.refresh("Weather");
+                    cbf.refresh("Schedule");
+                    cbf.refresh("Gas");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    SendMassgeHandler mHandler = new SendMassgeHandler();
     GoogleCloudMessaging gcm;
     // for bk service connection
     GetInformationService infoService;
     boolean isServiceConnected = false;
-    ServiceConnection mBkServiceConnection = new ServiceConnection(){
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            GetInformationService.LocalBinder tb = (GetInformationService.LocalBinder)service;
 
-            infoService = tb.getService();
-            isServiceConnected = true;
-            infoService.setBindStatus(true);
-            infoService.doTest("Test from Activity");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isServiceConnected = false;
-        }
-    };
     AtomicInteger msgId = new AtomicInteger();
     Context mContext;
 
@@ -74,7 +83,7 @@ public class MainActivity extends Activity {
 
     //GCM project key
     private static final String SENDER_ID = "803082977332";
-    //GCM µÓ∑œøÎ ≈∞(«⁄µÂ∆˘ ±‚¡ÿ 1∞≥)
+    //GCM Îì±Î°ùÏö© ÌÇ§(Ìï∏ÎìúÌè∞ Í∏∞Ï§Ä 1Í∞ú)
     String regid;
 
     @Override
@@ -88,63 +97,20 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null) {
             setDefaultFragment();
         }
-        //Toast.makeText(this,"hithere",Toast.LENGTH_SHORT).show();
-        Intent t = new Intent(this,GetInformationService.class);
-        bindService(t,mBkServiceConnection,Context.BIND_AUTO_CREATE);
+        //Intent t = new Intent(this, GetInformationService.class);
+        //bindService(t,mBkServiceConnection,Context.BIND_AUTO_CREATE);
 
-        //Check device for Play Services APK. If check succeeds, proceed with GCM registration.
-        /*
-        if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
-            regid = getRegistrationId(mContext);
+        ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
 
-            if (regid.equals("")) {
-                registerInBackground();
-            }
-            Toast.makeText(this, "µÓ∑œ id = " + regid, 1).show();
-            Log.d(TAG,regid);
+        mServiceAccessManager.setContext(this);
+        mServiceAccessManager.prepareService();
 
-            //≈‰Ω∫∆Æø°º≠ æÀ∑¡¡÷¿⁄!
-        } else {
-            Log.i(TAG, "No valid Google Play Services APK found.");
+        if(mServiceAccessManager.checkServiceConnected())
+        {
+            Toast.makeText(this,"checkServiceConnected is on",Toast.LENGTH_SHORT).show();
+
+            mServiceAccessManager.getService().doTest("Test from MainActivity");
         }
-
-        gcm = GoogleCloudMessaging.getInstance(this);
-        regid = getRegistrationId(mContext);
-
-        if (regid.equals("")) {
-            registerInBackground();
-        }
-        Toast.makeText(this, "µÓ∑œ id = " + regid, Toast.LENGTH_SHORT).show();
-        Log.d(TAG,regid);
-        */
-
-
-        //∫Ì∑Á≈ıΩ∫ √ ±‚»≠
-
-        /*
-		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
-		BTmanager = new RPiBluetoothConnectionManager(deviceID);
-		int ret = BTmanager.initializeBTConnection();
-		if(ret==RPiBluetoothConnectionManager.SUCCESS_INITIALIZE)
-		{
-
-		}
-		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
-		{
-			Toast.makeText(this, "∫Ì∑Á≈ıΩ∫∏¶ ¡ˆø¯«œ¡ˆ æ Ω¿¥œ¥Ÿ.", Toast.LENGTH_SHORT).show();
-		}
-		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
-		{
-			Toast.makeText(this, "∫Ì∑Á≈ıΩ∫∏¶ µÓ∑œ«œººø‰.", Toast.LENGTH_SHORT).show();
-		}
-
-		ArrayList<String> st = new ArrayList<String>();
-
-		st.add("º≠∫∏»∆¥‘ æ»≥Á«œººø‰. ø¿¥√ ≥Øææ¥¬ »Â∏≤. 147 πˆΩ∫ 3∫–¿¸. √ª∑Æ∏Æø™ ªÛ«‡ 5∫–¿¸. πﬂ«•≥Î∆Æ √¨±‚Ω√±‚ πŸ∂¯¥œ¥Ÿ. hello");
-		//st.add("π⁄ªÛ¡ÿ¥‘ æ»≥Á«œººø‰. ø¿¥√ ≥Øææ¥¬ »Â∏≤. 121 πˆΩ∫ 5∫–¿¸. √ª∑Æ∏Æø™ «œ«‡ 10∫–¿¸. ≥Î∆Æ∫œ √¨±‚Ω√±‚ πŸ∂¯¥œ¥Ÿ. hello");
-		BTmanager.setTTS(st);
-		*/
 
         Log.d(TAG,"onCreate Finish");
     }
@@ -154,22 +120,6 @@ public class MainActivity extends Activity {
     {
         super.onRestart();
         Log.d(TAG, "onRestart");
-        //Toast.makeText(this, "onRestart()", 1).show();
-
-        //refresh
-
-        //get kind of intent from activity called finished()?
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                cbf.refresh("Bus");
-                cbf.refresh("Subway");
-                cbf.refresh("Weather");
-                cbf.refresh("Schedule");
-            }
-        });
-
     }
 
     @Override
@@ -178,8 +128,12 @@ public class MainActivity extends Activity {
         Log.d(TAG, "onDestroy Start");
         super.onDestroy();
         Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
-        infoService.setBindStatus(false);
-        unbindService(mBkServiceConnection);
+
+        //ScheduleInfo sinfo = infoService.getNumber();
+
+        //infoService.setBindStatus(false);
+        //unbindService(mBkServiceConnection);
+        ServiceAccessManager.getInstance().releaseService();
 
         //BTmanager.stopBTConnection();
         Log.d(TAG, "onDestroy Start");
@@ -192,6 +146,7 @@ public class MainActivity extends Activity {
         transaction.add(R.id.container, cbf);
         transaction.commit();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -220,6 +175,12 @@ public class MainActivity extends Activity {
         startActivity(intent);
         this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
+
+    public SendMassgeHandler getHandler()
+    {
+        return mHandler;
+    }
+
 
     public void startBluetoothActivity_temp()
     {
@@ -370,13 +331,17 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         Log.d(TAG,"onResume Start");
+
+        // TODO Auto-generated method stub
         super.onResume();
 
-        //For Google Calendar
-        //calendarManager.startManager();
-        //GlobalGoogleCalendarManager.calendarManager = calendarManager;
+        //UI Update
+        if(ServiceAccessManager.getInstance().checkServiceConnected())
+        {
+            mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);
+        }
+
 
         Log.d(TAG, "onResume Finish");
     }

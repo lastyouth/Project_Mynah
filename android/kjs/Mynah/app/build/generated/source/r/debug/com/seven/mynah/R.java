@@ -2146,8 +2146,8 @@ containing a value of this type.
         public static final int tvCurrentSubwayStation=0x7f0c007f;
         public static final int tvCurrentWeatherLocation=0x7f0c0083;
         public static final int tvCustomListName=0x7f0c008f;
-        public static final int tvGasOnOff=0x7f0c009c;
-        public static final int tvGasTemperature=0x7f0c009d;
+        public static final int tvGasOnOff=0x7f0c009d;
+        public static final int tvGasTemperature=0x7f0c009c;
         public static final int tvListRow=0x7f0c00b3;
         public static final int tvListRowScheduleName=0x7f0c00b6;
         public static final int tvListRowScheduleTime=0x7f0c00b7;

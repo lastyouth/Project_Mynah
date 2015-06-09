@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.BusPaser;
 
 public class BusShortcutLayout extends CustomButton {
@@ -39,7 +40,6 @@ public class BusShortcutLayout extends CustomButton {
 		super(context);
 		// TODO Auto-generated constructor stub
 		cbf = _cbf;
-		// refresh();
 		initView();
 	}
 
@@ -55,27 +55,29 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime2 = (TextView) view.findViewById(R.id.tvBusNextTime2);
 		tvBusDirName = (TextView) view.findViewById(R.id.tvBusDirName);
 
-		refresh();
-		// √ﬂ»ƒ ¿Ã∫Œ∫–¿∫ ¥Ÿ xml∑Œ ≥—±Ê∞Õ
 		view.setOnTouchListener(new BusTouchListener());
 		addView(view);
 	}
 
+	public void refresh() {
+		//Request service to get bus Information
+		BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
+		setBusInfo(bInfo);
+	}
+
 	private void setBusInfo(BusInfo binfo)  {
 		if (binfo == null) {
-			// √ ±‚»≠
 			bRoute = "";
 			bStation = "";
-			bDir = "≈Õƒ°«ÿº≠ ¡§∫∏∏¶ ¿‘∑¬«œººø‰";
+			bDir = "ÌÑ∞ÏπòÌï¥ÏÑú Ï†ïÎ≥¥Î•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî";
 			time1 = "";
 			time2 = "";
 		} else {
-			bRoute = binfo.route.busRouteNm + " πˆΩ∫";
+			bRoute = binfo.route.busRouteNm + " Î≤ÑÏä§";
 			bStation = binfo.station.stNm;
-			bDir = binfo.dir + "«‡\n";
+			bDir = binfo.dir + "Ìñâ\n";
 			
 			//bStation = binfo.station.stNm;
-			
 			Date date = new Date();
 			SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			long curTime = System.currentTimeMillis();
@@ -83,7 +85,7 @@ public class BusShortcutLayout extends CustomButton {
 			
 			
 			if (binfo.array_ttb.size() == 0) {
-				time1 = "¬˜∞° æ¯¿Ω";
+				time1 = "Ï∞®Í∞Ä ÏóÜÏùå";
 				time2 = "";
 			} else if (binfo.array_ttb.size() == 1) {
 				time1 = binfo.array_ttb.get(0).time;
@@ -94,7 +96,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time1 = ((arriveTime - curTime)/1000/60) + "∫– ¿¸";
+				time1 = ((arriveTime - curTime)/1000/60) + "Î∂Ñ Ï†Ñ";
 				
 			} else {
 				time1 = binfo.array_ttb.get(0).time;
@@ -105,7 +107,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time1 = ((arriveTime - curTime)/1000/60) + "∫– ¿¸";
+				time1 = ((arriveTime - curTime)/1000/60) + "Î∂Ñ Ï†Ñ";
 				
 				time2 = binfo.array_ttb.get(1).time;
 				try {
@@ -115,7 +117,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time2 = ((arriveTime - curTime)/1000/60) + "∫– ¿¸";
+				time2 = ((arriveTime - curTime)/1000/60) + "Î∂Ñ Ï†Ñ";
 			}
 		}
 		ivBusImage.setImageResource(R.drawable.ic_bus);
@@ -126,37 +128,9 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime2.setText(time2);
 	}
 
-	public void refresh() {
-
-		// get current saved information from DB
-		busArrayList = new ArrayList<BusInfo>();
-		busArrayList = DBManager.getManager(getContext()).getBusDBbyLog();
-
-		if (busArrayList.size() == 0) 
-		{
-			setBusInfo(null);
-		}
-		else 
-		{
-			BusInfo binfo = busArrayList.get(0);
-			binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-
-			if (binfo.array_ttb.size() == 0) 
-			{
-				BusPaser bp = new BusPaser();
-				binfo = bp.getBusArrInfoByRoute(binfo);
-				DBManager.getManager(getContext()).setBusDB(binfo);
-				binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-			}
-			setBusInfo(binfo);
-		}
-
-	}
-
 	public View getBusView() {
 		return view;
 	}
-
 	
 	private final class BusTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -168,7 +142,7 @@ public class BusShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ø¯«œ¥¬ Ω««‡ ø¢∆º∫Ò∆º!
+				// ÏõêÌïòÎäî Ïã§Ìñâ ÏóëÌã∞ÎπÑÌã∞!
 				// refresh();
 				cbf.startSettingActivity("Bus");
 				return true;

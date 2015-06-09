@@ -2,11 +2,11 @@ package com.seven.mynah.artifacts;
 
 public class BusStationInfo {
 
-	public String stId; //Á¤·ù¼Ò id
-	public String stNm; //Á¤·ù¼Ò¸í
+	public String stId; //ì •ë¥˜ì†Œ id
+	public String stNm; //ì •ë¥˜ì†Œëª…
 	public String tmX; //X
 	public String tmY; //Y
-	public String arsId; //Á¤·ù¼Ò°íÀ¯¹øÈ£
+	public String arsId; //ì •ë¥˜ì†Œê³ ìœ ë²ˆí˜¸
 	
 	public BusStationInfo() {
 		// TODO Auto-generated constructor stub

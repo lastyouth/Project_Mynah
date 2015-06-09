@@ -162,5 +162,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.google.android.calendar.v2.API_KEY" android:value="AIzaSyCPA6My1YuRw5h2pD1uCMVcz70ZeTPNgAg" />
     </application>
 </manifest>

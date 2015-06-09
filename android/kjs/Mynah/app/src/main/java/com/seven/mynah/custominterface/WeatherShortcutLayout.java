@@ -16,6 +16,7 @@ import com.seven.mynah.R;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.WeatherParser;
 
 public class WeatherShortcutLayout extends CustomButton {
@@ -26,8 +27,8 @@ public class WeatherShortcutLayout extends CustomButton {
 	private TextView tvPlace;
 	private TextView tvPlace2;
 	private TextView tvTemper;
-	private TextView tvReh; // ½Àµµ
-	private TextView tvPop; // °­¼öÈ®·ü
+	private TextView tvReh; // ìŠµë„
+	private TextView tvPop; // ê°•ìˆ˜í™•ë¥ 
 	private TextView tvPopName;
 	private TextView tvUpdateTime;
 	private TextView tvHour;
@@ -53,23 +54,30 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvPlace2 = (TextView) view.findViewById(R.id.tvWeatherPlace2);
 		tvTemper = (TextView) view.findViewById(R.id.tvWeatherTemper);
 
-		// tvReh = (TextView)view.findViewById(R.id.tvReh);
-
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
 		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
-		refresh();
-		// ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+
 		view.setOnTouchListener(new WeatherTouchListener());
 		addView(view);
 		Log.d(TAG, "initView End");
+	}
+
+	public void refresh() {
+		Log.d(TAG, "refresh Start");
+
+		// Request service to get weather Information
+		WeatherInfo wInfo = ServiceAccessManager.getInstance().getService().getWeatherInfo();
+		setWeatherInfo(wInfo);
+
+		Log.d(TAG, "refresh End");
 	}
 
 	private void setWeatherInfo(WeatherInfo winfo) {
 		Log.d(TAG, "setWeatherInfo Start");
 		
 		if (winfo == null) {
-			// ÃÊ±âÈ­
-			tvPlace2.setText("ÅÍÄ¡ÇØ¼­ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			// ì´ˆê¸°í™”
+			tvPlace2.setText("í„°ì¹˜í•´ì„œ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			tvPopName.setText("");
 			setWeatherImage(3);
 			return;
@@ -77,42 +85,14 @@ public class WeatherShortcutLayout extends CustomButton {
 		
 		tvPlace.setText(winfo.location.city_name);
 		tvPlace2.setText(winfo.location.mdl_name + "\n");
-		tvTemper.setText(winfo.array_ttw.get(0).temp + "¡ÆC");
+		tvTemper.setText(winfo.array_ttw.get(0).temp + "Â°C");
 		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
-		tvPopName.setText("°­¼ö È®·ü:");
-		// tvReh.setText("½Àµµ : " + winfo.array_ttw.get(0).reh + "%");
+		tvPopName.setText("ê°•ìˆ˜ í™•ë¥ :");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
-
-
-		// ÀÌ¹ÌÁö Å¸ÀÔ ³Ö±â
+		// Set weather image type
 		setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
 		Log.d(TAG, "setWeatherInfo End");
-	}
-
-	public void refresh() {
-		Log.d(TAG, "refresh Start");
-		weatherArrayList = new ArrayList<WeatherLocationInfo>();
-		weatherArrayList = DBManager.getManager(cbf.getActivity()).getWeatherDBbyLog();
-		WeatherInfo winfo = new WeatherInfo();
-		
-		if(weatherArrayList.size() == 0)
-		{
-			setWeatherInfo(null);
-		}
-		else
-		{
-			WeatherLocationInfo wlinfo = weatherArrayList.get(0);
-			winfo.location = wlinfo;
-			winfo = DBManager.getManager(getContext()).getWeatherDB(winfo);
-			if(winfo.array_ttw.size() == 0)
-			{
-				WeatherParser wp = new WeatherParser();
-				winfo = wp.getWeatherInfo(winfo);
-			}
-			setWeatherInfo(winfo);
-		}
-		Log.d(TAG, "refresh End");
 	}
 
 	private void setWeatherImage(int type) {
@@ -149,7 +129,7 @@ public class WeatherShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				// ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				cbf.startSettingActivity("Weather");
 				// refresh();
 				return true;

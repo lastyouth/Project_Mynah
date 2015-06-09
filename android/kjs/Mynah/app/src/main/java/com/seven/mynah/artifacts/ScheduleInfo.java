@@ -2,8 +2,8 @@ package com.seven.mynah.artifacts;
 
 /**
  * Created by KimJS on 2015-06-02.
- * ½ºÄÉÁÙ 1°³¸¦ ´ã°íÀÖ´Â °´Ã¼
- * ½ºÄÉÁÙÀÌ¸§, ½Ã°£, ³¯Â¥
+ * ìŠ¤ì¼€ì¤„ 1ê°œë¥¼ ë‹´ê³ ìˆëŠ” ê°ì²´
+ * ìŠ¤ì¼€ì¤„ì´ë¦„, ì‹œê°„, ë‚ ì§œ
  */
 public class ScheduleInfo {
 

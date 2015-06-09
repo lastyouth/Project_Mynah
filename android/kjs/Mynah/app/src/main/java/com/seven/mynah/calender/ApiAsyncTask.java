@@ -99,9 +99,19 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
             String[] str = start.toString().split("T");
             // yyyy-mm-dd
             String date = str[0];
+
             // hh-mm-ss
-            String time = str[1].split("\\.")[0];
-            time = time.substring(0, 5);
+            String time;
+            if(str.length == 1)
+            {
+                time = "00:00:00";
+            }
+            else
+            {
+                time = str[1].split("\\.")[0];
+                time = time.substring(0, 5);
+            }
+
             scheduleInfo = new ScheduleInfo();
             scheduleInfo.scheduleName = event.getSummary();
             scheduleInfo.scheduleDate = date;

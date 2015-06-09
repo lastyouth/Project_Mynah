@@ -3,18 +3,15 @@ package com.seven.mynah.backgroundservice;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.google.android.gms.games.leaderboard.Leaderboard;
-import android.R.array;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothAdapter.LeScanCallback;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.provider.Settings.Secure;
 import android.util.Base64;
 import android.util.Log;
 
@@ -35,6 +32,8 @@ public class RPiBluetoothConnectionManager {
    private ServeThread svThread;
    private int currentRSSI;
    private String deviceID;
+
+   private BluetoothRequestCallback mCallback;
    
    @SuppressLint("NewApi")
 private LeScanCallback lecallback = new LeScanCallback(){
@@ -47,13 +46,15 @@ private LeScanCallback lecallback = new LeScanCallback(){
    
    
    
-   private ArrayList<String> array_TTS;
+   //private ArrayList<String> array_TTS;
    
    // sendtype
    
    public static final int SEND_TYPE_RSSI = 0x30001001;
-   public static final int SEND_TYPE_TTS = 0x30001002;
+   public static final int SEND_TYPE_OUTTTS = 0x30001002;
+   public static final int SEND_TYPE_INTTS = 0x30001005;
    public static final int SEND_TYPE_INIT = 0x30001003;
+   public static final int SEND_TYPE_TEMP = 0x30001004;
    
    // settings
    private final int MAX_WAIT_FOR_RECONNECT = 3000;
@@ -63,6 +64,8 @@ private LeScanCallback lecallback = new LeScanCallback(){
    
    public static final int ERROR_BT_NOT_SUPPORTED = 0x10001001;
    public static final int ERROR_TARGET_DEVICE_NOT_REGISTERED = 0x10001002;
+   public static final int ERROR_CALLBACK_IS_NOT_REGISTERED = 0x10001003;
+    public static final int ERROR_BT_IS_NOT_ENABLED = 0x10001004;
    
    public static final int SUCCESS_INITIALIZE = 0x20001001;
    
@@ -84,14 +87,19 @@ private LeScanCallback lecallback = new LeScanCallback(){
                   String str = new String(b,0,len);
 
                   Log.i(TAG,str);
-                  
-                  if(str.equals("tts"))
+
+                  if(str.startsWith("outtts"))
                   {
-                     if(array_TTS.size() != 0)
-                     {
-                        sendTo(SEND_TYPE_TTS, array_TTS.get(0));
-                     }
-                     
+                      mCallback.onRequestOutTTSWithRSSI();
+                  }else if(str.startsWith("intts"))
+                  {
+                     mCallback.onRequestInTTSWithRSSI();
+                  }
+                  else if(str.startsWith("temp"))
+                  {
+                     str = str.replace("temp : ","");
+
+                     mCallback.onTempDataArrived(Integer.parseInt(str));
                   }
                } catch (Exception e) {
                   // TODO Auto-generated catch block
@@ -148,6 +156,13 @@ private LeScanCallback lecallback = new LeScanCallback(){
       }catch(IOException e)
       {
          Log.e(TAG,"BTCONNECT - IO ERROR");
+          try {
+              Thread.sleep(MAX_WAIT_FOR_RECONNECT);
+          } catch (InterruptedException ee) {
+              // TODO Auto-generated catch block
+              ee.printStackTrace();
+          }
+          return;
       }
       try {
          Thread.sleep(MAX_WAIT_FOR_RECONNECT);
@@ -166,15 +181,24 @@ private LeScanCallback lecallback = new LeScanCallback(){
       btAdapter = BluetoothAdapter.getDefaultAdapter();
       this.deviceID = deviceID;
       isInitialize = false;
-      array_TTS = new ArrayList<String>();
    }
    
    @SuppressLint("NewApi")
-public int initializeBTConnection()
+    public int initializeBTConnection()
    {
       if(btAdapter == null)
       {
          return ERROR_BT_NOT_SUPPORTED;
+      }
+
+       if(!btAdapter.isEnabled())
+       {
+           return ERROR_BT_IS_NOT_ENABLED;
+       }
+
+      if(mCallback == null)
+      {
+         return ERROR_CALLBACK_IS_NOT_REGISTERED;
       }
       
       targetBTDevice = btAdapter.getRemoteDevice(TARGET_MAC_ADDR);
@@ -204,7 +228,7 @@ public int initializeBTConnection()
       return SUCCESS_INITIALIZE;
    }
    @SuppressLint("NewApi")
-public void stopBTConnection()
+   public void stopBTConnection()
    {
       isWatchThreadActivated = false;
       isServeThreadActivated = false;
@@ -226,21 +250,33 @@ public void stopBTConnection()
          e.printStackTrace();
       }
    }
-   public boolean sendTo(int type,String data)
+   private boolean sendTo(int type,String data)
    {
       JSONObject json = new JSONObject();
-      
+      if(!isInitialize())
+      {
+         return false;
+      }
       try {
-         json.put("id",this.deviceID);
+         json.put("id", this.deviceID);
          json.put("rssi", Integer.toString(currentRSSI));
          switch(type)
          {
-         case SEND_TYPE_TTS:
-            json.put("type", "tts");
+         case SEND_TYPE_OUTTTS:
+            json.put("type", "outtts");
             break;
+
+            case SEND_TYPE_INTTS:
+            json.put("type","intts");
+               break;
          case SEND_TYPE_INIT:
             json.put("type","init");
             break;
+
+            case SEND_TYPE_TEMP:
+            json.put("type","temp");
+               break;
+
          default:
             json.put("type", "bad");   
          }
@@ -276,10 +312,22 @@ public void stopBTConnection()
       return this.isInitialize;
    }
    
-   public void setTTS(ArrayList<String> tts)
+   public boolean sendTTSWithRSSI(int type,String data)
    {
-      array_TTS = tts;
+       Log.d("Bluetooth","SendData : "+data);
+       return sendTo(type,data);
    }
-   
-   
+
+   public boolean requestTempData()
+   {
+      return sendTo(SEND_TYPE_TEMP,"");
+   }
+
+   public void registerCallback(BluetoothRequestCallback callback)
+   {
+      if(mCallback == null)
+      {
+         mCallback = callback;
+      }
+   }
 }

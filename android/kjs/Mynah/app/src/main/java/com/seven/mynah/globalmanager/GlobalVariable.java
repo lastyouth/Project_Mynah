@@ -3,90 +3,90 @@ package com.seven.mynah.globalmanager;
 
 public final class GlobalVariable {
 
-	
-	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //¿ì¸®Áı ³»ºÎ¾ÆÀÌÇÇ Å×½ºÆ®¿ë
-	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //¿ÜºÎ¾ÆÀÌÇÇ. À¯µ¿ÀÌ¶ó °¡²û ¹Ù²î³× ½Ã¹ß
-    public static final int HTTP_PORT = 13337;
-    public static final int HTTPS_PORT = 13337;
+
+	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //ìš°ë¦¬ì§‘ ë‚´ë¶€ì•„ì´í”¼ í…ŒìŠ¤íŠ¸ìš©
+	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //ì™¸ë¶€ì•„ì´í”¼. ìœ ë™ì´ë¼ ê°€ë” ë°”ë€Œë„¤ ì‹œë°œ
+	public static final int HTTP_PORT = 13337;
+	public static final int HTTPS_PORT = 13337;
 	public static boolean isScheduleDBUpdated = false;
-	
+
 	public final class ShortcutType {
-		
-		public static final int 
-		typeScheduleShortcut  = 1,
-		typeBusShortcut = 2,
-		typeSubwayShortcut = 3,
-		typeWeatherShortcut = 4,
-		typeGasAlarmShortcut = 5,
-		typeFamilyShortcut= 6,
-		typeRefrash = 7,
-		typeVoice = 8,
-		typeSetting = 9;
-		
-	}
-	
-	
-	public final class SubwayConstant {
-		
-		public static final String
-			week_normal = "1", //ÆòÀÏ
-			week_saturday = "2", //Åä¿äÀÏ
-			week_holiday_sunday = "3"; //ÈŞÀÏ/ÀÏ¿äÀÏ
-		
-		public static final String
-			up_in_line = "1", //»óÇà/³»¼±
-			down_out_line ="2"; //ÇÏÇà/¿Ü¼±
-		
-		public static final String
-			tpye_I = "I",
-			type_K = "K";
-	}
-	
-	public final class BusConstant {
-		
-		
-		
-	}
-	
-	public final class GCMConstant {
-		
-		public static final String 
-		PROJECT_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
-		
-	}
-	
-	
-	public final class WeatherConstant {
-		
-		public static final int 
-			sky_clear = 1, //¸¼À½
-			sky_partly_cloudy = 2, //±¸¸§Á¶±İ
-			sky_mostly_cloudy = 3, //±¸¸§ ¸¹À½
-			sky_cloudy = 4; //Èå¸²
-		
-		public static final int 
-			pty_clear = 0,
-			pty_rain = 1,
-			pty_snow_rain = 2,
-			pty_rain_snow = 3,
-			pty_snow = 4;
-		
-		
-		
-	}
-	
-	public final class UserType {
-		
+
 		public static final int
-		me = 1, // ³ª
-		other = 2; //³ª Á¦¿Ü
-		
-		//master type check¿ë
-		public static final int 
-		master = 3, //°¡Á·Áß¿¡¼­ ¸ŞÀÎ ¾ÆÀÌµğÀÎ °æ¿ì
-		normal = 4; //°¡Á·Áß¿¡¼­ ¼­ºê ¾ÆÀÌµğÀÎ °æ¿ì
+				typeScheduleShortcut  = 1,
+				typeBusShortcut = 2,
+				typeSubwayShortcut = 3,
+				typeWeatherShortcut = 4,
+				typeGasAlarmShortcut = 5,
+				typeFamilyShortcut= 6,
+				typeRefrash = 7,
+				typeVoice = 8,
+				typeSetting = 9;
+
 	}
 
 
-	
+	public final class SubwayConstant {
+
+		public static final String
+				week_normal = "1", //í‰ì¼
+				week_saturday = "2", //í† ìš”ì¼
+				week_holiday_sunday = "3"; //íœ´ì¼/ì¼ìš”ì¼
+
+		public static final String
+				up_in_line = "1", //ìƒí–‰/ë‚´ì„ 
+				down_out_line ="2"; //í•˜í–‰/ì™¸ì„ 
+
+		public static final String
+				tpye_I = "I",
+				type_K = "K";
+	}
+
+	public final class BusConstant {
+
+
+
+	}
+
+	public final class GCMConstant {
+
+		public static final String
+				PROJECT_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
+
+	}
+
+
+	public final class WeatherConstant {
+
+		public static final int
+				sky_clear = 1, //ë§‘ìŒ
+				sky_partly_cloudy = 2, //êµ¬ë¦„ì¡°ê¸ˆ
+				sky_mostly_cloudy = 3, //êµ¬ë¦„ ë§ìŒ
+				sky_cloudy = 4; //íë¦¼
+
+		public static final int
+				pty_clear = 0,
+				pty_rain = 1,
+				pty_snow_rain = 2,
+				pty_rain_snow = 3,
+				pty_snow = 4;
+
+
+
+	}
+
+	public final class UserType {
+
+		public static final int
+				me = 1, // ë‚˜
+				other = 2; //ë‚˜ ì œì™¸
+
+		//master type checkìš©
+		public static final int
+				master = 3, //ê°€ì¡±ì¤‘ì—ì„œ ë©”ì¸ ì•„ì´ë””ì¸ ê²½ìš°
+				normal = 4; //ê°€ì¡±ì¤‘ì—ì„œ ì„œë¸Œ ì•„ì´ë””ì¸ ê²½ìš°
+	}
+
+
+
 }

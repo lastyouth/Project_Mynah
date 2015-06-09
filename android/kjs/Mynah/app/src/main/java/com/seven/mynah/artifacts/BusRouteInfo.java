@@ -2,15 +2,15 @@ package com.seven.mynah.artifacts;
 
 public class BusRouteInfo {
 	
-	public String busRouteId; //³ë¼± id
-	public String busRouteNm; //³ë¼±¸í
-	public String routeType; //³ë¼± À¯Çü
-	// ¹ö½º ³ë¼± À¯Çü (1:°øÇ×, 3:°£¼±, 4:Áö¼±, 5:¼øÈ¯, 6:±¤¿ª, 7:ÀÎÃµ, 8:°æ±â, 9:ÆóÁö, 0:°ø¿ë)
+	public String busRouteId; //ë…¸ì„  id
+	public String busRouteNm; //ë…¸ì„ ëª…
+	public String routeType; //ë…¸ì„  ìœ í˜•
+	// ë²„ìŠ¤ ë…¸ì„  ìœ í˜• (1:ê³µí•­, 3:ê°„ì„ , 4:ì§€ì„ , 5:ìˆœí™˜, 6:ê´‘ì—­, 7:ì¸ì²œ, 8:ê²½ê¸°, 9:íì§€, 0:ê³µìš©)
 	
-	public String stStationNm; //±âÁ¡
-	public String edStationNm; //Á¾Á¡
+	public String stStationNm; //ê¸°ì 
+	public String edStationNm; //ì¢…ì 
 	
-	//³ª¸ÓÁö Á¤º¸´Â ÇÊ¿ä¾øÀ½
+	//ë‚˜ë¨¸ì§€ ì •ë³´ëŠ” í•„ìš”ì—†ìŒ
 	
 	public BusRouteInfo() {
 		// TODO Auto-generated constructor stub

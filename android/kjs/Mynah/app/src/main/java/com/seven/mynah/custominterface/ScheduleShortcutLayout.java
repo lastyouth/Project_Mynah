@@ -27,6 +27,7 @@ import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 
 public class ScheduleShortcutLayout extends CustomButton{
 	
@@ -61,82 +62,32 @@ public class ScheduleShortcutLayout extends CustomButton{
 		calendarManager = GlobalGoogleCalendarManager.calendarManager;
 		int tableCount = DBManager.getManager(getContext()).getSchedulesCount();
 
-		//DBManager.getManager(context).deleteSchedulesAll();
 		if(tableCount == 0)
 		{
 			layoutSchedule.removeAllViews();
 			tvSchedules[0] = new TextView(context);
 			tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			tvSchedules[0].setText("ÅÍÄ¡ÇÏ¿© ±¸±ÛÄ¶¸°´õ¿Í ¿¬µ¿À» ½ÃÀÛÇÏ¼¼¿ä.");
+			tvSchedules[0].setText("í„°ì¹˜í•˜ì—¬ êµ¬ê¸€ìº˜ë¦°ë”ì™€ ì—°ë™ì„ ì‹œì‘í•˜ì„¸ìš”.");
 
 			layoutSchedule.setGravity(Gravity.CENTER);
 			layoutSchedule.addView(tvSchedules[0]);
 		}
-		else
-		{
-			setInfo();
-		}
-		/*
-		for(int i = 0; i < 2; i++)
-		{
-			tvSchedules[i] = new TextView(context);
-			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
-			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			layoutSchedule.addView(tvSchedules[i]);
-		}
-		tvSchedules[0].setText("09:00 ¿ÜÁÖ¾÷Ã¼ ¹ÌÆÃ");
-		tvSchedules[1].setText("12:30 Á¡½É¾à¼Ó");
 
-		tvPreparation.setText("ÁØºñ¹° : USB, º¸°í¼­");
-		tvPreparation.setTextColor(Color.parseColor("#ffffff"));
-		tvPreparation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-		layoutPreparation.addView(tvPreparation);
-		*/
-		//setInfo();
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
 	}
 	
-	private final class ScheduleTouchListener extends Activity implements OnTouchListener {
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
-			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-				view.setAlpha((float) 0.8);
-				return true;
-			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
-				return true;
-			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
-
-				//cbf.startSettingActivity("Schedule");
-				cbf.startSettingActivity("Calendar");
-				return true;	
-
-			}
-			return true;
-		}
-	}
-	
-	public void refresh() {
-		setInfo();
-	}
-
-	public void setInfo()
+	public void refresh()
 	{
-		//calendarManager = GlobalGoogleCalendarManager.calendarManager;
+		//Request service to get schedule information (through Mynah DB)
+		ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
+		setInfo(scheduleInfos);
+	}
 
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String strDate = sdf.format(date);
-
-		scheduleInfo = new ArrayList<ScheduleInfo>();
-		//scheduleInfo = calendarManager.getScheduleOnDate(strDate);
-		scheduleInfo = DBManager.getManager(getContext()).getSchedulesByDateTimeDB(strDate).scheduleList;
-
-		int size = scheduleInfo.size();
+	public void setInfo(ArrayList<ScheduleInfo> scheduleInfos)
+	{
+		int size = scheduleInfos.size();
 		layoutSchedule.removeAllViews();
 		if(size == 0)
 		{
@@ -145,7 +96,7 @@ public class ScheduleShortcutLayout extends CustomButton{
 			tvSchedules[0] = new TextView(context);
 			tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			tvSchedules[0].setText("µî·ÏµÈ ½ºÄÉÁÙÀÌ ¾ø½À´Ï´Ù.");
+			tvSchedules[0].setText("ë“±ë¡ëœ ìŠ¤ì¼€ì¤„ì´ ì—†ìŠµë‹ˆë‹¤.");
 
 			layoutSchedule.setGravity(Gravity.CENTER);
 			layoutSchedule.addView(tvSchedules[0]);
@@ -156,10 +107,28 @@ public class ScheduleShortcutLayout extends CustomButton{
 			tvSchedules[i] = new TextView(context);
 			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			String str = scheduleInfo.get(i).scheduleTime + " " + scheduleInfo.get(i).scheduleName;
+			String str = scheduleInfos.get(i).scheduleTime + " " + scheduleInfos.get(i).scheduleName;
 			tvSchedules[i].setText(str);
 			layoutSchedule.addView(tvSchedules[i]);
 		}
 
+	}
+
+	private final class ScheduleTouchListener extends Activity implements OnTouchListener {
+		public boolean onTouch(View view, MotionEvent motionEvent) {
+
+			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+				view.setAlpha((float) 0.8);
+				return true;
+			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+				return true;
+			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+				view.setAlpha((float) 1.0);
+
+				cbf.startSettingActivity("Calendar");
+				return true;
+			}
+			return true;
+		}
 	}
 }

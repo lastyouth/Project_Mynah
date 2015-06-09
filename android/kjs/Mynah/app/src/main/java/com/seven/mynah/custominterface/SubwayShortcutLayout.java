@@ -16,6 +16,7 @@ import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalFunction;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
@@ -64,17 +65,21 @@ public class SubwayShortcutLayout extends CustomButton {
 		tvSubwayNextTime2 = (TextView) view .findViewById(R.id.tvSubwayNextTime2);
 
 		ivSubwayImage.setImageResource(R.drawable.ic_subway);
-		
-		// √ﬂ»ƒ ¿Ã∫Œ∫–¿∫ ¥Ÿ xml∑Œ ≥—±Ê∞Õ
-		refresh();
+
 		view.setOnTouchListener(new SubwayTouchListener());
 		addView(view);
 	}
 
+	public void refresh() {
+		// Request service to get subway information
+		SubwayInfo sInfo = ServiceAccessManager.getInstance().getService().getSubwayInfo();
+		setSubwayInfo(sInfo);
+	}
+
 	private void setSubwayInfo(SubwayInfo sinfo) {
 		if (sinfo == null) {
-			// √ ±‚»≠
-			tvSubwayDirName.setText("≈Õƒ°«ÿº≠ ¡§∫∏∏¶ ¿‘∑¬«œººø‰");
+			// Ï¥àÍ∏∞Ìôî
+			tvSubwayDirName.setText("ÌÑ∞ÏπòÌï¥ÏÑú Ï†ïÎ≥¥Î•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî");
 			return;
 		}
 		String line_num = sinfo.station.line_num;
@@ -108,8 +113,8 @@ public class SubwayShortcutLayout extends CustomButton {
 				e.printStackTrace();
 			}
 			tt = tt/1000/60;
-			String time1 = tt + "∫– ¿¸";
-			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "«‡");
+			String time1 = tt + "Î∂Ñ Ï†Ñ";
+			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "Ìñâ");
 			tvSubwayNextTime.setText(time1);
 
 			
@@ -125,79 +130,13 @@ public class SubwayShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				tt2 = tt2/1000/60;
-				String time2 = tt2 + "∫– ¿¸";
-				tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "«‡");
+				String time2 = tt2 + "Î∂Ñ Ï†Ñ";
+				tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "Ìñâ");
 				tvSubwayNextTime2.setText(time2);
 
 			}
 
 		}
-
-	}
-
-	public void refresh() {
-
-		// get current saved information from DB
-		subwayArrayList = new ArrayList<SubwayInfo>();
-		subwayArrayList = DBManager.getManager(getContext()).getSubwayDBbyLog();
-
-		if (subwayArrayList.size() == 0) 
-		{
-			setSubwayInfo(null);
-		} 
-		else 
-		{
-			SubwayInfo sinfo = subwayArrayList.get(0);
-			sinfo = DBManager.getManager(getContext()).getSubwayDB(sinfo);
-
-			if (sinfo.array_tts.size() == 0) 
-			{
-				SubwayPaser sp = new SubwayPaser();
-				sinfo = sp.getTimeTableByID(sinfo);
-				DBManager.getManager(getContext()).setSubwayDB(sinfo);
-				sinfo = DBManager.getManager(getContext()).getSubwayDB(sinfo);
-			}
-			setSubwayInfo(sinfo);
-		}
-
-	}
-
-	public void setuptest() {
-
-		cbf.getActivity().runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				SubwayInfo sinfo = new SubwayInfo();
-
-				ArrayList<SubwayStationInfo> array_ssinfo;
-				ArrayList<SubwayInfo> array_sinfo;
-
-				SubwayPaser sp = new SubwayPaser();
-
-				array_sinfo = DBManager.getManager(cbf.getActivity())
-						.getSubwayDBbyLog();
-
-				if (array_sinfo.size() != 0) {
-					sinfo = array_sinfo.get(0);
-				} else {
-					array_ssinfo = sp.getStationInfoByName("ºÆ∞Ë");
-					sinfo.week_tag = "1";
-					sinfo.station = array_ssinfo.get(0);
-					sinfo.station.inout_tag = "1";
-
-				}
-
-				sinfo = sp.getTimeTableByID(sinfo);
-				DBManager.getManager(cbf.getActivity()).setSubwayDB(sinfo);
-				// ¿ÃπÃ ¿˙¿Âµ«æÓ ¿÷¿∏∏È ∫“∑Øø»..
-				sinfo = DBManager.getManager(cbf.getActivity()).getSubwayDB(
-						sinfo);
-
-				setSubwayInfo(sinfo);
-			}
-		});
 
 	}
 
@@ -211,7 +150,7 @@ public class SubwayShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ø¯«œ¥¬ Ω««‡ ø¢∆º∫Ò∆º!
+				// ÏõêÌïòÎäî Ïã§Ìñâ ÏóëÌã∞ÎπÑÌã∞!
 				cbf.startSettingActivity("Subway");
 				// setuptest();
 

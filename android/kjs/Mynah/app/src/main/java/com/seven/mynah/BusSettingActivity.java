@@ -112,8 +112,7 @@ public class BusSettingActivity extends Activity {
         lvBusStop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
-                // TODO ¾ÆÀÌÅÛ Å¬¸¯½Ã¿¡ ±¸ÇöÇÒ ³»¿ëÀº ¿©±â¿¡.
+                // TODO ì•„ì´í…œ í´ë¦­ì‹œì— êµ¬í˜„í•  ë‚´ìš©ì€ ì—¬ê¸°ì—.
                 BusInfo binfo = new BusInfo();
                 
                 ViewHolder vh = (ViewHolder)view.getTag();
@@ -151,8 +150,11 @@ public class BusSettingActivity extends Activity {
        String bus_route = etBusName.getText().toString();
        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
        alertDialog.setTitle("");
-       alertDialog.setMessage(bus_route + "¹ö½º¸¦ Ã£À»¼ö ¾ø½À´Ï´Ù.");
-       alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "È®ÀÎ", new DialogInterface.OnClickListener() {
+
+       alertDialog.setMessage(bus_route + "ë²„ìŠ¤ë¥¼ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+       alertDialog.setMessage(bus_route + "ë²„ìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+
+       alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "í™•ì¸", new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int which)
            {
                etBusName.setText("");
