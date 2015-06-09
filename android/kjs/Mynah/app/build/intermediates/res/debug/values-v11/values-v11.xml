@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/values-v11/styles.xml -->
+=======
+    <!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/values-v11/styles.xml -->
+>>>>>>> sbh
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- API 11 theme customizations can go here. -->
     </style>
+<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v11/values.xml -->
+=======
+    <!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v11/values.xml -->
+>>>>>>> sbh
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat.Inverse">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>

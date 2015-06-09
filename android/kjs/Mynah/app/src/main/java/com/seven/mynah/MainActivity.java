@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
             isServiceConnected = true;
             infoService.setBindStatus(true);
             infoService.doTest("Test from Activity");
+            infoService.requestTempData();
         }
 
         @Override

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/values-w820dp/dimens.xml -->
+=======
+    <!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/values-w820dp/dimens.xml -->
+>>>>>>> sbh
     <eat-comment/>
     <dimen name="activity_horizontal_margin">64dp</dimen>
 </resources>

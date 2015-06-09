@@ -43,7 +43,11 @@ public class DBHelper {
 							  CursorFactory factory, int version) {
 			super(context, name, factory, version);
 		}
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> sbh
 		// 최초 DB를 만들때 한번만 호출된다.
 		@Override
 		public void onCreate(SQLiteDatabase db) {
@@ -83,8 +87,13 @@ public class DBHelper {
 			//캘린더 지우기
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
 
+<<<<<<< HEAD
 			//세션유져 테이블 지우기
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SESSION_USER_TABLE_NAME);
+=======
+			//세션유져 테이블 지우기기
+		db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
+>>>>>>> sbh
 
 			onCreate(db);
 		}

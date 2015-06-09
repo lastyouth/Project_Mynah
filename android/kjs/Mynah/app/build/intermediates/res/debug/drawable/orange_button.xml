@@ -30,4 +30,8 @@
                 android:bottom="10dp" />
         </shape>
     </item>
+<<<<<<< HEAD
 </selector><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/orange_button.xml -->
+=======
+</selector><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/orange_button.xml -->
+>>>>>>> sbh

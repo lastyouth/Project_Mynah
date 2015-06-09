@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$/app/build.gradle" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/BluetoothListFragment.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/BusNameDialogFragment.java" charset="UTF-8" />
@@ -51,6 +52,21 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/calender/GoogleCalenderSynchronizer.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/calender/InsertAsyncTask.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/BusShortcutLayout.java" charset="UTF-8" />
+=======
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/BusNameDialogFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ScheduleListActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SignUpActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwaySettingActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwayStationAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/WeatherSettingActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/artifacts/BusInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/artifacts/BusRouteInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/BusShortcutLayout.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/CustomButton.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/CustomButtonsFragment.java" charset="UTF-8" />
+>>>>>>> sbh
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/FamilyShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/GasAlarmShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/RefreshShortcutLayout.java" charset="UTF-8" />
@@ -60,6 +76,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/VoiceShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/WeatherShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/DBHelper.java" charset="UTF-8" />
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/DBManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/MynahDB.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalFunction.java" charset="UTF-8" />
@@ -76,5 +93,11 @@
     <file url="file://$PROJECT_DIR$/build.gradle" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/settings.gradle" charset="UTF-8" />
     <file url="PROJECT" charset="x-windows-949" />
+=======
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/SoundSearcher.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/BusPaser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/SubwayPaser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/WeatherParser.java" charset="UTF-8" />
+>>>>>>> sbh
   </component>
 </project>

@@ -31,7 +31,7 @@ public class CustomButton extends FrameLayout{
 		init(this.context);
 	}
 	
-	//inflater·Î »ı¼º
+	//inflaterë¡œ ìƒì„±
 	public CustomButton(Context context, AttributeSet attrs) {
 		super(context,attrs);
 		this.context = context;
@@ -46,12 +46,12 @@ public class CustomButton extends FrameLayout{
 	
 	private void init(Context context) {
 		
-		//È¤½Ã³ª ÀÌ ºÎºĞ¿¡¼­ ÇÊ¿äÇÒ ºÎºĞÀ» Ã£À½...¸¸¾à¿¡ ±Û ¾Æ·¡·Î µé¾î°£´Ù¸é?
+		//í˜¹ì‹œë‚˜ ì´ ë¶€ë¶„ì—ì„œ í•„ìš”í•  ë¶€ë¶„ì„ ì°¾ìŒ...ë§Œì•½ì— ê¸€ ì•„ë˜ë¡œ ë“¤ì–´ê°„ë‹¤ë©´?
 	    //inflate(getContext(), R.layout.layout_custombutton, this);
 		
 	    inflate(context, R.layout.layout_button_custombutton, this);	
 	    
-	    //background ¼³Á¤
+	    //background ì„¤ì •
 	    
     }
 	

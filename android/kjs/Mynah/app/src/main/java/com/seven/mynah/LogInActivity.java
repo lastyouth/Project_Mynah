@@ -56,13 +56,19 @@ public class LogInActivity extends Activity{
     EditText etUserId;
     EditText etUserPassword;
 
+<<<<<<< HEAD
     //클래스 안에 선언해놓을 것
+=======
+>>>>>>> sbh
     protected Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
 
+<<<<<<< HEAD
             //시발아
             //여기서는 이런식으로 what에 헨들링 넘버 넣어놨으니까 그거에 맞는 동작하면 됨.
+=======
+>>>>>>> sbh
             System.out.println("in handler");
             if (msg.what == -1) {
                 //   BreakTimeout();
@@ -72,7 +78,10 @@ public class LogInActivity extends Activity{
 
 
             if (msg.what == 1) {
+<<<<<<< HEAD
                 //핸들링 1일때 할 것
+=======
+>>>>>>> sbh
                 System.out.println("response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
@@ -94,8 +103,11 @@ public class LogInActivity extends Activity{
                         else if(result.equals("LOGIN_SUCCESS")) {
                             Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
 
+<<<<<<< HEAD
                             //성공했으니 서버로부터 계정 정보 받아와서
                             //내부 세션 유지 테이블에 insert 해야될거같애여
+=======
+>>>>>>> sbh
 
 
                             final String strUserId = etUserId.getText() + "";
@@ -135,6 +147,7 @@ public class LogInActivity extends Activity{
             }
 
             if (msg.what == 2) {
+<<<<<<< HEAD
                 //핸들링 2일때 할 것
                 System.out.println("handling 2 !");
                 System.out.println("response : "+msg.obj);
@@ -144,6 +157,8 @@ public class LogInActivity extends Activity{
                     String messageType = jobj.get("messagetype") + "";
                     String result = jobj.get("result") + "";
                     String attach = jobj.get("attach") + "";
+=======
+>>>>>>> sbh
 
                     System.out.println("MT : " + messageType);
                     System.out.println("RT : " + result);
@@ -206,9 +221,12 @@ public class LogInActivity extends Activity{
 
         //new AsyncHttpTask(this, "192.168.35.75", mHandler, jobj, 1, 0);
 
+<<<<<<< HEAD
         //세션 데이터 지우는 부분 들어가야 할 것 같아
         DBManager.getManager(getApplicationContext()).deleteSessionUser();
         System.out.println("세션 비워야지");
+=======
+>>>>>>> sbh
 
         //login button listener
         btn = (Button) findViewById(R.id.btnLogin);

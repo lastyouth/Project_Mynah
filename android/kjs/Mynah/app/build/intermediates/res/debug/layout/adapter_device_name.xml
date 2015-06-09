@@ -18,4 +18,8 @@
     android:layout_height="wrap_content"
     android:textSize="18sp"
     android:padding="5dp"
+<<<<<<< HEAD
 /><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/adapter_device_name.xml -->
+=======
+/><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/adapter_device_name.xml -->
+>>>>>>> sbh

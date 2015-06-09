@@ -113,7 +113,10 @@ public class BusSettingActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 
+<<<<<<< HEAD
                 // TODO 아이템 클릭시에 구현할 내용은 여기에.
+=======
+>>>>>>> sbh
                 BusInfo binfo = new BusInfo();
                 
                 ViewHolder vh = (ViewHolder)view.getTag();
@@ -151,7 +154,11 @@ public class BusSettingActivity extends Activity {
        String bus_route = etBusName.getText().toString();
        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
        alertDialog.setTitle("");
+<<<<<<< HEAD
        alertDialog.setMessage(bus_route + "버스를 찾을수 없습니다.");
+=======
+       alertDialog.setMessage(bus_route + "버스를 찾을 수 없습니다.");
+>>>>>>> sbh
        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "확인", new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int which)
            {

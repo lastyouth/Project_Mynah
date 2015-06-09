@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //폐기 > BusStationAdapter로 변경
+=======
+>>>>>>> sbh
 
 package com.seven.mynah;
 

@@ -57,8 +57,8 @@ public class LoadingActivity extends Activity{
 		{
 			public void handleMessage(Message msg)
 			{
-				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-				//Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+				//Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+				Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -102,7 +102,11 @@ public class LoadingActivity extends Activity{
 	{
 		if(DBManager.getManager(this).isSetWeatherLocation())
 		{
+<<<<<<< HEAD
 			//지역정보 설정되어 있음.
+=======
+
+>>>>>>> sbh
 		}
 		else
 		{
@@ -115,8 +119,12 @@ public class LoadingActivity extends Activity{
 	}
 	
 	
+<<<<<<< HEAD
 	// 현 상황에서 필요없음.. A->B에서 B->A로 갈때 다이얼로그 사용할 때 사용.
 	@Override 	
+=======
+	@Override
+>>>>>>> sbh
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);

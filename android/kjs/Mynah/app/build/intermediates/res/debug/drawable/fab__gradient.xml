@@ -7,4 +7,8 @@
         android:endColor="#0000"
         android:startColor="#7000" />
 
+<<<<<<< HEAD
 </shape><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/fab__gradient.xml -->
+=======
+</shape><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/fab__gradient.xml -->
+>>>>>>> sbh

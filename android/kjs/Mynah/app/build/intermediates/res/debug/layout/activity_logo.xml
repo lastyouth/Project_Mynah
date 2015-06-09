@@ -36,4 +36,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="114dp" />
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_logo.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_logo.xml -->
+>>>>>>> sbh

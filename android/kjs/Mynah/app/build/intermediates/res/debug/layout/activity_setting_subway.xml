@@ -108,4 +108,8 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
+<<<<<<< HEAD
 </LinearLayout><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_setting_subway.xml -->
+=======
+</LinearLayout><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_setting_subway.xml -->
+>>>>>>> sbh

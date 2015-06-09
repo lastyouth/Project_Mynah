@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 
 public class BusNameDialogFragment extends DialogFragment {
 
+<<<<<<< HEAD
 	/* 각종 뷰 변수 선언 */
+=======
+>>>>>>> sbh
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -43,8 +46,12 @@ public class BusNameDialogFragment extends DialogFragment {
 	 * container, Bundle savedInstanceState) { View view =
 	 * inflater.inflate(R.layout.layout_dialogfragment_busname, container);
 	 * 
+<<<<<<< HEAD
 	 * // 레이아웃 XML과 뷰 변수 연결
 	 * 
+=======
+	 * 	 *
+>>>>>>> sbh
 	 * return view; }
 	 */
 }

@@ -23,11 +23,19 @@ public class DBManager {
 	private static SimpleDateFormat defaultDateFormat;
 	private static SimpleDateFormat printDateFormat;
 
+<<<<<<< HEAD
 
 	//db version 아님!  max 카운터임
 	private static int log_get_max_counter = 5;
 
 	// android 생성자
+=======
+	
+	//db version �ƴ�!  max ī������
+	private static int log_get_max_counter = 5;
+
+	// android ������
+>>>>>>> sbh
 	private DBManager(Context context) {
 
 		dbh = new DBHelper(context);
@@ -115,10 +123,17 @@ public class DBManager {
 
 			}
 		}
+<<<<<<< HEAD
 		Log.d(TAG, "setWeatherDB 완료");
 	}
 
 	// 현재 기준으로 가장 최근의 로그 테이블의 설정치로 location 반환함(최근껄로)
+=======
+		Log.d(TAG, "setWeatherDB �Ϸ�");
+	}
+
+	// ���� �������� ���� �ֱ��� �α� ���̺��� ����ġ�� location ��ȯ��(�ֱٲ���)
+>>>>>>> sbh
 	public synchronized ArrayList<WeatherLocationInfo> getWeatherDBbyLog() {
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
 
@@ -144,13 +159,22 @@ public class DBManager {
 			c.moveToNext();
 			counter++;
 		}
+<<<<<<< HEAD
 
 		Log.d(TAG,"getWeatherDBbyLog 완료");
+=======
+		
+		Log.d(TAG,"getWeatherDBbyLog �Ϸ�");
+>>>>>>> sbh
 		return array_location;
 
 	}
 
+<<<<<<< HEAD
 	// 로그테이블에 넣기 위한 정보. 현재 선택된 WeatherLocationInfo를 log테이블에 넣음.
+=======
+	// �α����̺� �ֱ� ���� ����. ���� ���õ� WeatherLocationInfo�� log���̺� ����.
+>>>>>>> sbh
 	public synchronized void setWeatherLocationDBbyLog(
 			WeatherLocationInfo location) {
 
@@ -164,13 +188,22 @@ public class DBManager {
 				defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._WEATHER_LOG_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		Log.d(TAG,"setWeatherLocationDBbyLog 완료");
+=======
+		Log.d(TAG,"setWeatherLocationDBbyLog �Ϸ�");
+>>>>>>> sbh
 	}
 
 	public synchronized WeatherInfo getWeatherDB(WeatherInfo winfo) {
 
+<<<<<<< HEAD
 		// city코드를 기준으로 현재 시간의 이후 정보를 하루치로 return함
 		// 현재 시간에 대해서 기준 필요함..
+=======
+		// city�ڵ带 �������� ���� �ð��� ���� ������ �Ϸ�ġ�� return��
+		// ���� �ð��� ���ؼ� ���� �ʿ���..
+>>>>>>> sbh
 		String sql = "select * from " + MynahDB._WEATHER_TABLE_NAME + " where "
 				+ MynahDB._WEATHER_COL_CITY_CODE + "= '"
 				+ winfo.location.city_code + "' and "
@@ -227,8 +260,13 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+<<<<<<< HEAD
 
 		Log.d(TAG,"getWeatherDB 완료");
+=======
+		
+		Log.d(TAG,"getWeatherDB �Ϸ�");
+>>>>>>> sbh
 		return winfo;
 
 	}
@@ -261,7 +299,11 @@ public class DBManager {
 
 			dbh.mDB.insert(MynahDB._WEATHER_CITY_TABLE_NAME, null, values);
 		}
+<<<<<<< HEAD
 		Log.d(TAG,"setWeatherLocationAll 완료");
+=======
+		Log.d(TAG,"setWeatherLocationAll �Ϸ�");
+>>>>>>> sbh
 
 	}
 
@@ -321,7 +363,11 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+<<<<<<< HEAD
 		Log.d(TAG,"getWeatherLocationByName 완료");
+=======
+		Log.d(TAG,"getWeatherLocationByName �Ϸ�");
+>>>>>>> sbh
 		return array_location;
 
 	}
@@ -361,7 +407,11 @@ public class DBManager {
 		location.top_name = c.getString(top_name_index);
 		location.mdl_name = c.getString(mdl_name_index);
 
+<<<<<<< HEAD
 		Log.d(TAG,"getWeatherLocationByCode 완료");
+=======
+		Log.d(TAG,"getWeatherLocationByCode �Ϸ�");
+>>>>>>> sbh
 		return location;
 
 	}
@@ -372,8 +422,13 @@ public class DBManager {
 				+ String.valueOf(GlobalVariable.UserType.me) + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
+<<<<<<< HEAD
 
 		Log.d(TAG,"isInitialUser 완료");
+=======
+		
+		Log.d(TAG,"isInitialUser �Ϸ�");
+>>>>>>> sbh
 		if (c != null && c.getCount() != 0) {
 			return true;
 		} else {
@@ -413,8 +468,13 @@ public class DBManager {
 
 			c.moveToNext();
 		}
+<<<<<<< HEAD
 
 		Log.d(TAG,"getFamilyDB 완료");
+=======
+		
+		Log.d(TAG,"getFamilyDB �Ϸ�");
+>>>>>>> sbh
 		return finfo;
 	}
 
@@ -436,7 +496,11 @@ public class DBManager {
 				// insert
 				values = new ContentValues();
 				// DateFormat df = new DateFormat();
+<<<<<<< HEAD
 				// TODO 날짜 데이터포멧 변경해야할 것임..확인
+=======
+				// TODO ��¥ ���������� �����ؾ��� ����..Ȯ��
+>>>>>>> sbh
 
 				values.put(MynahDB._USER_COL_ID, finfo.members.get(i).id);
 				values.put(MynahDB._USER_COL_PASSWD,
@@ -462,7 +526,11 @@ public class DBManager {
 				}
 			}
 		}
+<<<<<<< HEAD
 		Log.d(TAG,"setMemberDB 완료");
+=======
+		Log.d(TAG,"setMemberDB �Ϸ�");
+>>>>>>> sbh
 	}
 
 	public synchronized void deleteFamilyExceptMe() {
@@ -470,12 +538,21 @@ public class DBManager {
 				+ MynahDB._USER_COL_TYPE + "<>" + GlobalVariable.UserType.me
 				+ " ;";
 		dbh.mDB.execSQL(sql);
+<<<<<<< HEAD
 		Log.d(TAG,"deleteFamilyExceptMe 완료");
 	}
 
 	public synchronized void setBusDB(BusInfo binfo) {
 
 		Log.d(TAG,"setBusDB 시작");
+=======
+		Log.d(TAG,"deleteFamilyExceptMe �Ϸ�");
+	}
+
+	public synchronized void setBusDB(BusInfo binfo) {
+		
+		Log.d(TAG,"setBusDB ����");
+>>>>>>> sbh
 		ContentValues values;
 
 		String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
@@ -562,13 +639,22 @@ public class DBManager {
 
 			}
 		}
+<<<<<<< HEAD
 		Log.d(TAG, "setBusDB 완료");
 
+=======
+		Log.d(TAG, "setBusDB �Ϸ�");
+		
+>>>>>>> sbh
 	}
 
 	public synchronized ArrayList<BusInfo> getBusDBbyLog() {
 
+<<<<<<< HEAD
 		// 상위 3개정도의 버스 인포를 받음(설정한 것 기준으로)
+=======
+		// ���� 3�������� ���� ������ ����(������ �� ��������)
+>>>>>>> sbh
 		ArrayList<BusInfo> array_binfo = new ArrayList<BusInfo>();
 		BusInfo binfo;
 
@@ -602,8 +688,13 @@ public class DBManager {
 			counter++;
 		}
 
+<<<<<<< HEAD
 
 		Log.d(TAG,"getBusDBbyLog 완료");
+=======
+		
+		Log.d(TAG,"getBusDBbyLog �Ϸ�");
+>>>>>>> sbh
 		return array_binfo;
 
 	}
@@ -622,13 +713,22 @@ public class DBManager {
 		values.put(MynahDB._BUS_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._BUS_LOG_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		Log.d(TAG,"setBusDBbyLog 완료");
+=======
+		Log.d(TAG,"setBusDBbyLog �Ϸ�");
+>>>>>>> sbh
 
 	}
 
 	public synchronized BusInfo getBusDB(BusInfo binfo) {
+<<<<<<< HEAD
 
 		Log.d(TAG,"getBusDB 시작");
+=======
+		
+		Log.d(TAG,"getBusDB ����");
+>>>>>>> sbh
 		String sql = "select * from " + MynahDB._BUS_TABLE_NAME + " where "
 				+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
 				+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '"
@@ -684,14 +784,22 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+<<<<<<< HEAD
 		Log.d(TAG,"getBusDB 완료");
+=======
+		Log.d(TAG,"getBusDB �Ϸ�");
+>>>>>>> sbh
 		return binfo;
 
 	}
 
 	public synchronized void setSubwayDBbyLog(SubwayInfo sinfo) {
 
+<<<<<<< HEAD
 		Log.d(TAG,"setSubwayDBbyLog 시작");
+=======
+		Log.d(TAG,"setSubwayDBbyLog ����");
+>>>>>>> sbh
 		ContentValues values;
 
 		values = new ContentValues();
@@ -704,13 +812,21 @@ public class DBManager {
 		values.put(MynahDB._SUBWAY_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._SUBWAY_LOG_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		Log.d(TAG,"setSubwayDBbyLog 완료");
+=======
+		Log.d(TAG,"setSubwayDBbyLog �Ϸ�");
+>>>>>>> sbh
 
 	}
 
 	public synchronized ArrayList<SubwayInfo> getSubwayDBbyLog() {
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSubwayDBbyLog 시작");
+=======
+		Log.d(TAG,"getSubwayDBbyLog ����");
+>>>>>>> sbh
 		ArrayList<SubwayInfo> array_sinfo = new ArrayList<SubwayInfo>();
 
 		String sql = "select * from " + MynahDB._SUBWAY_LOG_TABLE_NAME
@@ -743,17 +859,28 @@ public class DBManager {
 			counter++;
 		}
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSubwayDBbyLog 끝");
+=======
+		Log.d(TAG,"getSubwayDBbyLog ��");
+>>>>>>> sbh
 		return array_sinfo;
 	}
 
 	public synchronized void setSubwayDB(SubwayInfo swinfo) {
 
+<<<<<<< HEAD
 
 		Log.d(TAG,"setSubwayDB 시작");
 		ContentValues values;
 
 		// delete는 필요없다..? 일단 추후 확인
+=======
+		
+		Log.d(TAG,"setSubwayDB ����");
+		ContentValues values;
+
+>>>>>>> sbh
 		// String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
 		// + MynahDB._BUS_COL_ARR_TIME + " < datetime('now','localtime');";
 		// dbh.mDB.execSQL(sql);
@@ -829,13 +956,21 @@ public class DBManager {
 
 			}
 		}
+<<<<<<< HEAD
 		Log.d(TAG,"setSubwayDB 끝");
+=======
+		Log.d(TAG,"setSubwayDB ��");
+>>>>>>> sbh
 
 	}
 
 	public synchronized SubwayInfo getSubwayDB(SubwayInfo swinfo) {
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSubwayDB 시작");
+=======
+		Log.d(TAG,"getSubwayDB ����");
+>>>>>>> sbh
 		String sql = "select * from " + MynahDB._SUBWAY_TABLE_NAME + " where "
 				+ MynahDB._SUBWAY_COL_STATION_ID + " = '"
 				+ swinfo.station.station_cd + "' and "
@@ -885,15 +1020,25 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSubwayDB 끝");
+=======
+		Log.d(TAG,"getSubwayDB ��");
+>>>>>>> sbh
 		return swinfo;
 
 	}
 
 	public void setMainUserDB(UserProfile upf) {
+<<<<<<< HEAD
 
 		Log.d(TAG,"setMainUserDB 시작");
 		// default로 넣음.
+=======
+		
+		Log.d(TAG,"setMainUserDB ����");
+		// default�� ����.
+>>>>>>> sbh
 		ContentValues values;
 
 		if (upf.id == null)
@@ -910,7 +1055,11 @@ public class DBManager {
 
 		// insert
 		dbh.mDB.insert(MynahDB._USER_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		Log.d(TAG, "setMainUserDB 끝");
+=======
+		Log.d(TAG, "setMainUserDB ��");
+>>>>>>> sbh
 
 	}
 
@@ -950,9 +1099,15 @@ public class DBManager {
 
 	}
 
+<<<<<<< HEAD
 	//스케쥴 받아오기 관련 쿼리
 
 	// 스케쥴 객체를 schedule 테이블에 insert하는 함수
+=======
+	//������ �޾ƿ��� ���� ����
+
+	// ������ ��ü�� schedule ���̺� insert�ϴ� �Լ�
+>>>>>>> sbh
 	public synchronized void setScheduleDB(ScheduleInfo scheduleInfo) {
 
 		ContentValues values;
@@ -966,14 +1121,22 @@ public class DBManager {
 		values.put(MynahDB._SCHEDULE_COL_CREATED_DATE, scheduleInfo.scheduleCreatedDate);
 
 		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		//Log.d(TAG,"setScheduleDB 완료");
 	}
 
 	//여러개의 스케쥴 한번에 때려박
+=======
+		Log.d(TAG,"setScheduleDB �Ϸ�");
+	}
+
+	//�������� ������ �ѹ��� ������
+>>>>>>> sbh
 	public synchronized void setSchedulesOnDateDB(SchedulesOnDateInfo schedulesOnDateInfo){
 		for(ScheduleInfo sInfo : schedulesOnDateInfo.scheduleList){
 			setScheduleDB(sInfo);
 		}
+<<<<<<< HEAD
 		Log.d(TAG,"setSchedulesOnDateDB 완료");
 	}
 
@@ -989,24 +1152,43 @@ public class DBManager {
 
 
 	//스케쥴에 날짜 찾아서 싸그리 딜리트 하는거
+=======
+		Log.d(TAG,"setSchedulesOnDateDB �Ϸ�");
+	}
+
+	//�����쿡 ��¥ ã�Ƽ� �α׸� ����Ʈ �ϴ°�
+>>>>>>> sbh
 	public synchronized void deleteSchedulesByDate(String date) {
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + "= '" + date.trim()
 				+ "' ;";
 		dbh.mDB.execSQL(sql);
+<<<<<<< HEAD
 		Log.d(TAG,"deleteSchedulesByDate 완료");
 	}
 
 	//스케쥴 테이블 비우기
+=======
+		Log.d(TAG,"deleteSchedulesByDate �Ϸ�");
+	}
+
+	//������ ���̺� ����
+>>>>>>> sbh
 	public synchronized void deleteSchedulesAll() {
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME
 				+ " ;";
 		dbh.mDB.execSQL(sql);
+<<<<<<< HEAD
 		Log.d(TAG,"deleteSchedulesAll 완료");
 	}
 
 
 	//스케줄 테이블의 레코드 개수
+=======
+		Log.d(TAG,"deleteSchedulesAll �Ϸ�");
+	}
+
+>>>>>>> sbh
 	public synchronized int getSchedulesCount(){
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME+ " ;";
 
@@ -1022,7 +1204,11 @@ public class DBManager {
 	}
 
 
+<<<<<<< HEAD
 	//날짜로 스케쥴 조나 받아오기
+=======
+	//��¥�� ������ ���� �޾ƿ���
+>>>>>>> sbh
 	public synchronized SchedulesOnDateInfo getSchedulesByDateTimeDB(String date) {
 		SchedulesOnDateInfo schedulesOnDateInfo = new SchedulesOnDateInfo();
 		ScheduleInfo scheduleInfo;
@@ -1030,6 +1216,10 @@ public class DBManager {
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " = "
 				+ "'" + date.trim()+ "'"
+<<<<<<< HEAD
+=======
+				+ "'" + date.trim() + "'"
+>>>>>>> sbh
 				//+ " order by "
 				//+ MynahDB._SCHEDULE_COL_SCHEDULE_TIME
 				+ " ; ";
@@ -1060,12 +1250,20 @@ public class DBManager {
 			c.moveToNext();
 		}
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSchedulesByDateTimeDB 완료");
+=======
+		Log.d(TAG,"getSchedulesByDateTimeDB �Ϸ�");
+>>>>>>> sbh
 		return schedulesOnDateInfo;
 	}
 
 
+<<<<<<< HEAD
 	//세션 갖는 유져를 세션테이블이 저장
+=======
+	//���� ���� ������ �������̺��� ����
+>>>>>>> sbh
 	public synchronized void setSessionUserDB(SessionUserInfo suInfo) {
 
 		ContentValues values;
@@ -1085,11 +1283,19 @@ public class DBManager {
 		values.put(MynahDB._SESSION_USER_COL_INOUT_TIME, suInfo.inoutTime);
 
 		dbh.mDB.insert(MynahDB._SESSION_USER_TABLE_NAME, null, values);
+<<<<<<< HEAD
 		Log.d(TAG,"setSessionUserDB 완료");
 	}
 
 
 	//현재 세션테이블에 있는 애새끼 불러오기
+=======
+		Log.d(TAG,"setSessionUserDB �Ϸ�");
+	}
+
+
+	//���� �������̺� �ִ� �ֻ��� �ҷ�����
+>>>>>>> sbh
 	public synchronized SessionUserInfo getSessionUserDB(){
 		SessionUserInfo sessionUserInfo = new SessionUserInfo();
 
@@ -1129,17 +1335,28 @@ public class DBManager {
 		sessionUserInfo.password = c.getString(password_index);
 		sessionUserInfo.inoutTime = c.getString(inout_time_index);
 
+<<<<<<< HEAD
 		Log.d(TAG,"getSessionUserDB 완료");
+=======
+		Log.d(TAG,"getSessionUserDB �Ϸ�");
+>>>>>>> sbh
 		return sessionUserInfo;
 	}
 
 
+<<<<<<< HEAD
 	//세션 끊기면 테이블 아예 비워버려
+=======
+>>>>>>> sbh
 	public synchronized void deleteSessionUser() {
 		String sql = "delete from " + MynahDB._SESSION_USER_TABLE_NAME
 				+ " ;";
 		dbh.mDB.execSQL(sql);
+<<<<<<< HEAD
 		Log.d(TAG,"deleteSessionUser 완료");
+=======
+		Log.d(TAG,"deleteSessionUser ");
+>>>>>>> sbh
 	}
 
 

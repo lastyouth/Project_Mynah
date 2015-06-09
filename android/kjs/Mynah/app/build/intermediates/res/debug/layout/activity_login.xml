@@ -52,4 +52,8 @@
             android:id="@+id/btnSignup" />
     </LinearLayout>
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_login.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_login.xml -->
+>>>>>>> sbh

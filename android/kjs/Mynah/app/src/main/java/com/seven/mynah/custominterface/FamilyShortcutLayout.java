@@ -35,6 +35,7 @@ public class FamilyShortcutLayout extends CustomButton{
 	private TextView tvFamilyName[];
 	private TextView tvFamilyTime[];
 	private TextView tvFamilyInOut[];
+<<<<<<< HEAD
 
 	private ArrayList<SessionUserInfo> suInfoList;
 
@@ -111,6 +112,9 @@ public class FamilyShortcutLayout extends CustomButton{
 		}
 	};
 
+=======
+	
+>>>>>>> sbh
 	//가족 구성원수
 	private int numOfFamily = 2;
 	
@@ -178,7 +182,17 @@ public class FamilyShortcutLayout extends CustomButton{
 	{
 		view = inflate(getContext(), R.layout.layout_button_family, null);
 		
+<<<<<<< HEAD
 		getFamilyInOutStatus();
+=======
+		tvFamilyName[0].setText("김진성");
+		tvFamilyTime[0].setText("08:11");
+		tvFamilyInOut[0].setText("IN");
+		
+		tvFamilyName[1].setText("김희중");
+		tvFamilyTime[1].setText("19:35");
+		tvFamilyInOut[1].setText("OUT");
+>>>>>>> sbh
 		
 		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new FamilyTouchListener());
@@ -222,9 +236,13 @@ public class FamilyShortcutLayout extends CustomButton{
 				Toast.makeText(getContext(), "가족 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
+<<<<<<< HEAD
 
 				getFamilyInOutStatus();
 
+=======
+				
+>>>>>>> sbh
 				return true;
 			}
 			return true;

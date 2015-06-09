@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v21/values.xml -->
+=======
+    <!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v21/values.xml -->
+>>>>>>> sbh
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>

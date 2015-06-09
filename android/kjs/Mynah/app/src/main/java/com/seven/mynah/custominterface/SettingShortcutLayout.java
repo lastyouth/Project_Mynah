@@ -49,9 +49,13 @@ public class SettingShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
+<<<<<<< HEAD
 				//cbf.startSettingActivity("Setting");
 
 				//serviceTest();
+=======
+				cbf.startSettingActivity("Setting");
+>>>>>>> sbh
 				return true;
 			}
 			return true;

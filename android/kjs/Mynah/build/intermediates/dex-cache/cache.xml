@@ -2,6 +2,7 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
         jar="D:\git\Mynah\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.3.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -420,6 +421,265 @@
         revision="22.0.1"
         sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
         <dex dex="D:\git\Project_Mynah\android\kjs\Mynah\app\build\intermediates\pre-dexed\debug\classes-03a6484091fb2235126e9c74ebfa05a0295c1930.jar" />
+=======
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-dbc3d079cbae39f6f679613e8ddce752e2c755bd.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="565a01f90f1529f73362707c4c185d0623a68782">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-6a51465d108553efdc375c5b3909f94e85d1c5fc.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.20.0/1d086ac5756475ddf451af2e2df6e288d18608ca/google-oauth-client-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.20.0-7fffd3b283a89497887830aa1266403bdafc621d.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/jsr305-1.3.9-9c645004249aebf8e5ac33059602bd4597ecec8d.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-8eb6237ebc187ba739b010543842d2d132f4721d.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-bfc2cd8a3f2f469daff6804fff3266a93489a81b.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-a6974633ae90a8845c4df38acf57aec2c877ab58.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-303b5b21335011961135187da7a3e901fc451a01.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3-15be3a4b58e7ea54cc3f35e7d73bb02abcd112c1.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.20.0/d3e66209ae9e749b2d6833761e7885f60f285564/google-api-client-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d3e66209ae9e749b2d6833761e7885f60f285564">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-api-client-1.20.0-ed3c65931d00e8bcd920454b4432eb9aa1129d47.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-d7cff66cefc184d2e6f3ee21bf84d16dd0e0c8b4.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-calendar/v3-rev125-1.20.0/fef496f895ad5be86416863153d4efbf7b601f8a/google-api-services-calendar-v3-rev125-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fef496f895ad5be86416863153d4efbf7b601f8a">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-api-services-calendar-v3-rev125-1.20.0-a499f8e380d2eef856635d8c444c65f6cdaf3df2.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/13.0/381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7/guava-jdk5-13.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/guava-jdk5-13.0-b206cf544bee74ca4062fd764b8de1868aed92ba.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-f99d92063c2472fdc2a01bc41acd153cc8da6a50.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-0fd02451f2314dc2200f5853ed45258cc1efca47.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-efa49fdc2a55820bcaa70d8b561332da411c7c92.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-b214f4e749cff0ef2b29072811fe6de1e91068e7.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-21bf2ad3f7a6af1fea4fc8bb7138eecbe339578e.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-gson/1.20.0/ace1924800ca8c256f6a3f63e72ee13e1b458d36/google-api-client-gson-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ace1924800ca8c256f6a3f63e72ee13e1b458d36">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-api-client-gson-1.20.0-c149acae9a0a3c2faf3e952dfbe5025830f4c441.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.20.0/313dc99a7963523871495897ca11aa8472b3c6fd/google-http-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.20.0-487818531fed17d0a054ef2facb1f46100910d58.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.20.0/2408070b2abec043624d35b35e30450f1b663858/google-http-client-jackson2-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2408070b2abec043624d35b35e30450f1b663858">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-http-client-jackson2-1.20.0-dc10e96572e1cb436e23d6b52efe4e2c8cb5487d.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-81d0b8bf67886b43c99f744ef354d946bd68b64a.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-ec90f96c42d7ee7007dfc272aa2176a355b287c9.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-b3110af9a86ce142b8d3ed6813cefd001cd5274e.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-458017ba266a43946887ea13503ab8183a27ac6d.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-d6497034eb296de7073f277d4cc0a20366981fc7.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-2b719f0157ae249d6bf22ed1f72ce7916550cc51.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-5d55119a9d10be7656f7617297a6bb73861acdaf.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-bb8513b5b2043b1a93107317687e92d9d1b6f082.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.20.0/9204765f39000f6109c927ac66c7963bf9c7df19/google-http-client-gson-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9204765f39000f6109c927ac66c7963bf9c7df19">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-http-client-gson-1.20.0-a91e3c918c82fa87de7fa8d324330ef0588ec33a.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.20.0/5673179575c32b69a474334255c3044adf18d40/google-api-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="05673179575c32b69a474334255c3044adf18d40">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-api-client-android-1.20.0-5cc99e70f8dbe57e0f5658028f4b3f2a8d09914c.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.20.0/93d82db2bca534960253f43424b2ba9d7638b4d2/google-http-client-1.20.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/google-http-client-1.20.0-834396b77e79fe42ff617d6a053f26dacd9c4650.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-8301464947d696c2c4ecbe761a663a707b95b1bf.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-c020657c5c53672e2f28e45b42ab820930661fcb.jar" />
+    </item>
+    <item
+        jar="/home/sbh/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.1/2e66da15851f9f5b5079228f856c2f090ba98c38/gson-2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2e66da15851f9f5b5079228f856c2f090ba98c38">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/gson-2.1-038701dab57c3da18803f784e4afedc0366d1b10.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-40b9ee2281352917bde32d77cb2d9c45f12adef2.jar" />
+    </item>
+    <item
+        jar="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
+        <dex dex="/home/sbh/Project_Mynah/android/kjs/Mynah/app/build/intermediates/pre-dexed/debug/classes-95a4e476f3c402859e154a02c7134068c5e13bf9.jar" />
+>>>>>>> sbh
     </item>
 
 </items>

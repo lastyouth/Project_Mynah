@@ -17,4 +17,8 @@
         </shape>
     </item>
     <item android:drawable="@drawable/transparent" />
+<<<<<<< HEAD
 </selector><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/list_selector.xml -->
+=======
+</selector><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/drawable/list_selector.xml -->
+>>>>>>> sbh
