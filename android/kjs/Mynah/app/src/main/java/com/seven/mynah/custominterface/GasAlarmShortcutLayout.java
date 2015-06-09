@@ -17,16 +17,19 @@ import com.seven.mynah.artifacts.GasAlarmInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.WeatherParser;
 
 public class GasAlarmShortcutLayout extends CustomButton{
-	
+
 	private View view;
 	private ImageView ivGasStatus;
 	private TextView tvGasOnOff;
 	private TextView tvGasTemperature;
-	
-	
+
+	private final int GAS_OFF = 1;
+	private final int GAS_WARNING = 2;
+	private final int GAS_WARNING2 = 3;
 
 	public GasAlarmShortcutLayout(Context context, CustomButtonsFragment _cbf) {
 		super(context);
@@ -34,26 +37,56 @@ public class GasAlarmShortcutLayout extends CustomButton{
 		cbf = _cbf;
 		initView();
 	}
-	
-	private void initView() 
+
+	private void initView()
 	{
 		view = inflate(getContext(), R.layout.layout_button_gas, null);
 		ivGasStatus = (ImageView)view.findViewById(R.id.ivGasImage);
 		tvGasOnOff = (TextView)view.findViewById(R.id.tvGasOnOff);
 		tvGasTemperature = (TextView)view.findViewById(R.id.tvGasTemperature);
-		
+
 		//if gas is on then ic_gas_warning2, tvGasonOff.setText("ON");
 		ivGasStatus.setImageResource(R.drawable.ic_gas);
-		tvGasOnOff.setText("OFF");
-		tvGasTemperature.setText("15 °C");
-		
-		
+
 		view.setOnTouchListener(new GasAlarmTouchListener());
 		addView(view);
 	}
+
+	public void refresh() {
+		// Request service to get temperature
+		int temp = ServiceAccessManager.getInstance().getService().getTempData();
+		setGasAlarmInfo(temp);
+	}
+
+	public void setGasAlarmInfo(int temp)
+	{
+		if(temp == 0)
+		{
+			tvGasTemperature.setText("받아오는 중입니다.");
+			tvGasTemperature.setTextSize(14);
+		}
+		tvGasTemperature.setText(temp + "°C");
+		if(isFired(temp))
+		{
+			tvGasOnOff.setText("ON");
+			setImageOnOff(GAS_WARNING);
+		}
+		else
+		{
+			tvGasOnOff.setText("OFF");
+			setImageOnOff(GAS_OFF);
+		}
+	}
+
+	public boolean isFired(int temp)
+	{
+		if(temp >= 30)
+			return true;
+		else
+			return false;
+	}
 	
-	
-	
+	/*
 	public void setGasAlarmInfo(GasAlarmInfo ginfo)
 	{
 		
@@ -67,57 +100,31 @@ public class GasAlarmShortcutLayout extends CustomButton{
 			tvGasOnOff.setText("OFF");
 			setImageOnOff(1);
 		}
-		
-	}
-	
-	
+	}*/
+
+
 	private void setImageOnOff(int type)
 	{
 		switch (type)
 		{
-		case 1:
-			ivGasStatus.setImageResource(R.drawable.ic_gas_warning);
-			break;
-				
-		case 2:
-			ivGasStatus.setImageResource(R.drawable.ic_gas_warning2);
-			break;
-		case 3:
-			ivGasStatus.setImageResource(R.drawable.ic_gas);
-			break;
-		}
-		
-	}
-	
-	
-	public void setuptest()
-	{
-		
-		cbf.getActivity().runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
+			case GAS_OFF:
+				ivGasStatus.setImageResource(R.drawable.ic_gas);
+				break;
 
-				GasAlarmInfo ginfo = new GasAlarmInfo();
-				
-				ginfo.isFired = true;
-				//ginfo.last_update = String.valueOf(new Date());
-				//ginfo.time = String.valueOf(new Date());
-				
-				setGasAlarmInfo(ginfo);
-				
-		    	
-			}
-		});
-		
-		
+			case GAS_WARNING:
+				ivGasStatus.setImageResource(R.drawable.ic_gas_warning2);
+				break;
+			case GAS_WARNING2:
+				ivGasStatus.setImageResource(R.drawable.ic_gas_warning);
+				break;
+		}
+
 	}
-	
-	
+
+
 	private final class GasAlarmTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
+
 			Log.d("Touch", "motionEvent.getAction()" + motionEvent.getAction());
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				view.setAlpha((float) 0.8);
@@ -125,21 +132,16 @@ public class GasAlarmShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-
 				//Toast.makeText(getContext(), "가스 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//원하는 실행 엑티비티
-				//setuptest();
-				cbf.startBluetoothList_temp();
-				
+
+				refresh();
 				return true;
 			}
 			return true;
 		}
 	}
-	
-	public void refresh() {
-		//Toast.makeText(getContext(), "Gas onRestart()", 1).show();
-	}
+
+
 
 }

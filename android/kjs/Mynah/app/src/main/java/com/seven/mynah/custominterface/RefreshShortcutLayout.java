@@ -63,7 +63,7 @@ public class RefreshShortcutLayout extends CustomButton{
 		cbf.refresh("Bus");
 		cbf.refresh("Subway");
 		cbf.refresh("Weather");
-		
+		cbf.refresh("Schedule");
 		setCurrentTime();
 	}
 	

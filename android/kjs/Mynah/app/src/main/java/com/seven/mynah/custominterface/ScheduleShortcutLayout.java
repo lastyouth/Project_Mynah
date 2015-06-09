@@ -27,6 +27,7 @@ import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 
 public class ScheduleShortcutLayout extends CustomButton{
 	
@@ -61,7 +62,6 @@ public class ScheduleShortcutLayout extends CustomButton{
 		calendarManager = GlobalGoogleCalendarManager.calendarManager;
 		int tableCount = DBManager.getManager(getContext()).getSchedulesCount();
 
-		//DBManager.getManager(context).deleteSchedulesAll();
 		if(tableCount == 0)
 		{
 			layoutSchedule.removeAllViews();
@@ -73,70 +73,21 @@ public class ScheduleShortcutLayout extends CustomButton{
 			layoutSchedule.setGravity(Gravity.CENTER);
 			layoutSchedule.addView(tvSchedules[0]);
 		}
-		else
-		{
-			setInfo();
-		}
-		/*
-		for(int i = 0; i < 2; i++)
-		{
-			tvSchedules[i] = new TextView(context);
-			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
-			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			layoutSchedule.addView(tvSchedules[i]);
-		}
-		tvSchedules[0].setText("09:00 외주업체 미팅");
-		tvSchedules[1].setText("12:30 점심약속");
 
-		tvPreparation.setText("준비물 : USB, 보고서");
-		tvPreparation.setTextColor(Color.parseColor("#ffffff"));
-		tvPreparation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-		layoutPreparation.addView(tvPreparation);
-		*/
-		//setInfo();
-		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new ScheduleTouchListener());
 		addView(view);
 	}
 	
-	private final class ScheduleTouchListener extends Activity implements OnTouchListener {
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
-			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-				view.setAlpha((float) 0.8);
-				return true;
-			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
-				return true;
-			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-				view.setAlpha((float) 1.0);
-				//원하는 실행 엑티비티!
-
-				//cbf.startSettingActivity("Schedule");
-				cbf.startSettingActivity("Calendar");
-				return true;	
-
-			}
-			return true;
-		}
-	}
-	
-	public void refresh() {
-		setInfo();
-	}
-
-	public void setInfo()
+	public void refresh()
 	{
-		//calendarManager = GlobalGoogleCalendarManager.calendarManager;
+		//Request service to get schedule information (through Mynah DB)
+		ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
+		setInfo(scheduleInfos);
+	}
 
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String strDate = sdf.format(date);
-
-		scheduleInfo = new ArrayList<ScheduleInfo>();
-		//scheduleInfo = calendarManager.getScheduleOnDate(strDate);
-		scheduleInfo = DBManager.getManager(getContext()).getSchedulesByDateTimeDB(strDate).scheduleList;
-
-		int size = scheduleInfo.size();
+	public void setInfo(ArrayList<ScheduleInfo> scheduleInfos)
+	{
+		int size = scheduleInfos.size();
 		layoutSchedule.removeAllViews();
 		if(size == 0)
 		{
@@ -156,10 +107,28 @@ public class ScheduleShortcutLayout extends CustomButton{
 			tvSchedules[i] = new TextView(context);
 			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			String str = scheduleInfo.get(i).scheduleTime + " " + scheduleInfo.get(i).scheduleName;
+			String str = scheduleInfos.get(i).scheduleTime + " " + scheduleInfos.get(i).scheduleName;
 			tvSchedules[i].setText(str);
 			layoutSchedule.addView(tvSchedules[i]);
 		}
 
+	}
+
+	private final class ScheduleTouchListener extends Activity implements OnTouchListener {
+		public boolean onTouch(View view, MotionEvent motionEvent) {
+
+			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+				view.setAlpha((float) 0.8);
+				return true;
+			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+				return true;
+			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+				view.setAlpha((float) 1.0);
+
+				cbf.startSettingActivity("Calendar");
+				return true;
+			}
+			return true;
+		}
 	}
 }

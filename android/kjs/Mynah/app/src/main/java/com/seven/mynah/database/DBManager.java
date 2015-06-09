@@ -1030,8 +1030,8 @@ public class DBManager {
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + " = "
 				+ "'" + date.trim()+ "'"
-				//+ " order by "
-				//+ MynahDB._SCHEDULE_COL_SCHEDULE_TIME
+				+ " order by "
+				+ MynahDB._SCHEDULE_COL_SCHEDULE_TIME
 				+ " ; ";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);

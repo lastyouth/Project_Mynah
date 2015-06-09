@@ -42,7 +42,6 @@
 
             android:textSize="30sp"
             android:textColor="#ffffff"/>
-        
         <TextView 
             android:id="@+id/tvGasOnOff"
             android:layout_height="wrap_content"

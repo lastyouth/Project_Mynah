@@ -15,7 +15,20 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.seven.mynah.artifacts.BusInfo;
+import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.artifacts.SubwayInfo;
+import com.seven.mynah.artifacts.WeatherInfo;
+import com.seven.mynah.artifacts.WeatherLocationInfo;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.infoparser.BusPaser;
+import com.seven.mynah.infoparser.SubwayPaser;
+import com.seven.mynah.infoparser.WeatherParser;
+
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class GetInformationService extends Service
 {
@@ -26,6 +39,7 @@ public class GetInformationService extends Service
     private String deviceID;
     private RPiBluetoothConnectionManager mBluetoothManager;
     private Context mCtx;
+    private int mTempdata;
 
     public static final String TAG = "GetInfomationService";
 
@@ -50,26 +64,37 @@ public class GetInformationService extends Service
 
     private BluetoothRequestCallback btCallback = new BluetoothRequestCallback() {
         @Override
-        public void onRequestTTSWithRSSI() {
-            Log.d(TAG, "onRequestTTSWithRSSI");
-            String data = new String("안녕하세요 서보훈님 오늘도 좋은하루 되시길 바라며 화이팅입니다!!");
+        public void onRequestOutTTSWithRSSI() {
+            Log.d(TAG, "onRequestOutTTSWithRSSI");
+            String data = new String("안녕하세요 기미중님 사랑합니다.~");
 
             Log.d(TAG,"Send Data from GetInformationService : "+data);
 
-            mBluetoothManager.sendTTSWithRSSI(data);
+            mBluetoothManager.sendTTSWithRSSI(RPiBluetoothConnectionManager.SEND_TYPE_OUTTTS,data);
 
+        }
+
+        @Override
+        public void onRequestInTTSWithRSSI() {
+            Log.d(TAG, "onRequestInTTSWithRSSI");
+            String data = new String("어서오세요 기미중님 오늘 하루도 수고하셨습니다.");
+
+            Log.d(TAG,"Send Data from GetInformationService : "+data);
+
+            mBluetoothManager.sendTTSWithRSSI(RPiBluetoothConnectionManager.SEND_TYPE_INTTS,data);
         }
 
         @Override
         public void onTempDataArrived(int temp) {
             Log.d(TAG,"Temparture : "+temp);
+            mTempdata = temp;
         }
     };
 
 	@Override
     public void onCreate() 
 	{
-
+        mTempdata = 0;
         Log.d(TAG, "onCreate Start");
 		//Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
         mCtx = this;
@@ -162,8 +187,8 @@ public class GetInformationService extends Service
         isBindWithActivity = status;
     }
 
-    public boolean requestTempData(){
-        return mBluetoothManager.requestTempData();
+    public int getTempData(){
+        return mTempdata;
     }
     public void onDestroy()
     {
@@ -182,9 +207,95 @@ public class GetInformationService extends Service
     	super.onDestroy();
     }
 
-    public int getNumber()
+    public BusInfo getBusInfo()
     {
-        int n = 100;
-        return n;
+        BusInfo bInfo;
+        ArrayList<BusInfo> busArrayList;
+
+        // get current saved information from DB
+        busArrayList = DBManager.getManager(this).getBusDBbyLog();
+
+        if (busArrayList.size() == 0)
+        {
+            return null;
+        }
+        else
+        {
+            bInfo = busArrayList.get(0);
+            bInfo = DBManager.getManager(this).getBusDB(bInfo);
+
+            if (bInfo.array_ttb.size() == 0)
+            {
+                BusPaser bp = new BusPaser();
+                bInfo = bp.getBusArrInfoByRoute(bInfo);
+                DBManager.getManager(this).setBusDB(bInfo);
+                bInfo = DBManager.getManager(this).getBusDB(bInfo);
+            }
+            return bInfo;
+        }
+    }
+
+    public SubwayInfo getSubwayInfo()
+    {
+        SubwayInfo sInfo;
+        ArrayList<SubwayInfo> subwayArrayList;
+
+        // get current saved information from DB
+        subwayArrayList = DBManager.getManager(this).getSubwayDBbyLog();
+
+        if (subwayArrayList.size() == 0)
+        {
+            return null;
+        }
+        else
+        {
+            sInfo = subwayArrayList.get(0);
+            sInfo = DBManager.getManager(this).getSubwayDB(sInfo);
+
+            if (sInfo.array_tts.size() == 0)
+            {
+                SubwayPaser sp = new SubwayPaser();
+                sInfo = sp.getTimeTableByID(sInfo);
+                DBManager.getManager(this).setSubwayDB(sInfo);
+                sInfo = DBManager.getManager(this).getSubwayDB(sInfo);
+            }
+            return sInfo;
+        }
+    }
+
+    public WeatherInfo getWeatherInfo()
+    {
+        ArrayList<WeatherLocationInfo> weatherArrayList = DBManager.getManager(this).getWeatherDBbyLog();
+        WeatherInfo wInfo = new WeatherInfo();
+
+        if(weatherArrayList.size() == 0)
+        {
+            return null;
+        }
+        else
+        {
+            WeatherLocationInfo wLocationInfo = weatherArrayList.get(0);
+            wInfo.location = wLocationInfo;
+            wInfo = DBManager.getManager(this).getWeatherDB(wInfo);
+            if(wInfo.array_ttw.size() == 0)
+            {
+                WeatherParser wp = new WeatherParser();
+                wInfo = wp.getWeatherInfo(wInfo);
+            }
+            return wInfo;
+        }
+    }
+
+    public ArrayList<ScheduleInfo> getScheduleInfo()
+    {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = sdf.format(date);
+
+        // Request to get Schedule Information through Mynah DB
+        ArrayList<ScheduleInfo> scheduleInfo;
+        scheduleInfo = DBManager.getManager(this).getSchedulesByDateTimeDB(strDate).scheduleList;
+
+        return scheduleInfo;
     }
 }

@@ -16,6 +16,7 @@ import com.seven.mynah.R;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.WeatherParser;
 
 public class WeatherShortcutLayout extends CustomButton {
@@ -53,15 +54,22 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvPlace2 = (TextView) view.findViewById(R.id.tvWeatherPlace2);
 		tvTemper = (TextView) view.findViewById(R.id.tvWeatherTemper);
 
-		// tvReh = (TextView)view.findViewById(R.id.tvReh);
-
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
 		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
-		refresh();
-		// 추후 이부분은 다 xml로 넘길것
+
 		view.setOnTouchListener(new WeatherTouchListener());
 		addView(view);
 		Log.d(TAG, "initView End");
+	}
+
+	public void refresh() {
+		Log.d(TAG, "refresh Start");
+
+		// Request service to get weather Information
+		WeatherInfo wInfo = ServiceAccessManager.getInstance().getService().getWeatherInfo();
+		setWeatherInfo(wInfo);
+
+		Log.d(TAG, "refresh End");
 	}
 
 	private void setWeatherInfo(WeatherInfo winfo) {
@@ -80,39 +88,11 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvTemper.setText(winfo.array_ttw.get(0).temp + "°C");
 		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
 		tvPopName.setText("강수 확률:");
-		// tvReh.setText("습도 : " + winfo.array_ttw.get(0).reh + "%");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
-
-
-		// 이미지 타입 넣기
+		// Set weather image type
 		setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
 		Log.d(TAG, "setWeatherInfo End");
-	}
-
-	public void refresh() {
-		Log.d(TAG, "refresh Start");
-		weatherArrayList = new ArrayList<WeatherLocationInfo>();
-		weatherArrayList = DBManager.getManager(cbf.getActivity()).getWeatherDBbyLog();
-		WeatherInfo winfo = new WeatherInfo();
-		
-		if(weatherArrayList.size() == 0)
-		{
-			setWeatherInfo(null);
-		}
-		else
-		{
-			WeatherLocationInfo wlinfo = weatherArrayList.get(0);
-			winfo.location = wlinfo;
-			winfo = DBManager.getManager(getContext()).getWeatherDB(winfo);
-			if(winfo.array_ttw.size() == 0)
-			{
-				WeatherParser wp = new WeatherParser();
-				winfo = wp.getWeatherInfo(winfo);
-			}
-			setWeatherInfo(winfo);
-		}
-		Log.d(TAG, "refresh End");
 	}
 
 	private void setWeatherImage(int type) {

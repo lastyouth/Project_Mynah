@@ -2,11 +2,9 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
@@ -24,7 +21,7 @@ import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
-import com.seven.mynah.globalmanager.GlobalVariable;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,7 +56,6 @@ public class ScheduleManageActivity extends Activity {
         btCancel = (Button)findViewById(R.id.btScheduleCancel);
         btDelete = (Button)findViewById(R.id.btScheduleDelete);
         btAdd = (Button)findViewById(R.id.btScheduleAdd);
-
 
         Intent intent = getIntent();
         // Modify Schedule Event
@@ -209,7 +205,6 @@ public class ScheduleManageActivity extends Activity {
                 scheduleInfo.scheduleTime = time;
                 scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
                 DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
-
 
                 finish();
             }

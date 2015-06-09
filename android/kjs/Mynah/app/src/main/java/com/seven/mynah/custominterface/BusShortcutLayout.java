@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.BusPaser;
 
 public class BusShortcutLayout extends CustomButton {
@@ -39,7 +40,6 @@ public class BusShortcutLayout extends CustomButton {
 		super(context);
 		// TODO Auto-generated constructor stub
 		cbf = _cbf;
-		// refresh();
 		initView();
 	}
 
@@ -55,15 +55,18 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime2 = (TextView) view.findViewById(R.id.tvBusNextTime2);
 		tvBusDirName = (TextView) view.findViewById(R.id.tvBusDirName);
 
-		refresh();
-		// 추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new BusTouchListener());
 		addView(view);
 	}
 
+	public void refresh() {
+		//Request service to get bus Information
+		BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
+		setBusInfo(bInfo);
+	}
+
 	private void setBusInfo(BusInfo binfo)  {
 		if (binfo == null) {
-			// 초기화
 			bRoute = "";
 			bStation = "";
 			bDir = "터치해서 정보를 입력하세요";
@@ -75,7 +78,6 @@ public class BusShortcutLayout extends CustomButton {
 			bDir = binfo.dir + "행\n";
 			
 			//bStation = binfo.station.stNm;
-			
 			Date date = new Date();
 			SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			long curTime = System.currentTimeMillis();
@@ -126,37 +128,9 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusNextTime2.setText(time2);
 	}
 
-	public void refresh() {
-
-		// get current saved information from DB
-		busArrayList = new ArrayList<BusInfo>();
-		busArrayList = DBManager.getManager(getContext()).getBusDBbyLog();
-
-		if (busArrayList.size() == 0) 
-		{
-			setBusInfo(null);
-		}
-		else 
-		{
-			BusInfo binfo = busArrayList.get(0);
-			binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-
-			if (binfo.array_ttb.size() == 0) 
-			{
-				BusPaser bp = new BusPaser();
-				binfo = bp.getBusArrInfoByRoute(binfo);
-				DBManager.getManager(getContext()).setBusDB(binfo);
-				binfo = DBManager.getManager(getContext()).getBusDB(binfo);
-			}
-			setBusInfo(binfo);
-		}
-
-	}
-
 	public View getBusView() {
 		return view;
 	}
-
 	
 	private final class BusTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
