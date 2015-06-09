@@ -75,11 +75,11 @@ public class LoadingActivity extends Activity{
 		if (DBManager.getManager(this).isInitialUser())
 		{
 			UserProfile up =  DBManager.getManager(this).getMainUserDB();
-			Toast.makeText(this, "±èÁø¼º´Ô È¯¿µÇÕ´Ï´Ù.", 1).show();
+			Toast.makeText(this, "ê¹€ì§„ì„±ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 		}
 		else 
 		{
-			Toast.makeText(this, "µî·ÏµÈ À¯Àú°¡ ¾ø½À´Ï´Ù.", 1).show();
+			Toast.makeText(this, "ë“±ë¡ëœ ìœ ì €ê°€ ì—†ìŠµë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 		}
 			
 	}
@@ -89,7 +89,7 @@ public class LoadingActivity extends Activity{
 		UserProfile up = new UserProfile();
 		up.id = "pika";
 		up.passwd = "";
-		up.name = "±èÁø¼º";
+		up.name = "ê¹€ì§„ì„±";
 		up.inout = 1;
 		up.mac_address = "";
 		up.usertype = 1;
@@ -105,7 +105,7 @@ public class LoadingActivity extends Activity{
 	{
 		if(DBManager.getManager(this).isSetWeatherLocation())
 		{
-			//Áö¿ªÁ¤º¸ ¼³Á¤µÇ¾î ÀÖÀ½.
+
 		}
 		else
 		{
@@ -118,8 +118,7 @@ public class LoadingActivity extends Activity{
 	}
 	
 	
-	// Çö »óÈ²¿¡¼­ ÇÊ¿ä¾øÀ½.. A->B¿¡¼­ B->A·Î °¥¶§ ´ÙÀÌ¾ó·Î±× »ç¿ëÇÒ ¶§ »ç¿ë.
-	@Override 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);

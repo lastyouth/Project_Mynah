@@ -70,9 +70,9 @@ public class SubwaySettingActivity extends Activity {
 				// TODO Auto-generated method stub
 				subway_station = etSubwayStation.getText().toString().trim();
 
-				if(subway_station.matches(".*¿ª"))
+				if(subway_station.matches(".*ì—­"))
 				{
-					int i = subway_station.indexOf("¿ª");
+					int i = subway_station.indexOf("ì—­");
 					subway_station = subway_station.substring(0, i);
 				}
 				if(subway_station.equals(""))
@@ -114,7 +114,7 @@ public class SubwaySettingActivity extends Activity {
 						sinfo.station = vh.subwayStationInfo;
 
 						sinfo.station.inout_tag = vh.subwayStationInfo.inout_tag;
-						sinfo.week_tag = GlobalVariable.SubwayConstant.week_normal; // ÆòÀÏ
+						sinfo.week_tag = GlobalVariable.SubwayConstant.week_normal; // í‰ì¼
 
 						DBManager.getManager(getApplicationContext())
 								.setSubwayDBbyLog(sinfo);
@@ -143,8 +143,8 @@ public class SubwaySettingActivity extends Activity {
 	{
 		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle("");
-		alertDialog.setMessage(subway_station + "À» Ã£À»¼ö ¾ø½À´Ï´Ù.");
-		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "È®ÀÎ", new DialogInterface.OnClickListener() {
+		alertDialog.setMessage(subway_station + "ì„ ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "í™•ì¸", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which)
 			{
 				etSubwayStation.setText("");

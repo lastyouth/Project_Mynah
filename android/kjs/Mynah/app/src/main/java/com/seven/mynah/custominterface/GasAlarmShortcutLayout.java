@@ -45,7 +45,7 @@ public class GasAlarmShortcutLayout extends CustomButton{
 		//if gas is on then ic_gas_warning2, tvGasonOff.setText("ON");
 		ivGasStatus.setImageResource(R.drawable.ic_gas);
 		tvGasOnOff.setText("OFF");
-		tvGasTemperature.setText("15 ¡ÆC");
+		tvGasTemperature.setText("15 Â°C");
 		
 		
 		view.setOnTouchListener(new GasAlarmTouchListener());
@@ -126,9 +126,9 @@ public class GasAlarmShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
-				//Toast.makeText(getContext(), "°¡½º Á¤º¸°¡ Å¬¸¯µÇ¾úÀ½.", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getContext(), "ê°€ìŠ¤ ì •ë³´ê°€ í´ë¦­ë˜ì—ˆìŒ.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°
 				//setuptest();
 				cbf.startBluetoothList_temp();
 				

@@ -65,7 +65,7 @@ public class SubwayShortcutLayout extends CustomButton {
 
 		ivSubwayImage.setImageResource(R.drawable.ic_subway);
 		
-		// ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		// ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		refresh();
 		view.setOnTouchListener(new SubwayTouchListener());
 		addView(view);
@@ -73,8 +73,8 @@ public class SubwayShortcutLayout extends CustomButton {
 
 	private void setSubwayInfo(SubwayInfo sinfo) {
 		if (sinfo == null) {
-			// ÃÊ±âÈ­
-			tvSubwayDirName.setText("ÅÍÄ¡ÇØ¼­ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			// ì´ˆê¸°í™”
+			tvSubwayDirName.setText("í„°ì¹˜í•´ì„œ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			return;
 		}
 		String line_num = sinfo.station.line_num;
@@ -108,8 +108,8 @@ public class SubwayShortcutLayout extends CustomButton {
 				e.printStackTrace();
 			}
 			tt = tt/1000/60;
-			String time1 = tt + "ºĞ Àü";
-			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "Çà");
+			String time1 = tt + "ë¶„ ì „";
+			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "í–‰");
 			tvSubwayNextTime.setText(time1);
 
 			
@@ -125,8 +125,8 @@ public class SubwayShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				tt2 = tt2/1000/60;
-				String time2 = tt2 + "ºĞ Àü";
-				tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "Çà");
+				String time2 = tt2 + "ë¶„ ì „";
+				tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "í–‰");
 				tvSubwayNextTime2.setText(time2);
 
 			}
@@ -182,7 +182,7 @@ public class SubwayShortcutLayout extends CustomButton {
 				if (array_sinfo.size() != 0) {
 					sinfo = array_sinfo.get(0);
 				} else {
-					array_ssinfo = sp.getStationInfoByName("¼®°è");
+					array_ssinfo = sp.getStationInfoByName("ì„ê³„");
 					sinfo.week_tag = "1";
 					sinfo.station = array_ssinfo.get(0);
 					sinfo.station.inout_tag = "1";
@@ -191,7 +191,7 @@ public class SubwayShortcutLayout extends CustomButton {
 
 				sinfo = sp.getTimeTableByID(sinfo);
 				DBManager.getManager(cbf.getActivity()).setSubwayDB(sinfo);
-				// ÀÌ¹Ì ÀúÀåµÇ¾î ÀÖÀ¸¸é ºÒ·¯¿È..
+				// ì´ë¯¸ ì €ì¥ë˜ì–´ ìˆìœ¼ë©´ ë¶ˆëŸ¬ì˜´..
 				sinfo = DBManager.getManager(cbf.getActivity()).getSubwayDB(
 						sinfo);
 
@@ -211,7 +211,7 @@ public class SubwayShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				// ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				cbf.startSettingActivity("Subway");
 				// setuptest();
 

@@ -192,7 +192,7 @@ public class ScheduleListActivity extends Activity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mStatusText.setText("Retrieving data¡¦");
+                mStatusText.setText("Retrieving dataâ€¦");
                 mResultsText.setText("");
             }
         });

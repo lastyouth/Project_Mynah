@@ -24,7 +24,7 @@ private View view;
 	{
 		view = inflate(getContext(), R.layout.layout_button_voice, null);
 		
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		//ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new VoiceTouchListener());
 		addView(view);
 	}
@@ -40,9 +40,9 @@ private View view;
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "voice ¹öÆ°ÀÌ Å¬¸¯µÇ¾úÀ½.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "voice ë²„íŠ¼ì´ í´ë¦­ë˜ì—ˆìŒ.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				//run tts
 				return true;
 			}

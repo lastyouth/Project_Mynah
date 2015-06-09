@@ -126,8 +126,8 @@ public class WeatherSettingActivity extends Activity{
 	{
 		AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		alertDialog.setTitle("");
-		alertDialog.setMessage(cityName + "À»(¸¦) Ã£À»¼ö ¾ø½À´Ï´Ù.");
-		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "È®ÀÎ", new DialogInterface.OnClickListener() {
+		alertDialog.setMessage(cityName + "ì„(ë¥¼) ì°¾ì„ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+		alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "í™•ì¸", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which)
 			{
 				etCityName.setText("");

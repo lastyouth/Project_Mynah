@@ -23,7 +23,7 @@ public class FamilyShortcutLayout extends CustomButton{
 	private TextView tvFamilyTime[];
 	private TextView tvFamilyInOut[];
 	
-	//°¡Á· ±¸¼º¿ø¼ö
+	//ê°€ì¡± êµ¬ì„±ì›ìˆ˜
 	private int numOfFamily = 2;
 	
 	public FamilyShortcutLayout(Context context, CustomButtonsFragment _cbf) 
@@ -73,15 +73,15 @@ public class FamilyShortcutLayout extends CustomButton{
 			layoutFamilyInOut.addView(tvFamilyInOut[i]);
 		}
 		
-		tvFamilyName[0].setText("±èÁø¼º");
+		tvFamilyName[0].setText("ê¹€ì§„ì„±");
 		tvFamilyTime[0].setText("08:11");
 		tvFamilyInOut[0].setText("IN");
 		
-		tvFamilyName[1].setText("±èÈñÁß");
+		tvFamilyName[1].setText("ê¹€í¬ì¤‘");
 		tvFamilyTime[1].setText("19:35");
 		tvFamilyInOut[1].setText("OUT");
 		
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		//ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new FamilyTouchListener());
 		addView(view);
 	}
@@ -97,9 +97,9 @@ public class FamilyShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "°¡Á· Á¤º¸°¡ Å¬¸¯µÇ¾úÀ½.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "ê°€ì¡± ì •ë³´ê°€ í´ë¦­ë˜ì—ˆìŒ.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				
 				return true;
 			}

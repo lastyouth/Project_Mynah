@@ -56,23 +56,23 @@ public class BusShortcutLayout extends CustomButton {
 		tvBusDirName = (TextView) view.findViewById(R.id.tvBusDirName);
 
 		refresh();
-		// ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		// ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new BusTouchListener());
 		addView(view);
 	}
 
 	private void setBusInfo(BusInfo binfo)  {
 		if (binfo == null) {
-			// ÃÊ±âÈ­
+			// ì´ˆê¸°í™”
 			bRoute = "";
 			bStation = "";
-			bDir = "ÅÍÄ¡ÇØ¼­ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä";
+			bDir = "í„°ì¹˜í•´ì„œ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”";
 			time1 = "";
 			time2 = "";
 		} else {
-			bRoute = binfo.route.busRouteNm + " ¹ö½º";
+			bRoute = binfo.route.busRouteNm + " ë²„ìŠ¤";
 			bStation = binfo.station.stNm;
-			bDir = binfo.dir + "Çà\n";
+			bDir = binfo.dir + "í–‰\n";
 			
 			//bStation = binfo.station.stNm;
 			
@@ -83,7 +83,7 @@ public class BusShortcutLayout extends CustomButton {
 			
 			
 			if (binfo.array_ttb.size() == 0) {
-				time1 = "Â÷°¡ ¾øÀ½";
+				time1 = "ì°¨ê°€ ì—†ìŒ";
 				time2 = "";
 			} else if (binfo.array_ttb.size() == 1) {
 				time1 = binfo.array_ttb.get(0).time;
@@ -94,7 +94,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time1 = ((arriveTime - curTime)/1000/60) + "ºĞ Àü";
+				time1 = ((arriveTime - curTime)/1000/60) + "ë¶„ ì „";
 				
 			} else {
 				time1 = binfo.array_ttb.get(0).time;
@@ -105,7 +105,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time1 = ((arriveTime - curTime)/1000/60) + "ºĞ Àü";
+				time1 = ((arriveTime - curTime)/1000/60) + "ë¶„ ì „";
 				
 				time2 = binfo.array_ttb.get(1).time;
 				try {
@@ -115,7 +115,7 @@ public class BusShortcutLayout extends CustomButton {
 					e.printStackTrace();
 				}
 				arriveTime = date.getTime();
-				time2 = ((arriveTime - curTime)/1000/60) + "ºĞ Àü";
+				time2 = ((arriveTime - curTime)/1000/60) + "ë¶„ ì „";
 			}
 		}
 		ivBusImage.setImageResource(R.drawable.ic_bus);
@@ -168,7 +168,7 @@ public class BusShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				// ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				// refresh();
 				cbf.startSettingActivity("Bus");
 				return true;
