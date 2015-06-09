@@ -735,8 +735,8 @@ int id tvCurrentBusRoute 0x7f0c007a
 int id tvCurrentSubwayStation 0x7f0c007f
 int id tvCurrentWeatherLocation 0x7f0c0083
 int id tvCustomListName 0x7f0c008f
-int id tvGasOnOff 0x7f0c009c
-int id tvGasTemperature 0x7f0c009d
+int id tvGasOnOff 0x7f0c009d
+int id tvGasTemperature 0x7f0c009c
 int id tvListRow 0x7f0c00b3
 int id tvListRowScheduleName 0x7f0c00b6
 int id tvListRowScheduleTime 0x7f0c00b7

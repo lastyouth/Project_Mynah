@@ -86,8 +86,8 @@ public class CalendarActivity extends Activity {
         calendarManager = new CalendarManager(this, CalendarActivity.this);
         calendarManager.init();
 
-        calendarManager.asyncSchedule();
-        GlobalGoogleCalendarManager.calendarManager = calendarManager;
+        //calendarManager.asyncSchedule();
+        //GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
         //get calendar view and set month color white
         cv = (CalendarView) this.findViewById(R.id.calendarView);

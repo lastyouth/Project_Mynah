@@ -981,7 +981,7 @@ public class DBManager {
 	//스케쥴에서 created date 찾아서 딜리트 하는거
 	public synchronized  void deleteSchedulesByCreatedDate(String createdDate){
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
-				+ MynahDB._SCHEDULE_COL_CREATED_DATE + "<> '" + createdDate.trim()
+				+ MynahDB._SCHEDULE_COL_CREATED_DATE + "= '" + createdDate.trim()
 				+ "' ;";
 		dbh.mDB.execSQL(sql);
 		Log.d(TAG,"deleteSchedulesByCreatedDate 완료");
@@ -991,7 +991,7 @@ public class DBManager {
 	//스케쥴에 날짜 찾아서 싸그리 딜리트 하는거
 	public synchronized void deleteSchedulesByDate(String date) {
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
-				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + "<> '" + date.trim()
+				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + "= '" + date.trim()
 				+ "' ;";
 		dbh.mDB.execSQL(sql);
 		Log.d(TAG,"deleteSchedulesByDate 완료");

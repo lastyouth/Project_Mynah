@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
             setDefaultFragment();
         }
         //Toast.makeText(this,"hithere",Toast.LENGTH_SHORT).show();
-        Intent t = new Intent(this,GetInformationService.class);
+        Intent t = new Intent(this, GetInformationService.class);
         bindService(t,mBkServiceConnection,Context.BIND_AUTO_CREATE);
 
         //Check device for Play Services APK. If check succeeds, proceed with GCM registration.

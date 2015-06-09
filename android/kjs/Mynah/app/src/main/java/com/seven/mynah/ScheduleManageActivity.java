@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.calender.CalendarManager;
+import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
@@ -141,6 +143,7 @@ public class ScheduleManageActivity extends Activity {
                 Date tmp = null;
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                SimpleDateFormat simpleCreatedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
                 try {
                     tmp = simpleDateFormat.parse(startTime);
@@ -174,8 +177,8 @@ public class ScheduleManageActivity extends Activity {
                 event.setEnd(end);
 
                 Date n = new Date();
-                String nn = simpleDateFormat.format(n);
-                nn += ":00+09:00";
+                String nn = simpleCreatedDateFormat.format(n);
+                nn += "+09:00";
                 DateTime now = new DateTime(nn);
                 event.setCreated(now);
                 final String calendarId = "primary";
@@ -184,6 +187,29 @@ public class ScheduleManageActivity extends Activity {
                 Log.d(TAG, "calendarManager.insertEvent Start");
                 calendarManager.insertEvent(event);
                 Log.d(TAG, "calendarManager.insertEvent Finish");
+
+                // insert event to MynahDB
+                // event to ScheduleInfo
+                ScheduleInfo scheduleInfo;
+                DateTime startt = event.getStart().getDateTime();
+                if (startt == null) {
+                    // All-day events don't have start times, so just use
+                    // the start date.
+                    startt = event.getStart().getDate();
+                }
+                String[] str = startt.toString().split("T");
+                // yyyy-mm-dd
+                String date = str[0];
+                // hh-mm-ss
+                String time = str[1].split("\\.")[0];
+                time = time.substring(0, 5);
+                scheduleInfo = new ScheduleInfo();
+                scheduleInfo.scheduleName = event.getSummary();
+                scheduleInfo.scheduleDate = date;
+                scheduleInfo.scheduleTime = time;
+                scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
+                DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
+
 
                 finish();
             }
@@ -216,5 +242,8 @@ public class ScheduleManageActivity extends Activity {
         calendarManager = GlobalGoogleCalendarManager.calendarManager;
         eventId = calendarManager.getEventIdFromCreatedDate(createdDate);
         calendarManager.deleteEvent(eventId);
+
+        //delete event from DB
+        DBManager.getManager(getApplicationContext()).deleteSchedulesByCreatedDate(createdDate);
     }
 }
