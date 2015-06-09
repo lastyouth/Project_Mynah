@@ -31,7 +31,7 @@ import com.seven.mynah.MainActivity;
  * Created by HJHOME on 2015-05-10.
  */
 
-//½Ã¹ß µÈ´Ù°í °¡Á¤ÇÏ°í ¼­ºñ½º¿¡ ´ëÇØ¼­ ¸í½ÃÇØ³õÀÚ....
+//ì‹œë°œ ëœë‹¤ê³  ê°€ì •í•˜ê³  ì„œë¹„ìŠ¤ì— ëŒ€í•´ì„œ ëª…ì‹œí•´ë†“ì....
 
 
 public class GCMIntentService extends IntentService {
@@ -101,7 +101,7 @@ public class GCMIntentService extends IntentService {
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				new Intent(this, MainActivity.class), 0);
 
-		//ÀÏ´Ü ¿ì¸®´Â ³ëÆ¼ÇÇÄÉÀÌ¼ÇÀº ÇÊ¿ä¾ø´Ù.
+		//ì¼ë‹¨ ìš°ë¦¬ëŠ” ë…¸í‹°í”¼ì¼€ì´ì…˜ì€ í•„ìš”ì—†ë‹¤.
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
 				.setContentTitle("GCM Notification")

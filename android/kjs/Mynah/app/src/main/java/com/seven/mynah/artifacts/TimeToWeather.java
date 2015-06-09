@@ -3,12 +3,12 @@ package com.seven.mynah.artifacts;
 
 public class TimeToWeather {
 	
-	public String hour; //½ÃÀÛ ½Ã°£
-	public String temp; //¿Âµµ
-	public String reh; //½Àµµ
-	public String wfKor; //³¯¾¾»óÅÂ
-	public String pop; //°­¼öÈ®·ü
-	public String sky; //³¯¾¾ Å¸ÀÔ ÀÌ¸§
+	public String hour; //ì‹œì‘ ì‹œê°„
+	public String temp; //ì˜¨ë„
+	public String reh; //ìŠµë„
+	public String wfKor; //ë‚ ì”¨ìƒíƒœ
+	public String pop; //ê°•ìˆ˜í™•ë¥ 
+	public String sky; //ë‚ ì”¨ íƒ€ì… ì´ë¦„
 	
 	public TimeToWeather() {
 		

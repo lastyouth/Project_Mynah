@@ -56,13 +56,13 @@ public class LogInActivity extends Activity{
     EditText etUserId;
     EditText etUserPassword;
 
-    //Å¬·¡½º ¾È¿¡ ¼±¾ğÇØ³õÀ» °Í
+    //í´ë˜ìŠ¤ ì•ˆì— ì„ ì–¸í•´ë†“ì„ ê²ƒ
     protected Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
 
-            //½Ã¹ß¾Æ
-            //¿©±â¼­´Â ÀÌ·±½ÄÀ¸·Î what¿¡ Çîµé¸µ ³Ñ¹ö ³Ö¾î³ùÀ¸´Ï±î ±×°Å¿¡ ¸Â´Â µ¿ÀÛÇÏ¸é µÊ.
+            //ì‹œë°œì•„
+            //ì—¬ê¸°ì„œëŠ” ì´ëŸ°ì‹ìœ¼ë¡œ whatì— í—¨ë“¤ë§ ë„˜ë²„ ë„£ì–´ë†¨ìœ¼ë‹ˆê¹Œ ê·¸ê±°ì— ë§ëŠ” ë™ì‘í•˜ë©´ ë¨.
             System.out.println("in handler");
             if (msg.what == -1) {
                 //   BreakTimeout();
@@ -72,7 +72,7 @@ public class LogInActivity extends Activity{
 
 
             if (msg.what == 1) {
-                //ÇÚµé¸µ 1ÀÏ¶§ ÇÒ °Í
+                //í•¸ë“¤ë§ 1ì¼ë•Œ í•  ê²ƒ
                 System.out.println("response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
@@ -94,8 +94,8 @@ public class LogInActivity extends Activity{
                         else if(result.equals("LOGIN_SUCCESS")) {
                             Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
 
-                            //¼º°øÇßÀ¸´Ï ¼­¹ö·ÎºÎÅÍ °èÁ¤ Á¤º¸ ¹Ş¾Æ¿Í¼­
-                            //³»ºÎ ¼¼¼Ç À¯Áö Å×ÀÌºí¿¡ insert ÇØ¾ßµÉ°Å°°¾Ö¿©
+                            //ì„±ê³µí–ˆìœ¼ë‹ˆ ì„œë²„ë¡œë¶€í„° ê³„ì • ì •ë³´ ë°›ì•„ì™€ì„œ
+                            //ë‚´ë¶€ ì„¸ì…˜ ìœ ì§€ í…Œì´ë¸”ì— insert í•´ì•¼ë ê±°ê°™ì• ì—¬
 
 
                             final String strUserId = etUserId.getText() + "";
@@ -135,7 +135,7 @@ public class LogInActivity extends Activity{
             }
 
             if (msg.what == 2) {
-                //ÇÚµé¸µ 2ÀÏ¶§ ÇÒ °Í
+                //í•¸ë“¤ë§ 2ì¼ë•Œ í•  ê²ƒ
                 System.out.println("handling 2 !");
                 System.out.println("response : "+msg.obj);
 
@@ -157,7 +157,7 @@ public class LogInActivity extends Activity{
                             //System.out.println("ja sal gak");
                             Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
 
-                            //user info ¹ŞÀº°Å ¼¼¼Ç Å×ÀÌºí·Î Áı¾î³Ö±â ¤¡¤¡
+                            //user info ë°›ì€ê±° ì„¸ì…˜ í…Œì´ë¸”ë¡œ ì§‘ì–´ë„£ê¸° ã„±ã„±
                             JSONObject user_jobj = new JSONObject(jobj.get("attach")+"");
 
                             SessionUserInfo suinfo = new SessionUserInfo();
@@ -172,7 +172,7 @@ public class LogInActivity extends Activity{
                             suinfo.inoutTime = ((user_jobj.get("inout_time")+"").replace('Z', ' ')).replace('T', ' ');
 
                             DBManager.getManager(getApplicationContext()).setSessionUserDB(suinfo);
-                            System.out.println("¼¼¼Ç ÀúÀå ¼º°ø");
+                            System.out.println("ì„¸ì…˜ ì €ì¥ ì„±ê³µ");
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
@@ -206,9 +206,9 @@ public class LogInActivity extends Activity{
 
         //new AsyncHttpTask(this, "192.168.35.75", mHandler, jobj, 1, 0);
 
-        //¼¼¼Ç µ¥ÀÌÅÍ Áö¿ì´Â ºÎºĞ µé¾î°¡¾ß ÇÒ °Í °°¾Æ
+        //ì„¸ì…˜ ë°ì´í„° ì§€ìš°ëŠ” ë¶€ë¶„ ë“¤ì–´ê°€ì•¼ í•  ê²ƒ ê°™ì•„
         DBManager.getManager(getApplicationContext()).deleteSessionUser();
-        System.out.println("¼¼¼Ç ºñ¿ö¾ßÁö");
+        System.out.println("ì„¸ì…˜ ë¹„ì›Œì•¼ì§€");
 
         //login button listener
         btn = (Button) findViewById(R.id.btnLogin);

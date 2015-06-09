@@ -33,7 +33,7 @@ public class SettingShortcutLayout extends CustomButton{
 	{
 		view = inflate(getContext(), R.layout.layout_button_setting, null);
 		
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		//ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new SettingTouchListener());
 		addView(view);
 	}
@@ -48,7 +48,7 @@ public class SettingShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				//cbf.startSettingActivity("Setting");
 
 				//serviceTest();

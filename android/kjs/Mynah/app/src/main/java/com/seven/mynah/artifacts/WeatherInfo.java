@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class WeatherInfo {
 
-	//ÇÏ·ç ±âÁØ
+	//í•˜ë£¨ ê¸°ì¤€
 	public WeatherLocationInfo location;
 	public String date;
 	public String last_update;

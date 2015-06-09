@@ -156,7 +156,7 @@ public class CalendarActivity extends Activity {
         selectedDate = sdf.format(selected);
 
 
-        //ProgressDialog pd = ProgressDialog.show(CalendarActivity.this, "", "ÀÏÁ¤À» ºÒ·¯¿À´Â ÁßÀÔ´Ï´Ù ...", true);
+        //ProgressDialog pd = ProgressDialog.show(CalendarActivity.this, "", "ì¼ì •ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ì¤‘ì…ë‹ˆë‹¤ ...", true);
         //pd.dismiss();
 
         setListView(selectedDate);

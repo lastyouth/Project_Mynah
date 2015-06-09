@@ -38,12 +38,12 @@ public class FamilyShortcutLayout extends CustomButton{
 
 	private ArrayList<SessionUserInfo> suInfoList;
 
-	//Å¬·¡½º ¾È¿¡ ¼±¾ğÇØ³õÀ» °Í
+	//í´ë˜ìŠ¤ ì•ˆì— ì„ ì–¸í•´ë†“ì„ ê²ƒ
 	protected Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			// IF Sucessfull no timeout
 
-			//¿©±â¼­´Â ÀÌ·±½ÄÀ¸·Î what¿¡ Çîµé¸µ ³Ñ¹ö ³Ö¾î³ùÀ¸´Ï±î ±×°Å¿¡ ¸Â´Â µ¿ÀÛÇÏ¸é µÊ.
+			//ì—¬ê¸°ì„œëŠ” ì´ëŸ°ì‹ìœ¼ë¡œ whatì— í—¨ë“¤ë§ ë„˜ë²„ ë„£ì–´ë†¨ìœ¼ë‹ˆê¹Œ ê·¸ê±°ì— ë§ëŠ” ë™ì‘í•˜ë©´ ë¨.
 			System.out.println("in handler");
 			if (msg.what == -1) {
 				//   BreakTimeout();
@@ -52,7 +52,7 @@ public class FamilyShortcutLayout extends CustomButton{
 
 
 			if (msg.what == 1) {
-				//ÇÚµé¸µ 1ÀÏ¶§ ÇÒ °Í °¡Á·µî »óÅÂ¸¦ ¹Ş¾Æ¿Í¾ßÁö
+				//í•¸ë“¤ë§ 1ì¼ë•Œ í•  ê²ƒ ê°€ì¡±ë“± ìƒíƒœë¥¼ ë°›ì•„ì™€ì•¼ì§€
 				System.out.println("response : "+msg.obj);
 				try{
 					JSONObject jobj = new JSONObject(msg.obj+"");
@@ -86,7 +86,7 @@ public class FamilyShortcutLayout extends CustomButton{
 
 								suInfoList.add(suinfo);
 							}
-							System.out.println("suinfo ArrayList Ãß°¡ ¼º°ø");
+							System.out.println("suinfo ArrayList ì¶”ê°€ ì„±ê³µ");
 							setFamilyInoutStatus();
 						}
 						else if(result.equals("GET_FAMILY_INOUT_ERROR")) {
@@ -106,12 +106,12 @@ public class FamilyShortcutLayout extends CustomButton{
 			}
 
 			if (msg.what == 2) {
-				//ÇÚµé¸µ 2ÀÏ¶§ ÇÒ °Í
+				//í•¸ë“¤ë§ 2ì¼ë•Œ í•  ê²ƒ
 			}
 		}
 	};
 
-	//°¡Á· ±¸¼º¿ø¼ö
+	//ê°€ì¡± êµ¬ì„±ì›ìˆ˜
 	private int numOfFamily = 2;
 	
 	public FamilyShortcutLayout(Context context, CustomButtonsFragment _cbf) 
@@ -122,7 +122,7 @@ public class FamilyShortcutLayout extends CustomButton{
 		initView();
 	}
 
-	//¹Ş¾Æ¿Â Á¤º¸ ¼ôÄÆÀ¸·Î
+	//ë°›ì•„ì˜¨ ì •ë³´ ìˆì»·ìœ¼ë¡œ
 	private void setFamilyInoutStatus(){
 		layoutFamilyName = (LinearLayout)view.findViewById(R.id.layoutFamilyName);
 		layoutFamilyTime = (LinearLayout)view.findViewById(R.id.layoutFamilyTime);
@@ -180,12 +180,12 @@ public class FamilyShortcutLayout extends CustomButton{
 		
 		getFamilyInOutStatus();
 		
-		//ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		//ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new FamilyTouchListener());
 		addView(view);
 	}
 
-	//¼­¹ö·Î product id º¸³»¼­ °¡Á·Á¤º¸ ¹Ş¾Æ¿À±â
+	//ì„œë²„ë¡œ product id ë³´ë‚´ì„œ ê°€ì¡±ì •ë³´ ë°›ì•„ì˜¤ê¸°
 	private void getFamilyInOutStatus(){
 		System.out.println("getFamilyInOutStatus");
 		SessionUserInfo suinfo = new SessionUserInfo();
@@ -219,9 +219,9 @@ public class FamilyShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "°¡Á· Á¤º¸°¡ Å¬¸¯µÇ¾úÀ½.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "ê°€ì¡± ì •ë³´ê°€ í´ë¦­ë˜ì—ˆìŒ.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				//ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 
 				getFamilyInOutStatus();
 

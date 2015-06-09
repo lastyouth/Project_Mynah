@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by HJHOME on 2015-06-05.
- * ½ºÄÉÁÙ 1°³¸¦ ´ã°íÀÖ´Â ScheduleInfo °´Ã¼¸¦ ArrayList·Î ´ã°í ÀÖµµ·Ï ÇÑ´Ù.
+ * ìŠ¤ì¼€ì¤„ 1ê°œë¥¼ ë‹´ê³ ìˆëŠ” ScheduleInfo ê°ì²´ë¥¼ ArrayListë¡œ ë‹´ê³  ìˆë„ë¡ í•œë‹¤.
  */
 public class SchedulesOnDateInfo {
 

@@ -97,7 +97,7 @@ public class ScheduleManageActivity extends Activity {
             minute = calendar.get(Calendar.MINUTE);
 
             ((ViewManager)btDelete.getParent()).removeView(btDelete);
-            btAdd.setText("µî·Ï");
+            btAdd.setText("ì¶”ê°€");
         }
 
 

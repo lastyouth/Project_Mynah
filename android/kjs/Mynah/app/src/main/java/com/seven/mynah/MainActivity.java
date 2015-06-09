@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 
     //GCM project key
     private static final String SENDER_ID = "803082977332";
-    //GCM µî·Ï¿ë Å°(ÇÚµåÆù ±âÁØ 1°³)
+    //GCM ë“±ë¡ìš© í‚¤(í•¸ë“œí° ê¸°ì¤€ 1ê°œ)
     String regid;
 
     @Override
@@ -101,10 +101,10 @@ public class MainActivity extends Activity {
             if (regid.equals("")) {
                 registerInBackground();
             }
-            Toast.makeText(this, "µî·Ï id = " + regid, 1).show();
+            Toast.makeText(this, "ë“±ë¡ id = " + regid, 1).show();
             Log.d(TAG,regid);
 
-            //Åä½ºÆ®¿¡¼­ ¾Ë·ÁÁÖÀÚ!
+            //í† ìŠ¤íŠ¸ì—ì„œ ì•Œë ¤ì£¼ì!
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -115,12 +115,12 @@ public class MainActivity extends Activity {
         if (regid.equals("")) {
             registerInBackground();
         }
-        Toast.makeText(this, "µî·Ï id = " + regid, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ë“±ë¡ id = " + regid, Toast.LENGTH_SHORT).show();
         Log.d(TAG,regid);
         */
 
 
-        //ºí·çÅõ½º ÃÊ±âÈ­
+        //ë¸”ë£¨íˆ¬ìŠ¤ ì´ˆê¸°í™”
 
         /*
 		String deviceID = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
@@ -132,17 +132,17 @@ public class MainActivity extends Activity {
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
 		{
-			Toast.makeText(this, "ºí·çÅõ½º¸¦ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ë¸”ë£¨íˆ¬ìŠ¤ë¥¼ ì§€ì›í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", Toast.LENGTH_SHORT).show();
 		}
 		else if (ret==RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
 		{
-			Toast.makeText(this, "ºí·çÅõ½º¸¦ µî·ÏÇÏ¼¼¿ä.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "ë¸”ë£¨íˆ¬ìŠ¤ë¥¼ ë“±ë¡í•˜ì„¸ìš”.", Toast.LENGTH_SHORT).show();
 		}
 
 		ArrayList<String> st = new ArrayList<String>();
 
-		st.add("¼­º¸ÈÆ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 147 ¹ö½º 3ºĞÀü. Ã»·®¸®¿ª »óÇà 5ºĞÀü. ¹ßÇ¥³ëÆ® Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
-		//st.add("¹Ú»óÁØ´Ô ¾È³çÇÏ¼¼¿ä. ¿À´Ã ³¯¾¾´Â Èå¸². 121 ¹ö½º 5ºĞÀü. Ã»·®¸®¿ª ÇÏÇà 10ºĞÀü. ³ëÆ®ºÏ Ã¬±â½Ã±â ¹Ù¶ø´Ï´Ù. hello");
+		st.add("ì„œë³´í›ˆë‹˜ ì•ˆë…•í•˜ì„¸ìš”. ì˜¤ëŠ˜ ë‚ ì”¨ëŠ” íë¦¼. 147 ë²„ìŠ¤ 3ë¶„ì „. ì²­ëŸ‰ë¦¬ì—­ ìƒí–‰ 5ë¶„ì „. ë°œí‘œë…¸íŠ¸ ì±™ê¸°ì‹œê¸° ë°”ëë‹ˆë‹¤. hello");
+		//st.add("ë°•ìƒì¤€ë‹˜ ì•ˆë…•í•˜ì„¸ìš”. ì˜¤ëŠ˜ ë‚ ì”¨ëŠ” íë¦¼. 121 ë²„ìŠ¤ 5ë¶„ì „. ì²­ëŸ‰ë¦¬ì—­ í•˜í–‰ 10ë¶„ì „. ë…¸íŠ¸ë¶ ì±™ê¸°ì‹œê¸° ë°”ëë‹ˆë‹¤. hello");
 		BTmanager.setTTS(st);
 		*/
 

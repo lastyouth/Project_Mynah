@@ -2,15 +2,15 @@ package com.seven.mynah.globalmanager;
 
 public class SoundSearcher 
 { 
-	private static final char HANGUL_BEGIN_UNICODE = 44032; // °¡ 
-	private static final char HANGUL_LAST_UNICODE = 55203; // ÆR
-	private static final char HANGUL_BASE_UNIT = 588;//°¢ÀÚÀ½ ¸¶´Ù °¡Áö´Â ±ÛÀÚ¼ö
-	//ÀÚÀ½
-	private static final char[] INITIAL_SOUND = { '¤¡', '¤¢', '¤¤', '¤§', '¤¨', '¤©', '¤±', '¤²', '¤³', '¤µ', '¤¶', '¤·', '¤¸', '¤¹', '¤º', '¤»', '¤¼', '¤½', '¤¾' }; 
+	private static final char HANGUL_BEGIN_UNICODE = 44032; // ê°€ 
+	private static final char HANGUL_LAST_UNICODE = 55203; // í£
+	private static final char HANGUL_BASE_UNIT = 588;//ê°ììŒ ë§ˆë‹¤ ê°€ì§€ëŠ” ê¸€ììˆ˜
+	//ììŒ
+	private static final char[] INITIAL_SOUND = { 'ã„±', 'ã„²', 'ã„´', 'ã„·', 'ã„¸', 'ã„¹', 'ã…', 'ã…‚', 'ã…ƒ', 'ã……', 'ã…†', 'ã…‡', 'ã…ˆ', 'ã…‰', 'ã…Š', 'ã…‹', 'ã…Œ', 'ã…', 'ã…' }; 
 	
 	
 	/**
-	 * ÇØ´ç ¹®ÀÚ°¡ INITIAL_SOUNDÀÎÁö °Ë»ç.
+	 * í•´ë‹¹ ë¬¸ìê°€ INITIAL_SOUNDì¸ì§€ ê²€ì‚¬.
 	 * @param searchar
 	 * @return
 	 */
@@ -24,9 +24,9 @@ public class SoundSearcher
 	} 
 	
 	/**
-	 * ÇØ´ç ¹®ÀÚÀÇ ÀÚÀ½À» ¾ò´Â´Ù.
+	 * í•´ë‹¹ ë¬¸ìì˜ ììŒì„ ì–»ëŠ”ë‹¤.
 	 *  
-	 * @param c °Ë»çÇÒ ¹®ÀÚ
+	 * @param c ê²€ì‚¬í•  ë¬¸ì
 	 * @return
 	 */
 	private static char getInitialSound(char c) { 
@@ -36,8 +36,8 @@ public class SoundSearcher
 	} 
 	
 	/**
-	 * ÇØ´ç ¹®ÀÚ°¡ ÇÑ±ÛÀÎÁö °Ë»ç
-	 * @param c ¹®ÀÚ ÇÏ³ª
+	 * í•´ë‹¹ ë¬¸ìê°€ í•œê¸€ì¸ì§€ ê²€ì‚¬
+	 * @param c ë¬¸ì í•˜ë‚˜
 	 * @return
 	 */
 	private static boolean isHangul(char c) { 
@@ -45,42 +45,42 @@ public class SoundSearcher
 	} 
 	
 	/**
-	 * »ı¼ºÀÚ.
+	 * ìƒì„±ì.
 	 */
 	public SoundSearcher() { } 
 	
-	/** * °Ë»öÀ» ÇÑ´Ù. ÃÊ¼º °Ë»ö ¿Ïº® Áö¿øÇÔ. 
-	 * @param value : °Ë»ö ´ë»ó ex> ÃÊ¼º°Ë»öÇÕ´Ï´Ù 
-	 * @param search : °Ë»ö¾î ex> ¤µ°Ë¤µÇÕ¤¤ 
-	 * @return ¸ÅÄª µÇ´Â°Å Ã£À¸¸é true ¸øÃ£À¸¸é false. */ 
+	/** * ê²€ìƒ‰ì„ í•œë‹¤. ì´ˆì„± ê²€ìƒ‰ ì™„ë²½ ì§€ì›í•¨. 
+	 * @param value : ê²€ìƒ‰ ëŒ€ìƒ ex> ì´ˆì„±ê²€ìƒ‰í•©ë‹ˆë‹¤ 
+	 * @param search : ê²€ìƒ‰ì–´ ex> ã……ê²€ã……í•©ã„´ 
+	 * @return ë§¤ì¹­ ë˜ëŠ”ê±° ì°¾ìœ¼ë©´ true ëª»ì°¾ìœ¼ë©´ false. */ 
 	public static boolean matchString(String value, String search){ 
 		int t = 0; 
 		int seof = value.length() - search.length(); 
 		int slen = search.length(); 
 		if(seof < 0) 
-			return false; //°Ë»ö¾î°¡ ´õ ±æ¸é false¸¦ ¸®ÅÏÇÑ´Ù. 
+			return false; //ê²€ìƒ‰ì–´ê°€ ë” ê¸¸ë©´ falseë¥¼ ë¦¬í„´í•œë‹¤. 
 		for(int i = 0;i <= seof;i++){ 
 			t = 0; 
 			while(t < slen){ 
 				if(isInitialSound(search.charAt(t))==true && isHangul(value.charAt(i+t))){ 
-					//¸¸¾à ÇöÀç charÀÌ ÃÊ¼ºÀÌ°í value°¡ ÇÑ±ÛÀÌ¸é
+					//ë§Œì•½ í˜„ì¬ charì´ ì´ˆì„±ì´ê³  valueê°€ í•œê¸€ì´ë©´
 					if(getInitialSound(value.charAt(i+t))==search.charAt(t)) 
-						//°¢°¢ÀÇ ÃÊ¼º³¢¸® °°ÀºÁö ºñ±³ÇÑ´Ù
+						//ê°ê°ì˜ ì´ˆì„±ë¼ë¦¬ ê°™ì€ì§€ ë¹„êµí•œë‹¤
 						t++; 
 					else 
 						break; 
 				} else { 
-					//charÀÌ ÃÊ¼ºÀÌ ¾Æ´Ï¶ó¸é
+					//charì´ ì´ˆì„±ì´ ì•„ë‹ˆë¼ë©´
 					if(value.charAt(i+t)==search.charAt(t)) 
-						//±×³É °°ÀºÁö ºñ±³ÇÑ´Ù. 
+						//ê·¸ëƒ¥ ê°™ì€ì§€ ë¹„êµí•œë‹¤. 
 						t++; 
 					else 
 						break; 
 				} 
 			} 
 			if(t == slen) 
-				return true; //¸ğµÎ ÀÏÄ¡ÇÑ °á°ú¸¦ Ã£À¸¸é true¸¦ ¸®ÅÏÇÑ´Ù. 
+				return true; //ëª¨ë‘ ì¼ì¹˜í•œ ê²°ê³¼ë¥¼ ì°¾ìœ¼ë©´ trueë¥¼ ë¦¬í„´í•œë‹¤. 
 			} 
-		return false; //ÀÏÄ¡ÇÏ´Â °ÍÀ» Ã£Áö ¸øÇßÀ¸¸é false¸¦ ¸®ÅÏÇÑ´Ù.
+		return false; //ì¼ì¹˜í•˜ëŠ” ê²ƒì„ ì°¾ì§€ ëª»í–ˆìœ¼ë©´ falseë¥¼ ë¦¬í„´í•œë‹¤.
 	}
 }

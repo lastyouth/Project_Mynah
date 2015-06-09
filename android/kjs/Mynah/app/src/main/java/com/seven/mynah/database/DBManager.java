@@ -24,10 +24,10 @@ public class DBManager {
 	private static SimpleDateFormat printDateFormat;
 
 
-	//db version ¾Æ´Ô!  max Ä«¿îÅÍÀÓ
+	//db version ì•„ë‹˜!  max ì¹´ìš´í„°ì„
 	private static int log_get_max_counter = 5;
 
-	// android »ı¼ºÀÚ
+	// android ìƒì„±ì
 	private DBManager(Context context) {
 
 		dbh = new DBHelper(context);
@@ -115,10 +115,10 @@ public class DBManager {
 
 			}
 		}
-		Log.d(TAG, "setWeatherDB ¿Ï·á");
+		Log.d(TAG, "setWeatherDB ì™„ë£Œ");
 	}
 
-	// ÇöÀç ±âÁØÀ¸·Î °¡Àå ÃÖ±ÙÀÇ ·Î±× Å×ÀÌºíÀÇ ¼³Á¤Ä¡·Î location ¹İÈ¯ÇÔ(ÃÖ±Ù²¬·Î)
+	// í˜„ì¬ ê¸°ì¤€ìœ¼ë¡œ ê°€ì¥ ìµœê·¼ì˜ ë¡œê·¸ í…Œì´ë¸”ì˜ ì„¤ì •ì¹˜ë¡œ location ë°˜í™˜í•¨(ìµœê·¼ê»„ë¡œ)
 	public synchronized ArrayList<WeatherLocationInfo> getWeatherDBbyLog() {
 		ArrayList<WeatherLocationInfo> array_location = new ArrayList<WeatherLocationInfo>();
 
@@ -145,12 +145,12 @@ public class DBManager {
 			counter++;
 		}
 
-		Log.d(TAG,"getWeatherDBbyLog ¿Ï·á");
+		Log.d(TAG,"getWeatherDBbyLog ì™„ë£Œ");
 		return array_location;
 
 	}
 
-	// ·Î±×Å×ÀÌºí¿¡ ³Ö±â À§ÇÑ Á¤º¸. ÇöÀç ¼±ÅÃµÈ WeatherLocationInfo¸¦ logÅ×ÀÌºí¿¡ ³ÖÀ½.
+	// ë¡œê·¸í…Œì´ë¸”ì— ë„£ê¸° ìœ„í•œ ì •ë³´. í˜„ì¬ ì„ íƒëœ WeatherLocationInfoë¥¼ logí…Œì´ë¸”ì— ë„£ìŒ.
 	public synchronized void setWeatherLocationDBbyLog(
 			WeatherLocationInfo location) {
 
@@ -164,13 +164,13 @@ public class DBManager {
 				defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._WEATHER_LOG_TABLE_NAME, null, values);
-		Log.d(TAG,"setWeatherLocationDBbyLog ¿Ï·á");
+		Log.d(TAG,"setWeatherLocationDBbyLog ì™„ë£Œ");
 	}
 
 	public synchronized WeatherInfo getWeatherDB(WeatherInfo winfo) {
 
-		// cityÄÚµå¸¦ ±âÁØÀ¸·Î ÇöÀç ½Ã°£ÀÇ ÀÌÈÄ Á¤º¸¸¦ ÇÏ·çÄ¡·Î returnÇÔ
-		// ÇöÀç ½Ã°£¿¡ ´ëÇØ¼­ ±âÁØ ÇÊ¿äÇÔ..
+		// cityì½”ë“œë¥¼ ê¸°ì¤€ìœ¼ë¡œ í˜„ì¬ ì‹œê°„ì˜ ì´í›„ ì •ë³´ë¥¼ í•˜ë£¨ì¹˜ë¡œ returní•¨
+		// í˜„ì¬ ì‹œê°„ì— ëŒ€í•´ì„œ ê¸°ì¤€ í•„ìš”í•¨..
 		String sql = "select * from " + MynahDB._WEATHER_TABLE_NAME + " where "
 				+ MynahDB._WEATHER_COL_CITY_CODE + "= '"
 				+ winfo.location.city_code + "' and "
@@ -228,7 +228,7 @@ public class DBManager {
 		}
 
 
-		Log.d(TAG,"getWeatherDB ¿Ï·á");
+		Log.d(TAG,"getWeatherDB ì™„ë£Œ");
 		return winfo;
 
 	}
@@ -261,7 +261,7 @@ public class DBManager {
 
 			dbh.mDB.insert(MynahDB._WEATHER_CITY_TABLE_NAME, null, values);
 		}
-		Log.d(TAG,"setWeatherLocationAll ¿Ï·á");
+		Log.d(TAG,"setWeatherLocationAll ì™„ë£Œ");
 
 	}
 
@@ -321,7 +321,7 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		Log.d(TAG,"getWeatherLocationByName ¿Ï·á");
+		Log.d(TAG,"getWeatherLocationByName ì™„ë£Œ");
 		return array_location;
 
 	}
@@ -361,7 +361,7 @@ public class DBManager {
 		location.top_name = c.getString(top_name_index);
 		location.mdl_name = c.getString(mdl_name_index);
 
-		Log.d(TAG,"getWeatherLocationByCode ¿Ï·á");
+		Log.d(TAG,"getWeatherLocationByCode ì™„ë£Œ");
 		return location;
 
 	}
@@ -373,7 +373,7 @@ public class DBManager {
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 
-		Log.d(TAG,"isInitialUser ¿Ï·á");
+		Log.d(TAG,"isInitialUser ì™„ë£Œ");
 		if (c != null && c.getCount() != 0) {
 			return true;
 		} else {
@@ -414,7 +414,7 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		Log.d(TAG,"getFamilyDB ¿Ï·á");
+		Log.d(TAG,"getFamilyDB ì™„ë£Œ");
 		return finfo;
 	}
 
@@ -436,7 +436,7 @@ public class DBManager {
 				// insert
 				values = new ContentValues();
 				// DateFormat df = new DateFormat();
-				// TODO ³¯Â¥ µ¥ÀÌÅÍÆ÷¸ä º¯°æÇØ¾ßÇÒ °ÍÀÓ..È®ÀÎ
+				// TODO ë‚ ì§œ ë°ì´í„°í¬ë©§ ë³€ê²½í•´ì•¼í•  ê²ƒì„..í™•ì¸
 
 				values.put(MynahDB._USER_COL_ID, finfo.members.get(i).id);
 				values.put(MynahDB._USER_COL_PASSWD,
@@ -462,7 +462,7 @@ public class DBManager {
 				}
 			}
 		}
-		Log.d(TAG,"setMemberDB ¿Ï·á");
+		Log.d(TAG,"setMemberDB ì™„ë£Œ");
 	}
 
 	public synchronized void deleteFamilyExceptMe() {
@@ -470,12 +470,12 @@ public class DBManager {
 				+ MynahDB._USER_COL_TYPE + "<>" + GlobalVariable.UserType.me
 				+ " ;";
 		dbh.mDB.execSQL(sql);
-		Log.d(TAG,"deleteFamilyExceptMe ¿Ï·á");
+		Log.d(TAG,"deleteFamilyExceptMe ì™„ë£Œ");
 	}
 
 	public synchronized void setBusDB(BusInfo binfo) {
 
-		Log.d(TAG,"setBusDB ½ÃÀÛ");
+		Log.d(TAG,"setBusDB ì‹œì‘");
 		ContentValues values;
 
 		String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
@@ -562,13 +562,13 @@ public class DBManager {
 
 			}
 		}
-		Log.d(TAG, "setBusDB ¿Ï·á");
+		Log.d(TAG, "setBusDB ì™„ë£Œ");
 
 	}
 
 	public synchronized ArrayList<BusInfo> getBusDBbyLog() {
 
-		// »óÀ§ 3°³Á¤µµÀÇ ¹ö½º ÀÎÆ÷¸¦ ¹ŞÀ½(¼³Á¤ÇÑ °Í ±âÁØÀ¸·Î)
+		// ìƒìœ„ 3ê°œì •ë„ì˜ ë²„ìŠ¤ ì¸í¬ë¥¼ ë°›ìŒ(ì„¤ì •í•œ ê²ƒ ê¸°ì¤€ìœ¼ë¡œ)
 		ArrayList<BusInfo> array_binfo = new ArrayList<BusInfo>();
 		BusInfo binfo;
 
@@ -603,7 +603,7 @@ public class DBManager {
 		}
 
 
-		Log.d(TAG,"getBusDBbyLog ¿Ï·á");
+		Log.d(TAG,"getBusDBbyLog ì™„ë£Œ");
 		return array_binfo;
 
 	}
@@ -622,13 +622,13 @@ public class DBManager {
 		values.put(MynahDB._BUS_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._BUS_LOG_TABLE_NAME, null, values);
-		Log.d(TAG,"setBusDBbyLog ¿Ï·á");
+		Log.d(TAG,"setBusDBbyLog ì™„ë£Œ");
 
 	}
 
 	public synchronized BusInfo getBusDB(BusInfo binfo) {
 
-		Log.d(TAG,"getBusDB ½ÃÀÛ");
+		Log.d(TAG,"getBusDB ì‹œì‘");
 		String sql = "select * from " + MynahDB._BUS_TABLE_NAME + " where "
 				+ MynahDB._BUS_COL_STATION_ID + "= '" + binfo.station.stId
 				+ "' and " + MynahDB._BUS_COL_ROUTE_ID + "= '"
@@ -684,14 +684,14 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		Log.d(TAG,"getBusDB ¿Ï·á");
+		Log.d(TAG,"getBusDB ì™„ë£Œ");
 		return binfo;
 
 	}
 
 	public synchronized void setSubwayDBbyLog(SubwayInfo sinfo) {
 
-		Log.d(TAG,"setSubwayDBbyLog ½ÃÀÛ");
+		Log.d(TAG,"setSubwayDBbyLog ì‹œì‘");
 		ContentValues values;
 
 		values = new ContentValues();
@@ -704,13 +704,13 @@ public class DBManager {
 		values.put(MynahDB._SUBWAY_LOG_SET_TIME, defaultDateFormat.format(date));
 
 		dbh.mDB.insert(MynahDB._SUBWAY_LOG_TABLE_NAME, null, values);
-		Log.d(TAG,"setSubwayDBbyLog ¿Ï·á");
+		Log.d(TAG,"setSubwayDBbyLog ì™„ë£Œ");
 
 	}
 
 	public synchronized ArrayList<SubwayInfo> getSubwayDBbyLog() {
 
-		Log.d(TAG,"getSubwayDBbyLog ½ÃÀÛ");
+		Log.d(TAG,"getSubwayDBbyLog ì‹œì‘");
 		ArrayList<SubwayInfo> array_sinfo = new ArrayList<SubwayInfo>();
 
 		String sql = "select * from " + MynahDB._SUBWAY_LOG_TABLE_NAME
@@ -743,17 +743,17 @@ public class DBManager {
 			counter++;
 		}
 
-		Log.d(TAG,"getSubwayDBbyLog ³¡");
+		Log.d(TAG,"getSubwayDBbyLog ë");
 		return array_sinfo;
 	}
 
 	public synchronized void setSubwayDB(SubwayInfo swinfo) {
 
 
-		Log.d(TAG,"setSubwayDB ½ÃÀÛ");
+		Log.d(TAG,"setSubwayDB ì‹œì‘");
 		ContentValues values;
 
-		// delete´Â ÇÊ¿ä¾ø´Ù..? ÀÏ´Ü ÃßÈÄ È®ÀÎ
+		// deleteëŠ” í•„ìš”ì—†ë‹¤..? ì¼ë‹¨ ì¶”í›„ í™•ì¸
 		// String sql = "delete from " + MynahDB._BUS_TABLE_NAME + " where "
 		// + MynahDB._BUS_COL_ARR_TIME + " < datetime('now','localtime');";
 		// dbh.mDB.execSQL(sql);
@@ -829,13 +829,13 @@ public class DBManager {
 
 			}
 		}
-		Log.d(TAG,"setSubwayDB ³¡");
+		Log.d(TAG,"setSubwayDB ë");
 
 	}
 
 	public synchronized SubwayInfo getSubwayDB(SubwayInfo swinfo) {
 
-		Log.d(TAG,"getSubwayDB ½ÃÀÛ");
+		Log.d(TAG,"getSubwayDB ì‹œì‘");
 		String sql = "select * from " + MynahDB._SUBWAY_TABLE_NAME + " where "
 				+ MynahDB._SUBWAY_COL_STATION_ID + " = '"
 				+ swinfo.station.station_cd + "' and "
@@ -885,15 +885,15 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		Log.d(TAG,"getSubwayDB ³¡");
+		Log.d(TAG,"getSubwayDB ë");
 		return swinfo;
 
 	}
 
 	public void setMainUserDB(UserProfile upf) {
 
-		Log.d(TAG,"setMainUserDB ½ÃÀÛ");
-		// default·Î ³ÖÀ½.
+		Log.d(TAG,"setMainUserDB ì‹œì‘");
+		// defaultë¡œ ë„£ìŒ.
 		ContentValues values;
 
 		if (upf.id == null)
@@ -910,7 +910,7 @@ public class DBManager {
 
 		// insert
 		dbh.mDB.insert(MynahDB._USER_TABLE_NAME, null, values);
-		Log.d(TAG, "setMainUserDB ³¡");
+		Log.d(TAG, "setMainUserDB ë");
 
 	}
 
@@ -950,9 +950,9 @@ public class DBManager {
 
 	}
 
-	//½ºÄÉÁì ¹Ş¾Æ¿À±â °ü·Ã Äõ¸®
+	//ìŠ¤ì¼€ì¥´ ë°›ì•„ì˜¤ê¸° ê´€ë ¨ ì¿¼ë¦¬
 
-	// ½ºÄÉÁì °´Ã¼¸¦ schedule Å×ÀÌºí¿¡ insertÇÏ´Â ÇÔ¼ö
+	// ìŠ¤ì¼€ì¥´ ê°ì²´ë¥¼ schedule í…Œì´ë¸”ì— insertí•˜ëŠ” í•¨ìˆ˜
 	public synchronized void setScheduleDB(ScheduleInfo scheduleInfo) {
 
 		ContentValues values;
@@ -966,47 +966,47 @@ public class DBManager {
 		values.put(MynahDB._SCHEDULE_COL_CREATED_DATE, scheduleInfo.scheduleCreatedDate);
 
 		dbh.mDB.insert(MynahDB._SCHEDULE_TABLE_NAME, null, values);
-		//Log.d(TAG,"setScheduleDB ¿Ï·á");
+		//Log.d(TAG,"setScheduleDB ì™„ë£Œ");
 	}
 
-	//¿©·¯°³ÀÇ ½ºÄÉÁì ÇÑ¹ø¿¡ ¶§·Á¹Ú
+	//ì—¬ëŸ¬ê°œì˜ ìŠ¤ì¼€ì¥´ í•œë²ˆì— ë•Œë ¤ë°•
 	public synchronized void setSchedulesOnDateDB(SchedulesOnDateInfo schedulesOnDateInfo){
 		for(ScheduleInfo sInfo : schedulesOnDateInfo.scheduleList){
 			setScheduleDB(sInfo);
 		}
-		Log.d(TAG,"setSchedulesOnDateDB ¿Ï·á");
+		Log.d(TAG,"setSchedulesOnDateDB ì™„ë£Œ");
 	}
 
 
-	//½ºÄÉÁì¿¡¼­ created date Ã£¾Æ¼­ µô¸®Æ® ÇÏ´Â°Å
+	//ìŠ¤ì¼€ì¥´ì—ì„œ created date ì°¾ì•„ì„œ ë”œë¦¬íŠ¸ í•˜ëŠ”ê±°
 	public synchronized  void deleteSchedulesByCreatedDate(String createdDate){
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_CREATED_DATE + "= '" + createdDate.trim()
 				+ "' ;";
 		dbh.mDB.execSQL(sql);
-		Log.d(TAG,"deleteSchedulesByCreatedDate ¿Ï·á");
+		Log.d(TAG,"deleteSchedulesByCreatedDate ì™„ë£Œ");
 	}
 
 
-	//½ºÄÉÁì¿¡ ³¯Â¥ Ã£¾Æ¼­ ½Î±×¸® µô¸®Æ® ÇÏ´Â°Å
+	//ìŠ¤ì¼€ì¥´ì— ë‚ ì§œ ì°¾ì•„ì„œ ì‹¸ê·¸ë¦¬ ë”œë¦¬íŠ¸ í•˜ëŠ”ê±°
 	public synchronized void deleteSchedulesByDate(String date) {
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME + " where "
 				+ MynahDB._SCHEDULE_COL_SCHEDULE_DATE + "= '" + date.trim()
 				+ "' ;";
 		dbh.mDB.execSQL(sql);
-		Log.d(TAG,"deleteSchedulesByDate ¿Ï·á");
+		Log.d(TAG,"deleteSchedulesByDate ì™„ë£Œ");
 	}
 
-	//½ºÄÉÁì Å×ÀÌºí ºñ¿ì±â
+	//ìŠ¤ì¼€ì¥´ í…Œì´ë¸” ë¹„ìš°ê¸°
 	public synchronized void deleteSchedulesAll() {
 		String sql = "delete from " + MynahDB._SCHEDULE_TABLE_NAME
 				+ " ;";
 		dbh.mDB.execSQL(sql);
-		Log.d(TAG,"deleteSchedulesAll ¿Ï·á");
+		Log.d(TAG,"deleteSchedulesAll ì™„ë£Œ");
 	}
 
 
-	//½ºÄÉÁÙ Å×ÀÌºíÀÇ ·¹ÄÚµå °³¼ö
+	//ìŠ¤ì¼€ì¤„ í…Œì´ë¸”ì˜ ë ˆì½”ë“œ ê°œìˆ˜
 	public synchronized int getSchedulesCount(){
 		String sql = "select * from " + MynahDB._SCHEDULE_TABLE_NAME+ " ;";
 
@@ -1022,7 +1022,7 @@ public class DBManager {
 	}
 
 
-	//³¯Â¥·Î ½ºÄÉÁì Á¶³ª ¹Ş¾Æ¿À±â
+	//ë‚ ì§œë¡œ ìŠ¤ì¼€ì¥´ ì¡°ë‚˜ ë°›ì•„ì˜¤ê¸°
 	public synchronized SchedulesOnDateInfo getSchedulesByDateTimeDB(String date) {
 		SchedulesOnDateInfo schedulesOnDateInfo = new SchedulesOnDateInfo();
 		ScheduleInfo scheduleInfo;
@@ -1060,12 +1060,12 @@ public class DBManager {
 			c.moveToNext();
 		}
 
-		Log.d(TAG,"getSchedulesByDateTimeDB ¿Ï·á");
+		Log.d(TAG,"getSchedulesByDateTimeDB ì™„ë£Œ");
 		return schedulesOnDateInfo;
 	}
 
 
-	//¼¼¼Ç °®´Â À¯Á®¸¦ ¼¼¼ÇÅ×ÀÌºíÀÌ ÀúÀå
+	//ì„¸ì…˜ ê°–ëŠ” ìœ ì ¸ë¥¼ ì„¸ì…˜í…Œì´ë¸”ì´ ì €ì¥
 	public synchronized void setSessionUserDB(SessionUserInfo suInfo) {
 
 		ContentValues values;
@@ -1085,11 +1085,11 @@ public class DBManager {
 		values.put(MynahDB._SESSION_USER_COL_INOUT_TIME, suInfo.inoutTime);
 
 		dbh.mDB.insert(MynahDB._SESSION_USER_TABLE_NAME, null, values);
-		Log.d(TAG,"setSessionUserDB ¿Ï·á");
+		Log.d(TAG,"setSessionUserDB ì™„ë£Œ");
 	}
 
 
-	//ÇöÀç ¼¼¼ÇÅ×ÀÌºí¿¡ ÀÖ´Â ¾Ö»õ³¢ ºÒ·¯¿À±â
+	//í˜„ì¬ ì„¸ì…˜í…Œì´ë¸”ì— ìˆëŠ” ì• ìƒˆë¼ ë¶ˆëŸ¬ì˜¤ê¸°
 	public synchronized SessionUserInfo getSessionUserDB(){
 		SessionUserInfo sessionUserInfo = new SessionUserInfo();
 
@@ -1129,17 +1129,17 @@ public class DBManager {
 		sessionUserInfo.password = c.getString(password_index);
 		sessionUserInfo.inoutTime = c.getString(inout_time_index);
 
-		Log.d(TAG,"getSessionUserDB ¿Ï·á");
+		Log.d(TAG,"getSessionUserDB ì™„ë£Œ");
 		return sessionUserInfo;
 	}
 
 
-	//¼¼¼Ç ²÷±â¸é Å×ÀÌºí ¾Æ¿¹ ºñ¿ö¹ö·Á
+	//ì„¸ì…˜ ëŠê¸°ë©´ í…Œì´ë¸” ì•„ì˜ˆ ë¹„ì›Œë²„ë ¤
 	public synchronized void deleteSessionUser() {
 		String sql = "delete from " + MynahDB._SESSION_USER_TABLE_NAME
 				+ " ;";
 		dbh.mDB.execSQL(sql);
-		Log.d(TAG,"deleteSessionUser ¿Ï·á");
+		Log.d(TAG,"deleteSessionUser ì™„ë£Œ");
 	}
 
 

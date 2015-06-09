@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class BusNameDialogFragment extends DialogFragment {
 
-	/* °¢Á¾ ºä º¯¼ö ¼±¾ğ */
+	/* ê°ì¢… ë·° ë³€ìˆ˜ ì„ ì–¸ */
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -28,12 +28,12 @@ public class BusNameDialogFragment extends DialogFragment {
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
 		builder.setView(view)
-				.setPositiveButton("È®ÀÎ",
+				.setPositiveButton("í™•ì¸",
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int id) {
 							}
-						}).setNegativeButton("Ãë¼Ò", null);
+						}).setNegativeButton("ì·¨ì†Œ", null);
 		return builder.create();
 	}
 	/*
@@ -43,7 +43,7 @@ public class BusNameDialogFragment extends DialogFragment {
 	 * container, Bundle savedInstanceState) { View view =
 	 * inflater.inflate(R.layout.layout_dialogfragment_busname, container);
 	 * 
-	 * // ·¹ÀÌ¾Æ¿ô XML°ú ºä º¯¼ö ¿¬°á
+	 * // ë ˆì´ì•„ì›ƒ XMLê³¼ ë·° ë³€ìˆ˜ ì—°ê²°
 	 * 
 	 * return view; }
 	 */

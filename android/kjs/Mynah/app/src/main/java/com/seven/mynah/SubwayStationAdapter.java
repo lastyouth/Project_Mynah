@@ -67,12 +67,12 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 		
 		if(isFirst)
 		{
-			stationName += " »óÇà";
+			stationName += " ìƒí–‰";
 			isFirst = false;
 		}
 		else
 		{
-			stationName += " ÇÏÇà";
+			stationName += " í•˜í–‰";
 			isFirst = true;
 		}
 		

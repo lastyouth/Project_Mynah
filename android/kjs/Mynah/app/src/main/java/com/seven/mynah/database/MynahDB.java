@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 public class MynahDB {
 
 
-	//°ø¿ë ÄÃ·³
+	//ê³µìš© ì»¬ëŸ¼
 	public static final String _USER_TABLE_NAME = "user";
 	public static final String _USER_COL_ID = "id";
 	public static final String _USER_COL_PASSWD = "passwd";
@@ -77,7 +77,7 @@ public class MynahDB {
 	public static final String _BUS_LOG_TABLE_NAME = "bus_log";
 	public static final String _BUS_LOG_SET_TIME = "set_time";
 
-	//´Ş·Â db °ü·Ã
+	//ë‹¬ë ¥ db ê´€ë ¨
 	public static final String _SCHEDULE_TABLE_NAME ="schedule";
 	public static final String _SCHEDULE_COL_SCHEDULE_DATE = "schedule_date";
 	public static final String _SCHEDULE_COL_SCHEDULE_TIME = "schedule_time";
@@ -85,7 +85,7 @@ public class MynahDB {
 	public static final String _SCHEDULE_COL_CREATED_DATE = "created_date";
 
 
-	//·Î±×ÀÎµÈ À¯Á® ¼¼¼ÇÀ» À§ÇÑ Å×ÀÌºí
+	//ë¡œê·¸ì¸ëœ ìœ ì ¸ ì„¸ì…˜ì„ ìœ„í•œ í…Œì´ë¸”
 	public static final String _SESSION_USER_TABLE_NAME = "session_user";
 	public static final String _SESSION_USER_COL_USER_ID = "user_id";
 	public static final String _SESSION_USER_COL_PRODUCT_ID = "product_id";
@@ -99,7 +99,7 @@ public class MynahDB {
 	public static final String _SESSION_USER_COL_INOUT_TIME = "inout_time";
 
 
-	//µğºñ »ı¼º¿ë
+	//ë””ë¹„ ìƒì„±ìš©
 	public static final class CreateDB implements BaseColumns{
 
 		public static final String _CREATE_USER_TABLE = "create table " + _USER_TABLE_NAME
@@ -205,7 +205,7 @@ public class MynahDB {
 				+ _GAS_COL_DATETIME + ") );";
 
 
-		//½ºÄÉÁÙ °ü·Ã Å×ÀÌºí
+		//ìŠ¤ì¼€ì¤„ ê´€ë ¨ í…Œì´ë¸”
 		public static final String _CREATE_SCHEDULE_TABLE = "create table "+_SCHEDULE_TABLE_NAME
 				+ " (" + _SCHEDULE_COL_SCHEDULE_DATE + " text, "
 				+ _SCHEDULE_COL_SCHEDULE_TIME + " text, "
@@ -214,7 +214,7 @@ public class MynahDB {
 				+ " );";
 
 
-		//¼¼¼Ç À¯Áö¸¦ À§ÇØ ¸¸µç ¼¼¼Ç»ç¿ëÀÚ Å×ÀÌºí
+		//ì„¸ì…˜ ìœ ì§€ë¥¼ ìœ„í•´ ë§Œë“  ì„¸ì…˜ì‚¬ìš©ì í…Œì´ë¸”
 		public static final String _CREATE_SESSION_USER_TABLE = "create table " + _SESSION_USER_TABLE_NAME
 				+ " (" + _SESSION_USER_COL_USER_ID + " text, "
 				+ _SESSION_USER_COL_PRODUCT_ID + " text, "

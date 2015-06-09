@@ -8,34 +8,34 @@ import android.content.res.Configuration;
 public class GlobalFunction {
 
 	public static String SubwayDecode(String code) {
-		// ÄÉÀÌ½º¹®
+		// ì¼€ì´ìŠ¤ë¬¸
 		String decode = "";
 
 		switch (code) 
 		{
 		case "I":
-			decode = "ÀÎÃµ1È£¼±";
+			decode = "ì¸ì²œ1í˜¸ì„ ";
 			break;
 		case "K":
-			decode = "°æÀÇÁß¾Ó¼±";
+			decode = "ê²½ì˜ì¤‘ì•™ì„ ";
 			break;
 		case "B":
-			decode = "ºĞ´ç¼±";
+			decode = "ë¶„ë‹¹ì„ ";
 			break;
 		case "A":
-			decode = "°øÇ×Ã¶µµ";
+			decode = "ê³µí•­ì² ë„";
 			break;
 		case "G":
-			decode = "°æÃá¼±";
+			decode = "ê²½ì¶˜ì„ ";
 			break;
 		case "S":
-			decode = "½ÅºĞ´ç¼±";
+			decode = "ì‹ ë¶„ë‹¹ì„ ";
 			break;
 		case "SU":
-			decode = "¼öÀÎ¼±";
+			decode = "ìˆ˜ì¸ì„ ";
 			break;
 		default:
-			decode = code + "È£¼±";
+			decode = code + "í˜¸ì„ ";
 			break;
 		}
 

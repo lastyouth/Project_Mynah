@@ -3,10 +3,10 @@ package com.seven.mynah.artifacts;
 
 public class TimeToBus {
 	
-	public String vehId;  //¹ö½º ¾ÆÀÌµğ
-	public String time; //µµÂø ½Ã°£
-	public String isLast; //¸·Â÷ ¿©ºÎ
-	public String sectNm; //Àü¿ª ord À§Ä¡
+	public String vehId;  //ë²„ìŠ¤ ì•„ì´ë””
+	public String time; //ë„ì°© ì‹œê°„
+	public String isLast; //ë§‰ì°¨ ì—¬ë¶€
+	public String sectNm; //ì „ì—­ ord ìœ„ì¹˜
 	
 	public TimeToBus() {
 		

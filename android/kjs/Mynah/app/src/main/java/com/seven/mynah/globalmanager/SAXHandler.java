@@ -12,68 +12,68 @@ import org.xml.sax.helpers.DefaultHandler;
 //@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SAXHandler extends DefaultHandler{
 
-	private String[] dset = null;								// µ¥ÀÌÅÍ¼Â ¸íÄª ¹è¿­
-	private Map dsetInfo = new HashMap();		// µ¥ÀÌÅÍ¼Â Á¤º¸¸¦ ÀúÀåÇÏ´Â Map
-	private boolean record = false;							// XML TAG°¡ ·¹ÄÚµåÀÎÁö ¿©ºÎ
-	private boolean dataset = false;						// XML TAG°¡ µ¥ÀÌÅÍ¼ÂÀÎÁö ¿©ºÎ
+	private String[] dset = null;								// ë°ì´í„°ì…‹ ëª…ì¹­ ë°°ì—´
+	private Map dsetInfo = new HashMap();		// ë°ì´í„°ì…‹ ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” Map
+	private boolean record = false;							// XML TAGê°€ ë ˆì½”ë“œì¸ì§€ ì—¬ë¶€
+	private boolean dataset = false;						// XML TAGê°€ ë°ì´í„°ì…‹ì¸ì§€ ì—¬ë¶€
 
-	private String column = null;								// ÄÃ·³¸í
+	private String column = null;								// ì»¬ëŸ¼ëª…
 
-	private StringBuffer value = new StringBuffer();		// ÀÏ¹İÀûÀÎ °ª ÀúÀå
+	private StringBuffer value = new StringBuffer();		// ì¼ë°˜ì ì¸ ê°’ ì €ì¥
 
-	private StringBuffer resultCode = new StringBuffer();	// ¼º°ø/½ÇÆĞ ¿©ºÎ [00:Á¤»ó, ±×¿Ü]
+	private StringBuffer resultCode = new StringBuffer();	// ì„±ê³µ/ì‹¤íŒ¨ ì—¬ë¶€ [00:ì •ìƒ, ê·¸ì™¸]
 
-	private StringBuffer resultMsg = new StringBuffer();	// ¼º°ø/½ÇÆĞ ¿©ºÎ ¸Ş¼¼Áö
+	private StringBuffer resultMsg = new StringBuffer();	// ì„±ê³µ/ì‹¤íŒ¨ ì—¬ë¶€ ë©”ì„¸ì§€
 
-	private String tagName = "";							// TAG¸íÄª
+	private String tagName = "";							// TAGëª…ì¹­
 
 	private String serviceId = "";
 
-	private boolean service = false;						// ¼­ºñ½º ½ÃÀÛ.
+	private boolean service = false;						// ì„œë¹„ìŠ¤ ì‹œì‘.
 
 	private Map row = null;
 
 	private List ds = null;
 
-	private Map fixRow = null;						// FIXºÎ Ã³¸®¿ë µ¥ÀÌÅÍ¼Â
+	private Map fixRow = null;						// FIXë¶€ ì²˜ë¦¬ìš© ë°ì´í„°ì…‹
 
 	private List fixDs = null;
 
 	/**
-	 * XMLÀü¹®À» ÆÄ½ÌÇÏ¿© Ã³¸®ÇÏ´Â XML ÇÚµé·¯
-	 * @param dataSetKey	- µ¥ÀÌÅÍ¼ÂÀÇ ¸íÄª fcSingleSelectÀÇ key°ª¿¡ ÇØ´çÇÏ´Â ³»¿ë
+	 * XMLì „ë¬¸ì„ íŒŒì‹±í•˜ì—¬ ì²˜ë¦¬í•˜ëŠ” XML í•¸ë“¤ëŸ¬
+	 * @param dataSetKey	- ë°ì´í„°ì…‹ì˜ ëª…ì¹­ fcSingleSelectì˜ keyê°’ì— í•´ë‹¹í•˜ëŠ” ë‚´ìš©
 	 * @param service TODO
 	 */
 
 	public SAXHandler(String[] dataSetKey, Map resultInfo, String service) {
-		// Ãâ·Â°ª°¡Á®°¥ ¸Ê
+		// ì¶œë ¥ê°’ê°€ì ¸ê°ˆ ë§µ
 		dsetInfo = resultInfo;
-		// µ¥ÀÌÅÍ¼ÂÀ» ±¸¼ºÇÒ Çì´õ
+		// ë°ì´í„°ì…‹ì„ êµ¬ì„±í•  í—¤ë”
 		dset = dataSetKey;
-		// ÀÀ´äºÎ ¾ÆÀÌµğ¸¦ Ã£À½:Àü¹®½ÃÀÛºÎ
+		// ì‘ë‹µë¶€ ì•„ì´ë””ë¥¼ ì°¾ìŒ:ì „ë¬¸ì‹œì‘ë¶€
 		serviceId = service;
 
-		/** UI¿¡¼­ ³Ñ¾î¿Â µ¥ÀÌÅÍ¼Â Á¤º¸¸¦ ´ã´Â ºÎºĞ **/
+		/** UIì—ì„œ ë„˜ì–´ì˜¨ ë°ì´í„°ì…‹ ì •ë³´ë¥¼ ë‹´ëŠ” ë¶€ë¶„ **/
 		for (int i=0;i<dset.length; i++) {
 			dsetInfo.put(dataSetKey[i], new ArrayList());
 		}
 	}
 
 	/**
-	 * XML Document [½ÃÀÛ]
+	 * XML Document [ì‹œì‘]
 	 */
 	 public void startDocument(){
-		 value.setLength(0);	// ÃÊ±âÈ­
+		 value.setLength(0);	// ì´ˆê¸°í™”
 	 }
 
 	 
 	 /**
-	  * XML Document [³¡]
+	  * XML Document [ë]
 	  */
 	 public void endDocument(){
 		 Iterator it = dsetInfo.keySet().iterator();
 
-		 /** µ¥ÀÌÅÍ¼ÂÀÇ µ¥ÀÌÅÍ¸¦ Å¬¶óÀÌ¾ğÆ® Àü¼Û **/
+		 /** ë°ì´í„°ì…‹ì˜ ë°ì´í„°ë¥¼ í´ë¼ì´ì–¸íŠ¸ ì „ì†¡ **/
 		 while(it.hasNext()) {
 			 System.out.println("it.hasNext()???");
 			 String key = (String)it.next();
@@ -83,7 +83,7 @@ public class SAXHandler extends DefaultHandler{
 			 }
 		 }
 
-		 /** ¿¡·¯ ¸Ş½ÃÁö ¹× ¼º°ø ¸Ş½ÃÁö¿¡ ´ëÇÑ Ã³¸® **/
+		 /** ì—ëŸ¬ ë©”ì‹œì§€ ë° ì„±ê³µ ë©”ì‹œì§€ì— ëŒ€í•œ ì²˜ë¦¬ **/
 		 String code = resultCode.toString().trim();
 		 String msg = resultMsg.toString().trim();
 		 
@@ -93,7 +93,7 @@ public class SAXHandler extends DefaultHandler{
 	 }
 
 	 /**
-	  * ÆÄ½ÌÇÒ ¿¤¸®¸ÕÆ® [½ÃÀÛ]
+	  * íŒŒì‹±í•  ì—˜ë¦¬ë¨¼íŠ¸ [ì‹œì‘]
 	  */
 	 public void startElement(String namespaceURI, String localName, String qName, Attributes attrs){
 		 value.setLength(0);
@@ -103,38 +103,38 @@ public class SAXHandler extends DefaultHandler{
 		 } else {
 			 tagName = qName;
 		 }
-		 /** XMLÀÇ TAG°¡ µ¥ÀÌÅÍ¼ÂÀÇ Key¸íÄª°ú ÀÏÄ¡ÇÏ´ÂÁö ÆÇ´Ü **/
+		 /** XMLì˜ TAGê°€ ë°ì´í„°ì…‹ì˜ Keyëª…ì¹­ê³¼ ì¼ì¹˜í•˜ëŠ”ì§€ íŒë‹¨ **/
 		 if (dsetInfo.containsKey(qName)) {
-			 //ds¿¡ ÇØ´çÄÃ·³¿¡ µ¥ÀÌÅÍ´ã´Â´Ù ¾Æ¸¶µµ addrow
+			 //dsì— í•´ë‹¹ì»¬ëŸ¼ì— ë°ì´í„°ë‹´ëŠ”ë‹¤ ì•„ë§ˆë„ addrow
 			 ds = (List)dsetInfo.get(qName);
 			 dataset = true;
 			 record = true;
 			 row = new HashMap();
-		 //Çì´õºÎ
+		 //í—¤ë”ë¶€
 		 } else if (serviceId.equals(qName)) {
-			 service = true;	// °íÁ¤ºÎ ½ÃÀÛ.
+			 service = true;	// ê³ ì •ë¶€ ì‹œì‘.
 		 }
 	}
 
 	 /**
-	  * ÆÄ½ÌÇÒ ¿¤¸®¸ÕÆ® [³¡]
-	  * - µ¥ÀÌÅÍ¼Â¿¡ FirstRow°¡ Àû¿ëµÇ¾î addDataRowÇÏ´Â ½ÃÁ¡¿¡ Æ¯Á¤ ·¹ÄÚµå °¹¼ö°¡ ÀÔ·ÂÀÌµÇ¸é Å¬¶óÀÌ¾ğÆ®·Î ¸ÕÀú Àü¼Û
+	  * íŒŒì‹±í•  ì—˜ë¦¬ë¨¼íŠ¸ [ë]
+	  * - ë°ì´í„°ì…‹ì— FirstRowê°€ ì ìš©ë˜ì–´ addDataRowí•˜ëŠ” ì‹œì ì— íŠ¹ì • ë ˆì½”ë“œ ê°¯ìˆ˜ê°€ ì…ë ¥ì´ë˜ë©´ í´ë¼ì´ì–¸íŠ¸ë¡œ ë¨¼ì € ì „ì†¡
 	  */
 	 public void endElement(String namesapceURI, String localName, String qName){
 		 if (dsetInfo.containsKey(qName)) {
 			 dataset = false;
 			 record = false;
 			 column = null;
-			 /** ÄÃ·³ÀÌ ³¡ÀÌ¸é »ı¼ºµÈ ·¹ÄÚµå¸¦ µ¥ÀÌÅÍ¼Â¿¡ Ãß°¡ **/
+			 /** ì»¬ëŸ¼ì´ ëì´ë©´ ìƒì„±ëœ ë ˆì½”ë“œë¥¼ ë°ì´í„°ì…‹ì— ì¶”ê°€ **/
 			 ds.add(row);
 		 } else if (service && !record && tagName.equals(qName)) {
-			 // °íÁ¤ºÎ¿¡ ´ëÇÑ Ãß°¡.
+			 // ê³ ì •ë¶€ì— ëŒ€í•œ ì¶”ê°€.
 			 if (fixDs != null) {
 				 fixRow.put(qName, value.toString());
 			 }
 			 value.setLength(0);
 	 	 } else {
-			 /** µ¥ÀÌÅÍ ·¹ÄÚµå(IXyncDataRow)¿¡ °ªÀ» ÀÔ·Â **/
+			 /** ë°ì´í„° ë ˆì½”ë“œ(IXyncDataRow)ì— ê°’ì„ ì…ë ¥ **/
 	 		 if (" ".equals(value.toString()))  {
 	 			 value.trimToSize();
 	 		 }
@@ -150,23 +150,23 @@ public class SAXHandler extends DefaultHandler{
 
 	 
 	 /**
-	  * XML Element¾ÈÀÇ Text¸¦ ÆÄ½ÌÇÏ¿© ´ã´Â ºÎºĞ
+	  * XML Elementì•ˆì˜ Textë¥¼ íŒŒì‹±í•˜ì—¬ ë‹´ëŠ” ë¶€ë¶„
 	  */
 	 public void characters(char[] ch, int start, int length){
-		//tagName´ÜÀÏµ¥ÀÌÅÍ È¤Àº ¿¬¼âµ¥ÀÌÅÍ½ÃÀÛ column¿¬¼âµ¥ÀÌÅÍ
+		//tagNameë‹¨ì¼ë°ì´í„° í˜¹ì€ ì—°ì‡„ë°ì´í„°ì‹œì‘ columnì—°ì‡„ë°ì´í„°
 		 if (dataset && record) {
 			 String str = new String(ch, start, length);
 			 value.append(str);
-	     //ÀÌÇÏ´Â ´ÜÀÏµ¥ÀÌÅÍÃ³¸®ÀÓ ÁÖ·Î Çì´õ
-		//Àü¹®Åë½Å°á°úÄÚµå	 
+	     //ì´í•˜ëŠ” ë‹¨ì¼ë°ì´í„°ì²˜ë¦¬ì„ ì£¼ë¡œ í—¤ë”
+		//ì „ë¬¸í†µì‹ ê²°ê³¼ì½”ë“œ	 
 		 } else if ("resultCode".equals(tagName)) {
 			 String str = new String(ch, start, length);
 			 resultCode.append(str.trim());
-			 //Àü¹®Åë½Å°á°ú¸Ş¼¼Áö
+			 //ì „ë¬¸í†µì‹ ê²°ê³¼ë©”ì„¸ì§€
 		 } else if ("resultMsg".equals(tagName)) {
 			 String str = new String(ch, start, length);
 			 resultMsg.append(str.trim());
-		 //¼­ºñ½º½ÃÀÛµÌ°í ¹İº¹ºÎ°¡ ¾Æ´Ñ °íÁ¤°ª Á¤ÇØÁø Çì´õ¿Ü°ªµé
+		 //ì„œë¹„ìŠ¤ì‹œì‘ë«ê³  ë°˜ë³µë¶€ê°€ ì•„ë‹Œ ê³ ì •ê°’ ì •í•´ì§„ í—¤ë”ì™¸ê°’ë“¤
 		 } else if (service && !dataset) {
 			 String str = new String(ch, start, length);
 			 value.append(str.trim());

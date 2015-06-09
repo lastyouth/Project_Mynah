@@ -6,8 +6,8 @@ public class SubwayInfo {
 
 
 	public SubwayStationInfo station;
-	public String week_tag; //¿äÀÏ
-	public String last_update; //ÀÇ¹Ì¾øÀ½
+	public String week_tag; //ìš”ì¼
+	public String last_update; //ì˜ë¯¸ì—†ìŒ
 
 	public ArrayList<TimeToSubway> array_tts;
 	

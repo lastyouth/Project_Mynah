@@ -4,8 +4,8 @@ public class TimeToSubway {
 
 	public String train_no;
 	public String arr_time;
-	public String subway_start_name; //½ÃÀÛ¿ª(¹«½¼Çà)
-	public String subway_end_name; //µµÂø¿ª
+	public String subway_start_name; //ì‹œì‘ì—­(ë¬´ìŠ¨í–‰)
+	public String subway_end_name; //ë„ì°©ì—­
 	public String fl_flag; 
 	
 	public TimeToSubway() {

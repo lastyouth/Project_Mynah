@@ -26,8 +26,8 @@ public class WeatherShortcutLayout extends CustomButton {
 	private TextView tvPlace;
 	private TextView tvPlace2;
 	private TextView tvTemper;
-	private TextView tvReh; // ½Àµµ
-	private TextView tvPop; // °­¼öÈ®·ü
+	private TextView tvReh; // ìŠµë„
+	private TextView tvPop; // ê°•ìˆ˜í™•ë¥ 
 	private TextView tvPopName;
 	private TextView tvUpdateTime;
 	private TextView tvHour;
@@ -58,7 +58,7 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
 		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
 		refresh();
-		// ÃßÈÄ ÀÌºÎºĞÀº ´Ù xml·Î ³Ñ±æ°Í
+		// ì¶”í›„ ì´ë¶€ë¶„ì€ ë‹¤ xmlë¡œ ë„˜ê¸¸ê²ƒ
 		view.setOnTouchListener(new WeatherTouchListener());
 		addView(view);
 		Log.d(TAG, "initView End");
@@ -68,8 +68,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		Log.d(TAG, "setWeatherInfo Start");
 		
 		if (winfo == null) {
-			// ÃÊ±âÈ­
-			tvPlace2.setText("ÅÍÄ¡ÇØ¼­ Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			// ì´ˆê¸°í™”
+			tvPlace2.setText("í„°ì¹˜í•´ì„œ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			tvPopName.setText("");
 			setWeatherImage(3);
 			return;
@@ -77,15 +77,15 @@ public class WeatherShortcutLayout extends CustomButton {
 		
 		tvPlace.setText(winfo.location.city_name);
 		tvPlace2.setText(winfo.location.mdl_name + "\n");
-		tvTemper.setText(winfo.array_ttw.get(0).temp + "¡ÆC");
+		tvTemper.setText(winfo.array_ttw.get(0).temp + "Â°C");
 		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
-		tvPopName.setText("°­¼ö È®·ü:");
-		// tvReh.setText("½Àµµ : " + winfo.array_ttw.get(0).reh + "%");
+		tvPopName.setText("ê°•ìˆ˜ í™•ë¥ :");
+		// tvReh.setText("ìŠµë„ : " + winfo.array_ttw.get(0).reh + "%");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
 
 
-		// ÀÌ¹ÌÁö Å¸ÀÔ ³Ö±â
+		// ì´ë¯¸ì§€ íƒ€ì… ë„£ê¸°
 		setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
 		Log.d(TAG, "setWeatherInfo End");
 	}
@@ -149,7 +149,7 @@ public class WeatherShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// ¿øÇÏ´Â ½ÇÇà ¿¢Æ¼ºñÆ¼!
+				// ì›í•˜ëŠ” ì‹¤í–‰ ì—‘í‹°ë¹„í‹°!
 				cbf.startSettingActivity("Weather");
 				// refresh();
 				return true;

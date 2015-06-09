@@ -2,10 +2,10 @@ package com.seven.mynah.artifacts;
 
 /**
  * Created by HJHOME on 2015-06-05.
- * ÁÖÀÇ»çÇ× :
- * ÄÚµù Àß ¸øÇÏ°Ú¾î¼­ Boolean º¯¼ö¿©¾ß Á¤»óÀûÀÎ º¯¼öµéÀÌ ÀÖ´Âµ¥
- * °Â³×µé StringÀ¸·Î Çß¾î.
- * "1", "0"·Î equals ±¸º°ÇØ¾ßÇÒµí ¤Ğ¤Ğ
+ * ì£¼ì˜ì‚¬í•­ :
+ * ì½”ë”© ì˜ ëª»í•˜ê² ì–´ì„œ Boolean ë³€ìˆ˜ì—¬ì•¼ ì •ìƒì ì¸ ë³€ìˆ˜ë“¤ì´ ìˆëŠ”ë°
+ * ê±”ë„¤ë“¤ Stringìœ¼ë¡œ í–ˆì–´.
+ * "1", "0"ë¡œ equals êµ¬ë³„í•´ì•¼í• ë“¯ ã… ã… 
  */
 
 public class SessionUserInfo {
@@ -13,9 +13,9 @@ public class SessionUserInfo {
     public String productId;
     public String registrationId;
     public String userName;
-    public String genderFlag; //boolean ³² 1 ¿© 0
-    public String representativeFlag; //boolean ´ëÇ¥ 1 ¾È´ëÇ¥ 0
-    public String inHomeFlag; //boolean ´ëÇ¥ 1 ¾È´ëÇ¥ 0
+    public String genderFlag; //boolean ë‚¨ 1 ì—¬ 0
+    public String representativeFlag; //boolean ëŒ€í‘œ 1 ì•ˆëŒ€í‘œ 0
+    public String inHomeFlag; //boolean ëŒ€í‘œ 1 ì•ˆëŒ€í‘œ 0
     public String deviceId;
     public String password;
     public String inoutTime; //datetime

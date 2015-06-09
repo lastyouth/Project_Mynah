@@ -23,11 +23,11 @@ import com.seven.mynah.artifacts.TimeToBus;
 public class BusPaser {
 
 
-	//2°¡Áö ¹öÀüÀ¸·Î °¡´ÉÇÔ
-	//¼­¿ï½Ã ±âÁØ
-	//±¹Åä±³ÅëºÎ ±âÁØ
-	//ÇöÀç 2°³ ´Ù Å°´Â ¹ß±ŞµÇ¾î ÀÖ´Âµ¥ ÀÎÁõÀÌ ¾ÈµÊ¿ä...
-	//¿©±â¿¡ µé¾î°¡´Â°Ô 3°¡ÁöÀÓ.
+	//2ê°€ì§€ ë²„ì „ìœ¼ë¡œ ê°€ëŠ¥í•¨
+	//ì„œìš¸ì‹œ ê¸°ì¤€
+	//êµ­í† êµí†µë¶€ ê¸°ì¤€
+	//í˜„ì¬ 2ê°œ ë‹¤ í‚¤ëŠ” ë°œê¸‰ë˜ì–´ ìˆëŠ”ë° ì¸ì¦ì´ ì•ˆë¨ìš”...
+	//ì—¬ê¸°ì— ë“¤ì–´ê°€ëŠ”ê²Œ 3ê°€ì§€ì„.
 	
 	private static String TAG = "BusPaser";
 	
@@ -54,30 +54,30 @@ public class BusPaser {
 	private final String option2_GetBusRouteList = "/getBusRouteList";
 	
 	
-	//³ë¼±¹øÈ£ ¸ñ·Ï Á¶È¸¸¦ ÇÏ°í!
-	//³ë¼± ¸ñ·ÏÀÌ Ãâ·ÂµÇ¸é ±× ¹ö½ºÀÇ busRouteld¸¦ ¾òÀ» ¼ö ÀÖ´Ù.
-	//±× ·çÆ® ¾ÆÀÌµğ¸¦ ±â¹İÀ¸·Î
-	//±× ·çÆ®¸¦ °æÀ¯ÇÏ´Â ¸ğµç Á¤·ù¼ÒÀÇ °æ·Î¸¦ ¾ò´Â´Ù.
-	//Á¤·ù¼Ò¸¦ ¼±ÅÃÇÑ´Ù.
-	//±×·³ ¼¼ÆÃÀÌ ¿Ï·áµÇ°í
-	//±× Á¤·ù¼Ò¿Í ³ë¼±À» ±âÁ¡À¸·Î Áö³ª°¡´Â ¹ö½ºÀÇ ½Ã°£À» °è¼Ó ¹Ş¾Æ¿Â´Ù.
+	//ë…¸ì„ ë²ˆí˜¸ ëª©ë¡ ì¡°íšŒë¥¼ í•˜ê³ !
+	//ë…¸ì„  ëª©ë¡ì´ ì¶œë ¥ë˜ë©´ ê·¸ ë²„ìŠ¤ì˜ busRouteldë¥¼ ì–»ì„ ìˆ˜ ìˆë‹¤.
+	//ê·¸ ë£¨íŠ¸ ì•„ì´ë””ë¥¼ ê¸°ë°˜ìœ¼ë¡œ
+	//ê·¸ ë£¨íŠ¸ë¥¼ ê²½ìœ í•˜ëŠ” ëª¨ë“  ì •ë¥˜ì†Œì˜ ê²½ë¡œë¥¼ ì–»ëŠ”ë‹¤.
+	//ì •ë¥˜ì†Œë¥¼ ì„ íƒí•œë‹¤.
+	//ê·¸ëŸ¼ ì„¸íŒ…ì´ ì™„ë£Œë˜ê³ 
+	//ê·¸ ì •ë¥˜ì†Œì™€ ë…¸ì„ ì„ ê¸°ì ìœ¼ë¡œ ì§€ë‚˜ê°€ëŠ” ë²„ìŠ¤ì˜ ì‹œê°„ì„ ê³„ì† ë°›ì•„ì˜¨ë‹¤.
 
-	//½Ã°£ÀÌ ³²À¸¸é ÀÌ ¿ªÀÌ °¡´ÉÇÏµµ·Ï ¼³°èÇÑ´Ù.
+	//ì‹œê°„ì´ ë‚¨ìœ¼ë©´ ì´ ì—­ì´ ê°€ëŠ¥í•˜ë„ë¡ ì„¤ê³„í•œë‹¤.
 
 	
 	public BusPaser() {
 		
 	}
 	
-	//±âº» Á¤º¸ °Ë»ö... ¹ö½º ³ë¼±°ú ¹ö½º½ºÅ×ÀÌ¼ÇÀ» ±âÁØÀ¸·Î ½Ã°£ Á¤º¸¸¦ ¼öÁıÇÔ		
+	//ê¸°ë³¸ ì •ë³´ ê²€ìƒ‰... ë²„ìŠ¤ ë…¸ì„ ê³¼ ë²„ìŠ¤ìŠ¤í…Œì´ì…˜ì„ ê¸°ì¤€ìœ¼ë¡œ ì‹œê°„ ì •ë³´ë¥¼ ìˆ˜ì§‘í•¨		
 	public BusInfo getBusArrInfoByRoute(BusInfo binfo)
 	{
 		
 		binfo = getStationByUid(binfo);
 		
-		String stId =  binfo.station.stId;  // ½ºÅ×ÀÌ¼Ç Á¤·ù¼Ò ¾ÆÀÌµğ
+		String stId =  binfo.station.stId;  // ìŠ¤í…Œì´ì…˜ ì •ë¥˜ì†Œ ì•„ì´ë””
 		//String arsId = binfo.station.arsId;
-		String busRouteId = binfo.route.busRouteId; //³ë¼± ¾ÆÀÌµğ
+		String busRouteId = binfo.route.busRouteId; //ë…¸ì„  ì•„ì´ë””
 		String ord = binfo.staOrd;
 		//SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREA);
 		SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.KOREA);
@@ -197,22 +197,22 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
-		Log.d(TAG,"getBusArrInfoByRoute ¿Ï·á");
+		Log.d(TAG,"getBusArrInfoByRoute ì™„ë£Œ");
 		return binfo;
 		
 	}
 	
-	//Á¤·ù¼Ò °íÀ¯¹øÈ£¸¦ ÅëÇØ ÇØ´ç Åë°úÇÏ´Â ³ë¼± ¸ğµÎÀÇ ¹ö½º Á¤º¸ ¾Ë¼öÀÖÀ½..
-	//¿©±â¼­ ord¸¸ ÃßÃâÇÏ¿© ´Ù½Ã ³ÖÀ½.
+	//ì •ë¥˜ì†Œ ê³ ìœ ë²ˆí˜¸ë¥¼ í†µí•´ í•´ë‹¹ í†µê³¼í•˜ëŠ” ë…¸ì„  ëª¨ë‘ì˜ ë²„ìŠ¤ ì •ë³´ ì•Œìˆ˜ìˆìŒ..
+	//ì—¬ê¸°ì„œ ordë§Œ ì¶”ì¶œí•˜ì—¬ ë‹¤ì‹œ ë„£ìŒ.
 	public BusInfo getStationByUid(BusInfo binfo)
 	{
 		
-		//String stId =  binfo.station.stId;  // ½ºÅ×ÀÌ¼Ç Á¤·ù¼Ò ¾ÆÀÌµğ
+		//String stId =  binfo.station.stId;  // ìŠ¤í…Œì´ì…˜ ì •ë¥˜ì†Œ ì•„ì´ë””
 		String arsId = binfo.station.arsId;
-		//String busRouteId = binfo.route.busRouteId; //³ë¼± ¾ÆÀÌµğ
+		//String busRouteId = binfo.route.busRouteId; //ë…¸ì„  ì•„ì´ë””
 		
 		
-		//clear ÇÏ¸é ¾ÈµÊ.
+		//clear í•˜ë©´ ì•ˆë¨.
 		//binfo.array_ttb.clear();
 		
 		try {
@@ -248,7 +248,7 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                    	//¾ÆÁ÷ ³²¾ÆÀÖÀ½... ³·¿¡ È®ÀÎÇØº¼°Í...
+                    	//ì•„ì§ ë‚¨ì•„ìˆìŒ... ë‚®ì— í™•ì¸í•´ë³¼ê²ƒ...
                         name = parser.getName();
                         if (name.equalsIgnoreCase("busRouteId")){
                             if(parser.nextText().equalsIgnoreCase(binfo.route.busRouteId))
@@ -280,12 +280,12 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
-		Log.d(TAG,"getStationByUid ¿Ï·á");
+		Log.d(TAG,"getStationByUid ì™„ë£Œ");
 		return binfo;
 		
 	}
 	
-	//Á¤·ù¼Ò °íÀ¯¹øÈ£ ±âÁØÀ¸·Î ·çÆ® ±¸ÇÔ
+	//ì •ë¥˜ì†Œ ê³ ìœ ë²ˆí˜¸ ê¸°ì¤€ìœ¼ë¡œ ë£¨íŠ¸ êµ¬í•¨
 	public ArrayList<BusRouteInfo> getRouteByStationList(String arsId)
 	{
 		
@@ -330,8 +330,8 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷ ¼öÇà.
-                    	//Å° ÀÎÁõ¸ğµâ ¿¡·¯ÄÚµå°¡ ¶¹À» ¶§ ¿¡·¯ Ã³¸®
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—… ìˆ˜í–‰.
+                    	//í‚¤ ì¸ì¦ëª¨ë“ˆ ì—ëŸ¬ì½”ë“œê°€ ë–´ì„ ë•Œ ì—ëŸ¬ ì²˜ë¦¬
                     	name = parser.getName();
                         if (name.equalsIgnoreCase("itemList")){
                             if (i != -1) {
@@ -374,11 +374,11 @@ public class BusPaser {
 			e.printStackTrace();
 		}
 		
-		Log.d(TAG,"getRouteByStationList ¿Ï·á");
+		Log.d(TAG,"getRouteByStationList ì™„ë£Œ");
 		return array_rinfo;
 	}
 	
-	//°Ë»ö¿ë ³ë¼± ÀÌ¸§À» ±â¹İÀ¸·Î ³ë¼±Á¤º¸¸¦ ¾òÀ½
+	//ê²€ìƒ‰ìš© ë…¸ì„  ì´ë¦„ì„ ê¸°ë°˜ìœ¼ë¡œ ë…¸ì„ ì •ë³´ë¥¼ ì–»ìŒ
 	public ArrayList<BusRouteInfo> getBusRouteList(String _strSrch)
 	{
 		
@@ -424,8 +424,8 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷ ¼öÇà.
-                    	//Å° ÀÎÁõ¸ğµâ ¿¡·¯ÄÚµå°¡ ¶¹À» ¶§ ¿¡·¯ Ã³¸®
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—… ìˆ˜í–‰.
+                    	//í‚¤ ì¸ì¦ëª¨ë“ˆ ì—ëŸ¬ì½”ë“œê°€ ë–´ì„ ë•Œ ì—ëŸ¬ ì²˜ë¦¬
                     	name = parser.getName();
                         if (name.equalsIgnoreCase("itemList")){
                             if (i != -1) {
@@ -469,7 +469,7 @@ public class BusPaser {
 		}
 		
 		
-		Log.d(TAG,"getBusRouteList ¿Ï·á");
+		Log.d(TAG,"getBusRouteList ì™„ë£Œ");
 		return array_rinfo;
 	}
 	
@@ -518,8 +518,8 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷ ¼öÇà.
-                    	//Å° ÀÎÁõ¸ğµâ ¿¡·¯ÄÚµå°¡ ¶¹À» ¶§ ¿¡·¯ Ã³¸®
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—… ìˆ˜í–‰.
+                    	//í‚¤ ì¸ì¦ëª¨ë“ˆ ì—ëŸ¬ì½”ë“œê°€ ë–´ì„ ë•Œ ì—ëŸ¬ ì²˜ë¦¬
                     	name = parser.getName();
                         if (name.equalsIgnoreCase("itemList")){
                             if (i != -1) {
@@ -563,11 +563,11 @@ public class BusPaser {
 		}
 		
 		
-		Log.d(TAG,"getStaionsByRouteList ¿Ï·á");
+		Log.d(TAG,"getStaionsByRouteList ì™„ë£Œ");
 		return array_sinfo;
 	}
 	
-	//¹ö½º ÀÌ¸§ Á¤º¸·Î °Ë»öÇÔ.
+	//ë²„ìŠ¤ ì´ë¦„ ì •ë³´ë¡œ ê²€ìƒ‰í•¨.
 	public ArrayList<BusStationInfo> getStationByNameList(String _stSrch)
 	{
 		
@@ -613,8 +613,8 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷ ¼öÇà.
-                    	//Å° ÀÎÁõ¸ğµâ ¿¡·¯ÄÚµå°¡ ¶¹À» ¶§ ¿¡·¯ Ã³¸®
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—… ìˆ˜í–‰.
+                    	//í‚¤ ì¸ì¦ëª¨ë“ˆ ì—ëŸ¬ì½”ë“œê°€ ë–´ì„ ë•Œ ì—ëŸ¬ ì²˜ë¦¬
                     	name = parser.getName();
                         if (name.equalsIgnoreCase("itemList")){
                             if (i != -1) {
@@ -658,7 +658,7 @@ public class BusPaser {
 		}
 		
 		
-		Log.d(TAG,"getStationByNameList ¿Ï·á");
+		Log.d(TAG,"getStationByNameList ì™„ë£Œ");
 		return array_sinfo;
 		
 	}
@@ -708,8 +708,8 @@ public class BusPaser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷ ¼öÇà.
-                    	//Å° ÀÎÁõ¸ğµâ ¿¡·¯ÄÚµå°¡ ¶¹À» ¶§ ¿¡·¯ Ã³¸®
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—… ìˆ˜í–‰.
+                    	//í‚¤ ì¸ì¦ëª¨ë“ˆ ì—ëŸ¬ì½”ë“œê°€ ë–´ì„ ë•Œ ì—ëŸ¬ ì²˜ë¦¬
                     	name = parser.getName();
                         if (name.equalsIgnoreCase("itemList")){
                             if (i != -1) {
@@ -753,7 +753,7 @@ public class BusPaser {
 		}
 		
 		
-		Log.d(TAG,"getStaionsByPosList ¿Ï·á");
+		Log.d(TAG,"getStaionsByPosList ì™„ë£Œ");
 		
 		return array_sinfo;
 		
