@@ -5,4 +5,5 @@ package com.seven.mynah.backgroundservice;
  */
 public interface BluetoothRequestCallback {
     public void onRequestTTSWithRSSI();
+    public void onTempDataArrived(int temp);
 }

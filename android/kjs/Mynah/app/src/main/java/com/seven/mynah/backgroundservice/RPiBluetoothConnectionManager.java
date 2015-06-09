@@ -56,6 +56,7 @@ private LeScanCallback lecallback = new LeScanCallback(){
    public static final int SEND_TYPE_RSSI = 0x30001001;
    public static final int SEND_TYPE_TTS = 0x30001002;
    public static final int SEND_TYPE_INIT = 0x30001003;
+   public static final int SEND_TYPE_TEMP = 0x30001004;
    
    // settings
    private final int MAX_WAIT_FOR_RECONNECT = 3000;
@@ -88,10 +89,15 @@ private LeScanCallback lecallback = new LeScanCallback(){
                   String str = new String(b,0,len);
 
                   Log.i(TAG,str);
-                  
-                  if(str.equals("tts"))
+
+                  if(str.startsWith("tts"))
                   {
                       mCallback.onRequestTTSWithRSSI();
+                  }else if(str.startsWith("temp"))
+                  {
+                     str = str.replace("temp : ","");
+
+                     mCallback.onTempDataArrived(Integer.parseInt(str));
                   }
                } catch (Exception e) {
                   // TODO Auto-generated catch block
@@ -257,6 +263,11 @@ private LeScanCallback lecallback = new LeScanCallback(){
          case SEND_TYPE_INIT:
             json.put("type","init");
             break;
+
+            case SEND_TYPE_TEMP:
+            json.put("type","temp");
+               break;
+
          default:
             json.put("type", "bad");   
          }
@@ -296,6 +307,11 @@ private LeScanCallback lecallback = new LeScanCallback(){
    {
        Log.d("Bluetooth","SendData : "+data);
        return sendTo(SEND_TYPE_TTS,data);
+   }
+
+   public boolean requestTempData()
+   {
+      return sendTo(SEND_TYPE_TEMP,"");
    }
 
    public void registerCallback(BluetoothRequestCallback callback)

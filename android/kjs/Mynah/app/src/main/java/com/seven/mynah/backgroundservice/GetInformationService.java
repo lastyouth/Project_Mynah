@@ -50,12 +50,17 @@ public class GetInformationService extends Service
         @Override
         public void onRequestTTSWithRSSI() {
             Log.d(TAG, "onRequestTTSWithRSSI");
-            String data = new String("안녕하세요 서보훈님 오늘도 좋은하루 되시길 바라며 화이팅입니다!! 안녕하세요 서보훈님 오늘도 좋은하루 되시길 바라며 화이팅입니다!! 안녕하세요 서보훈님 오늘도 좋은하루 되시길 바라며 화이팅입니다!!");
+            String data = new String("안녕하세요 서보훈님 오늘도 좋은하루 되시길 바라며 화이팅입니다!!");
 
             Log.d(TAG,"Send Data from GetInformationService : "+data);
 
             mBluetoothManager.sendTTSWithRSSI(data);
 
+        }
+
+        @Override
+        public void onTempDataArrived(int temp) {
+            Log.d(TAG,"Temparture : "+temp);
         }
     };
 
@@ -88,7 +93,8 @@ public class GetInformationService extends Service
     {
         if(ret == RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
         {
-
+            // Bluetooth is NOT Supported
+            Log.d(TAG,"Shit");
         }else if(ret == RPiBluetoothConnectionManager.ERROR_CALLBACK_IS_NOT_REGISTERED)
         {
 
@@ -100,7 +106,7 @@ public class GetInformationService extends Service
             Log.d(TAG,"BT is Not Enabled");
         }else if(ret == RPiBluetoothConnectionManager.SUCCESS_INITIALIZE)
         {
-
+            Log.d(TAG,"BT initialized Successfully");
         }else
         {
             Toast.makeText(this,"Unknown return value from RPiBluetoothConnectionManager",Toast.LENGTH_SHORT).show();
@@ -142,6 +148,9 @@ public class GetInformationService extends Service
     public void setBindStatus(boolean status)
     {
         isBindWithActivity = status;
+    }
+    public boolean requestTempData(){
+        return mBluetoothManager.requestTempData();
     }
     public void onDestroy() 
     {

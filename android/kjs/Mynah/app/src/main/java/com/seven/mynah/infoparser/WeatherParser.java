@@ -23,16 +23,16 @@ import com.seven.mynah.artifacts.*;
 
 
 
-//ÀÚÃ¼°¡ ¾²·¹µùÇÏÁö ¾Êµµ·Ï ÇÔ(´Ù¿î¹Þ´Â°÷ Á¦¿Ü)
-//ÆÄ¼­¸¦ È£ÃâÇÏ´Â Å¬·¡½º¿¡¼­ ¾²·¹µù
+//ìžì²´ê°€ ì“°ë ˆë”©í•˜ì§€ ì•Šë„ë¡ í•¨(ë‹¤ìš´ë°›ëŠ”ê³³ ì œì™¸)
+//íŒŒì„œë¥¼ í˜¸ì¶œí•˜ëŠ” í´ëž˜ìŠ¤ì—ì„œ ì“°ë ˆë”©
 
 
 public class WeatherParser {
 
-	//ÆÄ½ÌÇÑ ÀÚ·á¸¦ DB¿¡ ³Ö´Â°Í±îÁö¸¸ ÇÏ´Â °ÍÀ¸·Î ÇÑ´Ù.
-	//Çö ½ÃÁ¡À» ±âÁØÀ¸·Î ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
-	//DB ³»ºÎ Å¬·¡½ºÀÇ °æ¿ì Áßº¹µÇ°Å³ª »õ·Î Ãß°¡µÇ¾ßÇÏ´Â ºÎºÐÀº 
-	//±×ÂÊ¿¡¼­ ´Ù Ã³¸®ÇÑ´Ù.
+	//íŒŒì‹±í•œ ìžë£Œë¥¼ DBì— ë„£ëŠ”ê²ƒê¹Œì§€ë§Œ í•˜ëŠ” ê²ƒìœ¼ë¡œ í•œë‹¤.
+	//í˜„ ì‹œì ì„ ê¸°ì¤€ìœ¼ë¡œ ì—…ë°ì´íŠ¸í•œë‹¤.
+	//DB ë‚´ë¶€ í´ëž˜ìŠ¤ì˜ ê²½ìš° ì¤‘ë³µë˜ê±°ë‚˜ ìƒˆë¡œ ì¶”ê°€ë˜ì•¼í•˜ëŠ” ë¶€ë¶„ì€ 
+	//ê·¸ìª½ì—ì„œ ë‹¤ ì²˜ë¦¬í•œë‹¤.
 	
 	private final String open_Url = "http://www.kma.go.kr/";
 	
@@ -99,7 +99,7 @@ public class WeatherParser {
                         
                         break;
                     case XmlPullParser.START_TAG:
-                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷À» ¼öÇàÇÕ´Ï´Ù.
+                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§žëŠ” ìž‘ì—…ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
                         name = parser.getName();
                         if (name.equalsIgnoreCase("data")){
                             if (i != -1) {
@@ -153,7 +153,7 @@ public class WeatherParser {
 		
 	}
 	
-	//´ëÇÑ¹Î±¹ ¾È¿¡¼­ ³¯¾¾ °Ë»ö °¡´ÉÇÑ ¸ðµç Áö¿ª ÃßÃâ
+	//ëŒ€í•œë¯¼êµ­ ì•ˆì—ì„œ ë‚ ì”¨ ê²€ìƒ‰ ê°€ëŠ¥í•œ ëª¨ë“  ì§€ì—­ ì¶”ì¶œ
 	public ArrayList<WeatherLocationInfo> getAllLocationInfo()  {
 	
 		

@@ -38,13 +38,13 @@ public class DBHelper {
 	
 	private class DatabaseHelper extends SQLiteOpenHelper{
 
-		// »ı¼ºÀÚ
+		// ìƒì„±ì
 		public DatabaseHelper(Context context, String name,
 				CursorFactory factory, int version) {
 			super(context, name, factory, version);
 		}
 		
-		// ÃÖÃÊ DB¸¦ ¸¸µé¶§ ÇÑ¹ø¸¸ È£ÃâµÈ´Ù.
+		// ìµœì´ˆ DBë¥¼ ë§Œë“¤ë•Œ í•œë²ˆë§Œ í˜¸ì¶œëœë‹¤.
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			
@@ -58,15 +58,15 @@ public class DBHelper {
 			db.execSQL(MynahDB.CreateDB._CREATE_BUS_LOG_TABLE);
 			db.execSQL(MynahDB.CreateDB._CREATE_SUBWAY_LOG_TABLE);
 
-			//Ä¶¸°´õºÎºĞ
+			//ìº˜ë¦°ë”ë¶€ë¶„
 			db.execSQL(MynahDB.CreateDB._CREATE_SCHEDULE_TABLE);
 
-			//¼¼¼ÇÀ¯Á®ºÎºĞ
+			//ì„¸ì…˜ìœ ì ¸ë¶€ë¶„
 			db.execSQL(MynahDB.CreateDB._CREATE_SESSION_USER_TABLE);
 
 		}
 
-		// ¹öÀüÀÌ ¾÷µ¥ÀÌÆ® µÇ¾úÀ» °æ¿ì DB¸¦ ´Ù½Ã ¸¸µé¾î ÁØ´Ù.
+		// ë²„ì „ì´ ì—…ë°ì´íŠ¸ ë˜ì—ˆì„ ê²½ìš° DBë¥¼ ë‹¤ì‹œ ë§Œë“¤ì–´ ì¤€ë‹¤.
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			
@@ -80,10 +80,10 @@ public class DBHelper {
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._BUS_LOG_TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SUBWAY_LOG_TABLE_NAME);
 
-			//Ä¶¸°´õ Áö¿ì±â
+			//ìº˜ë¦°ë” ì§€ìš°ê¸°
 			db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
 
-			//¼¼¼ÇÀ¯Á® Å×ÀÌºí Áö¿ì±â±â
+			//ì„¸ì…˜ìœ ì ¸ í…Œì´ë¸” ì§€ìš°ê¸°ê¸°
 		db.execSQL("DROP TABLE IF EXISTS " + MynahDB._SCHEDULE_TABLE_NAME);
 
 			onCreate(db);

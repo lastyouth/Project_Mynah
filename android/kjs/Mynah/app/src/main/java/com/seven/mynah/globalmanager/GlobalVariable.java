@@ -4,7 +4,7 @@ package com.seven.mynah.globalmanager;
 public final class GlobalVariable {
 
 	
-	public static final String WEB_SERVER_IP = "https://192.168.35.75";
+	public static final String WEB_SERVER_IP = "https://1.227.248.51";
     public static final int HTTP_PORT = 13337;
     public static final int HTTPS_PORT = 13337;
 	
@@ -27,13 +27,13 @@ public final class GlobalVariable {
 	public final class SubwayConstant {
 		
 		public static final String
-			week_normal = "1", //ÆòÀÏ
-			week_saturday = "2", //Åä¿äÀÏ
-			week_holiday_sunday = "3"; //ÈÞÀÏ/ÀÏ¿äÀÏ
+			week_normal = "1", //ï¿½ï¿½ï¿½ï¿½
+			week_saturday = "2", //ï¿½ï¿½ï¿½ï¿½ï¿½
+			week_holiday_sunday = "3"; //ï¿½ï¿½ï¿½ï¿½/ï¿½Ï¿ï¿½ï¿½ï¿½
 		
 		public static final String
-			up_in_line = "1", //»óÇà/³»¼±
-			down_out_line ="2"; //ÇÏÇà/¿Ü¼±
+			up_in_line = "1", //ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
+			down_out_line ="2"; //ï¿½ï¿½ï¿½ï¿½/ï¿½Ü¼ï¿½
 		
 		public static final String
 			tpye_I = "I",
@@ -57,10 +57,10 @@ public final class GlobalVariable {
 	public final class WeatherConstant {
 		
 		public static final int 
-			sky_clear = 1, //¸¼À½
-			sky_partly_cloudy = 2, //±¸¸§Á¶±Ý
-			sky_mostly_cloudy = 3, //±¸¸§ ¸¹À½
-			sky_cloudy = 4; //Èå¸²
+			sky_clear = 1, //ï¿½ï¿½ï¿½ï¿½
+			sky_partly_cloudy = 2, //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			sky_mostly_cloudy = 3, //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+			sky_cloudy = 4; //ï¿½å¸²
 		
 		public static final int 
 			pty_clear = 0,
@@ -76,13 +76,13 @@ public final class GlobalVariable {
 	public final class UserType {
 		
 		public static final int
-		me = 1, // ³ª
-		other = 2; //³ª Á¦¿Ü
+		me = 1, // ï¿½ï¿½
+		other = 2; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
-		//master type check¿ë
+		//master type checkï¿½ï¿½
 		public static final int 
-		master = 3, //°¡Á·Áß¿¡¼­ ¸ÞÀÎ ¾ÆÀÌµðÀÎ °æ¿ì
-		normal = 4; //°¡Á·Áß¿¡¼­ ¼­ºê ¾ÆÀÌµðÀÎ °æ¿ì
+		master = 3, //ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		normal = 4; //ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	}
 
 

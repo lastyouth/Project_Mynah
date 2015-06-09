@@ -79,14 +79,14 @@ public class SubwayPaser {
 	                        
 	                        break;
 	                    case XmlPullParser.START_TAG:
-	                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷À» ¼öÇàÇÕ´Ï´Ù.
+	                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—…ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 	                        name = parser.getName();
 	                        if (name.equalsIgnoreCase("row")){
 	                            tts = new TimeToSubway();
 	                            i++;
 	                        }else if (name.equalsIgnoreCase("MESSAGE")){
 	                        	temp = parser.nextText();
-	                        	if(temp.equalsIgnoreCase("ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù."))
+	                        	if(temp.equalsIgnoreCase("í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤."))
 	                        	{
 	                        		done = true;
 	                        	}
@@ -185,7 +185,7 @@ public class SubwayPaser {
 	                        
 	                        break;
 	                    case XmlPullParser.START_TAG:
-	                        // ÅÂ±×¸¦ ½Äº°ÇÑ µÚ ÅÂ±×¿¡ ¸Â´Â ÀÛ¾÷À» ¼öÇàÇÕ´Ï´Ù.
+	                        // íƒœê·¸ë¥¼ ì‹ë³„í•œ ë’¤ íƒœê·¸ì— ë§ëŠ” ì‘ì—…ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 	                        name = parser.getName();
 	                        if (name.equalsIgnoreCase("row")){
 	                            station = new SubwayStationInfo();
@@ -193,7 +193,7 @@ public class SubwayPaser {
 	                            i++;
 	                        }else if (name.equalsIgnoreCase("MESSAGE")){
 	                        	temp = parser.nextText();
-	                        	if(temp.equalsIgnoreCase("ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù."))
+	                        	if(temp.equalsIgnoreCase("í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤."))
 	                        	{
 	                        		done = true;
 	                        	}

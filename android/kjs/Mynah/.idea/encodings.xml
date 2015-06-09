@@ -22,7 +22,10 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/SubwayShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/VoiceShortcutLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/custominterface/WeatherShortcutLayout.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/DBHelper.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/SoundSearcher.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/BusPaser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/SubwayPaser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/WeatherParser.java" charset="UTF-8" />
   </component>
 </project>
