@@ -24,6 +24,8 @@ g_clientlist = {}
 
 g_messagelist = []
 
+g_currenttemp = 0
+
 def addClient(obj):
     g_clientlock.acquire()
     if obj.cid not in g_clientlist.keys():
@@ -46,6 +48,32 @@ def broadcastCurrentClient():
         print "broadcast Key : ",key
         value.sendTo()
     g_clientlock.release()
+
+#get temp from arduino
+
+class ReadCurrentTempThread(threading.Thread):
+    def __init__(self,mac_addr):
+        threading.Thread.__init__(self)
+        self.mac_addr = mac_addr
+
+    def run(self):
+        while(True):
+            try:
+                global g_currenttemp
+                temp_socket = BluetoothSocket(RFCOMM)
+                temp_socket.connect((self.mac_addr,1))
+                temp_socket.send("hi")
+                temperature = temp_socket.recv(3)
+                temperature = int(temperature)
+                print "Current Temperature is updated : ",temperature
+                g_currenttemp = temperature
+                temp_socket.close()
+            except:
+                pass
+
+            time.sleep(3)
+
+
 
 class ClientProcessThread(threading.Thread):
     def __init__(self,sock,client_info):
@@ -156,6 +184,12 @@ class MynahManager:
             elif self.s2Activated == True:
                 self.directionFlag = self.DIRECTION_TYPE_TO_IN
             if self.t == 0:
+                #temp_socket = BluetoothSocket(RFCOMM)
+                #temp_socket.connect(("30:14:12:00:29:10",1))
+                #temp_socket.send("hi")
+                #temperature = temp_socket.recv(1024)
+                #print temperature
+                #temp_socket.close()
                 self.t = threading.Timer(5.0,self.sigHandler);
                 self.t.start()
         else:
@@ -164,6 +198,7 @@ class MynahManager:
                     self.t.cancel()
                     print "Timer Cancelled"
                     self.t = 0
+                quote_str = " !th!!"
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                     global g_messagelist
                     global g_clientlist
@@ -183,19 +218,38 @@ class MynahManager:
 
                     print "Best rssi measure : ",brssi
                     #msg = g_messagelist[0]
-                    print "first message : ",msg
-                    query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
-                    query += msg
-                    query += '"'
-                    print "query : ",query
-                    os.system(query.encode('utf-8'))
-                    os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
-                    os.remove('hello_ko.mp3')
+                    print "first message : ",msg," len : ",len(msg)
+
+                    remain_str = msg
+
+                    while len(remain_str) > 0:
+                        partial_msg = ""
+                        if len(remain_str) >= 50:
+                            partial_msg = remain_str[:50]
+                            remain_str = remain_str.replace(partial_msg,"")
+                        else:
+                            partial_msg = remain_str
+                            remain_str = ""
+
+                        print "partial message : ",partial_msg," len : ",len(partial_msg)
+
+
+                        query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
+                        query += partial_msg
+                        if remain_str == "":
+                            query += quote_str+'"'
+                        else:
+                            query += '"'
+                        print "query : ",query
+                        os.system(query.encode('utf-8'))
+                        os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
+                        os.remove('hello_ko.mp3')
 
                     print "To Out Processing"
                 else:
                     #os.system('omxplayer -o local --vol -1000 /home/pi/share/chams.mp3')
-                    msg = '어서오세요. 오늘 하루도 수고하셨습니다. hello"'
+                    msg = '어서오세요. 오늘 하루도 수고하셨습니다.'
+                    msg+= quote_str + '"'
                     query = 'wget -q -U Mozilla -O welcome.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
                     query+=msg
                     print "query : ",query
@@ -321,6 +375,10 @@ class DistanceSensor(threading.Thread):
 
 
 g_Mynah = MynahManager()
+
+g_readtempthread = ReadCurrentTempThread("30:14:12:00:29:10")
+g_readtempthread.daemon = True
+g_readtempthread.start()
 
 g_serverthread = BTServerThread();
 g_serverthread.daemon = True
