@@ -1,97 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#339900">
+
+    <!-- Left Margin -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp"
-            android:gravity="center"
-            android:text="Sign Up"
-            android:textColor="#FFFFFF"
-            android:textSize="50dp" />
+        <!-- Sign up -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-            <EditText
-                android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+            <TextView
+                android:id="@+id/textView1"
                 android:layout_width="match_parent"
-                android:hint="제품 ID를 입력하세요"
-                android:inputType="textPersonName"
-                android:ems="20"
-                android:id="@+id/etProductId"
-                android:layout_weight="1.00"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="인증"
-                android:id="@+id/btnProductPermission"/>
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|bottom"
+                android:text="Sign Up"
+                android:textColor="#FFFFFF"
+                android:textSize="50dp" />
         </LinearLayout>
 
+        <!-- Input -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-            <EditText
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ID를 입력하세요"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:hint="제품 ID를 입력하세요"
+                        android:inputType="textPersonName"
+                        android:ems="20"
+                        android:id="@+id/etProductId"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="인증"
+                        android:id="@+id/btnProductPermission"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="ID를 입력하세요"
+                        android:inputType="textPersonName"
+                        android:ems="20"
+                        android:id="@+id/etNewUserId" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="중복확인"
+                        android:id="@+id/btnIdDupCheck"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="비밀번호를 입력하세요"
+                android:ems="20"
+                android:id="@+id/etNewUserPassword" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="비밀번호를 한번 더 입력하세요"
+                android:ems="20"
+                android:id="@+id/etNewUserRePassword" />
+            -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이름을 입력하세요"
                 android:inputType="textPersonName"
                 android:ems="20"
-                android:id="@+id/etNewUserId"
-                android:layout_weight="1.00" />
+                android:id="@+id/etNewUserName"/>
+        </LinearLayout>
+
+        <!-- Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_horizontal">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="중복확인"
-                android:id="@+id/btnIdDupCheck"/>
+                android:text="회원가입"
+                android:id="@+id/btnNewSignup" />
         </LinearLayout>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="비밀번호를 입력하세요"
-            android:ems="20"
-            android:id="@+id/etNewUserPassword" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="비밀번호를 한번 더 입력하세요"
-            android:ems="20"
-            android:id="@+id/etNewUserRePassword" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="이름을 입력하세요"
-            android:inputType="textPersonName"
-            android:ems="20"
-            android:id="@+id/etNewUserName"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="회원가입"
-            android:id="@+id/btnNewSignup" />
     </LinearLayout>
 
-</RelativeLayout><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_signup.xml -->
+    <!-- Right Margin -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+    </LinearLayout>
+</LinearLayout><!-- From: file:/D:/git/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/activity_signup.xml -->

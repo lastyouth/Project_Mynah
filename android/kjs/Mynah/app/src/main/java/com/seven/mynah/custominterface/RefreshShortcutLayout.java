@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,10 +31,8 @@ public class RefreshShortcutLayout extends CustomButton{
 		view = inflate(getContext(), R.layout.layout_button_refresh, null);
 		
 		tvRefreshTime = (TextView)view.findViewById(R.id.tvRefreshTime);
-		
 		setCurrentTime();
-		
-		//추후 이부분은 다 xml로 넘길것
+
 		view.setOnTouchListener(new RefreshTouchListener());
 		addView(view);
 	}
@@ -48,9 +47,8 @@ public class RefreshShortcutLayout extends CustomButton{
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-				//test
 				view.setAlpha((float) 1.0);
-				//원하는 실행 엑티비티!
+
 				refreshAll();
 				return true;
 			}
@@ -73,5 +71,9 @@ public class RefreshShortcutLayout extends CustomButton{
 		date = new Date();
 		
 		tvRefreshTime.setText(date_format.format(date));
+
+		tvRefreshTime.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvRefreshTime.setSelected(true);
+		tvRefreshTime.setSingleLine();
 	}
 }

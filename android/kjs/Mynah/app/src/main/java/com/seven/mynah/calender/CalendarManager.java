@@ -141,13 +141,14 @@ public class CalendarManager {
     }
 
     public void clearResultsText() {
-        int a = 0;
+        /*
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(mContext, "Retrieving data...", Toast.LENGTH_SHORT).show();
             }
         });
+        */
     }
 
     /**

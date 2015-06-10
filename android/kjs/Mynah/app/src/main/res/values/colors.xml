@@ -4,6 +4,7 @@
     
     <color name="logo_background">#FF8224</color>
     <color name="main_gridLayout">#180052</color>
+    <color name="background_custom_theme_color">#000000</color>
     <color name="status_secret_color">#EDEDED</color>
     <color name="stroke">#dddddd</color>
     <color name="text_light">#66000000</color>

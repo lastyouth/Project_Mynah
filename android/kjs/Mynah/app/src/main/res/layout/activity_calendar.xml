@@ -14,13 +14,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:longClickable="false"
+            android:measureWithLargestChild="false">
             <CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:dateTextAppearance="@style/CalendarText"
-                android:focusedMonthDateColor="#ffffff"/>
+                android:focusedMonthDateColor="#ffffff"
+                android:longClickable="true" />
         </LinearLayout>
 
         <LinearLayout

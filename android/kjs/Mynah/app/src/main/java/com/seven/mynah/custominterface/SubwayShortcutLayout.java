@@ -23,6 +23,7 @@ import com.seven.mynah.infoparser.WeatherParser;
 
 import android.R.array;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,8 +85,14 @@ public class SubwayShortcutLayout extends CustomButton {
 		}
 		String line_num = sinfo.station.line_num;
 		tvSubwayName.setText(GlobalFunction.SubwayDecode(line_num));
-		tvSubwayStopName.setText(sinfo.station.station_nm + "\n");
-		
+		tvSubwayName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvSubwayName.setSelected(true);
+		tvSubwayName.setSingleLine();
+
+		tvSubwayStopName.setText(sinfo.station.station_nm);
+		tvSubwayStopName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvSubwayStopName.setSelected(true);
+		tvSubwayStopName.setSingleLine();
 		
 		Date curTime = new Date();
 		SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm",Locale.KOREA);
@@ -99,12 +106,13 @@ public class SubwayShortcutLayout extends CustomButton {
 		}
 		
 		
-		if (sinfo.array_tts.size() == 0) {
+		if (sinfo.array_tts.size() == 0)
+		{
 			tvSubwayNextTime.setText("");
 			tvSubwayNextTime2.setText("");
-
-		} else {
-			
+		}
+		else
+		{
 			long tt = 0;
 			try {
 				tt = cur_format.parse(sinfo.array_tts.get(0).arr_time).getTime() - curTime.getTime();
@@ -116,12 +124,13 @@ public class SubwayShortcutLayout extends CustomButton {
 			String time1 = tt + "분 전";
 			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
 			tvSubwayNextTime.setText(time1);
-
 			
-			if (sinfo.array_tts.size() == 1) {
+			if (sinfo.array_tts.size() == 1)
+			{
 				tvSubwayNextTime2.setText("");
-			} else {
-				
+			}
+			else
+			{
 				long tt2 = 0;
 				try {
 					tt2 = cur_format.parse(sinfo.array_tts.get(1).arr_time).getTime() - curTime.getTime();
@@ -135,7 +144,6 @@ public class SubwayShortcutLayout extends CustomButton {
 				tvSubwayNextTime2.setText(time2);
 
 			}
-
 		}
 
 	}

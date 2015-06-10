@@ -69,21 +69,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.seven.mynah.BusSettingActivity" >
+        <activity
+            android:name="com.seven.mynah.BusSettingActivity"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="com.seven.mynah.Bus" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.seven.mynah.SubwaySettingActivity" >
+        <activity
+            android:name="com.seven.mynah.SubwaySettingActivity"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="com.seven.mynah.Subway" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.seven.mynah.WeatherSettingActivity" >
+        <activity
+            android:name="com.seven.mynah.WeatherSettingActivity"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="com.seven.mynah.Weather" />
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,7 +56,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvTemper = (TextView) view.findViewById(R.id.tvWeatherTemper);
 
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
-		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
+
+		setButtonsMarquee();
 
 		view.setOnTouchListener(new WeatherTouchListener());
 		addView(view);
@@ -85,9 +87,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		
 		tvPlace.setText(winfo.location.city_name);
 		tvPlace2.setText(winfo.location.mdl_name + "\n");
-		tvTemper.setText(winfo.array_ttw.get(0).temp + "°C");
-		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
-		tvPopName.setText("강수 확률:");
+		tvTemper.setText(winfo.array_ttw.get(0).temp + " °C");
+		tvPop.setText("강수확률 : " + winfo.array_ttw.get(0).pop + "%");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
 		// Set weather image type
@@ -136,6 +137,25 @@ public class WeatherShortcutLayout extends CustomButton {
 			}
 			return true;
 		}
+	}
+
+	private void setButtonsMarquee()
+	{
+		tvPlace.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPlace.setSelected(true);
+		tvPlace.setSingleLine();
+
+		tvPlace2.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPlace2.setSelected(true);
+		tvPlace2.setSingleLine();
+
+		tvTemper.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvTemper.setSelected(true);
+		tvTemper.setSingleLine();
+
+		tvPop.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPop.setSelected(true);
+		tvPop.setSingleLine();
 	}
 
 }

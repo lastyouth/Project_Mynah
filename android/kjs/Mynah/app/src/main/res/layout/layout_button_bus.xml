@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:layout_weight="1"
+		android:layout_weight="3"
 		android:padding="5dp">
         
         <LinearLayout
@@ -44,7 +44,7 @@
             android:gravity="center"
 
             android:textColor="#ffffff"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     	   	
     	</LinearLayout>
     </LinearLayout>
@@ -54,17 +54,17 @@
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
-		android:layout_weight="1"
+		android:layout_weight="2"
 		android:orientation="vertical"
 		android:padding="5dp">
         
         <TextView
             android:id="@+id/tvBusStopName"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="12sp"/>
+            android:textSize="13sp"/>
         
         <TextView
             android:id="@+id/tvBusDirName"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="10sp"/>
+            android:textSize="11sp"/>
         
         <TextView
             android:id="@+id/tvBusNextTime"
@@ -81,7 +81,7 @@
             android:gravity="center"
             android:textColor="#ffffff"
 
-            android:textSize="12sp"/>
+            android:textSize="13sp"/>
         
         <TextView 
             android:id="@+id/tvBusNextTime2"
@@ -90,7 +90,7 @@
             android:gravity="center"
             android:textColor="#ffffff"
 
-            android:textSize="12sp"/>
+            android:textSize="13sp"/>
           
     </LinearLayout>	
 
