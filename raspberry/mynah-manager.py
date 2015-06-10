@@ -11,8 +11,11 @@ import signal
 import os
 import json
 import base64
+import httplib
 
 # global variables
+
+g_webhost = "1.227.248.51:13337"
 
 g_lock = threading.Lock()
 
@@ -42,12 +45,39 @@ def removeClient(obj):
         print g_clientlist
     g_clientlock.release()
 
-def broadcastCurrentClient():
+def broadcastCurrentClient(mtype):
     g_clientlock.acquire()
     for key, value in g_clientlist.iteritems():
-        print "broadcast Key : ",key
-        value.sendTo()
+        print "broadcast Key : ",key," type : ",mtype
+        value.sendTo(mtype)
     g_clientlock.release()
+
+def requestHTTPS(mtype,tid,data):
+    try:
+        conn = httplib.HTTPSConnection(g_webhost)
+
+        reqobj = {}
+        reqobj['messagetype'] = mtype
+        reqobj['product_id'] = 'product2'
+        reqobj['device_id'] = tid
+        reqobj['is_in_home'] = data
+
+        reqdata = base64.encodestring(json.dumps(reqobj))
+
+        print "Request data : ",reqdata
+
+        conn.request("POST","",reqdata)
+
+        response = conn.getresponse()
+        print "status : ",response.status," reason : ",response.reason
+
+        data = response.read()
+
+        print "result : ",data
+
+        return data;
+    except:
+        print "Web request failure!"
 
 #get temp from arduino
 
@@ -67,6 +97,7 @@ class ReadCurrentTempThread(threading.Thread):
                 temperature = int(temperature)
                 print "Current Temperature is updated : ",temperature
                 g_currenttemp = temperature
+                broadcastCurrentClient("temp : "+str(g_currenttemp))
                 temp_socket.close()
             except:
                 pass
@@ -81,8 +112,8 @@ class ClientProcessThread(threading.Thread):
         self.sock = sock
         self.client_info = client_info
 
-    def sendTo(self):
-        data = "tts"
+    def sendTo(self,rtype):
+        data = rtype
         try:
             self.sock.send(data)
         except IOError:
@@ -108,10 +139,19 @@ class ClientProcessThread(threading.Thread):
                     addClient(self)
                 elif ctype =="rssi":
                     print "rssi"
-                elif ctype == "tts":
-                    g_messagelist.append([crssi,cdata])
+                elif ctype == "outtts":
+                    g_messagelist.append([crssi,cdata,self.cid])
                     print g_messagelist
-                    print "tts"
+                    print "Out tts"
+                elif ctype == "intts":
+                    g_messagelist.append([crssi,cdata,self.cid])
+                    print g_messagelist
+                    print "in tts"
+                elif ctype == "temp":
+                    ret = "temp : "
+                    ret += str(g_currenttemp)
+                    self.sock.send(ret)
+                    print "temp"
                 else:
                     print "bad"
 
@@ -198,66 +238,82 @@ class MynahManager:
                     self.t.cancel()
                     print "Timer Cancelled"
                     self.t = 0
-                quote_str = " !th!!"
+
+                quote_str = " !aaaaa!!"
+                #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+                global g_messagelist
+                global g_clientlist
+                g_messagelist = []
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    global g_messagelist
-                    global g_clientlist
-                    g_messagelist = []
-                    broadcastCurrentClient()
-                    targetlen = len(g_clientlist)
-                    print "target len : ",targetlen;
-                    while len(g_messagelist) < targetlen:
-                        time.sleep(0.1)
-                    brssi = -200
-                    msg = ""
-                    for rssi,data in g_messagelist:
-                        print "rssi : ",rssi," data : ",data
-                        if brssi < rssi:
-                            brssi = rssi
-                            msg = data
+                    broadcastCurrentClient("outtts")
+                else:
+                    broadcastCurrentClient("intts")
 
-                    print "Best rssi measure : ",brssi
-                    #msg = g_messagelist[0]
-                    print "first message : ",msg," len : ",len(msg)
+                targetlen = len(g_clientlist)
+                print "target len : ",targetlen;
+                while len(g_messagelist) < targetlen:
+                    time.sleep(0.1)
+                brssi = -200
+                msg = ""
+                cid = ""
+                for rssi,data,tid in g_messagelist:
+                    print "rssi : ",rssi," data : ",data
+                    if brssi < rssi:
+                        brssi = rssi
+                        msg = data
+                        cid = tid
 
-                    remain_str = msg
+                print "Best rssi measure : ",brssi
+                #msg = g_messagelist[0]
+                print "id : ",cid," first message : ",msg," len : ",len(msg)
+                #http request
+                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+                    requestHTTPS("is_in_family",cid,"0")
+                else:
+                    if msg == "":
+                        msg = '~V�~D~\~X�~D�~Z~T. ~X�~J~X ~U~X루~O~D ~H~X| ~U~X~E�~J�~K~H~K�.'
+                    requestHTTPS("is_in_family",cid,"1")
 
-                    while len(remain_str) > 0:
-                        partial_msg = ""
-                        if len(remain_str) >= 50:
-                            partial_msg = remain_str[:50]
-                            remain_str = remain_str.replace(partial_msg,"")
-                        else:
-                            partial_msg = remain_str
-                            remain_str = ""
+                remain_str = msg
 
-                        print "partial message : ",partial_msg," len : ",len(partial_msg)
+                while len(remain_str) > 0:
+                    partial_msg = ""
+                    if len(remain_str) >= 50:
+                        partial_msg = remain_str[:50]
+                        remain_str = remain_str.replace(partial_msg,"")
+                    else:
+                        partial_msg = remain_str
+                        remain_str = ""
+
+                    print "partial message : ",partial_msg," len : ",len(partial_msg)
 
 
-                        query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
-                        query += partial_msg
-                        if remain_str == "":
-                            query += quote_str+'"'
-                        else:
-                            query += '"'
-                        print "query : ",query
-                        os.system(query.encode('utf-8'))
-                        os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
-                        os.remove('hello_ko.mp3')
+                    query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
+                    query += partial_msg
+                    if remain_str == "":
+                        query += quote_str+'"'
+                    else:
+                        query += '"'
+                    print "query : ",query
+                    os.system(query.encode('utf-8'))
+                    os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
+                    os.remove('hello_ko.mp3')
 
+                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                     print "To Out Processing"
                 else:
-                    #os.system('omxplayer -o local --vol -1000 /home/pi/share/chams.mp3')
-                    msg = '어서오세요. 오늘 하루도 수고하셨습니다.'
-                    msg+= quote_str + '"'
-                    query = 'wget -q -U Mozilla -O welcome.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
-                    query+=msg
-                    print "query : ",query
-                    os.system(query)
-                    os.system('omxplayer -o local welcome.mp3 --vol 1000')
-                    os.remove('welcome.mp3')
+                    os.system('omxplayer -o local --vol -1000 /home/pi/share/chams.mp3')
+                    #msg = '어서오세요. 오늘 하루도 수고하셨습니다.'
+                    #msg+= quote_str + '"'
+                    #query = 'wget -q -U Mozilla -O welcome.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
+                    #query+=msg
+                    #print "query : ",query
+                    #os.system(query)
+                    #os.system('omxplayer -o local welcome.mp3 --vol 1000')
+                    #os.remove('welcome.mp3')
 
                     print "To In Processing"
+
                 self.s1Activated = False
                 self.s2Activated = False
                 self.directionFlag = self.DIRECTION_TYPE_NONE
