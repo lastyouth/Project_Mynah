@@ -30,7 +30,6 @@ public class WeatherShortcutLayout extends CustomButton {
 	private TextView tvTemper;
 	private TextView tvReh; // 습도
 	private TextView tvPop; // 강수확률
-	private TextView tvPopName;
 	private TextView tvUpdateTime;
 	private TextView tvHour;
 	
@@ -80,8 +79,7 @@ public class WeatherShortcutLayout extends CustomButton {
 		if (winfo == null) {
 			// 초기화
 			tvPlace2.setText("터치해서 정보를 입력하세요");
-			tvPopName.setText("");
-			setWeatherImage(3);
+			setWeatherImage(5);
 			return;
 		}
 		
@@ -113,10 +111,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		case 4:
 			ivWeatherImage.setImageResource(R.drawable.ic_cloud3);
 			break;
-
-		default:
-
-			break;
+		case 5:
+			ivWeatherImage.setImageResource(R.drawable.ic_question);
 		}
 	}
 
@@ -130,9 +126,7 @@ public class WeatherShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// 원하는 실행 엑티비티!
 				cbf.startSettingActivity("Weather");
-				// refresh();
 				return true;
 			}
 			return true;

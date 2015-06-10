@@ -66,6 +66,7 @@ public class GasAlarmShortcutLayout extends CustomButton{
 			tvGasTemperature.setTextSize(14);
 			return;
 		}
+		tvGasTemperature.setTextSize(30);
 		tvGasTemperature.setText(temp + "°C");
 		if(isFired(temp))
 		{

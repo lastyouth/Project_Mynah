@@ -144,7 +144,7 @@ public class LoadingActivity extends Activity{
 							DBManager.getManager(getApplicationContext()).setSessionUserDB(suinfo);
 							System.out.println("세션 저장 성공");
 
-							Toast.makeText(getApplicationContext(), suinfo.userName + "님 고마 어서오이소", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(getApplicationContext(), suinfo.userName + "님 고마 어서오이소", Toast.LENGTH_SHORT).show();
 
 							Loading();
 							//Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -176,7 +176,7 @@ public class LoadingActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_logo);
 
-		//startService(); //서비스 시작하기 회원인증 성공 하면 ?
+		startService(); //서비스 시작하기 회원인증 성공 하면 ?
 		//Loading(); 핸들러 안으로 옮겼어
 	}
 

@@ -101,16 +101,9 @@ public class MainActivity extends Activity {
         //bindService(t,mBkServiceConnection,Context.BIND_AUTO_CREATE);
 
         ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
-
         mServiceAccessManager.setContext(this);
         mServiceAccessManager.prepareService();
-
-        if(mServiceAccessManager.checkServiceConnected())
-        {
-            Toast.makeText(this,"checkServiceConnected is on",Toast.LENGTH_SHORT).show();
-
-            mServiceAccessManager.getService().doTest("Test from MainActivity");
-        }
+        //mServiceAccessManager.
 
         Log.d(TAG,"onCreate Finish");
     }
@@ -130,9 +123,9 @@ public class MainActivity extends Activity {
         Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
 
         //ScheduleInfo sinfo = infoService.getNumber();
-
         //infoService.setBindStatus(false);
         //unbindService(mBkServiceConnection);
+
         ServiceAccessManager.getInstance().releaseService();
 
         //BTmanager.stopBTConnection();

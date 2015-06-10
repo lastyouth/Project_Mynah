@@ -96,7 +96,6 @@ public class SubwayShortcutLayout extends CustomButton {
 		
 		Date curTime = new Date();
 		SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm",Locale.KOREA);
-		SimpleDateFormat print_format = new SimpleDateFormat("mm",Locale.KOREA);
 		
 		try {
 			curTime = cur_format.parse(cur_format.format(curTime));
