@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,6 @@ public class WeatherShortcutLayout extends CustomButton {
 	private TextView tvTemper;
 	private TextView tvReh; // 습도
 	private TextView tvPop; // 강수확률
-	private TextView tvPopName;
 	private TextView tvUpdateTime;
 	private TextView tvHour;
 	
@@ -55,7 +55,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		tvTemper = (TextView) view.findViewById(R.id.tvWeatherTemper);
 
 		tvPop = (TextView) view.findViewById(R.id.tvPop);
-		tvPopName = (TextView) view.findViewById(R.id.tvPopName);
+
+		setButtonsMarquee();
 
 		view.setOnTouchListener(new WeatherTouchListener());
 		addView(view);
@@ -78,16 +79,14 @@ public class WeatherShortcutLayout extends CustomButton {
 		if (winfo == null) {
 			// 초기화
 			tvPlace2.setText("터치해서 정보를 입력하세요");
-			tvPopName.setText("");
-			setWeatherImage(3);
+			setWeatherImage(5);
 			return;
 		}
 		
 		tvPlace.setText(winfo.location.city_name);
 		tvPlace2.setText(winfo.location.mdl_name + "\n");
-		tvTemper.setText(winfo.array_ttw.get(0).temp + "°C");
-		tvPop.setText(winfo.array_ttw.get(0).pop + "%");
-		tvPopName.setText("강수 확률:");
+		tvTemper.setText(winfo.array_ttw.get(0).temp + " °C");
+		tvPop.setText("강수확률 : " + winfo.array_ttw.get(0).pop + "%");
 		tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
 
 		// Set weather image type
@@ -112,10 +111,8 @@ public class WeatherShortcutLayout extends CustomButton {
 		case 4:
 			ivWeatherImage.setImageResource(R.drawable.ic_cloud3);
 			break;
-
-		default:
-
-			break;
+		case 5:
+			ivWeatherImage.setImageResource(R.drawable.ic_question);
 		}
 	}
 
@@ -129,13 +126,30 @@ public class WeatherShortcutLayout extends CustomButton {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				// 원하는 실행 엑티비티!
 				cbf.startSettingActivity("Weather");
-				// refresh();
 				return true;
 			}
 			return true;
 		}
+	}
+
+	private void setButtonsMarquee()
+	{
+		tvPlace.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPlace.setSelected(true);
+		tvPlace.setSingleLine();
+
+		tvPlace2.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPlace2.setSelected(true);
+		tvPlace2.setSingleLine();
+
+		tvTemper.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvTemper.setSelected(true);
+		tvTemper.setSingleLine();
+
+		tvPop.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+		tvPop.setSelected(true);
+		tvPop.setSingleLine();
 	}
 
 }

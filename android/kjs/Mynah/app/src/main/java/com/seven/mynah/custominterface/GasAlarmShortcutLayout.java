@@ -64,7 +64,9 @@ public class GasAlarmShortcutLayout extends CustomButton{
 		{
 			tvGasTemperature.setText("받아오는 중입니다.");
 			tvGasTemperature.setTextSize(14);
+			return;
 		}
+		tvGasTemperature.setTextSize(30);
 		tvGasTemperature.setText(temp + "°C");
 		if(isFired(temp))
 		{
@@ -85,23 +87,6 @@ public class GasAlarmShortcutLayout extends CustomButton{
 		else
 			return false;
 	}
-	
-	/*
-	public void setGasAlarmInfo(GasAlarmInfo ginfo)
-	{
-		
-		if(ginfo.isFired)
-		{
-			tvGasOnOff.setText("ON");
-			setImageOnOff(2);
-		}
-		else
-		{
-			tvGasOnOff.setText("OFF");
-			setImageOnOff(1);
-		}
-	}*/
-
 
 	private void setImageOnOff(int type)
 	{

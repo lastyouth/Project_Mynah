@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#180052"
-    android:orientation="vertical" >
+    android:background="@color/background_custom_theme_color"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -32,7 +32,7 @@
                     android:gravity="center_vertical"
                     android:text="현재 등록 지하철역"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -48,7 +48,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="#cfcfcf"
-                    android:textSize="17sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -71,12 +71,12 @@
                     android:id="@+id/etSubwayStationName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#180052"
+                    android:background="@color/background_custom_theme_color"
                     android:hint="역명을 입력하세요"
                     android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -91,7 +91,6 @@
                     android:gravity="center" 
                     android:src="@drawable/ic_search"
                     android:clickable="true"/>
-                
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

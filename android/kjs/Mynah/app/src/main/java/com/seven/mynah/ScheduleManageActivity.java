@@ -129,7 +129,7 @@ public class ScheduleManageActivity extends Activity {
         btAdd.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                summary = etScheduleName.getText().toString();
+                summary = etScheduleName.getText().toString().trim();
                 date = etScheduleDate.getText().toString();
                 time = etScheduleTime.getText().toString();
 

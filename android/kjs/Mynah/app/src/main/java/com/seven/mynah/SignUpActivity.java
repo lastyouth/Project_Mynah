@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.seven.mynah.artifacts.SessionUserInfo;
+import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.network.AsyncHttpTask;
 
@@ -56,12 +58,8 @@ public class SignUpActivity extends Activity {
     //activity 관련
     Button btn;
     EditText etProductId;
-    EditText etNewUserId;
-    EditText etNewUserPassword;
-    EditText etNewUserRePassword;
     EditText etNewUserName;
     Boolean productCheck;
-    Boolean idDupCheck;
 
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
@@ -112,38 +110,63 @@ public class SignUpActivity extends Activity {
             }
 
             if (msg.what == 2) {
-                //핸들링 2일때 할 것 id 중복확인
+               //2일 떄 하는 일
+                //핸들링 2일때 할 것
+                System.out.println("handling 2 !");
                 System.out.println("response : "+msg.obj);
-                try{
-                    JSONObject jobj = new JSONObject(msg.obj+"");
+
+                try {
+                    JSONObject jobj = new JSONObject(msg.obj + "");
                     String messageType = jobj.get("messagetype") + "";
-                    String result = jobj.get("result")+"";
+                    String result = jobj.get("result") + "";
+                    String attach = jobj.get("attach") + "";
+                    System.out.println("MT : " + messageType);
+                    System.out.println("RT : " + result);
+                    System.out.println("AT : " + attach);
 
-                    System.out.println("MT : "+messageType);
-                    System.out.println("RT : "+result);
+                    if (messageType.equals("get_user_info")) {
+                        if (result.equals("GET_USER_INFO_FAIL")) {
+                            Toast.makeText(getApplicationContext(), "Get user info Fail", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(result.equals("GET_USER_INFO_SUCCESS")){
+                            //System.out.println("ja sal gak");
+                            Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
 
-                    if(messageType.equals("id_duplicate_check")){
-                        if(result.equals("ID_DUPLICATE")){
-                            Toast.makeText(getApplicationContext(), "id 중복여", Toast.LENGTH_SHORT).show();
+                            //user info 받은거 세션 테이블로 집어넣기 ㄱㄱ
+                            JSONObject user_jobj = new JSONObject(jobj.get("attach")+"");
+
+                            SessionUserInfo suinfo = new SessionUserInfo();
+                            suinfo.userId = user_jobj.get("user_id")+"";
+                            suinfo.productId = user_jobj.get("product_id")+"";
+                            suinfo.registrationId = user_jobj.get("registration_id")+"";
+                            suinfo.userName = user_jobj.get("user_name")+"";
+                            suinfo.genderFlag = user_jobj.get("gender_flag")+"";
+                            suinfo.representativeFlag = user_jobj.get("representative_flag")+"";
+                            suinfo.inHomeFlag = user_jobj.get("in_home_flag")+"";
+                            suinfo.deviceId = user_jobj.get("device_id")+"";
+                            suinfo.inoutTime = ((user_jobj.get("inout_time")+"").replace('Z', ' ')).replace('T', ' ');
+
+                            DBManager.getManager(getApplicationContext()).setSessionUserDB(suinfo);
+                            System.out.println("세션 저장 성공");
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
-                        else if(result.equals("ID_NOT_DUPLICATE")) {
-                            Toast.makeText(getApplicationContext(), "id 안중복 써도 돼", Toast.LENGTH_SHORT).show();
-                            idDupCheck = true;
+                        else if(result.equals("GET_USER_INFO_ERROR")){
+                            Toast.makeText(getApplicationContext(), "Get user info Error", Toast.LENGTH_SHORT).show();
                         }
-                        else if(result.equals("ID_DUPLICATE_ERROR")) {
-                            Toast.makeText(getApplicationContext(), "중복체크 에러", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "Wrong ID Duplicate Check Attempt", Toast.LENGTH_SHORT).show();
+                        else{
+                            Toast.makeText(getApplicationContext(), "Wrong get user info", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else {
-                        Toast.makeText(getApplicationContext(), "Wrong Id Duplicate Check Attempt", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(getApplicationContext(), "Wrong get user info", Toast.LENGTH_SHORT).show();
                     }
-                }catch(JSONException e){
+                }
+                catch(JSONException e){
                     e.printStackTrace();
                 }
-
             }
 
             if (msg.what == 3) {
@@ -164,7 +187,6 @@ public class SignUpActivity extends Activity {
                         else if(result.equals("SIGNUP_SUCCESS")) {
                             Toast.makeText(getApplicationContext(), "회원가입 성공인듯", Toast.LENGTH_SHORT).show();
                             finish();
-                            //idDupCheck = true;
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Wrong sign up Attempt", Toast.LENGTH_SHORT).show();
@@ -195,7 +217,6 @@ public class SignUpActivity extends Activity {
             if (regid.equals("")) {
                 registerInBackground();
             }
-            Toast.makeText(this, "등록 id = " + regid, 1).show();
             Log.d(TAG,regid);
 
             //토스트에서 알려주자!
@@ -219,13 +240,9 @@ public class SignUpActivity extends Activity {
 
         //activity 관련
         etProductId = (EditText)findViewById(R.id.etProductId);
-        etNewUserId = (EditText)findViewById(R.id.etNewUserId);
-        etNewUserPassword = (EditText)findViewById(R.id.etNewUserPassword);
-        etNewUserRePassword = (EditText)findViewById(R.id.etNewUserRePassword);
         etNewUserName = (EditText)findViewById(R.id.etNewUserName);
 
         productCheck = false; //기계 존재유무 확인
-        idDupCheck = false; //id 중복 확인
 
         //라즈베리파이 id 인증 버튼
         btn = (Button) findViewById(R.id.btnProductPermission);
@@ -247,35 +264,15 @@ public class SignUpActivity extends Activity {
             }
         });
 
-        //아이디 중복 검사 버튼
-        btn = (Button) findViewById(R.id.btnIdDupCheck);
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                final String strNewUserId = etNewUserId.getText() + "";
-
-                JSONObject jobj = new JSONObject();
-
-                try{
-                    jobj.put("messagetype", "id_duplicate_check");
-                    jobj.put("user_id", strNewUserId);
-                }
-                catch(JSONException e){
-                    e.printStackTrace();
-                }
-                new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj, 2, 1);
-            }
-        });
-
         //회원가입 커밋
         btn = (Button) findViewById(R.id.btnNewSignup);
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 final String strProductId = etProductId.getText() + "";
-                final String strNewUserId = etNewUserId.getText() + "";
-                final String strNewUserPassword = etNewUserPassword.getText() + "";
-                final String strNewUserRePassword = etNewUserRePassword.getText() + "";
+                final String strNewUserId = deviceID; //일단 device_id 넣어놓는걸로
+                final String strNewUserPassword = "";
+                final String strNewUserRePassword =  "";
                 final String strNewUserName = etNewUserName.getText()+"";
                 final String strRegId = regid;
                 final String strDeviceId = deviceID;
@@ -284,13 +281,7 @@ public class SignUpActivity extends Activity {
                 final Boolean isInHome = true;
 
                 if(!productCheck){
-                    Toast.makeText(getApplicationContext(), "기계 확인 안됬어", 1).show();
-                }
-                else if(!idDupCheck){
-                    Toast.makeText(getApplicationContext(), "id 중복확인 안됬어", 1).show();
-                }
-                else if(!strNewUserPassword.equals(strNewUserRePassword)){
-                    Toast.makeText(getApplicationContext(), "비밀번호 같은걸로 입력해야해", 1).show();
+                    Toast.makeText(getApplicationContext(), "기계 확인 안됬어", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     JSONObject jobj = new JSONObject();

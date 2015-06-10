@@ -33,7 +33,6 @@ public class SettingShortcutLayout extends CustomButton{
 	{
 		view = inflate(getContext(), R.layout.layout_button_setting, null);
 
-		//추후 이부분은 다 xml로 넘길것
 		view.setOnTouchListener(new SettingTouchListener());
 		addView(view);
 	}
@@ -48,26 +47,15 @@ public class SettingShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-				//원하는 실행 엑티비티!
-				//cbf.startSettingActivity("Setting");
 
-				//serviceTest();
+				cbf.startSettingActivity("Setting");
 				return true;
 			}
 			return true;
 		}
 	}
 
-	public void serviceTest()
-	{
-		doBindService();
-	}
-
-	public void doBindService()
-	{
-		//bind
-	}
-
+/*
 	private final ServiceConnection mBkServiceConnection = new ServiceConnection(){
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
@@ -83,9 +71,9 @@ public class SettingShortcutLayout extends CustomButton{
 		public void onServiceDisconnected(ComponentName name) {
 			isServiceConnected = false;
 		}
-	};
+	};*/
 
 	public void refresh() {
-		Toast.makeText(getContext(), "Setting onRestart()", 1).show();
+		//Toast.makeText(getContext(), "Setting onRestart()", Toast.LENGTH_SHORT).show();
 	}
 }

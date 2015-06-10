@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -55,7 +56,6 @@ public class ScheduleShortcutLayout extends CustomButton{
 	{
 		view = inflate(getContext(), R.layout.layout_button_schedule, null);
 		layoutSchedule = (LinearLayout)view.findViewById(R.id.layoutSchedule);
-		layoutPreparation = (LinearLayout)view.findViewById(R.id.layoutPreparation);
 		tvSchedules = new TextView[maxSchedules];
 		tvPreparation = new TextView(context);
 
@@ -106,9 +106,14 @@ public class ScheduleShortcutLayout extends CustomButton{
 		{
 			tvSchedules[i] = new TextView(context);
 			tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
-			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-			String str = scheduleInfos.get(i).scheduleTime + " " + scheduleInfos.get(i).scheduleName;
+			tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+			String str = scheduleInfos.get(i).scheduleTime + "    " + scheduleInfos.get(i).scheduleName;
 			tvSchedules[i].setText(str);
+
+			tvSchedules[0].setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			tvSchedules[0].setSelected(true);
+			tvSchedules[0].setSingleLine();
+
 			layoutSchedule.addView(tvSchedules[i]);
 		}
 

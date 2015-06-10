@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#180052"
-    android:orientation="vertical" >
+    android:background="@color/background_custom_theme_color"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical" >
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                     android:gravity="center_vertical"
                     android:text="현재 등록 버스"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -48,7 +49,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="#cfcfcf"
-                    android:textSize="17sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -71,12 +72,12 @@
                     android:id="@+id/etBusName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#180052"
+                    android:background="@color/background_custom_theme_color"
                     android:hint="버스 번호를 입력하세요"
                     android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -105,7 +106,7 @@
         <ListView
             android:id="@+id/lvBusStop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
         
     </LinearLayout>
 

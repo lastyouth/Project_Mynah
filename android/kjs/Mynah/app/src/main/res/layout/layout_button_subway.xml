@@ -9,15 +9,15 @@
     android:layout_margin="5dp"
     android:background="#9d00a5"
     android:clickable="true" >
-	
+
+    <!-- Right side -->
     <LinearLayout
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
 		android:orientation="vertical"
-		android:layout_weight="1"
+		android:layout_weight="3"
 		android:padding="5dp">
-		
         <LinearLayout
             android:layout_width="match_parent"
 			android:layout_height="match_parent"
@@ -40,33 +40,37 @@
     	   
     	   	<TextView
             android:id="@+id/tvSubwayName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:textColor="#ffffff"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     	   	
     	</LinearLayout>
-
     </LinearLayout>
-	
+
+    <!-- Right side -->
     <LinearLayout
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"
-		android:layout_weight="1"
+		android:layout_weight="2"
 		android:orientation="vertical"
 		android:padding="5dp">
-        
+
         <TextView
             android:id="@+id/tvSubwayStopName"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:gravity="center"
             android:textColor="#ffffff"
+            android:textSize="13sp"/>
 
-            android:textSize="12sp"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text=""
+            android:textSize="8sp"/>
         
         <TextView
             android:id="@+id/tvSubwayDirName"
@@ -82,7 +86,7 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="12sp"/>
+            android:textSize="13sp"/>
         
         <TextView
             android:id="@+id/tvSubwayDirName2"
@@ -98,8 +102,7 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="12sp"/>
-          
+            android:textSize="13sp"/>
     </LinearLayout>	
     
 </LinearLayout>

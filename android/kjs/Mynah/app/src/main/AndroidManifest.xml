@@ -81,7 +81,8 @@
 
         
         <activity
-            android:name=".BusSettingActivity">
+            android:name=".BusSettingActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="com.seven.mynah.Bus" />
                     
@@ -90,7 +91,8 @@
         </activity>
         
         <activity
-            android:name=".SubwaySettingActivity">
+            android:name=".SubwaySettingActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="com.seven.mynah.Subway" />
                     
@@ -99,7 +101,8 @@
         </activity>
         
         <activity
-            android:name=".WeatherSettingActivity">
+            android:name=".WeatherSettingActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="com.seven.mynah.Weather" />
                     

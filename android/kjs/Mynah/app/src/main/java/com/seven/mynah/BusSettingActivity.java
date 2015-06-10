@@ -151,7 +151,6 @@ public class BusSettingActivity extends Activity {
        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
        alertDialog.setTitle("");
 
-       alertDialog.setMessage(bus_route + "버스를 찾을수 없습니다.");
        alertDialog.setMessage(bus_route + "버스를 찾을 수 없습니다.");
 
        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "확인", new DialogInterface.OnClickListener() {

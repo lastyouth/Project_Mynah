@@ -8,8 +8,11 @@ package com.seven.mynah.artifacts;
 public class ScheduleInfo {
 
     public String scheduleName;
+    //hh:mm
     public String scheduleTime;
+    //yyyy-mm-dd
     public String scheduleDate;
+    //yyyy-mm-ddThh:mm:ss+09:00
     public String scheduleCreatedDate;
 
     public boolean isCorrectDate(String date)

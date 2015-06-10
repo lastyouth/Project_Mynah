@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 import java.util.*;
 
+import static android.graphics.Color.WHITE;
+
 /**
  * Created by KimJS on 2015-06-01.
  */
@@ -70,9 +72,10 @@ public class CalendarActivity extends Activity {
         ViewGroup vg = (ViewGroup) cv.getChildAt(0);
         View month_name = vg.getChildAt(0);
         //View day_name = vg.getChildAt(1);
+        cv.setShowWeekNumber(false);
 
-        if(month_name instanceof TextView) {
-            ((TextView)month_name).setTextColor(Color.WHITE);
+        if (month_name instanceof TextView) {
+            ((TextView) month_name).setTextColor(WHITE);
         }
 
         /*
@@ -83,18 +86,17 @@ public class CalendarActivity extends Activity {
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                String date = String.format("%04d-%02d-%02d", year, month+1, dayOfMonth);
+                String date = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
                 setListView(date);
             }
         });
 
-        layoutScheduleAdd = (LinearLayout)findViewById(R.id.lyScheduleAdd);
+        layoutScheduleAdd = (LinearLayout) findViewById(R.id.lyScheduleAdd);
         layoutScheduleAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ScheduleManageActivity.class);
                 startActivity(intent);
-                //insertEvent();
             }
         });
         Log.d(TAG, "onCreate Finish");
@@ -114,13 +116,6 @@ public class CalendarActivity extends Activity {
         Log.d(TAG, "onResume Start");
         super.onResume();
 
-        ServiceAccessManager mSAM = ServiceAccessManager.getInstance();
-
-        if(mSAM.checkServiceConnected())
-        {
-            mSAM.getService().doTest("Test from CalendarActivity");
-        }
-
         Date selected = new Date(cv.getDate());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         selectedDate = sdf.format(selected);
@@ -129,8 +124,7 @@ public class CalendarActivity extends Activity {
         Log.d(TAG, "onResume Finish");
     }
 
-    public void setListView(String date)
-    {
+    public void setListView(String date) {
         Log.d(TAG, "setListView Start");
 
         calendarManager.asyncSchedule();
@@ -162,5 +156,16 @@ public class CalendarActivity extends Activity {
             }
         });
         Log.d(TAG, "setListView Finish");
+    }
+
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+
+        finish();
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+
+        Log.d(TAG, "onBackPressed");
     }
 }
