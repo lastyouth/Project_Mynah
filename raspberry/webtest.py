@@ -2,13 +2,14 @@ import httplib
 import base64
 import json
 
-c = httplib.HTTPSConnection("211.108.75.252:13337")
+c = httplib.HTTPSConnection("1.227.248.51:13337")
 
 reqobj = {}
 
-reqobj["messagetype"] = "login"
-reqobj["family_id"] = "family01"
-reqobj["password"] = "1"
+reqobj['messagetype'] = "is_in_family"
+reqobj['product_id'] = 'product2'
+reqobj['device_id'] = "dba274cd84f7ea8c"#"6a5823bb465b4777"
+reqobj['is_in_home'] = 0
 
 #json.dumps(reqobj)
 

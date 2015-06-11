@@ -67,23 +67,19 @@ public class BusShortcutLayout extends CustomButton {
 	}
 
 	private void setBusInfo(BusInfo binfo)  {
-		if (binfo == null) {
+		if (binfo == null)
+		{
 			bRoute = "";
 			bStation = "";
 			bDir = "터치해서 정보를 입력하세요";
 			time1 = "";
 			time2 = "";
-		} else {
+		}
+		else
+		{
 			bRoute = binfo.route.busRouteNm + " 버스";
 			bStation = binfo.station.stNm;
 			bDir = binfo.dir + "행\n";
-
-			//bStation = binfo.station.stNm;
-			Date date = new Date();
-			SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-			long curTime = System.currentTimeMillis();
-			long arriveTime;
-
 
 			if (binfo.array_ttb.size() == 0)
 			{
@@ -91,12 +87,12 @@ public class BusShortcutLayout extends CustomButton {
 			}
 			else if (binfo.array_ttb.size() == 1)
 			{
-				time1 = getArriveTime(binfo, 0, curTime);
+				time1 = getArriveTime(binfo, 0);
 			}
 			else
 			{
-				time1 = getArriveTime(binfo, 0, curTime);
-				time2 = getArriveTime(binfo, 1, curTime);
+				time1 = getArriveTime(binfo, 0);
+				time2 = getArriveTime(binfo, 1);
 			}
 		}
 
@@ -133,8 +129,10 @@ public class BusShortcutLayout extends CustomButton {
 		}
 	}
 
-	private String getArriveTime(BusInfo binfo, int pos, long curTime)
+	private String getArriveTime(BusInfo binfo, int pos)
 	{
+		long curTime = System.currentTimeMillis();
+
 		String time = binfo.array_ttb.get(pos).time;
 		Date date = new Date();
 		SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");

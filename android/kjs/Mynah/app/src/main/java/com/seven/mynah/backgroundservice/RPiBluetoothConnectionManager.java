@@ -57,7 +57,7 @@ private LeScanCallback lecallback = new LeScanCallback(){
    public static final int SEND_TYPE_TEMP = 0x30001004;
    
    // settings
-   private final int MAX_WAIT_FOR_RECONNECT = 3000;
+   private final int MAX_WAIT_FOR_RECONNECT = 1500;
    private final int MAX_WAIT_FOR_ALIVE = 10000;
    
    // messages
@@ -153,6 +153,7 @@ private LeScanCallback lecallback = new LeScanCallback(){
       {
          btSocket = targetBTDevice.createRfcommSocketToServiceRecord(uuid);
          btSocket.connect();
+         sendTo(SEND_TYPE_INIT,"HITHERE");
       }catch(IOException e)
       {
          Log.e(TAG,"BTCONNECT - IO ERROR");
@@ -170,7 +171,7 @@ private LeScanCallback lecallback = new LeScanCallback(){
          // TODO Auto-generated catch block
          e.printStackTrace();
       }
-      sendTo(SEND_TYPE_INIT,"HITHERE");
+
    }
    
    
