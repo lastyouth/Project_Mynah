@@ -31,18 +31,24 @@ g_currenttemp = 0
 
 def addClient(obj):
     g_clientlock.acquire()
-    if obj.cid not in g_clientlist.keys():
-        print "addClient id : ",obj.cid
-        g_clientlist[obj.cid] = obj;
-        print g_clientlist
+    try:
+        if obj.cid not in g_clientlist.keys():
+            print "addClient id : ",obj.cid
+            g_clientlist[obj.cid] = obj;
+            print g_clientlist
+    except:
+        pass
     g_clientlock.release()
 
 def removeClient(obj):
     g_clientlock.acquire()
-    if obj.cid in g_clientlist.keys():
-        print "removeClient id : ",obj.cid
-        g_clientlist.pop(obj.cid,None)
-        print g_clientlist
+    try:
+        if obj.cid in g_clientlist.keys():
+            print "removeClient id : ",obj.cid
+            g_clientlist.pop(obj.cid,None)
+            print g_clientlist
+    except:
+        pass
     g_clientlock.release()
 
 def broadcastCurrentClient(mtype):
@@ -52,7 +58,7 @@ def broadcastCurrentClient(mtype):
         value.sendTo(mtype)
     g_clientlock.release()
 
-def requestHTTPS(mtype,tid,data):
+def requestHTTPS(mtype,tid,dtype,data):
     try:
         conn = httplib.HTTPSConnection(g_webhost)
 
@@ -60,7 +66,7 @@ def requestHTTPS(mtype,tid,data):
         reqobj['messagetype'] = mtype
         reqobj['product_id'] = 'product2'
         reqobj['device_id'] = tid
-        reqobj['is_in_home'] = data
+        reqobj[dtype] = data
 
         reqdata = base64.encodestring(json.dumps(reqobj))
 
@@ -71,11 +77,12 @@ def requestHTTPS(mtype,tid,data):
         response = conn.getresponse()
         print "status : ",response.status," reason : ",response.reason
 
-        data = response.read()
+        data = json.loads(response.read())
 
-        print "result : ",data
-
-        return data;
+        print "result : ",data["result"]
+        if data["result"] == "IS_IN_FAMILY_OK":
+            return True
+        return False
     except:
         print "Web request failure!"
 
@@ -98,11 +105,12 @@ class ReadCurrentTempThread(threading.Thread):
                 print "Current Temperature is updated : ",temperature
                 g_currenttemp = temperature
                 broadcastCurrentClient("temp : "+str(g_currenttemp))
+                requestHTTPS("set_temperature","","temperature",str(g_currenttemp));
                 temp_socket.close()
             except:
                 pass
 
-            time.sleep(3)
+            time.sleep(10)
 
 
 
@@ -239,7 +247,7 @@ class MynahManager:
                     print "Timer Cancelled"
                     self.t = 0
 
-                quote_str = " !aaaaa!!"
+                quote_str = " end"
                 #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                 global g_messagelist
                 global g_clientlist
@@ -267,35 +275,61 @@ class MynahManager:
                 #msg = g_messagelist[0]
                 print "id : ",cid," first message : ",msg," len : ",len(msg)
                 #http request
+
+                self.isNotFamily = False
+
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    requestHTTPS("is_in_family",cid,"0")
+                    self.isNotFamily = requestHTTPS("is_in_family",cid,"is_in_home","0")
                 else:
-                    if msg == "":
-                        msg = '~V�~D~\~X�~D�~Z~T. ~X�~J~X ~U~X루~O~D ~H~X| ~U~X~E�~J�~K~H~K�.'
-                    requestHTTPS("is_in_family",cid,"1")
+                    self.isNotFamily = requestHTTPS("is_in_family",cid,"is_in_home","1")
 
-                remain_str = msg
+                if self.isNotFamily == False:
+                    print "Access Denied - Unauthorized Person Approching detected"
+                    os.system('omxplayer -o local /home/pi/share/dog.mp3')
+                    self.s1Activated = False
+                    self.s2Activated = False
+                    self.directionFlag = self.DIRECTION_TYPE_NONE
+                    g_lock.release()
+                    return
+                self.usedefault = False
+                if msg == "":
+                    msg = "오늘도, 좋은하루, 되세요aa,."
+                    self.usedefault = True
+                remain_str = []
 
-                while len(remain_str) > 0:
-                    partial_msg = ""
-                    if len(remain_str) >= 50:
-                        partial_msg = remain_str[:50]
-                        remain_str = remain_str.replace(partial_msg,"")
-                    else:
-                        partial_msg = remain_str
-                        remain_str = ""
+                if len(msg) - 3 <= 100:
+                    #global remain_str
+                    msg = msg.replace("///","")
+                    remain_str.append(msg)
+                else:
+                    remain_str = msg.split("///")
+
+                print "Msg preprocessed : ",remain_str," len : ",len(remain_str)
+
+                for partial_msg in remain_str:
+                    #partial_msg = ""
+                    #if len(remain_str) >= 100:
+                    #    partial_msg = remain_str[:100]
+                    #    remain_str = remain_str.replace(partial_msg,"")
+                    #else:
+                    #    partial_msg = remain_str
+                    #    remain_str = ""
 
                     print "partial message : ",partial_msg," len : ",len(partial_msg)
 
 
                     query = 'wget -q -U Mozilla -O hello_ko.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
                     query += partial_msg
-                    if remain_str == "":
-                        query += quote_str+'"'
-                    else:
-                        query += '"'
+                    #if remain_str == "":
+                    query += quote_str+'"'
+                    #else:
+                    #    query += '"'
                     print "query : ",query
-                    os.system(query.encode('utf-8'))
+                    if self.usedefault:
+                        os.system(query)
+                    else:
+                        os.system(query.encode("utf-8"))
+
                     os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
                     os.remove('hello_ko.mp3')
 
