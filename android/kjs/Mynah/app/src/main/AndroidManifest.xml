@@ -127,7 +127,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+
+        <activity
+            android:name=".ChooseTTSActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.ChooseTTS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
         <service
             android:name="com.seven.mynah.backgroundservice.GetInformationService">

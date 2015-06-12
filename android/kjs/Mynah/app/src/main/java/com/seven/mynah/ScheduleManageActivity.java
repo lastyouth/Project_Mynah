@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ScheduleManageActivity extends Activity {
 
@@ -179,11 +180,6 @@ public class ScheduleManageActivity extends Activity {
                 event.setCreated(now);
                 final String calendarId = "primary";
 
-                calendarManager = GlobalGoogleCalendarManager.calendarManager;
-                Log.d(TAG, "calendarManager.insertEvent Start");
-                calendarManager.insertEvent(event);
-                Log.d(TAG, "calendarManager.insertEvent Finish");
-
                 // insert event to MynahDB
                 // event to ScheduleInfo
                 ScheduleInfo scheduleInfo;
@@ -205,6 +201,16 @@ public class ScheduleManageActivity extends Activity {
                 scheduleInfo.scheduleTime = time;
                 scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
                 DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
+
+
+
+                //Insert to api
+                calendarManager = GlobalGoogleCalendarManager.calendarManager;
+                calendarManager.eventIdMap.put(event.getCreated().toString(), event.getId());
+
+                Log.d(TAG, "calendarManager.insertEvent Start");
+                calendarManager.insertEvent(event);
+                Log.d(TAG, "calendarManager.insertEvent Finish");
 
                 finish();
             }
@@ -234,11 +240,16 @@ public class ScheduleManageActivity extends Activity {
     public void deleteEvent(String createdDate)
     {
         String eventId;
-        calendarManager = GlobalGoogleCalendarManager.calendarManager;
-        eventId = calendarManager.getEventIdFromCreatedDate(createdDate);
-        calendarManager.deleteEvent(eventId);
 
         //delete event from DB
         DBManager.getManager(getApplicationContext()).deleteSchedulesByCreatedDate(createdDate);
+        calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
+        eventId = calendarManager.getEventIdFromCreatedDate(createdDate);
+        if(eventId != null)
+        {
+            calendarManager.deleteEvent(eventId);
+            calendarManager.eventIdMap.remove(eventId);
+        }
     }
 }

@@ -22,11 +22,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.SessionUserInfo;
 import com.seven.mynah.artifacts.UserProfile;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.backgroundservice.GetInformationService;
+import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.infoparser.WeatherParser;
@@ -68,13 +71,13 @@ public class LoadingActivity extends Activity{
 
 					if(messageType.equals("member_check")){
 						if(result.equals("IS_NOT_MEMBER")){
-							Toast.makeText(getApplicationContext(), "회원이 아닙니다", Toast.LENGTH_SHORT).show();
+//							Toast.makeText(getApplicationContext(), "회원이 아닙니다", Toast.LENGTH_SHORT).show();
 							//회원가입 창으로
 							Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
 							startActivity(intent);
 						}
 						else if(result.equals("IS_MEMBER")) {
-							Toast.makeText(getApplicationContext(), "회원입니다.", Toast.LENGTH_SHORT).show();
+//							Toast.makeText(getApplicationContext(), "회원입니다.", Toast.LENGTH_SHORT).show();
 							//SQLITE에 레코드 넣고 메인액티비티로
 							//내부 세션 유지 테이블에 insert 해야될거같애여
 
@@ -125,7 +128,7 @@ public class LoadingActivity extends Activity{
 						}
 						else if(result.equals("GET_USER_INFO_SUCCESS")){
 							//System.out.println("ja sal gak");
-							Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
+//							Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
 
 							//user info 받은거 세션 테이블로 집어넣기 ㄱㄱ
 							JSONObject user_jobj = new JSONObject(jobj.get("attach")+"");
@@ -176,7 +179,6 @@ public class LoadingActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_logo);
 
-		startService(); //서비스 시작하기 회원인증 성공 하면 ?
 		//Loading(); 핸들러 안으로 옮겼어
 	}
 
@@ -205,11 +207,6 @@ public class LoadingActivity extends Activity{
 		new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj, 1, 0);
 	}
 
-	public void startService()
-	{
-		Intent service = new Intent(this, GetInformationService.class);
-		startService(service);
-	}
 	public void Loading()
 	{
 		
@@ -237,11 +234,11 @@ public class LoadingActivity extends Activity{
 		if (DBManager.getManager(this).isInitialUser())
 		{
 			UserProfile up =  DBManager.getManager(this).getMainUserDB();
-			Toast.makeText(this, "김진성님 환영합니다.", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "김진성님 환영합니다.", Toast.LENGTH_SHORT).show();
 		}
 		else 
 		{
-			Toast.makeText(this, "등록된 유저가 없습니다.", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "등록된 유저가 없습니다.", Toast.LENGTH_SHORT).show();
 		}
 			
 	}

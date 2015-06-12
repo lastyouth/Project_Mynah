@@ -3,6 +3,7 @@ package com.seven.mynah.custominterface;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.MotionEvent;

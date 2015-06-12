@@ -1,6 +1,7 @@
 package com.seven.mynah.custominterface;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +24,7 @@ private View view;
 	private void initView() 
 	{
 		view = inflate(getContext(), R.layout.layout_button_voice, null);
-		
-		//추후 이부분은 다 xml로 넘길것
+
 		view.setOnTouchListener(new VoiceTouchListener());
 		addView(view);
 	}
@@ -39,15 +39,20 @@ private View view;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-				//test
-				Toast.makeText(getContext(), "voice 버튼이 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
-				//원하는 실행 엑티비티!
-				//run tts
+
+
+
 				return true;
 			}
 			return true;
 		}
+	}
+
+	private void myTTS()
+	{
+		//TextToSpeech m_tts = new TextToSpeech(getContext(), this);
+		//http://www.tipssoft.com/bulletin/board.php?bo_table=FAQ&wr_id=953
 	}
 	
 }

@@ -28,9 +28,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.seven.mynah.artifacts.SessionUserInfo;
 import com.seven.mynah.backgroundservice.GetInformationService;
+import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.custominterface.CustomButtonsFragment;
 import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
+import com.seven.mynah.database.DBManager;
+import com.seven.mynah.globalmanager.GlobalFunction;
+import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 
 //Google Calendar
@@ -49,19 +55,25 @@ public class MainActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
-            switch (msg.what) {
-                case SIGNAL_UI_UPDATE:
-                    Log.d(TAG, "UI UPDATE");
-                    cbf.refresh("Bus");
-                    cbf.refresh("Subway");
-                    cbf.refresh("Weather");
-                    cbf.refresh("Schedule");
-                    cbf.refresh("Gas");
-                    break;
-                default:
-                    break;
+            try {
+                switch (msg.what) {
+                    case SIGNAL_UI_UPDATE:
+                        Log.d(TAG, "UI UPDATE");
+                        cbf.refresh("Bus");
+                        cbf.refresh("Subway");
+                        cbf.refresh("Weather");
+                        cbf.refresh("Schedule");
+                        cbf.refresh("Gas");
+                        cbf.refresh("Family");
+                        break;
+                    default:
+                        break;
+                }
+            }catch(NullPointerException npe)
+            {
+                Log.d(TAG,"NullPointerException");
             }
+
         }
     };
     SendMassgeHandler mHandler = new SendMassgeHandler();
@@ -86,9 +98,20 @@ public class MainActivity extends Activity {
     //GCM 등록용 키(핸드폰 기준 1개)
     String regid;
 
+
+    private CalendarManager mCalendarManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG,"onCreate Start");
+        Log.d(TAG, "MainActivity onCreate Start");
+
+        SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
+        Toast.makeText(getApplicationContext(), suInfo.userName + "님 환영합니다.", Toast.LENGTH_SHORT);
+
+        ServiceAccessManager.getInstance().setMainPid(android.os.Process.myPid());
+
+        Intent service = new Intent(this, GetInformationService.class);
+        startService(service);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -105,7 +128,19 @@ public class MainActivity extends Activity {
         mServiceAccessManager.prepareService();
         //mServiceAccessManager.
 
-        Log.d(TAG,"onCreate Finish");
+        SharedPreferences p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
+        SharedPreferences.Editor ed = p.edit();
+        int schedule = GlobalVariable.SCHEDULE;
+        int bus = GlobalVariable.BUS;
+        int subway = GlobalVariable.SUBWAY;
+        int weather = GlobalVariable.WEATHER;
+        int gas = GlobalVariable.GAS;
+
+        int status = p.getInt("status", schedule | bus | subway | weather | gas);
+        ed.putInt("status", status);
+        ed.commit();
+
+        Log.d(TAG, "onCreate Finish");
     }
 
     @Override
@@ -120,7 +155,7 @@ public class MainActivity extends Activity {
         // TODO Auto-generated method stub
         Log.d(TAG, "onDestroy Start");
         super.onDestroy();
-        Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
 
         //ScheduleInfo sinfo = infoService.getNumber();
         //infoService.setBindStatus(false);
@@ -324,12 +359,28 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
-        Log.d(TAG,"onResume Start");
+        Log.d(TAG, "onResume Start");
+
 
         // TODO Auto-generated method stub
         super.onResume();
+        boolean flag = ServiceAccessManager.getInstance().getDeleteFlag();
+        Log.d(TAG,"OnResume flag : "+flag);
+        if(flag)
+        {
+            Intent service = new Intent(this, GetInformationService.class);
+            stopService(service);
+            ServiceAccessManager.getInstance().setDeleteFlag(false);
+            finish();
+            return;
+        }
 
-        //UI Update
+        mCalendarManager = GlobalGoogleCalendarManager.calendarManager;
+        if(mCalendarManager != null)
+        {
+            mCalendarManager.asyncSchedule();
+        }
+
         if(ServiceAccessManager.getInstance().checkServiceConnected())
         {
             mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);

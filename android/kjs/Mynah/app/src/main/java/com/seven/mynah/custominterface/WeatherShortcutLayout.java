@@ -101,15 +101,18 @@ public class WeatherShortcutLayout extends CustomButton {
 			ivWeatherImage.setImageResource(R.drawable.ic_sunny);
 			break;
 		case 2:
-			ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
-			break;
-
-		case 3:
+			//구름조금
 			ivWeatherImage.setImageResource(R.drawable.ic_cloud2);
 			break;
 
+		case 3:
+			//구름 많음
+			ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
+			break;
+
 		case 4:
-			ivWeatherImage.setImageResource(R.drawable.ic_cloud3);
+			//흐림  /비
+			ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
 			break;
 		case 5:
 			ivWeatherImage.setImageResource(R.drawable.ic_question);

@@ -34,6 +34,9 @@ public class GlobalFunction {
 		case "SU":
 			decode = "수인선";
 			break;
+			case "U":
+			decode = "의정부경전철";
+			break;
 		default:
 			decode = code + "호선";
 			break;

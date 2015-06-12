@@ -72,7 +72,7 @@ public class CalendarManager {
     private Context mContext;
     private Activity activity;
 
-    private ArrayList<ScheduleInfo> totalScheduleList;
+    private ArrayList<ScheduleInfo> totalScheduleList = new ArrayList<ScheduleInfo>();
     private Multimap<String, ScheduleInfo> scheduleByDate;
     public HashMap<String, String> eventIdMap;
     private CalendarManager calendarManager;
@@ -214,12 +214,14 @@ public class CalendarManager {
 //                    mStatusText.setText("Error retrieving data!");
                 } else if (dataList.size() == 0) {
                     Toast.makeText(mContext, "No data found.", Toast.LENGTH_SHORT).show();
+                    DBManager.getManager(mContext).deleteSchedulesAll();
 //                    mStatusText.setText("No data found.");
                 } else {
                     totalScheduleList = new ArrayList<ScheduleInfo>();
                     totalScheduleList = dataList;
                     scheduleByDate = ArrayListMultimap.create();
                     scheduleByDate = setHashmapFromScheduleInfo(totalScheduleList);
+                    updateDB();
 //                    mStatusText.setText("Data retrieved using" + " the Google Calendar API:");
 //                    mResultsText.setText(TextUtils.join("\n\n", dataStrings));
                 }
@@ -351,7 +353,11 @@ public class CalendarManager {
                 schedulesOnDateInfo = new SchedulesOnDateInfo();
                 calendarManager = GlobalGoogleCalendarManager.calendarManager;
                 schedulesOnDateInfo.scheduleList = calendarManager.getTotalScheduleList();
-                DBManager.getManager(mContext).setSchedulesOnDateDB(schedulesOnDateInfo);
+
+                if(schedulesOnDateInfo.scheduleList != null)
+                {
+                    DBManager.getManager(mContext).setSchedulesOnDateDB(schedulesOnDateInfo);
+                }
 
                 Log.d(TAG, "updateDB finish");
             }
@@ -403,12 +409,12 @@ public class CalendarManager {
         Log.d(TAG, "deleteEvent Finish");
     }
 
-    public void setEventId(List<Event> _items) {
-        final List<Event> items = _items;
+    public void setEventId(List<Event> items) {
+        final List<Event> mItems = items;
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (Event e : items) {
+                for (Event e : mItems) {
                     eventIdMap.put(e.getCreated().toString(), e.getId());
                 }
             }

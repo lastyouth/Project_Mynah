@@ -61,11 +61,13 @@ public class CalendarActivity extends Activity {
 
         Log.d(TAG, "Google Calendar Start");
         //Google Calendar
+
         calendarManager = new CalendarManager(this, CalendarActivity.this);
         calendarManager.init();
+        GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
-        //calendarManager.asyncSchedule();
-        //GlobalGoogleCalendarManager.calendarManager = calendarManager;
+        calendarManager.asyncSchedule();
+        GlobalGoogleCalendarManager.calendarManager = calendarManager;
 
         //get calendar view and set month color white
         cv = (CalendarView) this.findViewById(R.id.calendarView);
@@ -127,11 +129,14 @@ public class CalendarActivity extends Activity {
     public void setListView(String date) {
         Log.d(TAG, "setListView Start");
 
-        calendarManager.asyncSchedule();
-        GlobalGoogleCalendarManager.calendarManager = calendarManager;
+        //calendarManager.asyncSchedule();
+        //GlobalGoogleCalendarManager.calendarManager = calendarManager;
+        //if calendatManager.credential.getSelectedAccountName() == null
+        //finish() ==> 캘린더 액티비티에 바로 업데이트가 안됨 메인을 다시 보여주면 동기화가 됨
 
         lvSchedule = (ListView) findViewById(R.id.lvSchedule);
 
+        arrayList = new ArrayList<ScheduleInfo>();
         arrayList = DBManager.getManager(getApplicationContext()).getSchedulesByDateTimeDB(date).scheduleList;
         adapter = new ScheduleAdapter(getApplicationContext(), R.layout.list_row_schedule, arrayList);
 

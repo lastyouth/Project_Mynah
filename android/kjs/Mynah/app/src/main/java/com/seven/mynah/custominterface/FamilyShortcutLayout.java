@@ -24,7 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Formatter;
 
 public class FamilyShortcutLayout extends CustomButton{
 
@@ -163,7 +167,22 @@ public class FamilyShortcutLayout extends CustomButton{
 			layoutFamilyInOut.addView(tvFamilyInOut[i]);
 
 			tvFamilyName[i].setText(suInfoList.get(i).userName);
-			tvFamilyTime[i].setText((suInfoList.get(i).inoutTime).substring(11, 16));
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			Date date = new Date();
+
+			try {
+				date = dateFormat.parse(suInfoList.get(i).inoutTime);
+			}
+			catch(ParseException e){
+				e.printStackTrace();
+			}
+			long d = date.getTime();
+			d += 1000*60*60*9;
+			date = new Date(d);
+			String tmpDate = dateFormat.format(date);
+
+			tvFamilyTime[i].setText((tmpDate).substring(5, 16));
 
 			if("1".equals(suInfoList.get(i).inHomeFlag)){
 				tvFamilyInOut[i].setText("IN");
@@ -233,6 +252,6 @@ public class FamilyShortcutLayout extends CustomButton{
 
 
 	public void refresh() {
-		Toast.makeText(getContext(), "Family onRestart()", 1).show();
+		getFamilyInOutStatus();
 	}
 }

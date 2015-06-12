@@ -1,5 +1,6 @@
 package com.seven.mynah;
 
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,5 +27,12 @@ public class ViewHolder {
 	public ImageView ivAdd;
 	public String createdDate;
 	public String scheduleDate;
-	
+
+	//Global Settin List
+	public TextView tvSettingList;
+	public TextView tvSettingStatus;
+
+	//Setting TTS
+	public TextView tvSettingTTS;
+	public CheckBox cbSettingTTS;
 }

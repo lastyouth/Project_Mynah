@@ -50,10 +50,10 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         Log.d(TAG, "doInBackground Start");
         try {
-            mManager.clearResultsText();
+            //mManager.clearResultsText();
             mManager.updateResultsText(getDataFromApi());
             mManager.setEventId(items);
-            mManager.updateDB();
+            //mManager.updateDB();
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
@@ -89,6 +89,7 @@ public class ApiAsyncTask extends AsyncTask<Void, Void, Void> {
                 .execute();
         //List<Event> items = events.getItems();
         items = events.getItems();
+
         for (Event event : items) {
             DateTime start = event.getStart().getDateTime();
             if (start == null) {

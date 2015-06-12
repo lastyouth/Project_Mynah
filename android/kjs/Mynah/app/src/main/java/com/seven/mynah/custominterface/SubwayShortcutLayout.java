@@ -120,6 +120,15 @@ public class SubwayShortcutLayout extends CustomButton {
 				e.printStackTrace();
 			}
 			tt = tt/1000/60;
+			if(tt >= 1000)
+			{
+				tvSubwayNextTime.setText("종착역입니다");
+				tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
+				tvSubwayNextTime.setTextSize(12);
+				tvSubwayDirName2.setText("");
+				tvSubwayNextTime2.setText("");
+				return;
+			}
 			String time1 = tt + "분 전";
 			tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
 			tvSubwayNextTime.setText(time1);

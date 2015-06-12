@@ -82,6 +82,10 @@ public class ScheduleShortcutLayout extends CustomButton{
 	{
 		//Request service to get schedule information (through Mynah DB)
 		ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
+		if(scheduleInfos == null)
+		{
+			scheduleInfos = new ArrayList<ScheduleInfo>();
+		}
 		setInfo(scheduleInfos);
 	}
 
@@ -89,10 +93,9 @@ public class ScheduleShortcutLayout extends CustomButton{
 	{
 		int size = scheduleInfos.size();
 		layoutSchedule.removeAllViews();
+		layoutSchedule.setGravity(Gravity.NO_GRAVITY);
 		if(size == 0)
 		{
-			layoutSchedule.removeAllViews();
-			layoutSchedule.setGravity(Gravity.NO_GRAVITY);
 			tvSchedules[0] = new TextView(context);
 			tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
 			tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);

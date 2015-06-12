@@ -10,8 +10,13 @@ public final class GlobalVariable {
 	public static final int HTTPS_PORT = 13337;
 	public static boolean isScheduleDBUpdated = false;
 
-	public final class ShortcutType {
+	public static final int GAS = 1;
+	public static final int BUS = 2;
+	public static final int SUBWAY = 4;
+	public static final int WEATHER = 8;
+	public static final int SCHEDULE = 16;
 
+	public final class ShortcutType {
 		public static final int
 				typeScheduleShortcut  = 1,
 				typeBusShortcut = 2,
@@ -22,7 +27,6 @@ public final class GlobalVariable {
 				typeRefrash = 7,
 				typeVoice = 8,
 				typeSetting = 9;
-
 	}
 
 

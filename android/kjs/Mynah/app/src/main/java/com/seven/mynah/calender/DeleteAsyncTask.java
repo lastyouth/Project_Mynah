@@ -27,7 +27,7 @@ public class DeleteAsyncTask extends AsyncTask<Void, Void, Void>{
         try {
             mManager.clearResultsText();
             deleteDataFromApi();
-            mManager.updateDB();
+            //mManager.updateDB();
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
@@ -46,6 +46,9 @@ public class DeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 
     private void deleteDataFromApi() throws IOException
     {
-        mManager.mService.events().delete("primary", mEventId).execute();
+        if(mEventId != null)
+        {
+            mManager.mService.events().delete("primary", mEventId).execute();
+        }
     }
 }

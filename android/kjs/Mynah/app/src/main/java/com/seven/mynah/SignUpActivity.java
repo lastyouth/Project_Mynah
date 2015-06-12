@@ -22,6 +22,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.artifacts.SessionUserInfo;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.network.AsyncHttpTask;
 
 import android.provider.Settings.Secure;
@@ -87,10 +88,35 @@ public class SignUpActivity extends Activity {
 
                     if(messageType.equals("product_check")){
                         if(result.equals("PRODUCT_NOT_EXIST")){
-                            Toast.makeText(getApplicationContext(), "Product Not Exist", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Product Not Exist", Toast.LENGTH_SHORT).show();
                         }
-                        else if(result.equals("PRODUCT_EXIST")) {
-                            Toast.makeText(getApplicationContext(), "Product Exist", Toast.LENGTH_SHORT).show();
+                        else if(result.startsWith("PRODUCT_EXIST")) {
+                            //인증성공
+                            Toast.makeText(getApplicationContext(), "인증된 제품입니다.", Toast.LENGTH_SHORT).show();
+                            String res = result;
+
+                            String[] data = res.split("//");
+
+
+                            if(data.length != 3)
+                            {
+//                                Toast.makeText(getApplicationContext(),"cannot get Mac and UUID",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+//                            Toast.makeText(getApplicationContext(),"Mac : "+data[1]+" UUID : "+data[2],Toast.LENGTH_SHORT).show();
+                            SharedPreferences pref = getSharedPreferences(ServiceAccessManager.PREF,MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+
+                            editor.putString("RPI_MAC",data[1]);
+                            editor.putString("RPI_UUID", data[2]);
+
+                            editor.commit();
+
+                            if(ServiceAccessManager.getInstance().checkServiceConnected())
+                            {
+                                ServiceAccessManager.getInstance().getService();
+                            }
+
                             productCheck = true;
                         }
                         else if(result.equals("PRODUCT_ERROR")) {
@@ -130,7 +156,7 @@ public class SignUpActivity extends Activity {
                         }
                         else if(result.equals("GET_USER_INFO_SUCCESS")){
                             //System.out.println("ja sal gak");
-                            Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Get user info success", Toast.LENGTH_SHORT).show();
 
                             //user info 받은거 세션 테이블로 집어넣기 ㄱㄱ
                             JSONObject user_jobj = new JSONObject(jobj.get("attach")+"");
@@ -185,7 +211,7 @@ public class SignUpActivity extends Activity {
                             Toast.makeText(getApplicationContext(), "회원가입 실패 에러", Toast.LENGTH_SHORT).show();
                         }
                         else if(result.equals("SIGNUP_SUCCESS")) {
-                            Toast.makeText(getApplicationContext(), "회원가입 성공인듯", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "회원가입 성공인듯", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else {
@@ -230,7 +256,7 @@ public class SignUpActivity extends Activity {
         if (regid.equals("")) {
             registerInBackground();
         }
-        Toast.makeText(this, "등록 id = " + regid, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "등록 id = " + regid, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "REG ID : " + regid);
 
         //device id 받아오기
@@ -281,7 +307,7 @@ public class SignUpActivity extends Activity {
                 final Boolean isInHome = true;
 
                 if(!productCheck){
-                    Toast.makeText(getApplicationContext(), "기계 확인 안됬어", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "기계 확인이 되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     JSONObject jobj = new JSONObject();

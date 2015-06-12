@@ -34,7 +34,7 @@ public class InsertAsyncTask extends AsyncTask<Void, Void, Void>{
         try {
             mManager.clearResultsText();
             insertDataToApi();
-            mManager.updateDB();
+            //mManager.updateDB();
         } catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
             mManager.showGooglePlayServicesAvailabilityErrorDialog(
                     availabilityException.getConnectionStatusCode());
@@ -56,6 +56,7 @@ public class InsertAsyncTask extends AsyncTask<Void, Void, Void>{
     {
         mManager.mService.events().insert("primary", mEvent).execute();
 
+        /*
         ScheduleInfo scheduleInfo;
         DateTime start = mEvent.getStart().getDateTime();
         if (start == null) {
@@ -76,7 +77,7 @@ public class InsertAsyncTask extends AsyncTask<Void, Void, Void>{
         scheduleInfo.scheduleCreatedDate = mEvent.getCreated().toString();
 
         mManager.insertTotalScheduleList(scheduleInfo);
-        GlobalGoogleCalendarManager.calendarManager = mManager;
+        GlobalGoogleCalendarManager.calendarManager = mManager;*/
 
     }
 }

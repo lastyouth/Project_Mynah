@@ -17,6 +17,11 @@ public class ServiceAccessManager {
     GetInformationService infoService;
     private Context mCtx;
     private String TAG = "ServiceAccessManager";
+    public static final String PREF = "PREF_RPI";
+    public static final String TSTAT = "TTS_STATUS";
+    private boolean mDelete ;
+    private int pid;
+
     boolean isServiceConnected = false;
     ServiceConnection mBkServiceConnection = new ServiceConnection(){
         @Override
@@ -40,6 +45,7 @@ public class ServiceAccessManager {
 
     private ServiceAccessManager()
     {
+        mDelete = false;
     }
 
     public static ServiceAccessManager getInstance() {
@@ -76,6 +82,26 @@ public class ServiceAccessManager {
     {
         return isServiceConnected;
     }
+
+    public void setMainPid(int pid)
+    {
+        this.pid = pid;
+    }
+    public int getMainPid()
+    {
+        return this.pid;
+    }
+
+    public void setDeleteFlag(boolean flag)
+    {
+        mDelete = flag;
+    }
+
+    public boolean getDeleteFlag()
+    {
+        return mDelete;
+    }
+
 
     public GetInformationService getService()
     {

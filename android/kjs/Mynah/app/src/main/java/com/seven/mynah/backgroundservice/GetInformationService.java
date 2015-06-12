@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -17,21 +18,25 @@ import android.widget.Toast;
 
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.ScheduleInfo;
+import com.seven.mynah.artifacts.SessionUserInfo;
 import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalFunction;
+import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 
 import java.io.UnsupportedEncodingException;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.prefs.Preferences;
 
 public class GetInformationService extends Service
 {
@@ -43,6 +48,10 @@ public class GetInformationService extends Service
     private RPiBluetoothConnectionManager mBluetoothManager;
     private Context mCtx;
     private int mTempdata;
+    private SharedPreferences pref;
+
+    private boolean isBluetoothEnabled;
+
 
     public static final String TAG = "GetInfomationService";
 
@@ -56,11 +65,13 @@ public class GetInformationService extends Service
                 int type = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
                 if(type == BluetoothAdapter.STATE_OFF)
                 {
-                    Toast.makeText(mCtx,"Bluetooth is Off",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mCtx,"Bluetooth is Off",Toast.LENGTH_SHORT).show();
+                    isBluetoothEnabled = false;
                 }
                 else if(type == BluetoothAdapter.STATE_ON)
                 {
-                    Toast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
+                    isBluetoothEnabled = true;
                 }
             }
         }
@@ -79,7 +90,11 @@ public class GetInformationService extends Service
         @Override
         public void onRequestInTTSWithRSSI() {
             Log.d(TAG, "onRequestInTTSWithRSSI");
-            String tts = new String("어서오세요 김진성님 오늘 하루도 수고하셨습니다.");
+
+            SessionUserInfo sInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
+            String userName = sInfo.userName;
+            String tts = "어서오세요, " + userName + "님, 오늘 하루도 수고하셨습니다.";
+
             mBluetoothManager.sendTTSWithRSSI(RPiBluetoothConnectionManager.SEND_TYPE_INTTS, tts);
             Log.d(TAG, "Send Data from GetInformationService : " + tts);
         }
@@ -98,7 +113,7 @@ public class GetInformationService extends Service
         Log.d(TAG, "onCreate Start");
 		//Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
         mCtx = this;
-		Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
         // register broadcast receiver
         IntentFilter btfilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(bluetoothReceiver,btfilter);
@@ -106,11 +121,19 @@ public class GetInformationService extends Service
         // Get Device Id
         deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
+        isBluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
+
         mBluetoothManager = new RPiBluetoothConnectionManager(deviceID);
         mBluetoothManager.registerCallback(btCallback);
 
+        pref = getSharedPreferences(ServiceAccessManager.PREF,MODE_PRIVATE);
+
+        String tuuid = pref.getString("RPI_UUID", "NULL");
+
+        String tmac = pref.getString("RPI_MAC","NULL");
+
         // initialize bt connection
-        int ret = mBluetoothManager.initializeBTConnection();
+        int ret = mBluetoothManager.initializeBTConnection(tuuid,tmac);
 
         processErrorHandler(ret);
 		super.onCreate();
@@ -125,6 +148,9 @@ public class GetInformationService extends Service
             Log.d(TAG,"Shit");
         }
         else if(ret == RPiBluetoothConnectionManager.ERROR_CALLBACK_IS_NOT_REGISTERED)
+        {
+
+        }else if(ret == RPiBluetoothConnectionManager.ERROR_TARGET_UUID_NOT_REGISTERED)
         {
 
         }
@@ -142,7 +168,7 @@ public class GetInformationService extends Service
         }
         else
         {
-            Toast.makeText(this,"Unknown return value from RPiBluetoothConnectionManager",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"Unknown return value from RPiBluetoothConnectionManager",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -160,10 +186,14 @@ public class GetInformationService extends Service
     	//Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onStartCommand Start");
 
-    	Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
+//    	Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
+        String tuuid = pref.getString("RPI_UUID", "NULL");
+
+        String tmac = pref.getString("RPI_MAC","NULL");
+
         if(!mBluetoothManager.isInitialize())
         {
-            int ret = mBluetoothManager.initializeBTConnection();
+            int ret = mBluetoothManager.initializeBTConnection(tuuid,tmac);
             processErrorHandler(ret);
         }
         //Log.d("GetInformationService", "Context : " + getBaseContext() + "Service context : " + this);
@@ -200,7 +230,7 @@ public class GetInformationService extends Service
         {
             mBluetoothManager.stopBTConnection();
         }
-        Toast.makeText(this, "Service onDestroy", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service onDestroy", Toast.LENGTH_SHORT).show();
 
         Log.d(TAG, "onDestroy Finish");
     	super.onDestroy();
@@ -298,6 +328,15 @@ public class GetInformationService extends Service
         return scheduleInfo;
     }
 
+    public int requestBTInit(String uuid, String mac)
+    {
+        if(!mBluetoothManager.isInitialize()) {
+            return mBluetoothManager.initializeBTConnection(uuid,mac);
+        }
+        return RPiBluetoothConnectionManager.SUCCESS_INITIALIZE;
+    }
+
+    //TTS
     public String getScheduleInfoTTS(ArrayList<ScheduleInfo> sInfoList)
     {
         if(sInfoList == null)
@@ -345,6 +384,10 @@ public class GetInformationService extends Service
                     break;
                 }
             }
+        }
+        if(!tts.equals(""))
+        {
+            tts = "오늘의 스케줄, " + tts;
         }
         return tts;
     }
@@ -501,8 +544,13 @@ public class GetInformationService extends Service
 
     public String getGasTemperatureTTS()
     {
-        String tts = "가스불, 주변 온도, " + mTempdata + " 도, ";
 
+        if(mTempdata == 0)
+        {
+            return "";
+        }
+
+        String tts = "가스불, 주변 온도, " + mTempdata + " 도, ";
         return tts;
     }
 
@@ -515,8 +563,38 @@ public class GetInformationService extends Service
         String subway = getSubwayInfoTTS(getSubwayInfo());
         String weather = getWeatherInfoTTS(getWeatherInfo());
         String gas = getGasTemperatureTTS();
+        String ttsList[] = {gas, bus, subway, weather, schedule};
+        SharedPreferences p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
+        int status = p.getInt("status", 31);
 
-        tts = gas + bus + subway + weather + " /// " + schedule;
+        for(int i=0;i<5;i++)
+        {
+            int v = 1 << i;
+            int f = status & v;
+
+            if(f != 0)
+            {
+                if(i == 4)
+                {
+                    tts += " /// ";
+                }
+                tts += ttsList[i];
+            }
+        }
+
+        /*for(int i = 0; i < 5; i++)
+        {
+            status = (status >> i);
+            if((status & 1) == 1)
+            {
+                if(i == 4)
+                {
+                    tts += " /// ";
+                }
+                tts += ttsList[i];
+            }
+        }*/
+        //tts = gas + bus + subway + weather + " /// " + schedule;
         return tts;
     }
 
