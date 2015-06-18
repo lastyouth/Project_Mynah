@@ -102,11 +102,12 @@ class ReadCurrentTempThread(threading.Thread):
                 temp_socket.send("hi")
                 temperature = temp_socket.recv(3)
                 temperature = int(temperature)
+                temp_socket.close();
+                #temperature = 28
                 print "Current Temperature is updated : ",temperature
                 g_currenttemp = temperature
                 broadcastCurrentClient("temp : "+str(g_currenttemp))
                 requestHTTPS("set_temperature","","temperature",str(g_currenttemp));
-                temp_socket.close()
             except:
                 pass
 
@@ -238,7 +239,7 @@ class MynahManager:
                 #temperature = temp_socket.recv(1024)
                 #print temperature
                 #temp_socket.close()
-                self.t = threading.Timer(5.0,self.sigHandler);
+                self.t = threading.Timer(7.0,self.sigHandler);
                 self.t.start()
         else:
             if self.s1Activated == True and self.s2Activated == True:
@@ -247,7 +248,7 @@ class MynahManager:
                     print "Timer Cancelled"
                     self.t = 0
 
-                quote_str = " end"
+                quote_str = " endend"
                 #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                 global g_messagelist
                 global g_clientlist
@@ -336,7 +337,7 @@ class MynahManager:
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                     print "To Out Processing"
                 else:
-                    os.system('omxplayer -o local --vol -1000 /home/pi/share/chams.mp3')
+                    os.system('omxplayer -o local --vol 250 /home/pi/share/rs.mp3')
                     #msg = '어서오세요. 오늘 하루도 수고하셨습니다.'
                     #msg+= quote_str + '"'
                     #query = 'wget -q -U Mozilla -O welcome.mp3 "http://translate.google.com/translate_tts?ie=UTF-8&tl=ko&q='
@@ -466,7 +467,7 @@ class DistanceSensor(threading.Thread):
 
 g_Mynah = MynahManager()
 
-g_readtempthread = ReadCurrentTempThread("30:14:12:00:29:10")
+g_readtempthread = ReadCurrentTempThread("20:15:04:24:13:32")
 g_readtempthread.daemon = True
 g_readtempthread.start()
 
@@ -487,6 +488,7 @@ g_sensor2.start()
 while True:
     time.sleep(10000)
     #broadcastCurrentClient()
+    #sleep(100)
     i=1
 
 GPIO.cleanup()
