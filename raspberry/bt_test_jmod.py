@@ -2,7 +2,7 @@ from bluetooth import *
 
 client_socket = BluetoothSocket(RFCOMM)
 
-client_socket.connect(("30:14:12:00:29:10",1))
+client_socket.connect(("20:15:04:24:13:32",1))
 
 print "connection established";
 

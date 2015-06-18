@@ -8,8 +8,8 @@ reqobj = {}
 
 reqobj['messagetype'] = "is_in_family"
 reqobj['product_id'] = 'product2'
-reqobj['device_id'] = "dba274cd84f7ea8c"#"6a5823bb465b4777"
-reqobj['is_in_home'] = 0
+reqobj['device_id'] = "6a5823bb465b4777"#"dba274cd84f7ea8c"#"6a5823bb465b4777"
+reqobj['is_in_home'] = 1
 
 #json.dumps(reqobj)
 
