@@ -1,6 +1,8 @@
 package com.seven.mynah;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +35,15 @@ public class GlobalSettingActivity extends Activity{
 	private ListView lvSetting;
 	private ArrayList<String[]> mArrayList;
 	private SettingListAdapter mAdapter;
+
+	private int SCHEDULE = GlobalVariable.SCHEDULE;
+	private int BUS = GlobalVariable.BUS;
+	private int SUBWAY= GlobalVariable.SUBWAY;
+	private int WEATHER = GlobalVariable.WEATHER;
+	private int GAS = GlobalVariable.GAS;
+	private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER, GAS};
+	private int ttsStatus;
+	private SharedPreferences p;
 
 	//클래스 안에 선언해놓을 것
 	protected Handler mHandler = new Handler() {
@@ -111,14 +122,36 @@ public class GlobalSettingActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_app);
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 		lvSetting = (ListView)findViewById(R.id.lvSetting);
 
 		mArrayList = new ArrayList<String[]>();
-		String tmp[] = {"TTS 설정", "현재 선택된 TTS 정보"};
-		String tmp2[] = {"제품 연결 해제", "현재 제품 번호"};
+		String setting1[] = {"TTS 설정", "현재 선택된 TTS 정보"};
+		String setting2[] = {"제품 연결 해제", "product2"};
 
-		mArrayList.add(tmp);
-		mArrayList.add(tmp2);
+		ArrayList<String> currentSetting = getCurrentTTSSetting();
+		String settingTTS = "";
+		for(int i = 0; i < currentSetting.size(); i++)
+		{
+			settingTTS += currentSetting.get(i) + " ";
+		}
+		if(settingTTS.trim().equals(""))
+		{
+			setting1[1] = "선택된 TTS 정보가 없습니다.";
+		}
+		else
+		{
+			setting1[1] = settingTTS;
+		}
+
+
+		mArrayList.add(setting1);
+		mArrayList.add(setting2);
 
 		mAdapter = new SettingListAdapter(getApplicationContext(), R.layout.list_row_setting, mArrayList);
 		lvSetting.setAdapter(mAdapter);
@@ -136,9 +169,9 @@ public class GlobalSettingActivity extends Activity{
 				else if(position == 1)
 				{
 					//Dialog Are you sure?
-
+					DialogConfirm();
 					//Request unregister to server
-					deleteUser();
+					//deleteUser();
 
 				}
 			}
@@ -159,7 +192,48 @@ public class GlobalSettingActivity extends Activity{
 		}
 		new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj, 1, 0);
 	}
-	
+
+	public ArrayList<String> getCurrentTTSSetting()
+	{
+		p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
+		SharedPreferences.Editor ed = p.edit();
+		ttsStatus = p.getInt("status", 31);
+		String sList[] = {"일정", "버스", "지하철", "날씨", "가스불"};
+		ArrayList<String> setting = new ArrayList<String>();
+
+		for(int i = 0; i < 5; i++)
+		{
+			int s = ttsStatus & ttsList[i];
+			String flag;
+			if(s != 0)
+			{
+				setting.add(sList[i]);
+			}
+		}
+
+		return setting;
+	}
+
+	private void DialogConfirm(){
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
+		alt_bld.setMessage("정말 해제하시겠습니까?").setCancelable(
+				false).setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'Yes' Button
+						deleteUser();
+					}
+				}).setNegativeButton("No",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'NO' Button
+						dialog.cancel();
+					}
+				});
+		AlertDialog alert = alt_bld.create();
+		alert.show();
+	}
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub

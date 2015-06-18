@@ -238,7 +238,6 @@ public class FamilyShortcutLayout extends CustomButton{
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				//test
-				Toast.makeText(getContext(), "가족 정보가 클릭되었음.", Toast.LENGTH_SHORT).show();
 				view.setAlpha((float) 1.0);
 				//원하는 실행 엑티비티!
 
