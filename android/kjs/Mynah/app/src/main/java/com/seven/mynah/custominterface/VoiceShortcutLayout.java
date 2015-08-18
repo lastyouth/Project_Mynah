@@ -23,8 +23,8 @@ private View view;
 	
 	private void initView() 
 	{
-		view = inflate(getContext(), R.layout.layout_button_voice, null);
-
+		//view = inflate(getContext(), R.layout.layout_button_voice, null);
+		view = inflate(getContext(), R.layout.layout_button_logo, null);
 		view.setOnTouchListener(new VoiceTouchListener());
 		addView(view);
 	}
@@ -40,9 +40,7 @@ private View view;
 				return true;
 			} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 				view.setAlpha((float) 1.0);
-
-
-
+				cbf.startSettingActivity("AppInfo");
 				return true;
 			}
 			return true;

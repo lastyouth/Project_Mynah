@@ -136,6 +136,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".AppInfoActivity">
+            <intent-filter>
+                <action android:name="com.seven.mynah.AppInfo" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
         <service
             android:name="com.seven.mynah.backgroundservice.GetInformationService">
