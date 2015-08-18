@@ -5,8 +5,8 @@ import Queue
 GPIO.setmode(GPIO.BCM)
 
 
-TRIG = 22
-ECHO = 26
+TRIG = 17
+ECHO = 22
 
 print "Distance Measurement In Progress"
 
