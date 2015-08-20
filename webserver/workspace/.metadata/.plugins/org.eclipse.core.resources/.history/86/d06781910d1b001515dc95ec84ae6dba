@@ -1,0 +1,90 @@
+/**
+ * 2015-06-22 uosmice Server
+ * Author : HJ KIM
+ */
+
+var http = require('http'); //http
+var https = require('https'); //https
+var fs = require('fs'); //File System
+var mysql = require('mysql'); //mysql
+
+var port = 13337; //http port
+var sslport = 13337; // https port
+
+//https verification options
+var options = {
+	key : fs.readFileSync('private_key.pem'),
+	cert : fs.readFileSync('cert.pem')
+};
+
+//MySql DB Connector
+var connection = mysql.createConnection({
+	host : "192.168.35.75",
+	port : 3306,
+	user : "micetest",
+	password : "micetest",
+	database : "miceuos"
+});
+
+//String을 Base64로 인코딩
+function base64_encode(req_str){
+	return new Buffer(req_str).toString('base64');
+}
+
+//https를 통해 정상적으로 request가 왔을 때 실행되는 함수, request 종류에 따라 알맞는 작업 수행 후 다시 app으로 response
+function HttpsEventProcessCallback(req, res) {
+	// console.log(req);
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain; charset=utf-8'
+	});
+
+	var date = new Date();
+	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
+
+
+	//post방식으로 메세지가 정상 도착 했을 때
+	if (req.method === 'POST') {
+		console.log('post request!');
+
+		var chunk = ""; //json 받는 변수
+
+		req.on('data', function(data) {
+			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+			console.log(chunk);
+		});
+		req.on('end', function() {
+			res.writeHead(200, {
+				'Content-Type' : 'text/plain; charset=utf-8'
+			});
+			
+			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+			console.log("messagetype : " + messagetype);
+			
+			//messagetype에 따라서 서버의 다른 작동
+			if (messagetype == 'blah') {
+				//
+
+			}//if messagetype = blah END
+			//확인되지 않은 messagetype의 Request가 들어왔을 때
+			else{
+				
+			}
+		});
+	} //if req = post END
+	else {
+		// 포스트가 아니면 에러
+		res.writeHead(200, {
+			'Content-Type' : 'text/plain; charset=utf-8'
+		});
+		console.log('NOT POST REQUEST');
+		res.end(base64_encode('not Post, Wrong Request'));
+	}//if req = post ELSE END
+}
+
+httpsServer = https.createServer(options, HttpsEventProcessCallback); //https 서버 생성, 공개키 비밀키, 리퀘스트 콜백 함수
+//httpServer = http.createServer(HttpEventProcessCallback);
+
+httpsServer.listen(sslport, '192.168.35.75'); //서버 시작
+connection.connect();//DB Connect
+console.log('UOSMice Server running at https://192.168.35.75:13337/');

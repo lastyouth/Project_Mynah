@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 6 packages to &apos;DropboxPC/src&apos;&#x0D;&#x0A;- Original project: &apos;Dropbox_pc&apos;&#x0D;&#x0A;- Destination element: &apos;DropboxPC/src&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     Dropbox_pc/src/dropbox.filemanage&#x0D;&#x0A;     Dropbox_pc/src/dropbox.config&#x0D;&#x0A;     Dropbox_pc/src/dropbox.groupmanage&#x0D;&#x0A;     Dropbox_pc/src/dropbox.common&#x0D;&#x0A;     Dropbox_pc/src/dropbox.ui&#x0D;&#x0A;     Dropbox_pc/src/testpack" description="Copy packages" destination="=DropboxPC/src" element1="/src&lt;dropbox.filemanage" element2="/src&lt;dropbox.config" element3="/src&lt;dropbox.groupmanage" element4="/src&lt;dropbox.common" element5="/src&lt;dropbox.ui" element6="/src&lt;testpack" flags="589830" fragments="6" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1432563740903" version="1.0"/>
+</session>

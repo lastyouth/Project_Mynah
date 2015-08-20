@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<div class="login">
+	<ul>
+		<li class="top"></li>
+		<!--내용 -->
+		<li class="bg">
+			<span class="pBlue"> <%=(String)session.getAttribute("USER_NAME") %> 관리자님 </span><br>
+			<img src="<%=root_path%>/images/bt_email.gif" alt="이메일" style="margin-right:5px; margin-top:10px;">
+			<a href="<%=root_path%>/jsp/admin/logout_proc.jsp"><img src="<%=root_path%>/images/bt_logout.gif" alt="로그아웃" style="margin-right:5px; margin-top:10px;"></a>
+		</li>
+		<!--//내용 -->
+		<li class="bottom"></li>
+	</ul>
+</div>

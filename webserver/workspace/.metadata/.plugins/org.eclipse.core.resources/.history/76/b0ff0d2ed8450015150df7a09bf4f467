@@ -1,0 +1,302 @@
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var mysql = require('mysql');
+var gcm = require('node-gcm');
+
+//var gcm_message = new gcm.Message();
+
+var basic_jobj = {
+		messagetype : "",
+		result : "",
+		attach : ""
+}
+
+//구글에서 발행한 key
+var server_access_key = 'AIzaSyAn_popA7yY_6O8U8yDcDv1Z3_lDGdtGxM';
+var sender = new gcm.Sender(server_access_key);
+
+var connection = mysql.createConnection({
+	host : "192.168.35.75",
+	port : 3306,
+	user : "hiik",
+	password : "hiik",
+	database : "hiik_mynah"
+});
+
+var httpsServer;
+var httpServer;
+
+// https verification options
+var options = {
+	key : fs.readFileSync('private_key.pem'),
+	cert : fs.readFileSync('cert.pem')
+};
+
+// http port
+var port = 13337;
+// https port
+var sslport = 13337;
+
+//https를 통해 정상적으로 request가 왔을 때 실행되는 함수, request 종류에 따라 알맞는 작업 수행 후 다시 app으로 response
+function HttpsEventProcessCallback(req, res) {
+	// console.log(req);
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain; charset=utf-8'
+	});
+
+	//res.write('안녕하세요');
+	var date = new Date();
+	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
+
+	//post방식으로 메세지가 정상 도착 했을 때
+	if (req.method === 'POST') {		
+		console.log('post request!');
+		
+		//사용자 프로필사진 업데이트
+		if(req.url === '/recording'){
+			var device_id;
+			var rec_file_name;
+			console.log('recording upload start');
+			
+			var form = new formidable.IncomingForm();
+			form.keepExtensions = true;
+			form.uploadDir ='./recording';
+			
+			form
+			    .on('error', function(err) {
+			        throw err;
+			    })
+
+			    .on('field', function(field, value) {
+			        //receive form fields here
+			    	
+			    	if(field === 'device_id'){
+			    		device_id = value;
+			    		console.log('device_id : ' + device_id);
+			    	}
+			    })
+
+			    /* this is where the renaming happens */
+			    .on ('fileBegin', function(name, file){
+			        //rename the incoming file to the file's name
+			    	var date_time = new Date().toISOString().replace(/T/, '_').replace(/\..+/, '');
+			    	rec_file_name = user_seq + "_" + date_time;
+			        file.path = form.uploadDir + "/" + update_file_name;
+			        console.log('file_name : ' + rec_file_name);
+			    })
+
+			    .on('file', function(field, file) {
+			        //On file received
+			    })
+
+			    .on('progress', function(bytesReceived, bytesExpected) {
+			        //self.emit('progess', bytesReceived, bytesExpected)
+
+			        var percent = (bytesReceived / bytesExpected * 100) | 0;
+			        process.stdout.write('Uploading: %' + percent + '\r');
+			    })
+
+			    .on('end', function() {
+			    	
+			    	var sql_query = "INSERT INTO recording_info"
+			    		+ " (user_seq, path, reg_date) "
+						+ "VALUES("
+						+ " (SELECT user_seq from user_info where device_id = \'"+device_id+"\' LIMIT 1)" 
+						", \'" + update_file_name
+						+ "\', now());";
+					
+					console.log('send_tts query : ' + sql_query);
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = "send_tts";
+							jobj.result = "SEND_TTS_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//throw err;
+						}
+						else{
+							var rec_del_query = "DELETE FROM recording_info WHERE rec_seq IN "
+									+ "(SELECT rec_seq FROM (SELECT rec_seq FROM recording_info WHERE user_seq = "
+									+ "(SELECT user_seq from user_info where device_id = \'"+device_id+"\' LIMIT 1) ORDER BY rec_seq DESC LIMIT 10, 10) x);";
+							
+							var del_query = connection.query(sql_query, function (err) {
+								if(err){
+									var jobj = basic_jobj;
+									jobj.messagetype = "send_tts";
+									jobj.result = "SEND_TTS_FAIL";
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+									//throw err;
+								}
+								else{
+									var jobj = basic_jobj;
+									jobj.messagetype = "send_tts";
+									jobj.result = "SEND_TTS_SUCCESS";
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+								}
+							});
+						}
+					});
+			    });
+
+			form.parse(req);
+		}
+
+		var chunk = ""; //json 받는 변수
+
+		req.on('data', function(data) {
+			//console.log(data.toString());
+			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+			//console.log(decoded_data);
+			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+			console.log(chunk);
+		});
+		req.on('end', function() {
+			res.writeHead(200, {
+				'Content-Type' : 'text/plain; charset=utf-8'
+			});
+			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+			console.log("messagetype : " + messagetype);
+			
+			if (messagetype == 'login') {
+				//login 시;
+				
+			} 
+			//sign_up START
+			else if (messagetype == 'sign_up') {
+				//회원가입
+				var sql_query = "INSERT INTO user_info" 
+					+ " (product_id, reg_id, device_id, user_name, reg_date) "
+					+ "VALUES(\'"
+					+ chunk.product_id + "\', \'" + chunk.reg_id + "\', \'"
+					+ chunk.device_id + "\', \'" + chunk.user_name
+					+ "\', now());";
+				
+				console.log('sign_up query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SIGN_UP_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					} else {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SIGN_UP_SUCCESS";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					}
+				});
+			}//sign_up END
+			//get_tts START
+			else if (messagetype === 'get_tts') {
+				//tts 주세요
+				sql_query = "SELECT * FROM recording_info WHERE user_seq = "
+						+ "(SELECT user_seq from user_info where device_id = \'"+chunk.device_id+"\' LIMIT 1) ORDER BY rec_seq DESC LIMIT 1;";
+				console.log("email_login : " + sql_query);
+				
+				var query = connection.query(sql_query, function(err, rows, fields) {
+					if (err) {
+						console.log(chunk.user_id + ' log in error');
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "EMAIL_LOGIN_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//res.end('LOGIN_ERROR');
+						//throw err;
+					} else {
+						if (rows.length === 0) {
+							//로그인 실패
+							console.log(chunk.user_id + ' log in fail passwd');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_LOGIN_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//res.end('LOGIN_FAIL_PASSWD');
+						} else {
+							//로그인 성공
+							console.log(chunk.user_id + ' log in success');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_LOGIN_SUCCESS";
+							
+							//파일 디코딩해서 Base64String 으로 바꿔줘
+							var image_origial = "./recording/" + rows[0].picture;
+							
+							if(rows[0].picture == null){
+								jobj.attach = rows[0];
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+								jobj.attach = "";
+							}
+							else{
+								fs.readFile(image_origial, function(err, buffer){
+									var base64Image = new Buffer(buffer, 'binary').toString('base64');
+									rows[0].picture = base64Image; 
+									
+									jobj.attach = rows[0];
+									
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+									jobj.attach = "";
+								});
+							}
+							
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = email_login END
+			else{
+				//그냥 https post 리퀘스트였을 때
+				res.end('Hi There');
+			}
+
+		});
+	}
+	else {
+		// 포스트가 아니면 에러
+		res.writeHead(200, {
+			'Content-Type' : 'text/plain; charset=utf-8'
+		});
+		console.log('NOT POST REQUEST');
+		var date_time = new Date().toISOString().replace(/T/, '_').replace(/\..+/, '');
+		res.end(date_time);
+		//res.end('wrong request');
+	}
+}
+
+function base64_decode(base64str, file) {
+	// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+	var bitmap = new Buffer(base64str, 'base64');
+	// write buffer to file
+	fs.writeFileSync(file, bitmap);
+	console.log('******** File created from base64 encoded string ********');
+}
+
+//http 리퀘스트 함수. 임시.
+function HttpEventProcessCallback(req, res) {
+	// http request from port 13337
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain'
+	});
+	res.end('request');
+	var date = new Date();
+	console.log("\r\nhttp request arriving!" + date.toUTCString() + "\r\n");
+
+}
+
+httpsServer = https.createServer(options, HttpsEventProcessCallback);
+
+httpsServer.listen(sslport, '192.168.35.75');
+connection.connect();
+console.log('Server running at https://192.168.35.75:13337/');

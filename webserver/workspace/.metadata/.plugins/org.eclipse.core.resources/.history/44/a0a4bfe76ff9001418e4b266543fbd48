@@ -1,0 +1,380 @@
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var crypto = require('crypto');
+var multiparty = require('multiparty');
+var util = require('util');
+var mysql = require('mysql');
+var tts = require('node-google-text-to-speech')
+var gcm = require('node-gcm');
+
+//var gcm_message = new gcm.Message();
+
+var gcm_message = new gcm.Message({
+	collapseKey : 'demo',
+	delayWhileIdle : true,
+	timeToLive : 3,
+	data : {
+		key1 : 'Hello',
+		key2 : 'push demo 죽고싶다'
+	}
+});
+
+//구글에서 발행한 key
+var server_access_key = 'AIzaSyAn_popA7yY_6O8U8yDcDv1Z3_lDGdtGxM';
+
+var sender = new gcm.Sender(server_access_key);
+
+var registration_ids = [];
+
+//안드로이드 기계의 구글 플레이 서비스의 id
+//var registration_id = 'APA91bFY7kMYOa_DhHqEOrP9QOia_oUI9eH41NcEulVxrxlDY4DdPaPFN8irJeFKIzs7GfTu5Q4-1XQRIThFUcvTSdxFeus4gyQCXylncybCA49FYvPf383ZagEiuYevMY8itcGWHU3b5HP0fu_FGq4snSCEevZvlTtd33ES3KhypCUw0m2u1KI';
+//var registration_id = 'APA91bHVVW5FOCDW4P9LYnsycJvmoL43nzy0rzadNcNyI4aS-J0rzRMy1AUG5zRXrgPZqm-FgEg9_cLrWIALdB0NJQh53vlh9Xn8NJEO-kuqAwAu2MPJCP7H1RFg9-VmK2T2jiqVsvsM';
+var registration_id = 'APA91bH_0SCR8Jl0oIP8c4L6Mx9BcNdQrAOR-TETrC2MxGWQODAF-AZ8E8vcS6qO78bPU1iQmLT39prFxVZx7dCv4qE3TSD3oDJ-zXW6cYWP0scoQUZs5yNvVAhA-hctC3tl9beRbHC4';
+registration_ids.push(registration_id);
+
+var connection = mysql.createConnection({
+	host : "192.168.35.75",
+	port : 3306,
+	user : "mynah",
+	password : "mynah",
+	database : "mynah_test"
+});
+
+var sqlQueryTest = "SELECT * FROM users";
+
+function callback(err, rows, fields) {
+	if (err) {
+		throw err;
+	}
+	for (var i = 0; i < rows.length; i++) {
+		console.log(rows[i].seq + "|" + rows[i].id + "|" + rows[i].passwd);
+	}
+}
+
+var httpsServer;
+var httpServer;
+
+// https verification options
+var options = {
+	key : fs.readFileSync('private_key.pem'),
+	cert : fs.readFileSync('cert.pem')
+};
+
+// http port
+var port = 13337;
+// https port
+var sslport = 13337;
+
+function ProcessPostRequest(res, err, fields, files) {
+	if (fields === undefined) {
+		// 이 경우는 무시
+		console.log("essential property is missing!");
+		console.log(fields);
+
+		res.writeHead(200, {
+			'type' : 'text',
+			'src' : 'NONE',
+			'order' : 'null'
+		});
+		res.end('EMISSING');
+		console.log("-status : EMISSING");
+		return;
+	}
+	// 잘못된 요청
+
+	if (fields.hasOwnProperty('id') === false || fields.hasOwnProperty('passwd') === false) {
+		console.log("essential property is missing!");
+		console.log(fields);
+
+		res.writeHead(200, {
+			'type' : 'text',
+			'src' : 'NONE',
+			'order' : 'null'
+		});
+		res.end('EMISSING');
+		console.log("-status : EMISSING");
+	} else {
+		var uniqueNumber = fields.uniqueNumber;
+		var type = fields.type;
+
+		console.log("uniqueNumber : " + uniqueNumber);
+		console.log("type : " + type);
+
+		uniqueNumber = uniqueNumber.toString();
+		type = type.toString();
+	}
+}
+
+// functions
+
+//https를 통해 정상적으로 request가 왔을 때 실행되는 함수, request 종류에 따라 알맞는 작업 수행 후 다시 app으로 response
+function HttpsEventProcessCallback(req, res) {
+	// console.log(req);
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain; charset=utf-8'
+	});
+
+	//res.write('안녕하세요');
+	var date = new Date();
+	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
+
+	
+	//gcm 이용 push 보내
+	sender.send(gcm_message, registration_ids, 4, function(err, result){
+		console.log(result);
+	});
+	 
+
+	//post방식으로 메세지가 정상 도착 했을 때
+	if (req.method === 'POST') {
+		// use multiparty module, 멀티파티 사용하지 않을 예정
+		// res.end('POST request');
+		//var form = new multiparty.Form();
+		//form.uploadDir = 'C:/Users/HJHOME/workspace/hello';
+
+		/*
+		 * form.parse(req, function(err, fields, files){ ProcessPostRequest(res,
+		 * err, fields, files); });
+		 */
+
+		var chunk = ""; //json 받는 변수
+
+		req.on('data', function(data) {
+			//console.log(data.toString());
+			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+			//console.log(decoded_data);
+			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+			console.log(chunk);
+		});
+
+		req.on('end', function() {
+			res.writeHead(200, {
+				'Content-Type' : 'text/plain; charset=utf-8'
+			});
+			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+			console.log("messagetype : " + messagetype);
+
+			if (messagetype == 'login') {
+				//login 시;
+				console.log("family_id : " + chunk.family_id);
+				var sql_query = "SELECT * FROM family_info WHERE family_id=\'"
+						+ chunk.family_id + "\';";
+				console.log(sql_query);
+				
+				//id로 먼저 검색, 없을 시 아이디가 없다고 respond
+				var is_exist_id = true;
+				var query = connection.query(sql_query, function(err, rows, fields) {
+					if (err) {
+						res.end('LOGIN_ERROR');
+						//throw err;
+					} else {
+						console.log(rows.length);
+						if (rows.length == 0) {
+							//id가 없을 때 id가 없다고 메세지 보냄. 
+							is_exist_id = false;
+							res.end('LOGIN_FAIL_ID');
+						}
+						else{
+							console.log("id exist");
+							console.log("family_id : " + chunk.family_id + " / password : " + chunk.password);
+							sql_query = "SELECT * FROM family_info WHERE family_id=\'" + chunk.family_id + "\' and password=\'" + chunk.password + "\';";
+							console.log(sql_query);
+							query = connection.query(sql_query, function(err, rows, fields) {
+								if (err) {
+									res.end('LOGIN_ERROR');
+									//throw err;
+								} else {
+									if (rows.length == 0) {
+										//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
+										res.end('LOGIN_FAIL_PASSWD');
+									} else {
+										//로그인 성공
+										res.end('LOGIN_SUCCESS');
+									}
+								}
+							});
+						}
+					}
+				});
+
+				/*
+				if (is_exist_id) {
+					//id는 존재할 때 passwd와 함께 다시 검사;
+					console.log("id exist");
+					console.log("family_id : " + chunk.family_id + " / password : " + chunk.password);
+					sql_query = "SELECT * FROM family_info WHERE family_id=\'" + chunk.family_id + "\' and password=\'" + chunk.password + "\';";
+					console.log(sql_query);
+					query = connection.query(sql_query, function(err, rows, fields) {
+						if (err) {
+							res.end('LOGIN_ERROR');
+							//throw err;
+						} else {
+							if (rows.length < 1) {
+								//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
+								res.end('LOGIN_FAIL_PASSWD');
+							} else {
+								//로그인 성공
+								res.end('LOGIN_SUCCESS');
+							}
+						}
+					});
+				}
+				*/
+
+				//res.end('로그인');
+			} else if (messagetype == 'send_tts') {
+				//app이 서버로 tts를 라즈베리파이로 전송하길 요청할 때
+				console.log(encodeURI(chunk.sentense));
+				tts.translate('ko', chunk.sentense, function(result) {
+					if (result.success) { // check for success
+						var response = {
+							'audio' : result.data
+						};
+						console.log(result);
+						//res.end('TTS SUCCESS ' + result.audio);
+						res.end('SEND_TTS_SUCCESS');
+						base64_decode(result.audio, 'decodetmp.mp3');
+						// socket.emit('ttsResult', response); //emit
+						// the audio to client
+
+						//console.log(response);
+					} else {
+						//res.end('TTS FAIL ' + chunk.sentense);
+						res.end('SEND_TTS_FAIL');
+						console.log('google tts FAIL');
+						console.log(result);
+					}
+
+				});
+				console.log("sentense : " + chunk.sentense);
+			} else if (messagetype == 'signup_first') {
+				//가족 구성원중 첫 가입자. 기계를 등록하고 가족 id를 등록하고 본인의 id도 등록해야함.
+				var sql_query = "INSERT INTO user_info values(\'"
+						+ chunk.user_id + "\', \'" + chunk.family_id + "\', \'"
+						+ chunk.registration_id + "\', \'" + chunk.RRN
+						+ "\', \'" + chunk.user_name + "\', "
+						+ chunk.gender_flag + ", " + chunk.representative_flag
+						+ ", " + chunk.in_home_flag + ")";
+				//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+				//var data = [chunk.]
+				console.log('query : ' + sql_query);
+
+				//connection.query(sqlQueryTest, callback);
+
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						//console.log(query.sql);
+						res.end("SIGNUP_FIRST_FAIL");
+						//throw err;
+					} else {
+						res.end("SIGNUP_FIRST_SUCCESS");
+					}
+				});
+
+				console.log('sign_up OK ' + chunk.user_id);
+				//res.end('sign_up OK');
+			} else if (messagetype == 'signup') {
+				//첫 가족 구성원이 가족의 대표 id를 만든 후의 가입자 생성
+				var sql_query = "INSERT INTO user_info values(\'"
+						+ chunk.user_id + "\', \'" + chunk.family_id + "\', \'"
+						+ chunk.registration_id + "\', \'" + chunk.RRN
+						+ "\', \'" + chunk.user_name + "\', "
+						+ chunk.gender_flag + ", " + chunk.representative_flag
+						+ ", " + chunk.in_home_flag + ")";
+				//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+				//var data = [chunk.]
+				console.log('query : ' + sql_query);
+
+				//connection.query(sqlQueryTest, callback);
+
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						//console.log(query.sql);
+						res.end("SIGNUP_FAIL");
+						//throw err;
+					} else {
+						res.end("SIGNUP_SUCCESS");
+					}
+				});
+
+				console.log('sign_up OK ' + chunk.user_id);
+				//res.end('sign_up OK');
+			} else if (messagetype == 'id_duplicate_check') {
+				//가족 대표 계정 가입 시 id 중복확인
+				var sql_query = "SELECT * FROM family_info WHERE family_id=\'" + chunk.family_id + "\';";
+				//console.log("id : " + chunk.id + " / passwd : " + chunk.passwd);
+
+				//id로 먼저 검색, 없을 시 아이디가 없다고 respond
+				var query = connection.query(sql_query, function(err, rows,
+						fields) {
+					if (err) {
+						res.end('ID_DUPLICATE_ERROR');
+						//throw err;
+					} else {
+						if (rows.length == 0) {
+							//id가 중복되지 않았을 때
+							res.end('ID_NOT_DUPLICATE');
+						} else {
+							//id가 중복 된 상태
+							res.end('ID_DUPLICATE');
+						}
+					}
+				});
+			}
+
+		});
+		// res.end("한글 ");
+		// res.end('JSON OK');
+
+	} else {
+		// 포스트가 아니면 에러
+		res.writeHead(200, {
+			'Content-Type' : 'text/plain; charset=utf-8'
+		});
+		console.log('NOT POST REQUEST');
+		res.end('wrong request');
+	}
+}
+
+function base64_decode(base64str, file) {
+	// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+	var bitmap = new Buffer(base64str, 'base64');
+	// write buffer to file
+	fs.writeFileSync(file, bitmap);
+	console.log('******** File created from base64 encoded string ********');
+}
+
+//http 리퀘스트 함수. 임시.
+function HttpEventProcessCallback(req, res) {
+	// http request from port 8010
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain'
+	});
+	res.end('request');
+	var date = new Date();
+	console.log("\r\nhttp request arriving!" + date.toUTCString() + "\r\n");
+	// res.end('wrong request');
+
+}
+
+httpsServer = https.createServer(options, HttpsEventProcessCallback);
+// httpServer = http.createServer(HttpEventProcessCallback);
+
+// http.createServer(function handler(req, res) {
+// res.writeHead(200, {'Content-Type': 'text/plain'});
+// res.end('Hello World HJHOME\n');
+// }).listen(sslport, '192.168.35.75');
+
+httpsServer.listen(sslport, '192.168.35.75');
+connection.connect();
+console.log('Server running at https://192.168.35.75:13337/');
+
+// httpServer.listen(port, '192.168.35.75');
+// console.log('Server running at http://192.168.35.75:13337/');
+
+//connection.connect();
+//connection.query(sqlQueryTest, callback);
+//connection.end();

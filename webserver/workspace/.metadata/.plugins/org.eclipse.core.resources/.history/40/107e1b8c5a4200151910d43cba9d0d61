@@ -1,0 +1,525 @@
+package sips.dept.contents;
+
+
+import java.util.StringTokenizer;
+
+import sips.common.lib.db.*;
+import sips.common.lib.exception.*;
+import sips.common.lib.util.StringUtil;
+import sips.common.lib.value.ParamValue;
+import sips.common.lib.value.ResultSetValue;
+import sips.dept.contents.Member;
+
+public class _Member extends ContentsMaster {
+   
+
+
+    /**
+     * 占쏙옙占� :   占쏙옙占쏙옙트 占쏙옙占쏙옙
+     */
+    public _Member() {
+        super();
+    }
+    
+    /**
+     * 濡쒓렇�씤 �솗�씤
+     * @return  int
+     */
+    public ResultSetValue getAdminMember(ParamValue parmValue) throws CommonException {
+        StringBuffer   sql   = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        ResultSetValue rset  = null;
+        
+        String id = parmValue.getString("id", "");
+        String pw = parmValue.getString("pw", "");
+        String app_key = parmValue.getString("app_key", "");
+        System.out.println("app_key------------>"+app_key);
+        int cnt = 0;
+
+
+        sql.append(" \n");
+        sql.append(" select user.*, c.name conference_name, c.banner_image from user user      \n");
+        sql.append(" JOIN conference c ON user.conference_id = c.conference_id and  c.user_yn = 'y'   \n");
+        sql.append("    WHERE user.user_yn = 'y'                 \n");
+        sql.append("    AND user.id = ?                  \n");
+        //sql.append("    AND user.passwd = PASSWORD(?)                  \n");
+        sql.append("    AND user.passwd = ?                  \n");
+        sql.append("    AND c.package_name = ?                  \n");
+        System.out.println(sql.toString());
+        try {
+
+            dbHelper.connect();
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setInt(    ++cnt, id );
+            dbHelper.setInt(    ++cnt, pw );
+            dbHelper.setInt(    ++cnt, app_key );
+            rset = dbHelper.executeQuery();
+            
+           
+
+            dbHelper.close();
+
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+
+        return rset;
+    }
+    
+
+    
+    /**
+     * 濡쒓렇�씤 �솗�씤
+     * @return  int
+     */
+    public ResultSetValue getAuthority(ParamValue parmValue) throws CommonException {
+        StringBuffer   sql   = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        ResultSetValue rset  = null;
+        
+        String user_cd = parmValue.getString("user_cd", "");
+        
+        int cnt = 0;
+
+        sql.append(" \n");
+        sql.append(" select user.*, c.name conference_name, c.banner_image, c.qr_image, c.info_image, c.start_date, c.end_date, qr_code.qr_image qr_images from user user      \n");
+        sql.append(" JOIN conference c ON user.conference_id = c.conference_id     \n");
+        sql.append(" LEFT JOIN qr_code ON user.qrcode_id = qr_code.qrcode_id    \n");
+        sql.append("    WHERE user.user_cd = ?                  \n");
+        System.out.println(sql.toString());
+        try {
+
+        	dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString(    ++cnt, user_cd );
+            rset = dbHelper.executeQuery();  
+            
+            updatePlatform(dbHelper, parmValue);
+//System.out.println("user_cd------------>"+user_cd);
+            dbHelper.commit();
+            dbHelper.close();
+
+        }
+        catch(CommonException e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw e;
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+
+        return rset;
+    }
+    
+    /**
+     * �쉶�썝 �뵆�옯�뤌 �뾽�뜲�씠�듃
+     * @param   ParamValue    parmValue
+     */
+    public void updatePlatform(DBHelper dbHelper, ParamValue parmValue) throws CommonException {
+        StringBuffer   sql      = new StringBuffer();
+
+        int cnt = 0;
+        String user_cd = parmValue.getString("user_cd", "");
+        String platform = parmValue.getString("platform", "");
+        String push_key = parmValue.getString("push_key", "");
+//System.out.println("platform------------>"+platform);
+        sql.append(" UPDATE user SET                 \n");
+        sql.append("        platform  = ? ,             \n");
+        sql.append("        push_key  = ?              \n");
+        sql.append("  WHERE user_cd    = ?               \n");
+
+        try{
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString(    ++cnt, platform );
+            dbHelper.setString(    ++cnt, push_key );
+            dbHelper.setString(    ++cnt, user_cd );
+            dbHelper.executeUpdate();
+        }
+        catch(Exception e) {
+            throw new CommonException(e);
+        }
+    }
+    
+    public int updateBusinesscardShare(ParamValue parmValue) throws CommonException {
+        StringBuffer   sql      = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        int rlt = 0;
+
+        int cnt = 0;
+        String user_cd = parmValue.getString("user_cd", "");
+        String share = parmValue.getString("share", "");
+        String random = parmValue.getString("random", "");
+//System.out.println("platform------------>"+platform);
+        
+        sql.append(" UPDATE user SET                 \n");
+        sql.append("        businesscard_share  = ?,              \n");
+        sql.append("        businesscard_random  = ?              \n");
+        sql.append("  WHERE user_cd    = ?               \n");
+
+        try{
+            dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString(    ++cnt, share );
+            dbHelper.setString(    ++cnt, random );
+            dbHelper.setString(    ++cnt, user_cd );
+            rlt = dbHelper.executeUpdate();
+            
+            dbHelper.commit();
+            dbHelper.close();
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+        return rlt;
+    }
+    
+
+    
+    public int updateUserInfo(ParamValue parmValue) throws CommonException {
+        StringBuffer   sql      = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        int rlt = 0;
+
+        int cnt = 0;
+        String user_cd = parmValue.getString("user_cd", "");
+        String share = parmValue.getString("share", "");
+//System.out.println("platform------------>"+platform);
+        sql.append(" UPDATE user SET                 \n");
+        sql.append("        businesscard_share  = ?              \n");
+        sql.append("  WHERE user_cd    = ?               \n");
+
+        try{
+            dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString(    ++cnt, share );
+            dbHelper.setString(    ++cnt, user_cd );
+            rlt = dbHelper.executeUpdate();
+            
+            dbHelper.commit();
+            dbHelper.close();
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+        return rlt;
+    }
+    
+    
+    public int memberModify(ParamValue parmValue) throws CommonException {
+        Member            member     = new Member();
+        StringBuffer   sql      = new StringBuffer();
+        DBHelper       dbHelper = new DBHelper();
+        ResultSetValue rset  = null;
+        
+        int cnt = 0;
+        int rlt = 0;
+        String first_phone = "";
+        
+        rset = member.getMemberInfo(parmValue);
+        if ( rset.next() ) {
+        	first_phone = rset.getString("first_phone");
+        }
+System.out.println("first_phone------------>"+first_phone);
+        
+        String user_cd = parmValue.getString("user_cd");
+System.out.println("user_cd------------>"+parmValue.getString("user_cd"    , ""));
+        sql.append(" UPDATE user SET                 \n");
+        sql.append("        name     = ? ,             \n");
+        sql.append("        email     = ? ,             \n");
+        sql.append("        company     = ? ,             \n");
+        sql.append("        appellation_id     = ? ,             \n");
+        if ("h".equals(first_phone)){
+        	sql.append("        handphone1     = ? ,             \n");
+            sql.append("        handphone2     = ? ,             \n");
+            sql.append("        handphone3     = ? ,             \n");
+        }else{
+        	sql.append("        phone1     = ? ,             \n");
+            sql.append("        phone2    = ? ,             \n");
+            sql.append("        phone3     = ? ,             \n");
+        }
+        sql.append("        street_address     = ? ,             \n");
+        sql.append("        street_address_detail     = ? ,            \n");
+        sql.append("        city     = ? ,            \n");
+        sql.append("        state     = ? ,            \n");
+        sql.append("        nation_id     = ? ,            \n");
+        if (!"".equals(parmValue.getString("picture"    , "")))
+        	sql.append("        picture    = ?,              \n");
+        sql.append("        postal_code     = ?             \n");
+        
+        sql.append("  WHERE user_cd    = ?               \n");
+        System.out.println(sql.toString());
+        try{
+            dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString( ++cnt, parmValue.getString("name"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("email"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("company"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("appellation_id"    , "0"));
+            dbHelper.setString( ++cnt, parmValue.getString("phone1"    , "0"));
+            dbHelper.setString( ++cnt, parmValue.getString("phone2"    , "0"));
+            dbHelper.setString( ++cnt, parmValue.getString("phone3"    , "0"));
+            dbHelper.setString( ++cnt, parmValue.getString("street_address"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("street_address_detail"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("city"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("state"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("nation_id"    , ""));
+            if (!"".equals(parmValue.getString("picture"    , "")))
+            	dbHelper.setString( ++cnt, parmValue.getString("picture"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("postal_code"    , ""));
+            dbHelper.setString( ++cnt, parmValue.getString("user_cd"    , "0"));
+            rlt = dbHelper.executeUpdate();
+
+            dbHelper.commit();
+            dbHelper.close();
+
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+        return rlt;
+    }
+    
+    public int memberAuthorityModify(ParamValue parmValue) throws CommonException {
+        Member            member     = new Member();
+        StringBuffer   sql      = new StringBuffer();
+        DBHelper       dbHelper = new DBHelper();
+        ResultSetValue rset  = null;
+        
+        int cnt = 0;
+        int rlt = 0;
+        String question_authority = "";
+        
+        rset = member.getMemberInfo(parmValue);
+        if ( rset.next() ) {
+        	question_authority = rset.getString("question_authority");
+        }
+        if ("n".equals(question_authority))
+        	question_authority = "y";
+        else
+        	question_authority = "n";
+System.out.println("question_authority------------>"+question_authority);
+        
+        String user_cd = parmValue.getString("user_cd");
+        
+        sql.append(" UPDATE user SET                 \n");
+        sql.append("        question_authority     = ?             \n");
+        sql.append("  WHERE user_cd    = ?               \n");
+        System.out.println(sql.toString());
+        try{
+            dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString( ++cnt, question_authority);
+            dbHelper.setString( ++cnt, user_cd);
+            rlt = dbHelper.executeUpdate();
+
+            dbHelper.commit();
+            dbHelper.close();
+
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+        return rlt;
+    }
+    
+    
+    public ResultSetValue getHolderList(ParamValue parmValue) throws CommonException {
+    	StringBuffer   sql   = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        ResultSetValue rset  = null;
+
+        String conference_id = parmValue.getString("conference_id", "");
+        String user_cd = parmValue.getString("user_cd", "");
+        String name = parmValue.getString("name", "");
+        
+        int cnt = 0;
+
+        sql.append(" \n");
+        sql.append(" SELECT      \n");
+        sql.append(" 		user.user_cd, user.name,  user.company, user.businesscard_share,      \n");
+        sql.append(" 		CASE (SELECT COUNT(*) FROM businesscard_mapping WHERE share_user = user.user_cd AND allow_user = ? )      \n");
+        sql.append(" 		WHEN 0 THEN businesscard_share      \n");
+        sql.append(" 		ELSE 'y' END businesscard_share,     \n");
+        sql.append(" 		appellation       \n");
+        sql.append(" from user       \n");
+        sql.append(" JOIN appellation ON appellation.appellation_id = user.appellation_id    \n");
+        sql.append("  where user.user_yn = 'y'    \n");
+        sql.append("  and businesscard_share in ( 'y' , 's')   \n");
+        sql.append("  and user.user_cd != ?     \n");
+        sql.append("  and user.conference_id = ?     \n");
+        sql.append("  and user_cd not in (select delete_user_cd from briefcase_delete where user_cd = ?)     \n");
+        if (!"".equals(name))
+        	sql.append("  and user.name like ?     \n");
+        System.out.println(sql.toString());
+        try {
+
+            dbHelper.connect();
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setInt(    ++cnt, user_cd );
+            dbHelper.setInt(    ++cnt, user_cd );
+            dbHelper.setInt(    ++cnt, conference_id );
+            dbHelper.setInt(    ++cnt, user_cd );
+            if (!"".equals(name))
+            	dbHelper.setString( ++cnt, "%" + name + "%" );
+            rset = dbHelper.executeQuery();
+            
+           
+
+            dbHelper.close();
+
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+
+        return rset;
+    }
+    
+    
+    public int deleteHolderList(ParamValue parmValue) throws CommonException {
+    	StringBuffer   sql      = new StringBuffer();
+        DBHelper dbHelper = new DBHelper();
+        int rlt = 0;
+
+        int cnt = 0;
+        String user_cd = parmValue.getString("user_cd", "");
+        String delete_user_cd = parmValue.getString("delete_user_cd", "");
+//System.out.println("platform------------>"+platform);
+        sql.append(" INSERT INTO briefcase_delete      VALUES            \n");
+        sql.append("        ( ? , ? )             \n"); 
+
+        try{
+            dbHelper.connect(false);
+
+            dbHelper.prepareStatement(sql.toString());
+            dbHelper.setString(    ++cnt, user_cd );
+            dbHelper.setString(    ++cnt, delete_user_cd );
+            rlt = dbHelper.executeUpdate();
+            
+            dbHelper.commit();
+            dbHelper.close();
+        }
+        catch(Exception e) {
+            try {
+                dbHelper.rollback();
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+            throw new CommonException(e);
+        }
+        finally {
+            try {
+                dbHelper.close();
+            }
+            catch(Exception ee) {
+            }
+        }
+        return rlt;
+    }
+
+
+}
