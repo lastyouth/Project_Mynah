@@ -950,6 +950,7 @@ public class DBManager {
 
 	}
 
+
 	//스케쥴 받아오기 관련 쿼리
 
 	// 스케쥴 객체를 schedule 테이블에 insert하는 함수

@@ -134,675 +134,830 @@ function HttpsEventProcessCallback(req, res) {
 		 */
 		
 		console.log('post request!');
-
-		var chunk = ""; //json 받는 변수
-
-		req.on('data', function(data) {
-			//console.log(data.toString());
-			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
-			//console.log(decoded_data);
-			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
-			console.log(chunk);
-		});
-		req.on('end', function() {
-			res.writeHead(200, {
-				'Content-Type' : 'text/plain; charset=utf-8'
-			});
-			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
-			console.log("messagetype : " + messagetype);
+		console.log(req.url);
+		
+		if(req.url === '/recording'){
+			var device_id;
+			var rec_file_name;
+			console.log('recording upload start');
 			
-			if (messagetype == 'login') {
-				//login 시;
-				
-				//gcm 이용 push 보내
-				var registration_ids = [];
-				var gcm_message = new gcm.Message({
-					collapseKey : 'demo',
-					delayWhileIdle : true,
-					timeToLive : 3,
-					data : {
-						key1 : 'hello',
-						key2 : 'no_permission_person'
-					}
-				});
-				registration_ids.push(registration_id)
-				sender.send(gcm_message, registration_ids, 4, function(err, result){
-					console.log(result);
-				});
-				
-				console.log("family_id : " + chunk.user_id);
-				var sql_query = "SELECT * FROM user_info WHERE user_id=\'"
-						+ chunk.user_id + "\';";
-				console.log(sql_query);
-				
-				//id로 먼저 검색, 없을 시 아이디가 없다고 respond
-				var is_exist_id = true;
-				var query = connection.query(sql_query, function(err, rows, fields) {
-					if (err) {
-						console.log(chunk.user_id + ' log in error');
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "LOGIN_ERROR";
-						res.end(JSON.stringify(jobj));
-						//res.end('LOGIN_ERROR');
-						//throw err;
-					} else {
-						console.log(rows.length);
-						if (rows.length == 0) {
-							//id가 없을 때 id가 없다고 메세지 보냄. 
-							is_exist_id = false;
-							console.log(chunk.user_id + ' no id');
+			var form = new formidable.IncomingForm();
+			form.keepExtensions = true;
+			form.uploadDir ='./recording';
+			
+			form
+			    .on('error', function(err) {
+			        throw err;
+			    })
+
+			    .on('field', function(field, value) {
+			        //receive form fields here
+			    	
+			    	if(field === 'device_id'){
+			    		device_id = value;
+			    		console.log('device_id : ' + device_id);
+			    	}
+			    })
+
+			    /* this is where the renaming happens */
+			    .on ('fileBegin', function(name, file){
+			        //rename the incoming file to the file's name
+			    	var date_time = new Date().toISOString().replace(/T/, '_').replace(/\..+/, '');
+			    	rec_file_name = user_seq + "_" + date_time + "_" + file.name;
+			        file.path = form.uploadDir + "/" + rec_file_name;
+			        console.log('file_name : ' + rec_file_name);
+			    })
+
+			    .on('file', function(field, file) {
+			        //On file received
+			    })
+
+			    .on('progress', function(bytesReceived, bytesExpected) {
+			        //self.emit('progess', bytesReceived, bytesExpected)
+
+			        var percent = (bytesReceived / bytesExpected * 100) | 0;
+			        process.stdout.write('Uploading: %' + percent + '\r');
+			    })
+
+			    .on('end', function() {
+			    	
+			    	var sql_query = "INSERT INTO recording_info"
+			    		+ " (user_id, path, reg_date) "
+						+ "VALUES("
+						+ " (SELECT user_id from user_info where device_id = \'"+device_id+"\' LIMIT 1)" 
+						", \'" + update_file_name
+						+ "\', now());";
+					
+					console.log('send_tts query : ' + sql_query);
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
 							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "LOGIN_FAIL_ID";
-							res.end(JSON.stringify(jobj));
-							//res.end('LOGIN_FAIL_ID');
+							jobj.messagetype = "send_tts";
+							jobj.result = "SEND_TTS_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//throw err;
 						}
 						else{
-							console.log("id exist");
-							console.log("family_id : " + chunk.user_id + " / password : " + chunk.password);
-							sql_query = "SELECT * FROM user_info WHERE user_id=\'" + chunk.user_id + "\' and password=\'" + chunk.password + "\';";
-							console.log(sql_query);
-							query = connection.query(sql_query, function(err, rows, fields) {
-								if (err) {
-									console.log(chunk.user_id + ' log in error');
+							var rec_del_query = "DELETE FROM recording_info WHERE rec_seq IN "
+									+ "(SELECT rec_seq FROM (SELECT rec_seq FROM recording_info WHERE user_id = "
+									+ "(SELECT user_id from user_info where device_id = \'"+device_id+"\' LIMIT 1) ORDER BY rec_seq DESC LIMIT 10, 10) x);";
+							
+							var del_query = connection.query(sql_query, function (err) {
+								if(err){
 									var jobj = basic_jobj;
-									jobj.messagetype = messagetype;
-									jobj.result = "LOGIN_ERROR";
-									res.end(JSON.stringify(jobj));
-									//res.end('LOGIN_ERROR');
+									jobj.messagetype = "send_tts";
+									jobj.result = "SEND_TTS_FAIL";
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
 									//throw err;
-								} else {
-									if (rows.length == 0) {
-										//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
-										console.log(chunk.user_id + ' log in fail passwd');
-										var jobj = basic_jobj;
-										jobj.messagetype = messagetype;
-										jobj.result = "LOGIN_FAIL_PASSWD";
-										res.end(JSON.stringify(jobj));
-										//res.end('LOGIN_FAIL_PASSWD');
-									} else {
-										//로그인 성공
-										console.log(chunk.user_id + ' log in success');
-										var jobj = basic_jobj;
-										jobj.messagetype = messagetype;
-										jobj.result = "LOGIN_SUCCESS";
-										res.end(JSON.stringify(jobj));
-										//res.end('LOGIN_SUCCESS');
-									}
+								}
+								else{
+									var jobj = basic_jobj;
+									jobj.messagetype = "send_tts";
+									jobj.result = "SEND_TTS_SUCCESS";
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
 								}
 							});
 						}
-					}
-				});
+					});
+			    });
 
-				/*
-				if (is_exist_id) {
-					//id는 존재할 때 passwd와 함께 다시 검사;
-					console.log("id exist");
-					console.log("family_id : " + chunk.family_id + " / password : " + chunk.password);
-					sql_query = "SELECT * FROM family_info WHERE family_id=\'" + chunk.family_id + "\' and password=\'" + chunk.password + "\';";
+			form.parse(req);
+		}
+		else{
+			var chunk = ""; //json 받는 변수
+	
+			req.on('data', function(data) {
+				//console.log(data.toString());
+				var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+				//console.log(decoded_data);
+				chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+				console.log(chunk);
+			});
+			req.on('end', function() {
+				res.writeHead(200, {
+					'Content-Type' : 'text/plain; charset=utf-8'
+				});
+				var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+				console.log("messagetype : " + messagetype);
+				
+				
+				
+				if (messagetype == 'login') {
+					//login 시;
+					
+					//gcm 이용 push 보내
+					var registration_ids = [];
+					var gcm_message = new gcm.Message({
+						collapseKey : 'demo',
+						delayWhileIdle : true,
+						timeToLive : 3,
+						data : {
+							key1 : 'hello',
+							key2 : 'no_permission_person'
+						}
+					});
+					registration_ids.push(registration_id)
+					sender.send(gcm_message, registration_ids, 4, function(err, result){
+						console.log(result);
+					});
+					
+					console.log("family_id : " + chunk.user_id);
+					var sql_query = "SELECT * FROM user_info WHERE user_id=\'"
+							+ chunk.user_id + "\';";
 					console.log(sql_query);
-					query = connection.query(sql_query, function(err, rows, fields) {
+					
+					//id로 먼저 검색, 없을 시 아이디가 없다고 respond
+					var is_exist_id = true;
+					var query = connection.query(sql_query, function(err, rows, fields) {
 						if (err) {
-							res.end('LOGIN_ERROR');
+							console.log(chunk.user_id + ' log in error');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "LOGIN_ERROR";
+							res.end(JSON.stringify(jobj));
+							//res.end('LOGIN_ERROR');
 							//throw err;
 						} else {
-							if (rows.length < 1) {
-								//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
-								res.end('LOGIN_FAIL_PASSWD');
+							console.log(rows.length);
+							if (rows.length == 0) {
+								//id가 없을 때 id가 없다고 메세지 보냄. 
+								is_exist_id = false;
+								console.log(chunk.user_id + ' no id');
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "LOGIN_FAIL_ID";
+								res.end(JSON.stringify(jobj));
+								//res.end('LOGIN_FAIL_ID');
+							}
+							else{
+								console.log("id exist");
+								console.log("family_id : " + chunk.user_id + " / password : " + chunk.password);
+								sql_query = "SELECT * FROM user_info WHERE user_id=\'" + chunk.user_id + "\' and password=\'" + chunk.password + "\';";
+								console.log(sql_query);
+								query = connection.query(sql_query, function(err, rows, fields) {
+									if (err) {
+										console.log(chunk.user_id + ' log in error');
+										var jobj = basic_jobj;
+										jobj.messagetype = messagetype;
+										jobj.result = "LOGIN_ERROR";
+										res.end(JSON.stringify(jobj));
+										//res.end('LOGIN_ERROR');
+										//throw err;
+									} else {
+										if (rows.length == 0) {
+											//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
+											console.log(chunk.user_id + ' log in fail passwd');
+											var jobj = basic_jobj;
+											jobj.messagetype = messagetype;
+											jobj.result = "LOGIN_FAIL_PASSWD";
+											res.end(JSON.stringify(jobj));
+											//res.end('LOGIN_FAIL_PASSWD');
+										} else {
+											//로그인 성공
+											console.log(chunk.user_id + ' log in success');
+											var jobj = basic_jobj;
+											jobj.messagetype = messagetype;
+											jobj.result = "LOGIN_SUCCESS";
+											res.end(JSON.stringify(jobj));
+											//res.end('LOGIN_SUCCESS');
+										}
+									}
+								});
+							}
+						}
+					});
+	
+					/*
+					if (is_exist_id) {
+						//id는 존재할 때 passwd와 함께 다시 검사;
+						console.log("id exist");
+						console.log("family_id : " + chunk.family_id + " / password : " + chunk.password);
+						sql_query = "SELECT * FROM family_info WHERE family_id=\'" + chunk.family_id + "\' and password=\'" + chunk.password + "\';";
+						console.log(sql_query);
+						query = connection.query(sql_query, function(err, rows, fields) {
+							if (err) {
+								res.end('LOGIN_ERROR');
+								//throw err;
 							} else {
-								//로그인 성공
-								res.end('LOGIN_SUCCESS');
+								if (rows.length < 1) {
+									//id는 있는데 passwd와 함께 검색이 안된다면 비밀번호가 틀린 것;
+									res.end('LOGIN_FAIL_PASSWD');
+								} else {
+									//로그인 성공
+									res.end('LOGIN_SUCCESS');
+								}
+							}
+						});
+					}
+					*/
+	
+					//res.end('로그인');
+				} else if (messagetype == 'send_tts') {
+					//app이 서버로 tts를 라즈베리파이로 전송하길 요청할 때
+					console.log(encodeURI(chunk.sentense));
+					tts.translate('ko', chunk.sentense, function(result) {
+						if (result.success) { // check for success
+							var response = {
+								'audio' : result.data
+							};
+							console.log(result);
+							//res.end('TTS SUCCESS ' + result.audio);
+							res.end('SEND_TTS_SUCCESS');
+							base64_decode(result.audio, 'decodetmp.mp3');
+							// socket.emit('ttsResult', response); //emit
+							// the audio to client
+	
+							//console.log(response);
+						} else {
+							//res.end('TTS FAIL ' + chunk.sentense);
+							res.end('SEND_TTS_FAIL');
+							console.log('google tts FAIL');
+							console.log(result);
+						}
+	
+					});
+					console.log("sentense : " + chunk.sentense);
+				}
+				else if(messagetype == 'product_check'){
+					var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'"+ chunk.product_id + "\' LIMIT 1;";
+					console.log(sql_query);
+					
+					var query = connection.query(sql_query, function(err, rows, fields) {
+						if (err) {
+							console.log(chunk.product + 'product check error');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "PRODUCT_ERROR";
+							res.end(JSON.stringify(jobj));
+							//res.end('PRODUCT_ERROR');
+							//throw err;
+						} else {
+							console.log(rows.length);
+							if (rows.length == 0) {
+								//id가 없을 때 id가 없다고 메세지 보냄. 
+								console.log(chunk.product_id + ' no product id');
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "PRODUCT_NOT_EXIST";
+								res.end(JSON.stringify(jobj));
+								//res.end('PRODUCT_NOT_EXIST');
+							}
+							else{
+								console.log("id exist");
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "PRODUCT_EXIST//"+rows[0].mac_address+"//"+rows[0].uuid;
+								res.end(JSON.stringify(jobj));
+								//res.end('PRODUCT_EXIST');
 							}
 						}
 					});
 				}
-				*/
-
-				//res.end('로그인');
-			} else if (messagetype == 'send_tts') {
-				//app이 서버로 tts를 라즈베리파이로 전송하길 요청할 때
-				console.log(encodeURI(chunk.sentense));
-				tts.translate('ko', chunk.sentense, function(result) {
-					if (result.success) { // check for success
-						var response = {
-							'audio' : result.data
-						};
-						console.log(result);
-						//res.end('TTS SUCCESS ' + result.audio);
-						res.end('SEND_TTS_SUCCESS');
-						base64_decode(result.audio, 'decodetmp.mp3');
-						// socket.emit('ttsResult', response); //emit
-						// the audio to client
-
-						//console.log(response);
-					} else {
-						//res.end('TTS FAIL ' + chunk.sentense);
-						res.end('SEND_TTS_FAIL');
-						console.log('google tts FAIL');
-						console.log(result);
-					}
-
-				});
-				console.log("sentense : " + chunk.sentense);
-			}
-			else if(messagetype == 'product_check'){
-				var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'"+ chunk.product_id + "\' LIMIT 1;";
-				console.log(sql_query);
-				
-				var query = connection.query(sql_query, function(err, rows, fields) {
-					if (err) {
-						console.log(chunk.product + 'product check error');
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "PRODUCT_ERROR";
-						res.end(JSON.stringify(jobj));
-						//res.end('PRODUCT_ERROR');
-						//throw err;
-					} else {
-						console.log(rows.length);
-						if (rows.length == 0) {
-							//id가 없을 때 id가 없다고 메세지 보냄. 
-							console.log(chunk.product_id + ' no product id');
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "PRODUCT_NOT_EXIST";
-							res.end(JSON.stringify(jobj));
-							//res.end('PRODUCT_NOT_EXIST');
-						}
-						else{
-							console.log("id exist");
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "PRODUCT_EXIST//"+rows[0].mac_address+"//"+rows[0].uuid;
-							res.end(JSON.stringify(jobj));
-							//res.end('PRODUCT_EXIST');
-						}
-					}
-				});
-			}
-			/*
-			else if (messagetype == 'signup_first') {
-				//가족 구성원중 첫 가입자. 기계를 등록하고 가족 id를 등록하고 본인의 id도 등록해야함.
-				var sql_query = "INSERT INTO user_info values(\'"
-						+ chunk.user_id + "\', \'" + chunk.family_id + "\', \'"
-						+ chunk.registration_id + "\', \'" + chunk.RRN
-						+ "\', \'" + chunk.user_name + "\', "
-						+ chunk.gender_flag + ", " + chunk.representative_flag
-						+ ", " + chunk.in_home_flag + ")";
-				//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-				//var data = [chunk.]
-				console.log('query : ' + sql_query);
-
-				//connection.query(sqlQueryTest, callback);
-
-				var query = connection.query(sql_query, function(err) {
-					if (err) {
-						console.log('err : ' + err);
-						//console.log(query.sql);
-						res.end("SIGNUP_FIRST_FAIL");
-						//throw err;
-					} else {
-						res.end("SIGNUP_FIRST_SUCCESS");
-					}
-				});
-
-				console.log('sign_up OK ' + chunk.user_id);
-				//res.end('sign_up OK');
-			}
-			*/ 
-			else if (messagetype == 'signup') {
-				//첫 가족 구성원이 가족의 대표 id를 만든 후의 가입자 생성
-				var sql_query = "INSERT INTO user_info values(\'"
-						+ chunk.user_id + "\', \'" + chunk.product_id + "\', \'"
-						+ chunk.registration_id + "\', \'" + chunk.user_name + "\', "
-						+ chunk.gender_flag + ", " + chunk.representative_flag
-						+ ", " + chunk.in_home_flag + ", \'"+ chunk.device_id + "\', \'" + chunk.password +"\', now())";
-				//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-				//var data = [chunk.]
-				console.log('query : ' + sql_query);
-
-				//connection.query(sqlQueryTest, callback);
-
-				var query = connection.query(sql_query, function(err) {
-					if (err) {
-						console.log('err : ' + err);
-						//console.log(query.sql);
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "SIGNUP_FAIL";
-						res.end(JSON.stringify(jobj));
-						//res.end("SIGNUP_FAIL");
-						//throw err;
-					} else {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "SIGNUP_SUCCESS";
-						res.end(JSON.stringify(jobj));
-						//res.end("SIGNUP_SUCCESS");
-					}
-				});
-
-				console.log('sign_up OK ' + chunk.user_id);
-				//res.end('sign_up OK');
-			} else if (messagetype == 'member_check') {
-				//device_id로 회원이엿는지 검사
-				//console.log("id_duplicate_check");
-				var sql_query = "SELECT * FROM user_info WHERE device_id=\'" + chunk.device_id + "\';";
-				//console.log("id : " + chunk.id + " / passwd : " + chunk.passwd);
-
-				//id로 먼저 검색, 없을 시 아이디가 없다고 respond
-				var query = connection.query(sql_query, function(err, rows,
-						fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "MEMBER_CHECK_ERROR";
-						res.end(JSON.stringify(jobj));
-						//res.end('ID_DUPLICATE_ERROR');
-						//throw err;
-					} else {
-						if (rows.length == 0) {
-							//회원 아닌거같애
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "IS_NOT_MEMBER";
-							res.end(JSON.stringify(jobj));
-							//res.end('ID_NOT_DUPLICATE');
+				/*
+				else if (messagetype == 'signup_first') {
+					//가족 구성원중 첫 가입자. 기계를 등록하고 가족 id를 등록하고 본인의 id도 등록해야함.
+					var sql_query = "INSERT INTO user_info values(\'"
+							+ chunk.user_id + "\', \'" + chunk.family_id + "\', \'"
+							+ chunk.registration_id + "\', \'" + chunk.RRN
+							+ "\', \'" + chunk.user_name + "\', "
+							+ chunk.gender_flag + ", " + chunk.representative_flag
+							+ ", " + chunk.in_home_flag + ")";
+					//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+					//var data = [chunk.]
+					console.log('query : ' + sql_query);
+	
+					//connection.query(sqlQueryTest, callback);
+	
+					var query = connection.query(sql_query, function(err) {
+						if (err) {
+							console.log('err : ' + err);
+							//console.log(query.sql);
+							res.end("SIGNUP_FIRST_FAIL");
+							//throw err;
 						} else {
-							//회원인듯
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "IS_MEMBER";
-							res.end(JSON.stringify(jobj));
-							//res.end('ID_DUPLICATE');
+							res.end("SIGNUP_FIRST_SUCCESS");
 						}
-					}
-				});
-			}
-			else if(messagetype == 'get_user_info'){
-				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
-				var sql_query = "SELECT * FROM user_info WHERE device_id=\'" + chunk.device_id + "\' LIMIT 1;";
-				
-				var query = connection.query(sql_query, function (err, rows, fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "GET_USER_INFO_ERROR";
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						if(rows.length == 0){
+					});
+	
+					console.log('sign_up OK ' + chunk.user_id);
+					//res.end('sign_up OK');
+				}
+				*/ 
+				else if (messagetype == 'signup') {
+					//첫 가족 구성원이 가족의 대표 id를 만든 후의 가입자 생성
+					var sql_query = "INSERT INTO user_info values(\'"
+							+ chunk.user_id + "\', \'" + chunk.product_id + "\', \'"
+							+ chunk.registration_id + "\', \'" + chunk.user_name + "\', "
+							+ chunk.gender_flag + ", " + chunk.representative_flag
+							+ ", " + chunk.in_home_flag + ", \'"+ chunk.device_id + "\', \'" + chunk.password +"\', now())";
+					//var sql_query = "INSERT INTO user_info VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+					//var data = [chunk.]
+					console.log('query : ' + sql_query);
+	
+					//connection.query(sqlQueryTest, callback);
+	
+					var query = connection.query(sql_query, function(err) {
+						if (err) {
+							console.log('err : ' + err);
+							//console.log(query.sql);
 							var jobj = basic_jobj;
 							jobj.messagetype = messagetype;
-							jobj.result = "GET_USER_INFO_FAIL";
+							jobj.result = "SIGNUP_FAIL";
 							res.end(JSON.stringify(jobj));
-						}
-						else{
+							//res.end("SIGNUP_FAIL");
+							//throw err;
+						} else {
 							var jobj = basic_jobj;
 							jobj.messagetype = messagetype;
-							jobj.result = "GET_USER_INFO_SUCCESS";
-							
-							/*
-							var user_jobj ={
-								user_id : rows[0].user_id,
-								product_id : rows[0].product_id,
-								registration_id : rows[0].registration_id,
-								user_name : rows[0].user_name,
-								gender_flag : rows[0].gendar_flag,
-								representative_flag : rows[0].represendative_flag,
-								in_home_flag : rows[0].in_home_flag,
-								device_id : rows[0].device_id,
-								inout_time : rows[0].inout_time
-							}
-							*/
-							jobj.attach = rows[0];
-							
+							jobj.result = "SIGNUP_SUCCESS";
+							res.end(JSON.stringify(jobj));
+							//res.end("SIGNUP_SUCCESS");
+						}
+					});
+	
+					console.log('sign_up OK ' + chunk.user_id);
+					//res.end('sign_up OK');
+				} else if (messagetype == 'member_check') {
+					//device_id로 회원이엿는지 검사
+					//console.log("id_duplicate_check");
+					var sql_query = "SELECT * FROM user_info WHERE device_id=\'" + chunk.device_id + "\';";
+					//console.log("id : " + chunk.id + " / passwd : " + chunk.passwd);
+	
+					//id로 먼저 검색, 없을 시 아이디가 없다고 respond
+					var query = connection.query(sql_query, function(err, rows,
+							fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "MEMBER_CHECK_ERROR";
 							console.log(JSON.stringify(jobj));
 							res.end(JSON.stringify(jobj));
-							jobj.attach = "";
-							
+							//res.end('ID_DUPLICATE_ERROR');
+							//throw err;
+						} else {
+							if (rows.length == 0) {
+								//회원 아닌거같애
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "IS_NOT_MEMBER";
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								//res.end('ID_NOT_DUPLICATE');
+							} else {
+								//회원인듯
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "IS_MEMBER";
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								//res.end('ID_DUPLICATE');
+							}
 						}
-						
-					}
-				});
-				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
-				
-				
-			}
-			else if(messagetype == 'get_family_inout'){
-				//product id 받아서 가족들 목록 다보냄 시발
-				var sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\' ;";
-				console.log(sql_query);
-				console.log("product id request : "+chunk.product_id);
-				
-				var query = connection.query(sql_query, function (err, rows, fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "GET_FAMILY_INOUT_ERROR";
-						console.log("GET_FAMILY_INOUT_ERROR");
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						if(rows.length == 0){
+					});
+				}
+				else if(messagetype == 'get_user_info'){
+					//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+					var sql_query = "SELECT * FROM user_info WHERE device_id=\'" + chunk.device_id + "\' LIMIT 1;";
+					
+					var query = connection.query(sql_query, function (err, rows, fields) {
+						if (err) {
 							var jobj = basic_jobj;
 							jobj.messagetype = messagetype;
-							jobj.result = "GET_FAMILY_INOUT_FAIL";
-							console.log("GET_FAMILY_INOUT_FAIL");
+							jobj.result = "GET_USER_INFO_ERROR";
 							res.end(JSON.stringify(jobj));
+							//throw err;
 						}
 						else{
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							console.log("GET_FAMILY_INOUT_SUCCESS");
-							jobj.result = "GET_FAMILY_INOUT_SUCCESS";
-							
-							
-							var users = [];
-							for (var i = 0; i < rows.length; i++) {
-								console.log(rows[i].user_id);
-								users.push(rows[i]);
+							if(rows.length == 0){
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_USER_INFO_FAIL";
+								res.end(JSON.stringify(jobj));
 							}
-							/*
-							var user_jobj ={
-								user_id : rows[0].user_id,
-								product_id : rows[0].product_id,
-								registration_id : rows[0].registration_id,
-								user_name : rows[0].user_name,
-								gender_flag : rows[0].gendar_flag,
-								representative_flag : rows[0].represendative_flag,
-								in_home_flag : rows[0].in_home_flag,
-								device_id : rows[0].device_id,
-								inout_time : rows[0].inout_time
-							}
-							*/
-							jobj.attach = rows;
-							
-							console.log(JSON.stringify(jobj));
-							res.end(JSON.stringify(jobj));
-							jobj.attach = "";
-						}
-						
-					}
-				});
-				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
-			}
-			else if(messagetype == 'is_in_family'){
-				//product id, device_id 받아서 이새끼 가족인가 판단함
-				var sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\' and device_id=\'" + chunk.device_id + "\' ;";
-				console.log("product_id, device_id request(is_in_family) : "+chunk.product_id + ", " + chunk.device_id);
-			
-				var moving_user_name;
-				var moving_is_in_home;
-				var query = connection.query(sql_query, function (err, rows, fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "IS_IN_FAMILY_ERROR";
-						console.log('IS_IN_FAMILY_ERROR');
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						if(rows.length == 0){
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "IS_IN_FAMILY_NO";
-							console.log('IS_IN_FAMILY_NO');
-							res.end(JSON.stringify(jobj));
-							
-							var get_regid_sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\'" 
-							//+ " and device_id <> \'" + chunk.device_id + "\'"
-							+ ";";
-							
-							var get_regid_query = connection.query(get_regid_sql_query, function (err, rows, fields) {
-								if (err) {
-									console.log("get_regid_query error");
-									throw err;
+							else{
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_USER_INFO_SUCCESS";
+								
+								/*
+								var user_jobj ={
+									user_id : rows[0].user_id,
+									product_id : rows[0].product_id,
+									registration_id : rows[0].registration_id,
+									user_name : rows[0].user_name,
+									gender_flag : rows[0].gendar_flag,
+									representative_flag : rows[0].represendative_flag,
+									in_home_flag : rows[0].in_home_flag,
+									device_id : rows[0].device_id,
+									inout_time : rows[0].inout_time
 								}
-								else{
-									console.log("get family regid by product_id success");
-									
-									var registration_ids = [];
-									var gcm_message = new gcm.Message({
-										collapseKey : 'demo',
-										delayWhileIdle : true,
-										timeToLive : 3,
-										data : {
-											key1 : 'is_in_family',
-											key2 : 'no_permission_person'
-										}
-									});
-									for (var i = 0; i < rows.length; i++) {
-										console.log(rows[i].registration_id);
-										registration_ids.push(rows[i].registration_id);
+								*/
+								jobj.attach = rows[0];
+								
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								jobj.attach = "";
+								
+							}
+							
+						}
+					});
+					basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+					
+					
+				}
+				else if(messagetype == 'get_family_inout'){
+					//product id 받아서 가족들 목록 다보냄 시발
+					var sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\' ;";
+					console.log(sql_query);
+					console.log("product id request : "+chunk.product_id);
+					
+					var query = connection.query(sql_query, function (err, rows, fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_FAMILY_INOUT_ERROR";
+							console.log("GET_FAMILY_INOUT_ERROR");
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							if(rows.length == 0){
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_FAMILY_INOUT_FAIL";
+								console.log("GET_FAMILY_INOUT_FAIL");
+								res.end(JSON.stringify(jobj));
+							}
+							else{
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								console.log("GET_FAMILY_INOUT_SUCCESS");
+								jobj.result = "GET_FAMILY_INOUT_SUCCESS";
+								
+								
+								var users = [];
+								for (var i = 0; i < rows.length; i++) {
+									console.log(rows[i].user_id);
+									users.push(rows[i]);
+								}
+								/*
+								var user_jobj ={
+									user_id : rows[0].user_id,
+									product_id : rows[0].product_id,
+									registration_id : rows[0].registration_id,
+									user_name : rows[0].user_name,
+									gender_flag : rows[0].gendar_flag,
+									representative_flag : rows[0].represendative_flag,
+									in_home_flag : rows[0].in_home_flag,
+									device_id : rows[0].device_id,
+									inout_time : rows[0].inout_time
+								}
+								*/
+								jobj.attach = rows;
+								
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								jobj.attach = "";
+							}
+							
+						}
+					});
+					basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				}
+				else if(messagetype == 'is_in_family'){
+					//product id, device_id 받아서 이새끼 가족인가 판단함
+					var sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\' and device_id=\'" + chunk.device_id + "\' ;";
+					console.log("product_id, device_id request(is_in_family) : "+chunk.product_id + ", " + chunk.device_id);
+				
+					var moving_user_name;
+					var moving_is_in_home;
+					var query = connection.query(sql_query, function (err, rows1, fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "IS_IN_FAMILY_ERROR";
+							console.log('IS_IN_FAMILY_ERROR');
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							if(rows1.length == 0){
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "IS_IN_FAMILY_NO";
+								console.log('IS_IN_FAMILY_NO');
+								res.end(JSON.stringify(jobj));
+								
+								var get_regid_sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\'" 
+								//+ " and device_id <> \'" + chunk.device_id + "\'"
+								+ ";";
+								
+								var get_regid_query = connection.query(get_regid_sql_query, function (err, rows, fields) {
+									if (err) {
+										console.log("get_regid_query error");
+										throw err;
 									}
-									console.log("gcm to whom ? : " + registration_ids);
-									
-									//gcm 이용 push 보내
-									sender.send(gcm_message, registration_ids, 4, function(err, result){
-										console.log(result);
-									});
-									console.log("gcm send!");
-								}
-							});
-						}
-						else{
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "IS_IN_FAMILY_OK";
-							console.log('IS_IN_FAMILY_OK');
-							res.end(JSON.stringify(jobj));
-							
-							moving_user_name = rows[0].user_name;
-							moving_is_in_home = rows[0].in_home_flag;
-							
-							console.log('inoutsqlquery go');
-							var in_out_sql_query = "UPDATE user_info SET inout_time = now(), in_home_flag=" + chunk.is_in_home+" WHERE device_id = \'"+chunk.device_id+"\' ;";
-							
-							console.log(in_out_sql_query);
-							
-							var in_out_query = connection.query(in_out_sql_query, function (err) {
-								if (err) {
-									console.log("in_out_query error");
-									throw err;
-								}
-								else{
-									//쿼리 잘 들어가면 product_id로 걸린사람들 다 찾아서 gcm
-									console.log("in out update success");
-									var get_regid_sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\'" 
-									//+ " and device_id <> \'" + chunk.device_id + "\'"
-									+ ";";
-									
-									var get_regid_query = connection.query(get_regid_sql_query, function (err, rows, fields) {
-										if (err) {
-											console.log("get_regid_query error");
-											throw err;
-										}
-										else{
-											console.log("get family regid by product_id success");
-											
-											var registration_ids = [];
-											var gcm_message = new gcm.Message({
-												collapseKey : 'demo',
-												delayWhileIdle : true,
-												timeToLive : 3,
-												data : {
-													key1 : 'is_in_family',
-													key2 : 'refresh_in_out_status',
-													key3 : moving_user_name,
-													key4 : moving_is_in_home
-												}
-											});
-											for (var i = 0; i < rows.length; i++) {
-												console.log(rows[i].registration_id);
-												registration_ids.push(rows[i].registration_id);
+									else{
+										console.log("get family regid by product_id success");
+										
+										var registration_ids = [];
+										var gcm_message = new gcm.Message({
+											collapseKey : 'demo',
+											delayWhileIdle : true,
+											timeToLive : 3,
+											data : {
+												key1 : 'is_in_family',
+												key2 : 'no_permission_person'
 											}
-											console.log("gcm to whom ? : " + registration_ids);
-											
-											//gcm 이용 push 보내
-											sender.send(gcm_message, registration_ids, 4, function(err, result){
-												console.log(result);
-											});
-											console.log("gcm send!");
+										});
+										for (var i = 0; i < rows.length; i++) {
+											console.log(rows[i].registration_id);
+											registration_ids.push(rows[i].registration_id);
 										}
-									});
-									
-								}
-							});	
-						}
-						
-					}
-				});
-			
-			}
-			else if(messagetype == 'set_temperature'){
-				//온도갱신 product_id 받아서
-				var sql_query = "UPDATE product_sub_info SET temperature=" + chunk.temperature+" WHERE product_id = \'"+chunk.product_id+"\' ;";
-				console.log("product_id, temperature request : "+chunk.product_id + ", " + chunk.temperature);
-				
-				var query = connection.query(sql_query, function (err) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "SET_TEMPERATURE_ERROR";
-						console.log("SET_TEMPERATURE_ERROR");
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "SET_TEMPERATURE_SUCCESS";
-						console.log("SET_TEMPERATURE_SUCCESS");
-						res.end(JSON.stringify(jobj));
-					}
-				});
-			}
-			else if(messagetype == 'get_temperature'){
-				//product_id 받아서 온도가지고 ㄱㄱ
-				var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'" + chunk.product_id + "\' LIMIT 1;";
-				console.log("get_temp go");
-				
-				var query = connection.query(sql_query, function (err, rows, fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "GET_TEMPERATURE_ERROR";
-						console.log("GET_TEMPERATURE_ERROR");
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						if(rows.length == 0){
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "GET_TEMPERATURE_FAIL";
-							console.log("GET_TEMPERATURE_FAIL");
-							res.end(JSON.stringify(jobj));
-						}
-						else{
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							console.log("GET_TEMPERATURE_SUCCESS");
-							jobj.result = "GET_TEMPERATURE_SUCCESS";
-							
-							jobj.attach = rows[0];
-							
-							console.log(JSON.stringify(jobj));
-							res.end(JSON.stringify(jobj));
-							jobj.attach = "";
-						}
-						
-					}
-				});
-				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
-			}
-			else if(messagetype == 'delete_user'){
-				//device id 받아서 디비에서 지워
-				var sql_query = "DELETE FROM user_info" + " WHERE device_id = \'"+chunk.device_id+"\' ;";
-				console.log("product_id  : "+chunk.product_id);
-				
-				var query = connection.query(sql_query, function (err) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "DELETE_USER_ERROR";
-						console.log("DELETE_USER_ERROR");
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "DELETE_USER_SUCCESS";
-						console.log("DELETE_USER_SUCCESS");
-						res.end(JSON.stringify(jobj));
-					}
-				});
-			}
-			else if(messagetype == 'get_product_sub_info'){
-				//product_id 받으면 부가정보 보내
-				var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'" + chunk.device_id + "\' LIMIT 1;";
-				
-				var query = connection.query(sql_query, function (err, rows, fields) {
-					if (err) {
-						var jobj = basic_jobj;
-						jobj.messagetype = messagetype;
-						jobj.result = "GET_PRODUCT_SUB_INFO_ERROR";
-						res.end(JSON.stringify(jobj));
-						//throw err;
-					}
-					else{
-						if(rows.length == 0){
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "GET_PRODUCT_SUB_INFO_FAIL";
-							res.end(JSON.stringify(jobj));
-						}
-						else{
-							var jobj = basic_jobj;
-							jobj.messagetype = messagetype;
-							jobj.result = "GET_PRODUCT_SUB_INFO_SUCCESS";
-							
-							/*
-							var user_jobj ={
-								user_id : rows[0].user_id,
-								product_id : rows[0].product_id,
-								registration_id : rows[0].registration_id,
-								user_name : rows[0].user_name,
-								gender_flag : rows[0].gendar_flag,
-								representative_flag : rows[0].represendative_flag,
-								in_home_flag : rows[0].in_home_flag,
-								device_id : rows[0].device_id,
-								inout_time : rows[0].inout_time
+										console.log("gcm to whom ? : " + registration_ids);
+										
+										//gcm 이용 push 보내
+										sender.send(gcm_message, registration_ids, 4, function(err, result){
+											console.log(result);
+										});
+										console.log("gcm send!");
+									}
+								});
 							}
-							*/
-							jobj.attach = rows[0];
-							
-							console.log(JSON.stringify(jobj));
-							res.end(JSON.stringify(jobj));
-							jobj.attach = "";
+							else{
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "IS_IN_FAMILY_OK";
+								console.log('IS_IN_FAMILY_OK');
+								res.end(JSON.stringify(jobj));
+								
+								console.log("in_out_id : " + rows1[0].user_id);
+								moving_user_name = rows1[0].user_name;
+								
+								
+	
+								console.log('inoutsqlquery go');
+								var in_out_sql_query = "UPDATE user_info SET inout_time = now(), in_home_flag=" + chunk.is_in_home+" WHERE device_id = \'"+chunk.device_id+"\' ;";
+								moving_is_in_home = chunk.is_in_home;
+								console.log(in_out_sql_query);
+								
+								var in_out_query = connection.query(in_out_sql_query, function (err) {
+									if (err) {
+										console.log("in_out_query error");
+										throw err;
+									}
+									else{
+										//쿼리 잘 들어가면 product_id로 걸린사람들 다 찾아서 gcm
+										console.log("in out update success");
+										var get_regid_sql_query = "SELECT * FROM user_info WHERE product_id=\'" + chunk.product_id + "\'" 
+										//+ " and device_id <> \'" + chunk.device_id + "\'"
+										+ ";";
+										
+										var get_regid_query = connection.query(get_regid_sql_query, function (err, rows, fields) {
+											if (err) {
+												console.log("get_regid_query error");
+												throw err;
+											}
+											else{
+												console.log("get family regid by product_id success");
+												
+												var registration_ids = [];
+												var gcm_message = new gcm.Message({
+													collapseKey : 'demo',
+													delayWhileIdle : true,
+													timeToLive : 3,
+													data : {
+														key1 : 'is_in_family',
+														key2 : 'refresh_in_out_status',
+														key3 : moving_user_name,
+														key4 : moving_is_in_home
+													}
+												});
+												console.log(moving_user_name + " is in home ? : "+moving_is_in_home);
+												for (var i = 0; i < rows.length; i++) {
+													console.log(rows[i].registration_id);
+													registration_ids.push(rows[i].registration_id);
+												}
+												console.log("gcm to whom ? : " + registration_ids);
+												
+												//gcm 이용 push 보내
+												sender.send(gcm_message, registration_ids, 4, function(err, result){
+													console.log(result);
+												});
+												console.log("gcm send!");
+											}
+										});
+										
+									}
+								});	
+							}
 							
 						}
-						
-					}
-				});
-				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
-			}
-			else{
-				//그냥 https 리퀘스트였을 때
-				res.end('Hi There');
-			}
-
-		});
-		// res.end("한글 ");
-		//res.end('Hi There');
-
+					});
+				
+				}
+				else if(messagetype == 'set_temperature'){
+					//온도갱신 product_id 받아서
+					var sql_query = "UPDATE product_sub_info SET temperature=" + chunk.temperature+" WHERE product_id = \'"+chunk.product_id+"\' ;";
+					console.log("product_id, temperature request : "+chunk.product_id + ", " + chunk.temperature);
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "SET_TEMPERATURE_ERROR";
+							console.log("SET_TEMPERATURE_ERROR");
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "SET_TEMPERATURE_SUCCESS";
+							console.log("SET_TEMPERATURE_SUCCESS");
+							res.end(JSON.stringify(jobj));
+						}
+					});
+				}
+				else if(messagetype == 'get_temperature'){
+					//product_id 받아서 온도가지고 ㄱㄱ
+					var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'" + chunk.product_id + "\' LIMIT 1;";
+					console.log("get_temp go");
+					
+					var query = connection.query(sql_query, function (err, rows, fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_TEMPERATURE_ERROR";
+							console.log("GET_TEMPERATURE_ERROR");
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							if(rows.length == 0){
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_TEMPERATURE_FAIL";
+								console.log("GET_TEMPERATURE_FAIL");
+								res.end(JSON.stringify(jobj));
+							}
+							else{
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								console.log("GET_TEMPERATURE_SUCCESS");
+								jobj.result = "GET_TEMPERATURE_SUCCESS";
+								
+								jobj.attach = rows[0];
+								
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								jobj.attach = "";
+							}
+							
+						}
+					});
+					basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				}
+				else if(messagetype == 'delete_user'){
+					//device id 받아서 디비에서 지워
+					var sql_query = "DELETE FROM user_info" + " WHERE device_id = \'"+chunk.device_id+"\' ;";
+					console.log("product_id  : "+chunk.product_id);
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "DELETE_USER_ERROR";
+							console.log("DELETE_USER_ERROR");
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "DELETE_USER_SUCCESS";
+							console.log("DELETE_USER_SUCCESS");
+							res.end(JSON.stringify(jobj));
+						}
+					});
+				}
+				else if(messagetype == 'get_product_sub_info'){
+					//product_id 받으면 부가정보 보내
+					var sql_query = "SELECT * FROM product_sub_info WHERE product_id=\'" + chunk.device_id + "\' LIMIT 1;";
+					
+					var query = connection.query(sql_query, function (err, rows, fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_PRODUCT_SUB_INFO_ERROR";
+							res.end(JSON.stringify(jobj));
+							//throw err;
+						}
+						else{
+							if(rows.length == 0){
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_PRODUCT_SUB_INFO_FAIL";
+								res.end(JSON.stringify(jobj));
+							}
+							else{
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_PRODUCT_SUB_INFO_SUCCESS";
+								
+								/*
+								var user_jobj ={
+									user_id : rows[0].user_id,
+									product_id : rows[0].product_id,
+									registration_id : rows[0].registration_id,
+									user_name : rows[0].user_name,
+									gender_flag : rows[0].gendar_flag,
+									representative_flag : rows[0].represendative_flag,
+									in_home_flag : rows[0].in_home_flag,
+									device_id : rows[0].device_id,
+									inout_time : rows[0].inout_time
+								}
+								*/
+								jobj.attach = rows[0];
+								
+								console.log(JSON.stringify(jobj));
+								res.end(JSON.stringify(jobj));
+								jobj.attach = "";
+								
+							}
+							
+						}
+					});
+					basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				}
+				//get_tts START
+				else if (messagetype === 'get_tts') {
+					//tts 주세요
+					sql_query = "SELECT * FROM recording_info WHERE user_id = "
+							+ "(SELECT user_id from user_info where device_id = \'"+chunk.device_id+"\' LIMIT 1) ORDER BY rec_seq DESC LIMIT 1;";
+					console.log("email_login : " + sql_query);
+					
+					var query = connection.query(sql_query, function(err, rows, fields) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_TTS_ERROR";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//res.end('LOGIN_ERROR');
+							//throw err;
+						} else {
+							if (rows.length === 0) {
+								//tts 1개도 없어
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_TTS_FAIL";
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+								//res.end('LOGIN_FAIL_PASSWD');
+							} else {
+								//로그인 성공
+								var jobj = basic_jobj;
+								jobj.messagetype = messagetype;
+								jobj.result = "GET_TTS_SUCCESS";
+								
+								//파일 디코딩해서 Base64String 으로 바꿔줘
+								var rec_file = "./recording/" + rows[0].path;
+								
+								fs.readFile(rec_file, function(err, buffer){
+									var base64File = new Buffer(buffer, 'binary').toString('base64');
+									
+									var ajobj = {
+											file_name : "",
+											file : ""
+									};
+									ajobj.file_name = rows[0].path;
+									ajobj.file = base64File;
+									jobj.attach = ajobj;
+									
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+									jobj.attach = "";
+								});
+							}
+						}
+					});
+					basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				}//get_tts END
+				else{
+					//그냥 https 리퀘스트였을 때
+					res.end('Hi There');
+				}
+	
+			});
+			// res.end("한글 ");
+			//res.end('Hi There');
+		}
 	}
 	else {
 		// 포스트가 아니면 에러

@@ -1,0 +1,989 @@
+/**
+ * 2015-06-22 uosmice Server
+ * Author : HJ KIM
+ */
+
+var http = require('http'); //http
+var https = require('https'); //https
+var fs = require('fs'); //File System
+var mysql = require('mysql'); //mysql
+
+var express = require('express');
+
+var port = 13337; //http port
+var sslport = 13337; // https port
+
+var app = express();
+
+//https verification options
+var options = {
+	key : fs.readFileSync('private_key.pem'),
+	cert : fs.readFileSync('cert.pem')
+};
+
+//MySql DB Connector
+var connection = mysql.createConnection({
+	host : "192.168.35.75",
+	port : 3306,
+	user : "micetest",
+	password : "micetest",
+	database : "miceuos"
+});
+
+//앱으로 보내는 기본 json object
+var basic_jobj = {
+		messagetype : "",
+		result : "",
+		attach : ""
+};
+
+//String을 Base64로 인코딩
+function base64_encode(req_str){
+	return new Buffer(req_str).toString('base64');
+}
+
+//https를 통해 정상적으로 request가 왔을 때 실행되는 함수, request 종류에 따라 알맞는 작업 수행 후 다시 app으로 response
+function HttpsEventProcessCallback(req, res) {
+	// console.log(req);
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain; charset=utf-8'
+	});
+
+	var date = new Date();
+	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
+
+
+	//post방식으로 메세지가 정상 도착 했을 때
+	if (req.method === 'POST') {
+		console.log('post request!');
+
+		var chunk = ""; //json 받는 변수
+
+		req.on('data', function(data) {
+			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+			console.log(decoded_data);
+			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+			console.log(chunk);
+		});
+		req.on('end', function() {
+			res.writeHead(200, {
+				'Content-Type' : 'text/plain; charset=utf-8'
+			});
+			
+			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+			console.log("messagetype : " + messagetype);
+			
+			//messagetype에 따라서 서버의 다른 작동
+			if (messagetype === 'email_login') {
+				//이메일 로그인
+				sql_query = "SELECT * FROM user_info WHERE user_id=\'" + chunk.user_id + "\' and password=\'" + chunk.password + "\';";
+				console.log("email_login : " + sql_query);
+				
+				var query = connection.query(sql_query, function(err, rows, fields) {
+					if (err) {
+						console.log(chunk.user_id + ' log in error');
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "EMAIL_LOGIN_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//res.end('LOGIN_ERROR');
+						//throw err;
+					} else {
+						if (rows.length === 0) {
+							//로그인 실패
+							console.log(chunk.user_id + ' log in fail passwd');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_LOGIN_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//res.end('LOGIN_FAIL_PASSWD');
+						} else {
+							//로그인 성공
+							console.log(chunk.user_id + ' log in success');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_LOGIN_SUCCESS";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+					}
+				});
+			}//if messagetype = email_login END
+			//if messagetype = email_id_duplicate_check
+			else if(messagetype == 'email_id_duplicate_check'){
+				var sql_query = "SELECT * FROM user_info WHERE user_id=\'"
+						+ chunk.user_id + "\';";
+				
+				console.log("email_id_duplicate_check : " + sql_query);
+				
+				var query = connection.query(sql_query, function(err, rows, fields) {
+					if (err) {
+						//중복체크 중 에러 발생
+						console.log(chunk.user_id + ' dup check error');
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "EMAIL_ID_DUPLICATE_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//res.end('LOGIN_ERROR');
+						//throw err;
+					} else {
+						console.log(rows.length);
+						if (rows.length == 0) {
+							//중복된 아이디 없음 
+							console.log(chunk.user_id + ' not dup');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_ID_NO_DUPLICATE";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							//중복된 아이디 있음
+							console.log(chunk.user_id + ' dup');
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "EMAIL_ID_DUPLICATE";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+					}
+				});
+						
+			}//if messagetype = email_id_duplicate_check END
+			//if messagetype = email_sign_up
+			else if (messagetype == 'email_sign_up') {
+				
+				var sql_query = "INSERT INTO user_info" 
+					+ " (id_flag, user_id, password, email, authority_kind, business_card_share_flag, platform, reg_date) "
+					+ "values(\'"
+					+ chunk.id_flag + "\', \'" + chunk.user_id + "\', \'"
+					+ chunk.password + "\', \'" + chunk.user_id + "\', \'" + chunk.authority_kind + "\', "
+					+ chunk.business_card_share_flag + ", \'"
+					+ chunk.platform + "\', now());";
+				
+				console.log('email_sign_up query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "EMAIL_SIGN_UP_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					} else {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "EMAIL_SIGN_UP_SUCCESS";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					}
+				});
+			}//if messagetype = email_sign_up END
+			//if messagetype = get_user_info
+			else if(messagetype == 'get_user_info'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT user_seq, id_flag, user_id, name, company, picture, phone, email, address, authority_kind,phone_1, phone_2, cell_phone_1, cell_phone_2, business_card_code, business_card_share_flag, nation_code, platform, reg_date, mod_date, duty FROM user_info WHERE user_id=\'" + chunk.user_id + "\' LIMIT 1;";
+				
+				console.log('get_user_info query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_USER_INFO_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_USER_INFO_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_USER_INFO_SUCCESS";
+							
+							//파일 디코딩해서 Base64String 으로 바꿔줘
+							var image_origial = "./profile/" + rows[0].picture;
+							
+							if(rows[0].picture == null){
+								jobj.attach = rows[0];
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+								jobj.attach = "";
+							}
+							else{
+								fs.readFile(image_origial, function(err, buffer){
+									var base64Image = new Buffer(buffer, 'binary').toString('base64');
+									rows[0].picture = base64Image; 
+									
+									jobj.attach = rows[0];
+									
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+									jobj.attach = "";
+								});
+							}
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = get_user_info END
+			//if messagetype = update_business_card
+			else if(messagetype == 'update_business_card'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "UPDATE user_info SET "
+					+ "name = \'" + chunk.name + "\', "
+					+ "company = \'" + chunk.company + "\', "
+					//+ "picture = \'" + chunk.picture + "\', "
+					+ "phone = \'" + chunk.phone + "\', "
+					+ "email = \'" + chunk.email + "\', "
+					+ "address = \'" + chunk.address + "\', "
+					+ "phone_1 = \'" + chunk.phone_1 + "\', "
+					//+ "nation_code = \'" + chunk.nation_code + "\', "
+					+ "duty = \'" + chunk.duty + "\', "
+					+ "mod_date = now() "
+					+ " WHERE user_seq = \'"+chunk.user_seq+"\' ;";
+				
+				console.log('update_business_card query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function (err) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "UPDATE_BUSINESS_CARD_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "UPDATE_BUSINESS_CARD_SUCCESS";
+						
+						
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						/*
+						var decodedImage = new Buffer(chunk.picture, 'base64').toString('binary');
+						fs.writeFile('./profile/profile_' + chunk.user_seq + '.jpg', decodedImage, 'binary', function(err) {
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						});
+						*/
+					}
+				});
+			}//if messagetype = update_business_card END
+			//if messagetype = update_business_card_share_flag
+			else if(messagetype == 'update_business_card_share_flag'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query;
+				if(chunk.business_card_share_flag == '0'){
+					sql_query = "UPDATE user_info SET business_card_share_flag=" + chunk.business_card_share_flag+" WHERE user_seq = \'"+chunk.user_seq+"\' ;";
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "UPDATE_BUSINESS_CARD_SHARE_FLAG_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//throw err;
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "UPDATE_BUSINESS_CARD_SHARE_FLAG_SUCCESS";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+					});
+				}
+				else if(chunk.business_card_share_flag == '1'){
+					var time_code = chunk.time_code;
+					var business_card_code;
+				}
+				else{
+					var jobj = basic_jobj;
+					jobj.messagetype = messagetype;
+					jobj.result = "UPDATE_BUSINESS_CARD_SHARE_FLAG_FAIL";
+					console.log(JSON.stringify(jobj));
+					res.end(base64_encode(JSON.stringify(jobj)));
+				}
+			}//if messagetype = update_business_card_share_flag END
+			//if messagetype = get_conference_info END
+			else if(messagetype == 'get_conference_info'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT * FROM agenda_info LIMIT 1;";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_CONFERENCE_INFO_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_CONFERENCE_INFO_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_CONFERENCE_INFO_SUCCESS";
+							
+							jobj.attach = rows[0];
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";
+							
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_conference_info END
+			//if messagetype = get_all_session_info
+			else if(messagetype == 'get_all_session_info'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT a.agenda_session_seq, a.title, a.contents, a.writer_user_seq, (SELECT name FROM user_info u WHERE u.user_seq = a.writer_user_seq) AS writer_user_name, a.writer_user_seq, (SELECT name FROM user_info u WHERE u.user_seq = a.presenter_user_seq) AS presenter_user_name, a.presenter_user_seq, a.session_start_time, a.session_end_time, a.attached FROM agenda_session a ORDER BY a.session_start_time DESC;";
+				console.log(sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_ALL_SESSION_INFO_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SESSION_INFO_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SESSION_INFO_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";	
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_all_session_info END
+			//if messagetype = search_people_by_word
+			else if(messagetype == 'search_people_by_word'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT user_seq, id_flag, user_id, name, company, picture, phone, email, address, authority_kind,phone_1, phone_2, cell_phone_1, cell_phone_2, business_card_code, business_card_share_flag, nation_code, platform, reg_date, mod_date, duty FROM user_info" 
+					+" WHERE " + chunk.search_type + " like \'%" + chunk.word + "%\';";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SEARCH_PEOPLE_BY_WORD_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "SEARCH_PEOPLE_BY_WORD_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "SEARCH_PEOPLE_BY_WORD_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";
+							
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = search_people_by_word END
+			//if messagetype = add_coupon_by_serial
+			else if (messagetype == 'add_coupon_by_serial') {
+				//이미 등록했던 쿠폰인지 확인하는 쿼리
+				var check_sql_query = "SELECT * FROM coupon_map cm, coupon_info ci WHERE ci.coupon_serial = \'"
+					+ chunk.coupon_serial
+					+ "\' AND cm.user_seq = \'"
+					+ chunk.user_seq 
+					+ "\' AND ci.coupon_seq = cm.coupon_seq;";
+				
+				console.log('add_coupon_by_serial query : '+check_sql_query);
+				
+				var check_query = connection.query(check_sql_query, function(err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "ADD_COUPON_BY_SERIAL_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						//검색된 내역이 없으니 등록쿼리를 날리기 시작
+						if(rows.length == 0){
+							var sql_query = "INSERT INTO coupon_map" 
+								+ " (coupon_seq, user_seq, receive_date, use_flag) "
+								+ "VALUES("
+								+ "(SELECT coupon_seq FROM coupon_info WHERE coupon_serial = \'" + chunk.coupon_serial + "\')" + ", " + chunk.user_seq
+								+ ", now(), 0);";
+							
+							console.log('add_coupon_by_serial query : ' + sql_query);
+							
+							var query = connection.query(sql_query, function(err) {
+								if (err) {
+									console.log('err : ' + err);
+									var jobj = basic_jobj;
+									jobj.messagetype = messagetype;
+									jobj.result = "ADD_COUPON_BY_SERIAL_FAIL";
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+								} else {
+									var coupon_sql_query = "SELECT * FROM coupon_info WHERE coupon_serial =\'" + chunk.coupon_serial  + "\' LIMIT 1;";
+									
+									var coupon_query = connection.query(coupon_sql_query, function (err, rows1, fields) {
+										if (err) {
+											var jobj = basic_jobj;
+											jobj.messagetype = messagetype;
+											jobj.result = "ADD_COUPON_BY_SERIAL_ERROR";
+											console.log(JSON.stringify(jobj));
+											res.end(base64_encode(JSON.stringify(jobj)));
+											//throw err;
+										}
+										else{
+											if(rows1.length == 0){
+												var jobj = basic_jobj;
+												jobj.messagetype = messagetype;
+												jobj.result = "ADD_COUPON_BY_SERIAL_FAIL";
+												console.log(JSON.stringify(jobj));
+												res.end(base64_encode(JSON.stringify(jobj)));
+											}
+											else{
+												var jobj = basic_jobj;
+												jobj.messagetype = messagetype;
+												jobj.result = "ADD_COUPON_BY_SERIAL_SUCCESS";
+												
+												//파일 디코딩해서 Base64String 으로 바꿔줘
+												var image_origial = "./coupon/" + rows1[0].coupon_img;
+												fs.readFile(image_origial, function(err, buffer){
+													var base64Image = new Buffer(buffer, 'binary').toString('base64');
+													rows1[0].coupon_img = base64Image; 
+													
+													jobj.attach = rows1[0];
+													
+													console.log(JSON.stringify(jobj));
+													res.end(base64_encode(JSON.stringify(jobj)));
+													jobj.attach = "";
+												});
+											}
+											
+										}
+									});
+									basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+								}
+							});
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "ADD_COUPON_BY_SERIAL_ALREADY";
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+					}
+				});
+				
+			}//if messagetype = add_coupon_by_serial END
+			//if messagetype = get_all_session_info END
+			else if(messagetype == 'get_all_session_info'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT a.agenda_session_seq, a.title, a.contents, a.writer_user_seq, (SELECT name FROM user_info u WHERE u.user_seq = a.writer_user_seq) AS writer_user_name, a.writer_user_seq, (SELECT name FROM user_info u WHERE u.user_seq = a.presenter_user_seq) AS presenter_user_name, a.session_start_time, a.session_end_time, a.attached FROM agenda_session a ORDER BY a.session_start_time DESC;";
+				console.log(sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_ALL_SESSION_INFO_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SESSION_INFO_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SESSION_INFO_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";	
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_all_session_info END
+			//if messagetype = get_all_coupon_by_user_seq
+			else if(messagetype == 'get_all_coupon_by_user_seq'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT ci.* FROM coupon_info ci, coupon_map cm WHERE cm.user_seq = "+chunk.user_seq+" AND cm.coupon_seq = ci.coupon_seq AND cm.use_flag = false;";
+				console.log(sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_ALL_COUPON_BY_USER_SEQ_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_COUPON_BY_USER_SEQ_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_COUPON_BY_USER_SEQ_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";	
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_all_coupon_by_user_seq END
+			//if messagetype = get_coupon_by_seq
+			else if(messagetype == 'get_coupon_by_seq'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT * FROM coupon_info WHERE coupon_seq =\'" + chunk.coupon_seq  + "\' LIMIT 1;";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_COUPON_BY_SEQ_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_COUPON_BY_SEQ_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_COUPON_BY_SEQ_SUCCESS";
+							
+							//파일 디코딩해서 Base64String 으로 바꿔줘
+							var image_origial = "./coupon/" + rows[0].coupon_img;
+							fs.readFile(image_origial, function(err, buffer){
+								var base64Image = new Buffer(buffer, 'binary').toString('base64');
+								rows[0].coupon_img = base64Image; 
+								
+								jobj.attach = rows[0];
+								
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+								jobj.attach = "";
+							});
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = get_coupon_by_seq END
+			//if messagetype = get_indoor_map
+			else if(messagetype == 'get_indoor_map'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT * FROM conference_indoor_map ORDER BY map_order;";
+				console.log(sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_INDOOR_MAP_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_INDOOR_MAP_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_INDOOR_MAP_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";	
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_indoor_map END
+			//if messagetype = get_coupon_by_seq
+			else if(messagetype == 'get_coupon_by_seq'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT * FROM conference_indoor_map WHERE indoor_map_seq =\'" + chunk.indoor_map_seq  + "\' LIMIT 1;";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_INDOOR_MAP_BY_SEQ_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_INDOOR_MAP_BY_SEQ_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_INDOOR_MAP_BY_SEQ_SUCCESS";
+							
+							//파일 디코딩해서 Base64String 으로 바꿔줘
+							var image_origial = "./indoor_map/" + rows[0].image;
+							fs.readFile(image_origial, function(err, buffer){
+								var base64Image = new Buffer(buffer, 'binary').toString('base64');
+								rows[0].image = base64Image; 
+								
+								jobj.attach = rows[0];
+								
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+								jobj.attach = "";
+							});
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = get_coupon_by_seq END
+			//if messagetype = get_message_by_users
+			else if(messagetype == 'get_message_by_users'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT * FROM message_info" 
+					+" WHERE " 
+					+ "(sender_user_seq = \'"
+					+ chunk.sender_user_seq + "\' "
+					+ "AND receiver_user_seq = \'"
+					+ chunk.receiver_user_seq + "\') "
+					+ "OR "
+					+ "(sender_user_seq = \'"
+					+ chunk.receiver_user_seq + "\' "
+					+ "AND receiver_user_seq = \'"
+					+ chunk.sender_user_seq + "\') "
+					+ "order by send_time desc;";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_MESSAGE_BY_USERS_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_MESSAGE_BY_USERS_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_MESSAGE_BY_USERS_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";
+							
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = get_message_by_users END
+			//if messagetype = send_message
+			else if (messagetype == 'send_message') {
+				
+				var sql_query = "INSERT INTO message_info" 
+					+ " (sender_user_seq, receiver_user_seq, message, send_time) "
+					+ "values(\'"
+					+ chunk.sender_user_seq + "\', \'" + chunk.receiver_user_seq + "\', \'"
+					+ chunk.message + "\', now());";
+				
+				console.log('send_message query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SEND_MESSAGE_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					} else {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SEND_MESSAGE_SUCCESS";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					}
+				});
+			}//if messagetype = send_message END
+			//if messagetype = get_all_sponsor
+			else if(messagetype == 'get_all_sponsor'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT sponsor_seq, sponsor_name, explanation, logo FROM sponsor;";
+				console.log(sql_query);
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_ALL_SPONSOR_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SPONSOR_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_ALL_SPONSOR_SUCCESS";
+							
+							jobj.attach = rows;
+							
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							jobj.attach = "";	
+						}
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+				
+			}//if messagetype = get_all_sponsor END
+			//if messagetype = get_sponsor_by_seq
+			else if(messagetype == 'get_sponsor_by_seq'){
+				//사용자 id를 받아서 그 id로 정보 받아서 앱으로 보내줘
+				var sql_query = "SELECT  sponsor_seq, sponsor_name, explanation, detail_image FROM sponsor WHERE sponsor_seq =\'" + chunk.sponsor_seq  + "\' LIMIT 1;";
+				
+				var query = connection.query(sql_query, function (err, rows, fields) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "GET_SPONSOR_BY_SEQ_ERROR";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						if(rows.length == 0){
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_SPONSOR_BY_SEQ_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = messagetype;
+							jobj.result = "GET_SPONSOR_BY_SEQ_SUCCESS";
+							
+							//파일 디코딩해서 Base64String 으로 바꿔줘
+							try{
+								var image_origial = "./sponsor/" + rows[0].detail_image;
+								fs.readFile(image_origial, function(err, buffer){
+									var base64Image = new Buffer(buffer, 'binary').toString('base64');
+									rows[0].detail_image = base64Image; 
+									
+									jobj.attach = rows[0];
+									
+									console.log(JSON.stringify(jobj));
+									res.end(base64_encode(JSON.stringify(jobj)));
+									jobj.attach = "";
+								});
+							}
+							catch(exception){
+								console.log(exception);
+								console.log(JSON.stringify(jobj));
+								jobj.result = "GET_SPONSOR_BY_SEQ_FAIL";
+								res.end(base64_encode(JSON.stringify(jobj)));
+							}
+						}
+						
+					}
+				});
+				basic_jobj.attach = ""; //얕은복사인가.. 초기화가필요하네
+			}//if messagetype = get_sponsor_by_seq END
+			//if messagetype = update_user_picture
+			else if(messagetype == 'update_business_card'){
+				
+				var sql_query = "UPDATE user_info SET "
+					+ "picture = \'profile_" + chunk.user_seq + ".jpg\' "
+					+ " WHERE user_seq = \'"+chunk.user_seq+"\' ;";
+				
+				console.log('update_business_card query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function (err) {
+					if (err) {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "UPDATE_USER_PICTURE_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+						//throw err;
+					}
+					else{
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "UPDATE_USER_PICTURE_SUCCESS";
+						
+						try{
+							var decodedImage = new Buffer(chunk.picture, 'base64').toString('binary');
+							fs.writeFile('./profile/profile_' + chunk.user_seq + '.jpg', decodedImage, 'binary', function(err) {
+								console.log(JSON.stringify(jobj));
+								res.end(base64_encode(JSON.stringify(jobj)));
+							});
+						}
+						catch(exception){
+							console.log(exception);
+							console.log(JSON.stringify(jobj));
+							jobj.result = "UPDATE_USER_PICTURE_FAIL";
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+						
+					}
+				});
+			}//if messagetype = update_user_picture END
+			//확인되지 않은 messagetype의 Request가 들어왔을 때
+			else{
+				res.end('who');
+			}
+		});
+	} //if req = post END
+	else {
+		// 포스트가 아니면 에러
+		res.writeHead(200, {
+			'Content-Type' : 'text/plain; charset=utf-8'
+		});
+		console.log('NOT POST REQUEST');
+		
+		/*
+		var image_origial = "./profile/profile_1.jpg";
+		fs.readFile(image_origial, function(err, buffer){
+			fs.writeFile('./profile/copy.jpg', buffer, function(err) {});
+			var base64Image = new Buffer(buffer, 'binary').toString('base64');
+			console.log(base64Image.substring(0, 18));
+			var decodedImage = new Buffer(base64Image, 'base64').toString('binary');
+			fs.writeFile('./profile/tmp3.jpg', decodedImage, 'binary', function(err) {});
+		});
+		*/
+		
+		res.end(base64_encode('not Post, Wrong Request'));
+	}//if req = post ELSE END
+}
+
+httpsServer = https.createServer(options, HttpsEventProcessCallback); //https 서버 생성, 공개키 비밀키, 리퀘스트 콜백 함수
+//httpServer = http.createServer(HttpEventProcessCallback);
+
+httpsServer.listen(sslport, '192.168.35.75'); //서버 시작
+connection.connect();//DB Connect
+console.log('UOSMice Server running at https://192.168.35.75:13337/');

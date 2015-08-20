@@ -2,14 +2,25 @@
 <section name="Workbench">
 	<section name="ExternalProjectImportWizard">
 		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
-		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\HJHOME\Documents\엠투더씨\원앙\MC\현쟈버젼소스\MobileConference(안드로이드)"/>
+			<item value="C:\Users\HJHOME\Downloads\2010920006김민규, 2010920023 김희중 OOP 기말 텀\FinalTerms"/>
+			<item value="C:\Users\HJHOME\Documents\카카오톡 받은 파일\화일처리_해싱_2010920049이수진_기말텀\2010920049_hash"/>
+			<item value="C:\Users\HJHOME\Documents\소멤\Dropbox_pc"/>
 			<item value="N:\CLASS\2014\객체지향과제\2010920006김민규, 2010920023 김희중 OOP 기말 텀\FinalTerms"/>
 			<item value="C:\Users\HJHOME\Documents\소공\Dropbox_pc"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
+		</list>
+	</section>
+	<section name="NewWizardAction">
+		<item value="org.nodeclipse.ui.wizards.NodeProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.jdt.ui.java"/>
+			<item value="org.nodeclipse.ui.wizards.category"/>
 		</list>
 	</section>
 </section>

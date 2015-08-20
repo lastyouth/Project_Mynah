@@ -1,0 +1,218 @@
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var mysql = require('mysql');
+var gcm = require('node-gcm');
+
+//var gcm_message = new gcm.Message();
+
+var basic_jobj = {
+		messagetype : "",
+		result : "",
+		attach : ""
+}
+
+//구글에서 발행한 key
+var server_access_key = 'AIzaSyAn_popA7yY_6O8U8yDcDv1Z3_lDGdtGxM';
+var sender = new gcm.Sender(server_access_key);
+
+var connection = mysql.createConnection({
+	host : "192.168.35.75",
+	port : 3306,
+	user : "hiik",
+	password : "hiik",
+	database : "hiik_mynah"
+});
+
+var httpsServer;
+var httpServer;
+
+// https verification options
+var options = {
+	key : fs.readFileSync('private_key.pem'),
+	cert : fs.readFileSync('cert.pem')
+};
+
+// http port
+var port = 13337;
+// https port
+var sslport = 13337;
+
+//https를 통해 정상적으로 request가 왔을 때 실행되는 함수, request 종류에 따라 알맞는 작업 수행 후 다시 app으로 response
+function HttpsEventProcessCallback(req, res) {
+	// console.log(req);
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain; charset=utf-8'
+	});
+
+	//res.write('안녕하세요');
+	var date = new Date();
+	console.log("\r\nhttps request arriving! " + date.toUTCString() + "\r\n");
+
+	//post방식으로 메세지가 정상 도착 했을 때
+	if (req.method === 'POST') {		
+		console.log('post request!');
+		
+		//사용자 프로필사진 업데이트
+		if(req.url === '/recording'){
+			var user_seq;
+			var update_file_name;
+			console.log('recording upload start');
+			var form = new formidable.IncomingForm();
+			form.keepExtensions = true;
+			form.uploadDir ='./recording';
+			
+			form
+			    .on('error', function(err) {
+			        throw err;
+			    })
+
+			    .on('field', function(field, value) {
+			        //receive form fields here
+			    	
+			    	if(field === 'user_seq'){
+			    		user_seq = value;
+			    		console.log('user_seq : ' + user_seq);
+			    	}
+			    })
+
+			    /* this is where the renaming happens */
+			    .on ('fileBegin', function(name, file){
+			            //rename the incoming file to the file's name
+			    		update_file_name = user_seq + "_" + file.name;
+			            file.path = form.uploadDir + "/" + update_file_name;
+			    })
+
+			    .on('file', function(field, file) {
+			        //On file received
+			    })
+
+			    .on('progress', function(bytesReceived, bytesExpected) {
+			        //self.emit('progess', bytesReceived, bytesExpected)
+
+			        var percent = (bytesReceived / bytesExpected * 100) | 0;
+			        process.stdout.write('Uploading: %' + percent + '\r');
+			    })
+
+			    .on('end', function() {
+			    	
+			    	var sql_query = "UPDATE user_info SET "
+			    		+ "picture = \'" + update_file_name + "\' "
+						+ " WHERE user_seq = \'"+user_seq+"\' ;";
+					
+					console.log('update_user_picture query : ' + sql_query);
+					
+					var query = connection.query(sql_query, function (err) {
+						if (err) {
+							var jobj = basic_jobj;
+							jobj.messagetype = "update_user_picture";
+							jobj.result = "UPDATE_USER_PICTURE_FAIL";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+							//throw err;
+						}
+						else{
+							var jobj = basic_jobj;
+							jobj.messagetype = "update_user_picture";
+							jobj.result = "UPDATE_USER_PICTURE_SUCCESS";
+							console.log(JSON.stringify(jobj));
+							res.end(base64_encode(JSON.stringify(jobj)));
+						}
+					});
+			    });
+
+			form.parse(req);
+		}
+
+		var chunk = ""; //json 받는 변수
+
+		req.on('data', function(data) {
+			//console.log(data.toString());
+			var decoded_data = new Buffer(data.toString(), 'base64').toString(); // base64 인코딩 된 json을 base64로 다시 디코딩
+			//console.log(decoded_data);
+			chunk = JSON.parse(decoded_data);// json을 파싱하여 JSON OBJECT 형태로 변수에 저장
+			console.log(chunk);
+		});
+		req.on('end', function() {
+			res.writeHead(200, {
+				'Content-Type' : 'text/plain; charset=utf-8'
+			});
+			var messagetype = chunk.messagetype;//messagetype, 이것에 따라서 하는 일이 바뀜
+			console.log("messagetype : " + messagetype);
+			
+			if (messagetype == 'login') {
+				//login 시;
+				
+			} 
+			//sign_up START
+			else if (messagetype == 'sign_up') {
+				//회원가입
+				var sql_query = "INSERT INTO user_info" 
+					+ " (product_id, reg_id, device_id, user_name, reg_date) "
+					+ "values(\'"
+					+ chunk.product_id + "\', \'" + chunk.reg_id + "\', \'"
+					+ chunk.device_id + "\', \'" + chunk.user_name
+					+ "\', now());";
+				
+				console.log('sign_up query : ' + sql_query);
+				
+				var query = connection.query(sql_query, function(err) {
+					if (err) {
+						console.log('err : ' + err);
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SIGN_UP_FAIL";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					} else {
+						var jobj = basic_jobj;
+						jobj.messagetype = messagetype;
+						jobj.result = "SIGN_UP_SUCCESS";
+						console.log(JSON.stringify(jobj));
+						res.end(base64_encode(JSON.stringify(jobj)));
+					}
+				});
+			}//sign_up END
+			else{
+				//그냥 https post 리퀘스트였을 때
+				res.end('Hi There');
+			}
+
+		});
+	}
+	else {
+		// 포스트가 아니면 에러
+		res.writeHead(200, {
+			'Content-Type' : 'text/plain; charset=utf-8'
+		});
+		console.log('NOT POST REQUEST');
+		res.end(new Date().toUTCString());
+		//res.end('wrong request');
+	}
+}
+
+function base64_decode(base64str, file) {
+	// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+	var bitmap = new Buffer(base64str, 'base64');
+	// write buffer to file
+	fs.writeFileSync(file, bitmap);
+	console.log('******** File created from base64 encoded string ********');
+}
+
+//http 리퀘스트 함수. 임시.
+function HttpEventProcessCallback(req, res) {
+	// http request from port 13337
+	res.writeHead(200, {
+		'Content-Type' : 'text/plain'
+	});
+	res.end('request');
+	var date = new Date();
+	console.log("\r\nhttp request arriving!" + date.toUTCString() + "\r\n");
+
+}
+
+httpsServer = https.createServer(options, HttpsEventProcessCallback);
+
+httpsServer.listen(sslport, '192.168.35.75');
+connection.connect();
+console.log('Server running at https://192.168.35.75:13337/');
