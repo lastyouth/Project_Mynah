@@ -13,9 +13,18 @@ import json
 import base64
 import httplib
 
+os.system('sudo hciconfig hci0 piscan')
+os.system('sudo hciconfig hci0 leadv')
 # global variables
 
 g_webhost = "1.227.248.51:13337"
+
+g_defaultpath = '/home/pi/share/mynahmedia/'
+
+#this product id
+g_productid = 'product2'
+
+g_productuser = {}
 
 g_lock = threading.Lock()
 
@@ -80,11 +89,11 @@ def requestHTTPS(mtype,tid,dtype,data):
         data = json.loads(response.read())
 
         print "result : ",data["result"]
-        if data["result"] == "IS_IN_FAMILY_OK":
-            return True
-        return False
+
+        return data;
     except:
         print "Web request failure!"
+        return False
 
 class ClientProcessThread(threading.Thread):
     def __init__(self,sock,client_info):
@@ -239,7 +248,7 @@ class MynahManager:
 
                 print "Best rssi measure : ",brssi
                 #msg = g_messagelist[0]
-                print "id : ",cid," first message : ",msg," len : ",len(msg)
+                print "id : ",cid," must be nearest!!!"
                 #http request
 
                 self.isFamily = True
@@ -249,21 +258,53 @@ class MynahManager:
                 #else:
                     #self.isFamily = requestHTTPS("is_in_family",cid,"is_in_home","1")
 
-                if self.isFamily == False:
-                    print "Access Denied - Unauthorized Person Approching detected"
-                    os.system('mplayer /home/pi/share/dog.mp3')
-                    self.s1Activated = False
-                    self.s2Activated = False
-                    self.directionFlag = self.DIRECTION_TYPE_NONE
-                    g_lock.release()
-                    return
+                #if self.isFamily == False:
+                #    print "Access Denied - Unauthorized Person Approching detected"
+                    #os.system('mplayer /home/pi/share/dog.mp3')
+                #    self.s1Activated = False
+                #    self.s2Activated = False
+                #    self.directionFlag = self.DIRECTION_TYPE_NONE
+                #    g_lock.release()
+                #    return
 
-                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    os.system('mplayer /home/pi/share/tempid_tts.mp3')
+                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT and cid != "":
+                   #os.system('mplayer '+g_defaultpath+'tempid_tts.mp3')
+                    usermediaobj = g_productuser[cid];
+                    policy = usermediaobj.getPolicy();
+                    print cid + ' policy is ' + policy
+                    if policy == 'n':
+                        os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                    elif policy == 't':
+                        filename = usermediaobj.getTTSFileName()
+                        if filename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        else:
+                            os.system('mplayer '+g_defaultpath+filename)
+                    elif policy == 'r':
+                        filename = usermediaobj.getRECFileName()
+                        if filename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+
+                        else:
+                            os.system('mplayer '+g_defaultpath+filename)
+                    elif policy == 'b':
+                        ttsfilename = usermediaobj.getTTSFileName()
+                        recfilename = usermediaobj.getRECFileName()
+                        if ttsfilename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        else:
+                            os.system('mplayer '+g_defaultpath+ttsfilename)
+                        if recfilename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        else:
+                            os.system('mplayer '+g_defaultpath+recfilename)
+                    else:
+                        print "Unknown policy"
+                    g_productuser[cid].makeClear()
                     print "To Out Processing"
                 else:
-                    os.system('mplayer /home/pi/share/defaultin.mp3')
-                    os.system('mplayer /home/pi/share/rs.mp3')
+                    os.system('mplayer '+g_defaultpath+'defaultin.mp3')
+                    os.system('mplayer '+g_defaultpath+'rs.mp3')
                     print "To In Processing"
 
                 self.s1Activated = False
@@ -381,6 +422,40 @@ class DistanceSensor(threading.Thread):
 
                             #print "Sensor",self.sensortype," Distance : ",dist,"cm Avg :",avg
 
+class UserMediaData:
+    def __init__(self):
+        self.ttsfile = ''
+        self.recfile = ''
+        self.filemap = {}
+        self.policy = 'n'
+
+    def isDuplicated(self,name):
+        return name in self.filemap.keys()
+
+    def setTTSFileName(self,name):
+        if self.ttsfile != '' and self.ttsfile != name:
+            os.remove(g_defaultpath+self.ttsfile)
+        self.ttsfile = name
+
+    def setRECFileName(self,name):
+        if self.isDuplicated(name):
+            print name+'is duplicated';
+        else:
+            self.filemap[name] = 1;
+            self.recfile = name
+
+    def setPolicy(self,pol):
+        self.policy = pol
+    def getPolicy(self):
+        return self.policy
+    def getRECFileName(self):
+        return self.recfile
+    def getTTSFileName(self):
+        return self.ttsfile
+    def makeClear(self):
+        if self.recfile != '':
+            os.remove(g_defaultpath+self.recfile)
+        self.recfile = ''
 
 g_Mynah = MynahManager()
 
@@ -403,9 +478,58 @@ g_sensor2.daemon = True
 g_sensor2.start()
 
 while True:
-    time.sleep(10000)
+    g_lock.acquire()
+    data = requestHTTPS('get_devices','','','')
+    print 'Request deviceids from product2'
+    for pp in data['attach']:
+        if pp['device_id'] in g_productuser.keys():
+            print pp['device_id']+'is already in'
+        else:
+            g_productuser[pp['device_id']] = UserMediaData()
+    print g_productuser
+
+    print 'Request file from server'
+    for key in g_productuser.keys():
+        print key +' request file'
+        data = requestHTTPS('get_media',key,'','')
+        if data == False:
+            print 'Current Web Request Failure'
+        else:
+            targetlen = data['attach']
+            #record voice
+            recname = data['attach']['rec_file_name'];
+            if recname == '':
+                print key+' : No recorded voice'
+            else:
+                print key+' : recored file exists ' +recname
+                if g_productuser[key].isDuplicated(recname):
+                    print recname + 'is already exist'
+                else:
+                    filedata = base64.decodestring(data['attach']['rec_file'])
+                    fp = open(g_defaultpath+recname,'w')
+                    fp.write(filedata)
+                    fp.close()
+                    g_productuser[key].setRECFileName(recname)
+
+            ttsname = data['attach']['tts_file_name']
+            if ttsname == '':
+                print key+' : No tts file'
+            else:
+                filedata = base64.decodestring(data['attach']['tts_file'])
+                fp = open(g_defaultpath+ttsname,'w')
+                fp.write(filedata)
+                fp.close()
+                g_productuser[key].setTTSFileName(ttsname)
+            policy = data['attach']['opt']
+            print key+' : policy ' +policy
+            g_productuser[key].setPolicy(policy)
+    g_lock.release()
+    #print data['attach']['file_name']
+    #f = open(g_defaultpath+data['attach']['file_name'],'w')
+    #f.write(base64.decodestring(data['attach']['file']))
+    #f.close();
     #broadcastCurrentClient()
-    #sleep(100)
+    time.sleep(10)
     i=1
 
 GPIO.cleanup()
