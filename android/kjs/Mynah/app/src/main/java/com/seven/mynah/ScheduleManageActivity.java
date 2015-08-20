@@ -82,6 +82,106 @@ public class ScheduleManageActivity extends Activity {
                     }
                 }
             });
+            btAdd.setOnClickListener((new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String eventId;
+
+                    //delete event from DB
+                    DBManager.getManager(getApplicationContext()).deleteSchedulesByCreatedDate(createdDate);
+                    calendarManager = GlobalGoogleCalendarManager.calendarManager;
+
+                    eventId = calendarManager.getEventIdFromCreatedDate(createdDate);
+                    if(eventId != null)
+                    {
+                        calendarManager.deleteEvent(eventId);
+                        calendarManager.eventIdMap.remove(eventId);
+                    }
+
+                    summary = etScheduleName.getText().toString().trim();
+                    date = etScheduleDate.getText().toString();
+                    time = etScheduleTime.getText().toString();
+
+                    String startTime = date + "T" + time;
+                    String endTime;
+
+                    Date tmp = null;
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    SimpleDateFormat simpleCreatedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+                    try {
+                        tmp = simpleDateFormat.parse(startTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(tmp);
+                    cal.add(Calendar.HOUR, 1);
+                    tmp = cal.getTime();
+                    endTime = simpleDateFormat.format(tmp);
+                    startTime += ":00+09:00";
+                    endTime += ":00+09:00";
+
+                    final Event event = new Event()
+                            .setSummary(summary);
+
+                    //DateTime startDateTime = new DateTime("2015-06-06T10:00:00+09:00");
+                    DateTime startDateTime = new DateTime(startTime);
+                    EventDateTime start = new EventDateTime()
+                            .setDateTime(startDateTime)
+                            .setTimeZone("Asia/Seoul");
+                    event.setStart(start);
+
+                    //DateTime endDateTime = new DateTime("2015-06-06T12:00:00+09:00");
+                    DateTime endDateTime = new DateTime(endTime);
+                    EventDateTime end = new EventDateTime()
+                            .setDateTime(endDateTime)
+                            .setTimeZone("Asia/Seoul");
+                    event.setEnd(end);
+
+                    Date n = new Date();
+                    String nn = simpleCreatedDateFormat.format(n);
+                    nn += "+09:00";
+                    DateTime now = new DateTime(nn);
+                    event.setCreated(now);
+                    final String calendarId = "primary";
+
+                    // insert event to MynahDB
+                    // event to ScheduleInfo
+                    ScheduleInfo scheduleInfo;
+                    DateTime startt = event.getStart().getDateTime();
+                    if (startt == null) {
+                        // All-day events don't have start times, so just use
+                        // the start date.
+                        startt = event.getStart().getDate();
+                    }
+                    String[] str = startt.toString().split("T");
+                    // yyyy-mm-dd
+                    String date = str[0];
+                    // hh-mm-ss
+                    String time = str[1].split("\\.")[0];
+                    time = time.substring(0, 5);
+                    scheduleInfo = new ScheduleInfo();
+                    scheduleInfo.scheduleName = event.getSummary();
+                    scheduleInfo.scheduleDate = date;
+                    scheduleInfo.scheduleTime = time;
+                    scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
+                    DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
+
+
+                    //Insert to api
+                    calendarManager = GlobalGoogleCalendarManager.calendarManager;
+                    calendarManager.eventIdMap.put(event.getCreated().toString(), event.getId());
+
+                    Log.d(TAG, "calendarManager.insertEvent Start");
+                    calendarManager.insertEvent(event);
+                    Log.d(TAG, "calendarManager.insertEvent Finish");
+
+                    finish();
+                }
+            }));
         }
         //Add Schedule Event
         else
@@ -95,6 +195,93 @@ public class ScheduleManageActivity extends Activity {
 
             ((ViewManager)btDelete.getParent()).removeView(btDelete);
             btAdd.setText("추가");
+            btAdd.setOnClickListener((new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    summary = etScheduleName.getText().toString().trim();
+                    date = etScheduleDate.getText().toString();
+                    time = etScheduleTime.getText().toString();
+
+                    String startTime = date + "T" + time;
+                    String endTime;
+
+                    Date tmp = null;
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    SimpleDateFormat simpleCreatedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+                    try {
+                        tmp = simpleDateFormat.parse(startTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(tmp);
+                    cal.add(Calendar.HOUR, 1);
+                    tmp = cal.getTime();
+                    endTime = simpleDateFormat.format(tmp);
+                    startTime += ":00+09:00";
+                    endTime += ":00+09:00";
+
+                    final Event event = new Event()
+                            .setSummary(summary);
+
+                    //DateTime startDateTime = new DateTime("2015-06-06T10:00:00+09:00");
+                    DateTime startDateTime = new DateTime(startTime);
+                    EventDateTime start = new EventDateTime()
+                            .setDateTime(startDateTime)
+                            .setTimeZone("Asia/Seoul");
+                    event.setStart(start);
+
+                    //DateTime endDateTime = new DateTime("2015-06-06T12:00:00+09:00");
+                    DateTime endDateTime = new DateTime(endTime);
+                    EventDateTime end = new EventDateTime()
+                            .setDateTime(endDateTime)
+                            .setTimeZone("Asia/Seoul");
+                    event.setEnd(end);
+
+                    Date n = new Date();
+                    String nn = simpleCreatedDateFormat.format(n);
+                    nn += "+09:00";
+                    DateTime now = new DateTime(nn);
+                    event.setCreated(now);
+                    final String calendarId = "primary";
+
+                    // insert event to MynahDB
+                    // event to ScheduleInfo
+                    ScheduleInfo scheduleInfo;
+                    DateTime startt = event.getStart().getDateTime();
+                    if (startt == null) {
+                        // All-day events don't have start times, so just use
+                        // the start date.
+                        startt = event.getStart().getDate();
+                    }
+                    String[] str = startt.toString().split("T");
+                    // yyyy-mm-dd
+                    String date = str[0];
+                    // hh-mm-ss
+                    String time = str[1].split("\\.")[0];
+                    time = time.substring(0, 5);
+                    scheduleInfo = new ScheduleInfo();
+                    scheduleInfo.scheduleName = event.getSummary();
+                    scheduleInfo.scheduleDate = date;
+                    scheduleInfo.scheduleTime = time;
+                    scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
+                    DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
+
+
+                    //Insert to api
+                    calendarManager = GlobalGoogleCalendarManager.calendarManager;
+                    calendarManager.eventIdMap.put(event.getCreated().toString(), event.getId());
+
+                    Log.d(TAG, "calendarManager.insertEvent Start");
+                    calendarManager.insertEvent(event);
+                    Log.d(TAG, "calendarManager.insertEvent Finish");
+
+                    finish();
+                }
+            }));
         }
 
 
@@ -127,94 +314,7 @@ public class ScheduleManageActivity extends Activity {
             }
         });
 
-        btAdd.setOnClickListener((new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                summary = etScheduleName.getText().toString().trim();
-                date = etScheduleDate.getText().toString();
-                time = etScheduleTime.getText().toString();
 
-                String startTime = date + "T" + time;
-                String endTime;
-
-                Date tmp = null;
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                SimpleDateFormat simpleCreatedDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
-                try {
-                    tmp = simpleDateFormat.parse(startTime);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(tmp);
-                cal.add(Calendar.HOUR, 1);
-                tmp = cal.getTime();
-                endTime = simpleDateFormat.format(tmp);
-                startTime += ":00+09:00";
-                endTime += ":00+09:00";
-
-                final Event event = new Event()
-                        .setSummary(summary);
-
-                //DateTime startDateTime = new DateTime("2015-06-06T10:00:00+09:00");
-                DateTime startDateTime = new DateTime(startTime);
-                EventDateTime start = new EventDateTime()
-                        .setDateTime(startDateTime)
-                        .setTimeZone("Asia/Seoul");
-                event.setStart(start);
-
-                //DateTime endDateTime = new DateTime("2015-06-06T12:00:00+09:00");
-                DateTime endDateTime = new DateTime(endTime);
-                EventDateTime end = new EventDateTime()
-                        .setDateTime(endDateTime)
-                        .setTimeZone("Asia/Seoul");
-                event.setEnd(end);
-
-                Date n = new Date();
-                String nn = simpleCreatedDateFormat.format(n);
-                nn += "+09:00";
-                DateTime now = new DateTime(nn);
-                event.setCreated(now);
-                final String calendarId = "primary";
-
-                // insert event to MynahDB
-                // event to ScheduleInfo
-                ScheduleInfo scheduleInfo;
-                DateTime startt = event.getStart().getDateTime();
-                if (startt == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    startt = event.getStart().getDate();
-                }
-                String[] str = startt.toString().split("T");
-                // yyyy-mm-dd
-                String date = str[0];
-                // hh-mm-ss
-                String time = str[1].split("\\.")[0];
-                time = time.substring(0, 5);
-                scheduleInfo = new ScheduleInfo();
-                scheduleInfo.scheduleName = event.getSummary();
-                scheduleInfo.scheduleDate = date;
-                scheduleInfo.scheduleTime = time;
-                scheduleInfo.scheduleCreatedDate = event.getCreated().toString();
-                DBManager.getManager(getApplicationContext()).setScheduleDB(scheduleInfo);
-
-
-
-                //Insert to api
-                calendarManager = GlobalGoogleCalendarManager.calendarManager;
-                calendarManager.eventIdMap.put(event.getCreated().toString(), event.getId());
-
-                Log.d(TAG, "calendarManager.insertEvent Start");
-                calendarManager.insertEvent(event);
-                Log.d(TAG, "calendarManager.insertEvent Finish");
-
-                finish();
-            }
-        }));
 
         Log.d(TAG, "onCreate Finish");
     }

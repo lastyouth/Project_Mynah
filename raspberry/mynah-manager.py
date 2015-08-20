@@ -286,7 +286,7 @@ class MynahManager:
 
                 if self.isNotFamily == False:
                     print "Access Denied - Unauthorized Person Approching detected"
-                    os.system('omxplayer -o local /home/pi/share/dog.mp3')
+                    os.system('omxplayer -o local /home/pi/share/dog.mp3 --vol -1500')
                     self.s1Activated = False
                     self.s2Activated = False
                     self.directionFlag = self.DIRECTION_TYPE_NONE
@@ -331,7 +331,7 @@ class MynahManager:
                     else:
                         os.system(query.encode("utf-8"))
 
-                    os.system('omxplayer -o local hello_ko.mp3 --vol 1000')
+                    os.system('omxplayer -o local hello_ko.mp3')
                     os.remove('hello_ko.mp3')
 
                 if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
@@ -378,12 +378,12 @@ class DistanceSensor(threading.Thread):
         self.sensortype = sensortype
 
         if sensortype == 1:
-            self.ECHO = 26
-            self.TRIG = 22
+            self.ECHO = 23
+            self.TRIG = 18
             self.validate = True
         elif sensortype == 2:
-            self.ECHO = 21
-            self.TRIG = 20
+            self.ECHO = 22
+            self.TRIG = 17
             self.validate = True
         else:
             self.ECHO = self.TRIG = -1
