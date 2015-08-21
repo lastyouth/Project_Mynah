@@ -62,6 +62,7 @@ public class ScheduleManageActivity extends Activity {
         // Modify Schedule Event
         if(intent.getExtras().getString("type").equals("modify"))
         {
+            btAdd.setText("수정");
             summary = intent.getStringExtra("scheduleName").toString();
             date = intent.getStringExtra("date").toString();
             time = intent.getStringExtra("time").toString();

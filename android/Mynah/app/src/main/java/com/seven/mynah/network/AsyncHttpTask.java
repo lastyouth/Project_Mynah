@@ -26,6 +26,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import com.google.api.client.http.MultipartContent;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 import android.content.Context;
@@ -109,7 +110,8 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
             String encodedJSON = Base64.encodeToString(jobj.toString().getBytes(), 0);
             StringEntity entity = new StringEntity(encodedJSON, "UTF-8");
-            
+
+
             System.out.println("send : " + jobj.toString());
             System.out.println("encoded : " + encodedJSON);
             

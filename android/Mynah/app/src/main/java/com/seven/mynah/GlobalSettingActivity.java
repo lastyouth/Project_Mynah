@@ -37,7 +37,9 @@ public class GlobalSettingActivity extends Activity{
 	private int BUS = GlobalVariable.BUS;
 	private int SUBWAY= GlobalVariable.SUBWAY;
 	private int WEATHER = GlobalVariable.WEATHER;
-	private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER};
+	private int RECORD = GlobalVariable.RECORD;
+
+	private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER, RECORD};
 	private int ttsStatus;
 	private SharedPreferences p;
 
@@ -199,11 +201,11 @@ public class GlobalSettingActivity extends Activity{
 	{
 		p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
 		SharedPreferences.Editor ed = p.edit();
-		ttsStatus = p.getInt("status", 15);
-		String sList[] = {"일정", "버스", "지하철", "날씨"};
+		ttsStatus = p.getInt("status", 31);
+		String sList[] = {"일정", "버스", "지하철", "날씨","녹음"};
 		ArrayList<String> setting = new ArrayList<String>();
 
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < sList.length; i++)
 		{
 			int s = ttsStatus & ttsList[i];
 			String flag;

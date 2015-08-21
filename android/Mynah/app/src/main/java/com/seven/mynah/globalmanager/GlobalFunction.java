@@ -11,6 +11,11 @@ public class GlobalFunction {
 		// 케이스문
 		String decode = "";
 
+		if(code == null)
+		{
+			return "";
+		}
+
 		switch (code) 
 		{
 		case "I":
@@ -34,7 +39,7 @@ public class GlobalFunction {
 		case "SU":
 			decode = "수인선";
 			break;
-			case "U":
+		case "U":
 			decode = "의정부경전철";
 			break;
 		default:

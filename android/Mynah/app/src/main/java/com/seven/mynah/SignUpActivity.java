@@ -51,16 +51,18 @@ public class SignUpActivity extends Activity {
     //GCM project key
     private static final String SENDER_ID = "803082977332";
     //GCM 등록용 키(핸드폰 기준 1개)
-    String regid;
+    private String regid;
 
     //device id
-    String deviceID;
+    private String deviceID;
 
     //activity 관련
-    Button btn;
-    EditText etProductId;
-    EditText etNewUserName;
-    Boolean productCheck;
+    private Button btn;
+    private EditText etProductId;
+    private EditText etNewUserName;
+    private EditText etSignUpPassword;
+    private EditText etSignUpRePassword;
+    private Boolean productCheck;
 
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
@@ -96,7 +98,6 @@ public class SignUpActivity extends Activity {
                             String res = result;
 
                             String[] data = res.split("//");
-
 
                             if(data.length != 3)
                             {
@@ -267,6 +268,8 @@ public class SignUpActivity extends Activity {
         //activity 관련
         etProductId = (EditText)findViewById(R.id.etProductId);
         etNewUserName = (EditText)findViewById(R.id.etNewUserName);
+        etSignUpPassword = (EditText)findViewById(R.id.etSignUpPassword);
+        etSignUpRePassword = (EditText)findViewById(R.id.etSignUpRePassword);
 
         productCheck = false; //기계 존재유무 확인
 
@@ -297,8 +300,8 @@ public class SignUpActivity extends Activity {
             public void onClick(View v) {
                 final String strProductId = etProductId.getText() + "";
                 final String strNewUserId = deviceID; //일단 device_id 넣어놓는걸로
-                final String strNewUserPassword = "";
-                final String strNewUserRePassword =  "";
+                final String strNewUserPassword = etSignUpPassword.getText() + "";
+                final String strNewUserRePassword =  etSignUpRePassword.getText() + "";
                 final String strNewUserName = etNewUserName.getText()+"";
                 final String strRegId = regid;
                 final String strDeviceId = deviceID;
@@ -306,8 +309,14 @@ public class SignUpActivity extends Activity {
                 final Boolean isRepresentative = true;
                 final Boolean isInHome = true;
 
+                if (!strNewUserPassword.equals(strNewUserRePassword))
+                {
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(!productCheck){
-                    Toast.makeText(getApplicationContext(), "기계 확인이 되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "디바이스 확인이 되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     JSONObject jobj = new JSONObject();

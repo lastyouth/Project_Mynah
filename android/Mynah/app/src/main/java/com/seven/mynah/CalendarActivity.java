@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import com.seven.mynah.artifacts.SchedulesOnDateInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.RECManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,15 +98,29 @@ public class CalendarActivity extends Activity {
         });
 
         layoutScheduleAdd = (LinearLayout) findViewById(R.id.lyScheduleAdd);
-        layoutScheduleAdd.setOnClickListener(new View.OnClickListener() {
+
+        layoutScheduleAdd.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScheduleManageActivity.class);
-                intent.putExtra("type", "add");
-                intent.putExtra("date", selectedDate);
-                startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    layoutScheduleAdd.setAlpha((float) 0.8);
+                    return true;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    return true;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    layoutScheduleAdd.setAlpha((float) 1.0);
+                    Intent intent = new Intent(getApplicationContext(), ScheduleManageActivity.class);
+                    intent.putExtra("type", "add");
+                    intent.putExtra("date", selectedDate);
+                    startActivity(intent);
+                    return true;
+                }
+                return true;
             }
         });
+
         Log.d(TAG, "onCreate Finish");
     }
 

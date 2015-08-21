@@ -82,7 +82,8 @@
                         android:id="@+id/ivBusImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        />
 
                 </LinearLayout>
 
@@ -177,7 +178,8 @@
                         android:id="@+id/ivSubwayImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        />
 
                 </LinearLayout>
 
@@ -259,98 +261,164 @@
 
     <!-- Weather -->
     <LinearLayout
-        android:id="@+id/llWeather"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_border"
-        android:clickable="true">
-        <!-- Left Side -->
+        android:layout_weight="1">
+
         <LinearLayout
+            android:id="@+id/llWeather"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:padding="5dp">
-
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:layout_margin="10dp"
+            android:clickable="true">
+            <!-- Left Side -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <ImageView
-                    android:id="@+id/ivWeatherImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivWeatherImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:src="@drawable/ic_sunny"
+                        android:layout_marginLeft="18dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvWeatherType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+                </LinearLayout>
             </LinearLayout>
 
+
+            <!-- Right side -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/tvWeatherType"
+                    android:id="@+id/tvWeatherPlace"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvWeatherPlace2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvWeatherTemper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvPop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+
             </LinearLayout>
         </LinearLayout>
 
-
-        <!-- Right side -->
+        <!-- play icon 2 -->
         <LinearLayout
+            android:id="@+id/llPlaying"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/tvWeatherPlace"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_border"
+            android:clickable="true"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:layout_weight="1"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tvWeatherPlace2"
+                <ImageView
+                    android:id="@+id/ivPlaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_playing"
+                    android:layout_margin="14dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:orientation="vertical"
+                android:layout_weight="2">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="13sp"/>
+                <TextView
+                    android:id="@+id/tvPlaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="재생"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvWeatherTemper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tvPlayingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="파일존재여부"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tvPop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
 
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
+
 
     <!-- Record, Setting -->
     <LinearLayout
@@ -375,6 +443,7 @@
                 android:padding="10dp">
 
                 <ImageView
+                    android:id="@+id/ivRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -389,14 +458,18 @@
                 android:layout_weight="2">
 
                 <TextView
+                    android:id="@+id/tvRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="녹음"
+                    android:text="빠른 녹음"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
+
+
+
 
         <!-- Refresh -->
         <LinearLayout
@@ -503,4 +576,4 @@
 
 </LinearLayout>
 
-<!-- From: file:/D:/git/Mynah/app/src/main/res/layout/activity_main.xml -->
+<!-- From: file:/D:/Development/develop_backup/Mynah/app/src/main/res/layout/activity_main.xml -->

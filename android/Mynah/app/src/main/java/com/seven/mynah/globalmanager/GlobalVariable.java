@@ -14,6 +14,7 @@ public final class GlobalVariable {
 	public static final int BUS = 2;
 	public static final int SUBWAY = 4;
 	public static final int WEATHER = 8;
+	public static final int RECORD = 16;
 
 
 	public final class ShortcutType {

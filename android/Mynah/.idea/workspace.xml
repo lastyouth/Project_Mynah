@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="verbose" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="" />
+        <option name="name" value="Unnamed-0" />
+        <option name="packageNamePattern" value="com.seven.mynah" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayouts">
     <shared>
-      <config>
-        <target>android-19</target>
-      </config>
+      <config />
     </shared>
-    <layouts>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-        <config>
-          <theme>@style/AppTheme</theme>
-        </config>
-      </layout>
-    </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Unnamed-0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a388a96-1da4-44d1-b3db-1294bdf9ce06" name="Default" comment="" />
+    <list default="true" id="7adb662b-f1f0-47ec-9d6a-660213acc612" name="Default" comment="" />
     <ignored path="Mynah.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,42 +49,118 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java">
+      <file leaf-file-name="GetInformationService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.7">
-              <caret line="409" column="49" selection-start-line="409" selection-start-column="49" selection-end-line="409" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="313" column="20" selection-start-line="313" selection-start-column="20" selection-end-line="313" selection-end-column="20" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#10138#11560#0" expanded="true" />
+                <element signature="e#11559#11560#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GlobalSettingActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/GlobalSettingActivity.java">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5335516">
-              <caret line="202" column="51" selection-start-line="202" selection-start-column="51" selection-end-line="202" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SignUpActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SignUpActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6527415">
+              <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LogInActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LogInActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoadingActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LoadingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SubwaySettingActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwaySettingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="17" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherSettingActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/WeatherSettingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RPiBluetoothConnectionManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="291" column="10" selection-start-line="291" selection-start-column="10" selection-end-line="291" selection-end-column="10" />
               <folding>
-                <element signature="e#6180#6346#0" expanded="true" />
-                <element signature="e#6345#6346#0" expanded="true" />
-                <element signature="e#6377#6541#0" expanded="true" />
-                <element signature="e#6540#6541#0" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#1286#1488#0" expanded="false" />
+                <element signature="e#1487#1488#0" expanded="false" />
+                <element signature="e#8733#8734#0" expanded="false" />
+                <element signature="e#8770#8771#0" expanded="false" />
+                <element signature="e#8956#8957#0" expanded="false" />
+                <element signature="e#9001#9002#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="layoutResourceFile_vertical" />
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="availableProjects">
@@ -1325,7 +1405,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4299201794699" />
+        <entry key="D:\Development\develop_backup\Mynah" value="4319453931074" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1491,32 +1571,32 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.4/commons-codec-1.4-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/android/m2repository/com/android/support/appcompat-v7/22.1.1/appcompat-v7-22.1.1.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services/7.3.0/play-services-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/22.1.1/appcompat-v7-22.1.1.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services/7.3.0/play-services-7.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.20.0/d3e66209ae9e749b2d6833761e7885f60f285564/google-api-client-1.20.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.20.0/5673179575c32b69a474334255c3044adf18d40/google-api-client-android-1.20.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-gson/1.20.0/ace1924800ca8c256f6a3f63e72ee13e1b458d36/google-api-client-gson-1.20.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-calendar/v3-rev125-1.20.0/fef496f895ad5be86416863153d4efbf7b601f8a/google-api-services-calendar-v3-rev125-1.20.0.jar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-ads/7.3.0/play-services-ads-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-analytics/7.3.0/play-services-analytics-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-appindexing/7.3.0/play-services-appindexing-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-appinvite/7.3.0/play-services-appinvite-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-appstate/7.3.0/play-services-appstate-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-base/7.3.0/play-services-base-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-cast/7.3.0/play-services-cast-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-drive/7.3.0/play-services-drive-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-fitness/7.3.0/play-services-fitness-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-games/7.3.0/play-services-games-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-gcm/7.3.0/play-services-gcm-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-identity/7.3.0/play-services-identity-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-location/7.3.0/play-services-location-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-maps/7.3.0/play-services-maps-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-nearby/7.3.0/play-services-nearby-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-panorama/7.3.0/play-services-panorama-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-plus/7.3.0/play-services-plus-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-safetynet/7.3.0/play-services-safetynet-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-wallet/7.3.0/play-services-wallet-7.3.0.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/google/m2repository/com/google/android/gms/play-services-wearable/7.3.0/play-services-wearable-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-ads/7.3.0/play-services-ads-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-analytics/7.3.0/play-services-analytics-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-appindexing/7.3.0/play-services-appindexing-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-appinvite/7.3.0/play-services-appinvite-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-appstate/7.3.0/play-services-appstate-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-base/7.3.0/play-services-base-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-cast/7.3.0/play-services-cast-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-drive/7.3.0/play-services-drive-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-fitness/7.3.0/play-services-fitness-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-games/7.3.0/play-services-games-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-gcm/7.3.0/play-services-gcm-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-identity/7.3.0/play-services-identity-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-location/7.3.0/play-services-location-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-maps/7.3.0/play-services-maps-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-nearby/7.3.0/play-services-nearby-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-panorama/7.3.0/play-services-panorama-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-plus/7.3.0/play-services-plus-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-safetynet/7.3.0/play-services-safetynet-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-wallet/7.3.0/play-services-wallet-7.3.0.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-wearable/7.3.0/play-services-wearable-7.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.20.0/1d086ac5756475ddf451af2e2df6e288d18608ca/google-oauth-client-1.20.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.20.0/2408070b2abec043624d35b35e30450f1b663858/google-http-client-jackson2-1.20.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/13.0/381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7/guava-jdk5-13.0.jar" />
@@ -1530,8 +1610,9 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.0.1/e813b8722c387b22e1adccf7914729db09bcb4a9/httpcore-4.0.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/5043bfebc3db072ed80fbd362e7caf00e885d8ae/commons-logging-1.1.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.3/fd32786786e2adb664d5ecc965da47629dca14ba/commons-codec-1.3.jar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/android/m2repository/com/android/support/support-v4/22.1.1/support-v4-22.1.1.aar" />
-                            <option value="D:/Program Files(D)/Android/SDK/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar" />
+                            <option value="D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/support-v4/22.1.1/support-v4-22.1.1.aar" />
+                            <option value="D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar" />
+                            <option value="$MODULE_DIR$/libs/httpmime-4.2.2.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -1543,59 +1624,108 @@
               <option name="name" value="app" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/ant-1.9.3.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/ant-launcher-1.9.3.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-base-services-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-base-services-groovy-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-cli-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-core-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-docs-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-launcher-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-messaging-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-model-core-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-model-groovy-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-native-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-open-api-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-resources-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-tooling-api-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-ui-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/gradle-wrapper-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/groovy-all-2.3.6.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/ant-antlr-1.9.3.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-announce-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-antlr-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-build-comparison-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-build-init-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-code-quality-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-cunit-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-dependency-management-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-diagnostics-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-ear-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-ide-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-ide-native-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-ivy-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-jacoco-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-javascript-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-jetty-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-language-groovy-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-language-java-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-language-jvm-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-language-native-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-maven-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-osgi-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-platform-base-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-platform-jvm-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-platform-native-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-plugin-development-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-plugin-use-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-plugins-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-publish-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-reporting-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-resources-http-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-scala-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-signing-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/gradle-sonar-2.2.1.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.2.1/lib/plugins/ivy-2.2.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/announce" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/antlr" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/base-services" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/base-services-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/build-comparison" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/build-init" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/cli" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/code-quality" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/core" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/cunit" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/dependency-management" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/diagnostics" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ear" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ide" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ide-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/internal-integ-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/internal-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ivy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/jacoco" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/javascript" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/jetty" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-java" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/launcher" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/maven" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/messaging" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/model-core" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/model-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/open-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/osgi" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-base" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugin-development" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugin-use" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugins" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/publish" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/reporting" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/resources" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/resources-http" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/scala" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/signing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/sonar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/tooling-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ui" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/wrapper" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/ant-1.9.3.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/ant-launcher-1.9.3.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-base-services-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-base-services-groovy-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-cli-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-core-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-docs-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-launcher-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-messaging-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-model-core-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-model-groovy-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-native-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-open-api-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-resources-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-tooling-api-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-ui-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-wrapper-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/groovy-all-2.3.6.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/ant-antlr-1.9.3.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-announce-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-antlr-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-build-comparison-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-build-init-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-code-quality-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-cunit-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-dependency-management-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-diagnostics-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ear-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ide-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ide-native-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ivy-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-jacoco-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-javascript-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-jetty-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-groovy-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-java-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-jvm-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-native-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-maven-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-osgi-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-base-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-jvm-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-native-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugin-development-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugin-use-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugins-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-publish-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-reporting-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-resources-http-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-scala-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-signing-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-sonar-2.2.1.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/ivy-2.2.0.jar" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
                 </list>
@@ -1612,27 +1742,21 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/CityNameAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/AppInfoActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_app_info.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_row_setting.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_loading.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwaySettingActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/util/TransparentProgressDialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/SettingTTSAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/network/AsyncHttpTask.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LogInActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SignUpActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ChooseTTSActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CalendarActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ScheduleManageActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_schedule_manage.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_setting_app.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalGoogleCalendarManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/network/AsyncHttpUpload.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GCMIntentService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/RECManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/DBManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LoadingActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/calender/CalendarManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/GlobalSettingActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalFunction.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/summarize/InfoTextSummarizer.java" />
       </list>
     </option>
   </component>
@@ -1642,8 +1766,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1547" />
-    <option name="height" value="916" />
+    <option name="width" value="1604" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1669,8 +1793,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
@@ -1678,6 +1800,10 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Mynah" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1711,6 +1837,64 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="anim" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1740,41 +1924,21 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mynah" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adapter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Mynah" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="fast_2" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MobileConference" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="42f05d04e8d06fa5" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mynah_150818" />
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -1796,10 +1960,15 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
-      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
-      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
-      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
@@ -1821,10 +1990,15 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
-      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
-      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
-      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1840,22 +2014,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -1938,10 +2096,15 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
-      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
-      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
-      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
     <list size="1">
@@ -1966,45 +2129,53 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3a388a96-1da4-44d1-b3db-1294bdf9ce06" name="Default" comment="" />
-      <created>1439714572446</created>
+      <changelist id="7adb662b-f1f0-47ec-9d6a-660213acc612" name="Default" comment="" />
+      <created>1440074681769</created>
       <option name="number" value="Default" />
-      <updated>1439714572446</updated>
+      <updated>1440074681769</updated>
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1547" height="916" extended-state="6" />
+    <frame x="-8" y="-8" width="1604" height="876" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32817754" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3992095" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28853756" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.123847164" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729805" sideWeight="0.4974293" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729805" sideWeight="0.45142487" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42618385" sideWeight="0.44365284" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729805" sideWeight="0.48704663" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729805" sideWeight="0.49485862" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32966322" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42618385" sideWeight="0.55634713" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24680565" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32806325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" x="92" y="92" width="1347" height="716" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3955432" sideWeight="0.6314767" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32966322" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729805" sideWeight="0.48704663" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2020,55 +2191,853 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java</url>
+          <line>250</line>
+          <properties />
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java</url>
+          <line>258</line>
+          <properties />
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="45" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/ServiceAccessManager.java">
+    <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3075709">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/button_border.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/WebRegistrationManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28418803">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Project_Mynah/android/kjs/Mynah/app/src/main/java/com/seven/mynah/custominterface/BusShortcutLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56837606">
-          <caret line="119" column="14" selection-start-line="119" selection-start-column="14" selection-end-line="121" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/summarize/InfoTextSummarizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.081196584">
+        <state vertical-scroll-proportion="0.0">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/MynahDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_logo.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/android/widget/TextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3780" column="0" selection-start-line="3780" selection-start-column="0" selection-end-line="3780" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/summarize/ShortCutSummarizer.java">
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/android/widget/ImageView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.081196584">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="373" column="0" selection-start-line="373" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6414" column="0" selection-start-line="6414" selection-start-column="0" selection-end-line="6414" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#818327#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#61654#61660#0" expanded="false" />
+            <element signature="e#135422#135423#0" expanded="false" />
+            <element signature="e#135461#135462#0" expanded="false" />
+            <element signature="e#178968#178969#0" expanded="false" />
+            <element signature="e#179017#179018#0" expanded="false" />
+            <element signature="e#187020#187021#0" expanded="false" />
+            <element signature="e#187084#187085#0" expanded="false" />
+            <element signature="e#187504#187505#0" expanded="false" />
+            <element signature="e#187544#187545#0" expanded="false" />
+            <element signature="e#188319#188320#0" expanded="false" />
+            <element signature="e#188371#188372#0" expanded="false" />
+            <element signature="e#188584#188585#0" expanded="false" />
+            <element signature="e#188638#188639#0" expanded="false" />
+            <element signature="e#189160#189161#0" expanded="false" />
+            <element signature="e#189214#189215#0" expanded="false" />
+            <element signature="e#189659#189660#0" expanded="false" />
+            <element signature="e#189712#189713#0" expanded="false" />
+            <element signature="e#196918#196919#0" expanded="false" />
+            <element signature="e#196977#196978#0" expanded="false" />
+            <element signature="e#215860#215861#0" expanded="false" />
+            <element signature="e#215909#215910#0" expanded="false" />
+            <element signature="e#223336#223337#0" expanded="false" />
+            <element signature="e#223380#223381#0" expanded="false" />
+            <element signature="e#226191#226192#0" expanded="false" />
+            <element signature="e#226236#226237#0" expanded="false" />
+            <element signature="e#229337#229338#0" expanded="false" />
+            <element signature="e#229379#229380#0" expanded="false" />
+            <element signature="e#232511#232512#0" expanded="false" />
+            <element signature="e#232565#232566#0" expanded="false" />
+            <element signature="e#234319#234320#0" expanded="false" />
+            <element signature="e#234372#234373#0" expanded="false" />
+            <element signature="e#234625#234626#0" expanded="false" />
+            <element signature="e#234659#234660#0" expanded="false" />
+            <element signature="e#235869#235870#0" expanded="false" />
+            <element signature="e#235904#235905#0" expanded="false" />
+            <element signature="e#236418#236419#0" expanded="false" />
+            <element signature="e#236477#236478#0" expanded="false" />
+            <element signature="e#236728#236729#0" expanded="false" />
+            <element signature="e#236801#236802#0" expanded="false" />
+            <element signature="e#238744#238745#0" expanded="false" />
+            <element signature="e#238806#238807#0" expanded="false" />
+            <element signature="e#239788#239789#0" expanded="false" />
+            <element signature="e#239845#239846#0" expanded="false" />
+            <element signature="e#240577#240578#0" expanded="false" />
+            <element signature="e#240616#240617#0" expanded="false" />
+            <element signature="e#240956#240957#0" expanded="false" />
+            <element signature="e#241006#241007#0" expanded="false" />
+            <element signature="e#241307#241308#0" expanded="false" />
+            <element signature="e#241347#241348#0" expanded="false" />
+            <element signature="e#241692#241693#0" expanded="false" />
+            <element signature="e#241744#241745#0" expanded="false" />
+            <element signature="e#242036#242037#0" expanded="false" />
+            <element signature="e#242073#242074#0" expanded="false" />
+            <element signature="e#242403#242404#0" expanded="false" />
+            <element signature="e#242449#242450#0" expanded="false" />
+            <element signature="e#242747#242748#0" expanded="false" />
+            <element signature="e#242786#242787#0" expanded="false" />
+            <element signature="e#243126#243127#0" expanded="false" />
+            <element signature="e#243176#243177#0" expanded="false" />
+            <element signature="e#243483#243484#0" expanded="false" />
+            <element signature="e#243525#243526#0" expanded="false" />
+            <element signature="e#258848#258849#0" expanded="false" />
+            <element signature="e#258893#258894#0" expanded="false" />
+            <element signature="e#259357#259358#0" expanded="false" />
+            <element signature="e#259398#259399#0" expanded="false" />
+            <element signature="e#260143#260144#0" expanded="false" />
+            <element signature="e#260194#260195#0" expanded="false" />
+            <element signature="e#260894#260895#0" expanded="false" />
+            <element signature="e#260955#260956#0" expanded="false" />
+            <element signature="e#269454#269455#0" expanded="false" />
+            <element signature="e#269523#269524#0" expanded="false" />
+            <element signature="e#272280#272281#0" expanded="false" />
+            <element signature="e#272322#272323#0" expanded="false" />
+            <element signature="e#273376#273377#0" expanded="false" />
+            <element signature="e#273440#273441#0" expanded="false" />
+            <element signature="e#274672#274673#0" expanded="false" />
+            <element signature="e#274732#274733#0" expanded="false" />
+            <element signature="e#275197#275198#0" expanded="false" />
+            <element signature="e#275259#275260#0" expanded="false" />
+            <element signature="e#275562#275563#0" expanded="false" />
+            <element signature="e#275632#275633#0" expanded="false" />
+            <element signature="e#278251#278252#0" expanded="false" />
+            <element signature="e#278322#278323#0" expanded="false" />
+            <element signature="e#278695#278696#0" expanded="false" />
+            <element signature="e#278768#278769#0" expanded="false" />
+            <element signature="e#282316#282317#0" expanded="false" />
+            <element signature="e#282381#282382#0" expanded="false" />
+            <element signature="e#285784#285988#0" expanded="false" />
+            <element signature="e#285987#285988#0" expanded="false" />
+            <element signature="e#286850#286856#0" expanded="false" />
+            <element signature="e#290513#290519#0" expanded="false" />
+            <element signature="e#296056#296057#0" expanded="false" />
+            <element signature="e#296108#296109#0" expanded="false" />
+            <element signature="e#297061#297062#0" expanded="false" />
+            <element signature="e#297113#297114#0" expanded="false" />
+            <element signature="e#323509#323510#0" expanded="false" />
+            <element signature="e#323555#323556#0" expanded="false" />
+            <element signature="e#323761#323762#0" expanded="false" />
+            <element signature="e#323789#323790#0" expanded="false" />
+            <element signature="e#323869#323870#0" expanded="false" />
+            <element signature="e#323920#323921#0" expanded="false" />
+            <element signature="e#323998#323999#0" expanded="false" />
+            <element signature="e#324053#324054#0" expanded="false" />
+            <element signature="e#327037#327038#0" expanded="false" />
+            <element signature="e#327077#327078#0" expanded="false" />
+            <element signature="e#327622#327623#0" expanded="false" />
+            <element signature="e#327663#327664#0" expanded="false" />
+            <element signature="e#337467#337468#0" expanded="false" />
+            <element signature="e#337495#337496#0" expanded="false" />
+            <element signature="e#337930#337931#0" expanded="false" />
+            <element signature="e#337958#337959#0" expanded="false" />
+            <element signature="e#338387#338388#0" expanded="false" />
+            <element signature="e#338415#338416#0" expanded="false" />
+            <element signature="e#339573#339574#0" expanded="false" />
+            <element signature="e#339619#339620#0" expanded="false" />
+            <element signature="e#341029#341030#0" expanded="false" />
+            <element signature="e#341102#341103#0" expanded="false" />
+            <element signature="e#342822#342823#0" expanded="false" />
+            <element signature="e#342857#342858#0" expanded="false" />
+            <element signature="e#349693#349694#0" expanded="false" />
+            <element signature="e#349724#349725#0" expanded="false" />
+            <element signature="e#350428#350429#0" expanded="false" />
+            <element signature="e#350456#350457#0" expanded="false" />
+            <element signature="e#352308#352309#0" expanded="false" />
+            <element signature="e#352336#352337#0" expanded="false" />
+            <element signature="e#354384#354385#0" expanded="false" />
+            <element signature="e#354412#354413#0" expanded="false" />
+            <element signature="e#355047#355048#0" expanded="false" />
+            <element signature="e#355075#355076#0" expanded="false" />
+            <element signature="e#356045#356046#0" expanded="false" />
+            <element signature="e#356073#356074#0" expanded="false" />
+            <element signature="e#357199#357200#0" expanded="false" />
+            <element signature="e#357226#357227#0" expanded="false" />
+            <element signature="e#357798#357799#0" expanded="false" />
+            <element signature="e#357826#357827#0" expanded="false" />
+            <element signature="e#359548#359549#0" expanded="false" />
+            <element signature="e#359575#359576#0" expanded="false" />
+            <element signature="e#360507#360508#0" expanded="false" />
+            <element signature="e#360535#360536#0" expanded="false" />
+            <element signature="e#362335#362336#0" expanded="false" />
+            <element signature="e#362363#362364#0" expanded="false" />
+            <element signature="e#367119#367120#0" expanded="false" />
+            <element signature="e#367178#367179#0" expanded="false" />
+            <element signature="e#377444#377445#0" expanded="false" />
+            <element signature="e#377485#377486#0" expanded="false" />
+            <element signature="e#377593#377594#0" expanded="false" />
+            <element signature="e#377630#377631#0" expanded="false" />
+            <element signature="e#390267#390268#0" expanded="false" />
+            <element signature="e#390297#390298#0" expanded="false" />
+            <element signature="e#390579#390580#0" expanded="false" />
+            <element signature="e#390620#390621#0" expanded="false" />
+            <element signature="e#390900#390901#0" expanded="false" />
+            <element signature="e#390941#390942#0" expanded="false" />
+            <element signature="e#391321#391322#0" expanded="false" />
+            <element signature="e#391352#391353#0" expanded="false" />
+            <element signature="e#391718#391719#0" expanded="false" />
+            <element signature="e#391749#391750#0" expanded="false" />
+            <element signature="e#391952#391953#0" expanded="false" />
+            <element signature="e#391989#391990#0" expanded="false" />
+            <element signature="e#392191#392192#0" expanded="false" />
+            <element signature="e#392228#392229#0" expanded="false" />
+            <element signature="e#393173#393174#0" expanded="false" />
+            <element signature="e#393231#393232#0" expanded="false" />
+            <element signature="e#393770#393771#0" expanded="false" />
+            <element signature="e#393807#393808#0" expanded="false" />
+            <element signature="e#394095#394096#0" expanded="false" />
+            <element signature="e#394154#394155#0" expanded="false" />
+            <element signature="e#394696#394697#0" expanded="false" />
+            <element signature="e#394734#394735#0" expanded="false" />
+            <element signature="e#396146#396147#0" expanded="false" />
+            <element signature="e#396200#396201#0" expanded="false" />
+            <element signature="e#400094#400095#0" expanded="false" />
+            <element signature="e#400142#400143#0" expanded="false" />
+            <element signature="e#401342#401343#0" expanded="false" />
+            <element signature="e#401391#401392#0" expanded="false" />
+            <element signature="e#402818#402819#0" expanded="false" />
+            <element signature="e#402867#402868#0" expanded="false" />
+            <element signature="e#404370#404371#0" expanded="false" />
+            <element signature="e#404416#404417#0" expanded="false" />
+            <element signature="e#405544#405545#0" expanded="false" />
+            <element signature="e#405590#405591#0" expanded="false" />
+            <element signature="e#406762#406763#0" expanded="false" />
+            <element signature="e#406808#406809#0" expanded="false" />
+            <element signature="e#408201#408202#0" expanded="false" />
+            <element signature="e#408247#408248#0" expanded="false" />
+            <element signature="e#409509#409510#0" expanded="false" />
+            <element signature="e#409592#409593#0" expanded="false" />
+            <element signature="e#410886#410887#0" expanded="false" />
+            <element signature="e#410913#410914#0" expanded="false" />
+            <element signature="e#416369#416370#0" expanded="false" />
+            <element signature="e#416396#416397#0" expanded="false" />
+            <element signature="e#418438#418439#0" expanded="false" />
+            <element signature="e#418468#418469#0" expanded="false" />
+            <element signature="e#418638#418639#0" expanded="false" />
+            <element signature="e#418700#418701#0" expanded="false" />
+            <element signature="e#420685#420686#0" expanded="false" />
+            <element signature="e#420713#420714#0" expanded="false" />
+            <element signature="e#422777#422778#0" expanded="false" />
+            <element signature="e#422806#422807#0" expanded="false" />
+            <element signature="e#424934#424935#0" expanded="false" />
+            <element signature="e#424982#424983#0" expanded="false" />
+            <element signature="e#425363#425364#0" expanded="false" />
+            <element signature="e#425405#425406#0" expanded="false" />
+            <element signature="e#425768#425769#0" expanded="false" />
+            <element signature="e#425815#425816#0" expanded="false" />
+            <element signature="e#426194#426195#0" expanded="false" />
+            <element signature="e#426235#426236#0" expanded="false" />
+            <element signature="e#426610#426611#0" expanded="false" />
+            <element signature="e#426667#426668#0" expanded="false" />
+            <element signature="e#427058#427059#0" expanded="false" />
+            <element signature="e#427109#427110#0" expanded="false" />
+            <element signature="e#427358#427359#0" expanded="false" />
+            <element signature="e#427407#427408#0" expanded="false" />
+            <element signature="e#428255#428256#0" expanded="false" />
+            <element signature="e#428307#428308#0" expanded="false" />
+            <element signature="e#429521#429522#0" expanded="false" />
+            <element signature="e#429573#429574#0" expanded="false" />
+            <element signature="e#430586#430587#0" expanded="false" />
+            <element signature="e#430638#430639#0" expanded="false" />
+            <element signature="e#431685#431686#0" expanded="false" />
+            <element signature="e#431726#431727#0" expanded="false" />
+            <element signature="e#432930#432931#0" expanded="false" />
+            <element signature="e#432983#432984#0" expanded="false" />
+            <element signature="e#436088#436089#0" expanded="false" />
+            <element signature="e#436127#436128#0" expanded="false" />
+            <element signature="e#437801#437802#0" expanded="false" />
+            <element signature="e#437847#437848#0" expanded="false" />
+            <element signature="e#440183#440184#0" expanded="false" />
+            <element signature="e#440216#440217#0" expanded="false" />
+            <element signature="e#441520#441521#0" expanded="false" />
+            <element signature="e#441572#441573#0" expanded="false" />
+            <element signature="e#446475#446476#0" expanded="false" />
+            <element signature="e#446511#446512#0" expanded="false" />
+            <element signature="e#448678#448679#0" expanded="false" />
+            <element signature="e#448730#448731#0" expanded="false" />
+            <element signature="e#457920#457921#0" expanded="false" />
+            <element signature="e#457952#457953#0" expanded="false" />
+            <element signature="e#461188#461189#0" expanded="false" />
+            <element signature="e#461230#461231#0" expanded="false" />
+            <element signature="e#474092#474093#0" expanded="false" />
+            <element signature="e#474132#474133#0" expanded="false" />
+            <element signature="e#492965#492966#0" expanded="false" />
+            <element signature="e#493022#493023#0" expanded="false" />
+            <element signature="e#493709#493710#0" expanded="false" />
+            <element signature="e#493742#493743#0" expanded="false" />
+            <element signature="e#494511#494512#0" expanded="false" />
+            <element signature="e#494542#494543#0" expanded="false" />
+            <element signature="e#495309#495310#0" expanded="false" />
+            <element signature="e#495342#495343#0" expanded="false" />
+            <element signature="e#495990#495991#0" expanded="false" />
+            <element signature="e#496024#496025#0" expanded="false" />
+            <element signature="e#496777#496778#0" expanded="false" />
+            <element signature="e#496808#496809#0" expanded="false" />
+            <element signature="e#497558#497559#0" expanded="false" />
+            <element signature="e#497592#497593#0" expanded="false" />
+            <element signature="e#504618#504619#0" expanded="false" />
+            <element signature="e#504646#504647#0" expanded="false" />
+            <element signature="e#509400#509401#0" expanded="false" />
+            <element signature="e#509449#509450#0" expanded="false" />
+            <element signature="e#510082#510083#0" expanded="false" />
+            <element signature="e#510150#510151#0" expanded="false" />
+            <element signature="e#518315#518316#0" expanded="false" />
+            <element signature="e#518361#518362#0" expanded="false" />
+            <element signature="e#518552#518553#0" expanded="false" />
+            <element signature="e#518610#518611#0" expanded="false" />
+            <element signature="e#520209#520210#0" expanded="false" />
+            <element signature="e#520250#520251#0" expanded="false" />
+            <element signature="e#522297#522298#0" expanded="false" />
+            <element signature="e#522369#522370#0" expanded="false" />
+            <element signature="e#527600#527601#0" expanded="false" />
+            <element signature="e#527650#527651#0" expanded="false" />
+            <element signature="e#535165#535166#0" expanded="false" />
+            <element signature="e#535238#535239#0" expanded="false" />
+            <element signature="e#541745#541746#0" expanded="false" />
+            <element signature="e#541772#541773#0" expanded="false" />
+            <element signature="e#542450#542451#0" expanded="false" />
+            <element signature="e#542483#542484#0" expanded="false" />
+            <element signature="e#544090#544091#0" expanded="false" />
+            <element signature="e#544117#544118#0" expanded="false" />
+            <element signature="e#552628#552629#0" expanded="false" />
+            <element signature="e#552673#552674#0" expanded="false" />
+            <element signature="e#556158#556159#0" expanded="false" />
+            <element signature="e#556209#556210#0" expanded="false" />
+            <element signature="e#556409#556410#0" expanded="false" />
+            <element signature="e#556449#556450#0" expanded="false" />
+            <element signature="e#567422#567423#0" expanded="false" />
+            <element signature="e#567450#567451#0" expanded="false" />
+            <element signature="e#568167#568168#0" expanded="false" />
+            <element signature="e#568195#568196#0" expanded="false" />
+            <element signature="e#568517#568518#0" expanded="false" />
+            <element signature="e#568541#568542#0" expanded="false" />
+            <element signature="e#568866#568867#0" expanded="false" />
+            <element signature="e#568890#568891#0" expanded="false" />
+            <element signature="e#569209#569210#0" expanded="false" />
+            <element signature="e#569233#569234#0" expanded="false" />
+            <element signature="e#569561#569562#0" expanded="false" />
+            <element signature="e#569585#569586#0" expanded="false" />
+            <element signature="e#572199#572200#0" expanded="false" />
+            <element signature="e#572274#572275#0" expanded="false" />
+            <element signature="e#604294#604295#0" expanded="false" />
+            <element signature="e#604318#604319#0" expanded="false" />
+            <element signature="e#614495#614496#0" expanded="false" />
+            <element signature="e#614528#614529#0" expanded="false" />
+            <element signature="e#619138#619139#0" expanded="false" />
+            <element signature="e#619186#619187#0" expanded="false" />
+            <element signature="e#619231#619232#0" expanded="false" />
+            <element signature="e#619290#619291#0" expanded="false" />
+            <element signature="e#620145#620146#0" expanded="false" />
+            <element signature="e#620186#620187#0" expanded="false" />
+            <element signature="e#633872#633873#0" expanded="false" />
+            <element signature="e#633906#633907#0" expanded="false" />
+            <element signature="e#642334#642335#0" expanded="false" />
+            <element signature="e#642368#642369#0" expanded="false" />
+            <element signature="e#642654#642655#0" expanded="false" />
+            <element signature="e#642691#642692#0" expanded="false" />
+            <element signature="e#646520#646521#0" expanded="false" />
+            <element signature="e#646558#646559#0" expanded="false" />
+            <element signature="e#648082#648083#0" expanded="false" />
+            <element signature="e#648142#648143#0" expanded="false" />
+            <element signature="e#649715#649716#0" expanded="false" />
+            <element signature="e#649776#649777#0" expanded="false" />
+            <element signature="e#662416#662417#0" expanded="false" />
+            <element signature="e#662483#662484#0" expanded="false" />
+            <element signature="e#662829#662830#0" expanded="false" />
+            <element signature="e#662855#662856#0" expanded="false" />
+            <element signature="e#663130#663131#0" expanded="false" />
+            <element signature="e#663157#663158#0" expanded="false" />
+            <element signature="e#663601#663602#0" expanded="false" />
+            <element signature="e#663627#663628#0" expanded="false" />
+            <element signature="e#666119#666120#0" expanded="false" />
+            <element signature="e#666143#666144#0" expanded="false" />
+            <element signature="e#669248#669249#0" expanded="false" />
+            <element signature="e#669273#669274#0" expanded="false" />
+            <element signature="e#684394#684395#0" expanded="false" />
+            <element signature="e#684427#684428#0" expanded="false" />
+            <element signature="e#685202#685203#0" expanded="false" />
+            <element signature="e#685234#685235#0" expanded="false" />
+            <element signature="e#685967#685968#0" expanded="false" />
+            <element signature="e#686007#686008#0" expanded="false" />
+            <element signature="e#688229#688230#0" expanded="false" />
+            <element signature="e#688285#688286#0" expanded="false" />
+            <element signature="e#688623#688624#0" expanded="false" />
+            <element signature="e#688680#688681#0" expanded="false" />
+            <element signature="e#689357#689358#0" expanded="false" />
+            <element signature="e#689385#689386#0" expanded="false" />
+            <element signature="e#697136#697137#0" expanded="false" />
+            <element signature="e#697178#697179#0" expanded="false" />
+            <element signature="e#702162#702163#0" expanded="false" />
+            <element signature="e#702223#702224#0" expanded="false" />
+            <element signature="e#702742#702743#0" expanded="false" />
+            <element signature="e#702803#702804#0" expanded="false" />
+            <element signature="e#703336#703337#0" expanded="false" />
+            <element signature="e#703378#703379#0" expanded="false" />
+            <element signature="e#712081#712082#0" expanded="false" />
+            <element signature="e#712109#712110#0" expanded="false" />
+            <element signature="e#713278#713279#0" expanded="false" />
+            <element signature="e#713347#713348#0" expanded="false" />
+            <element signature="e#721144#721145#0" expanded="false" />
+            <element signature="e#721182#721183#0" expanded="false" />
+            <element signature="e#727701#727702#0" expanded="false" />
+            <element signature="e#727754#727755#0" expanded="false" />
+            <element signature="e#759351#759352#0" expanded="false" />
+            <element signature="e#759397#759398#0" expanded="false" />
+            <element signature="e#759456#759457#0" expanded="false" />
+            <element signature="e#759504#759505#0" expanded="false" />
+            <element signature="e#759886#759887#0" expanded="false" />
+            <element signature="e#759939#759940#0" expanded="false" />
+            <element signature="e#760006#760007#0" expanded="false" />
+            <element signature="e#760061#760062#0" expanded="false" />
+            <element signature="e#760443#760444#0" expanded="false" />
+            <element signature="e#760496#760497#0" expanded="false" />
+            <element signature="e#760555#760556#0" expanded="false" />
+            <element signature="e#760610#760611#0" expanded="false" />
+            <element signature="e#760992#760993#0" expanded="false" />
+            <element signature="e#761045#761046#0" expanded="false" />
+            <element signature="e#761104#761105#0" expanded="false" />
+            <element signature="e#761159#761160#0" expanded="false" />
+            <element signature="e#761485#761486#0" expanded="false" />
+            <element signature="e#761527#761528#0" expanded="false" />
+            <element signature="e#761586#761587#0" expanded="false" />
+            <element signature="e#761630#761631#0" expanded="false" />
+            <element signature="e#761956#761957#0" expanded="false" />
+            <element signature="e#761998#761999#0" expanded="false" />
+            <element signature="e#762057#762058#0" expanded="false" />
+            <element signature="e#762101#762102#0" expanded="false" />
+            <element signature="e#762427#762428#0" expanded="false" />
+            <element signature="e#762469#762470#0" expanded="false" />
+            <element signature="e#762528#762529#0" expanded="false" />
+            <element signature="e#762572#762573#0" expanded="false" />
+            <element signature="e#762933#762934#0" expanded="false" />
+            <element signature="e#762982#762983#0" expanded="false" />
+            <element signature="e#763041#763042#0" expanded="false" />
+            <element signature="e#763092#763093#0" expanded="false" />
+            <element signature="e#763459#763460#0" expanded="false" />
+            <element signature="e#763509#763510#0" expanded="false" />
+            <element signature="e#763568#763569#0" expanded="false" />
+            <element signature="e#763620#763621#0" expanded="false" />
+            <element signature="e#763987#763988#0" expanded="false" />
+            <element signature="e#764037#764038#0" expanded="false" />
+            <element signature="e#764096#764097#0" expanded="false" />
+            <element signature="e#764148#764149#0" expanded="false" />
+            <element signature="e#764500#764501#0" expanded="false" />
+            <element signature="e#764547#764548#0" expanded="false" />
+            <element signature="e#764606#764607#0" expanded="false" />
+            <element signature="e#764655#764656#0" expanded="false" />
+            <element signature="e#765007#765008#0" expanded="false" />
+            <element signature="e#765054#765055#0" expanded="false" />
+            <element signature="e#765113#765114#0" expanded="false" />
+            <element signature="e#765162#765163#0" expanded="false" />
+            <element signature="e#768756#768757#0" expanded="false" />
+            <element signature="e#768812#768813#0" expanded="false" />
+            <element signature="e#769136#769137#0" expanded="false" />
+            <element signature="e#769193#769194#0" expanded="false" />
+            <element signature="e#771183#771184#0" expanded="false" />
+            <element signature="e#771254#771255#0" expanded="false" />
+            <element signature="e#771686#771687#0" expanded="false" />
+            <element signature="e#771724#771725#0" expanded="false" />
+            <element signature="e#772591#772592#0" expanded="false" />
+            <element signature="e#772639#772640#0" expanded="false" />
+            <element signature="e#773074#773075#0" expanded="false" />
+            <element signature="e#773112#773113#0" expanded="false" />
+            <element signature="e#782927#782928#0" expanded="false" />
+            <element signature="e#782968#782969#0" expanded="false" />
+            <element signature="e#783395#783396#0" expanded="false" />
+            <element signature="e#783432#783433#0" expanded="false" />
+            <element signature="e#783681#783682#0" expanded="false" />
+            <element signature="e#783722#783723#0" expanded="false" />
+            <element signature="e#783919#783920#0" expanded="false" />
+            <element signature="e#783980#783981#0" expanded="false" />
+            <element signature="e#784038#784039#0" expanded="false" />
+            <element signature="e#784101#784102#0" expanded="false" />
+            <element signature="e#785073#785089#0" expanded="false" />
+            <element signature="e#789218#789224#0" expanded="false" />
+            <element signature="e#794686#794692#0" expanded="false" />
+            <element signature="e#812195#812196#0" expanded="false" />
+            <element signature="e#812230#812231#0" expanded="false" />
+            <element signature="e#813607#813608#0" expanded="false" />
+            <element signature="e#813655#813656#0" expanded="false" />
+            <element signature="e#813825#813826#0" expanded="false" />
+            <element signature="e#813888#813889#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/SAXHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_mynah_logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_mynah.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_mynah_icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/network/AsyncHttpTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.6">
+          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/BusSettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ConfirmActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/BluetoothRequestCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/AlarmReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/CityNameAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GCMBroadcastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/summarize/ShortCutSummarizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ChooseTTSActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/network/AsyncHttpUpload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="150" column="0" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GCMIntentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.8333333">
+          <caret line="299" column="0" selection-start-line="299" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/TTSManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/RECManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="169" column="5" selection-start-line="169" selection-start-column="5" selection-end-line="169" selection-end-column="5" />
+          <folding>
+            <element signature="e#4016#4017#0" expanded="false" />
+            <element signature="e#4049#4050#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalGoogleCalendarManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CalendarActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.233333">
+          <caret line="156" column="62" selection-start-line="156" selection-start-column="62" selection-end-line="156" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/android/util/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/com/android/internal/os/AndroidPrintStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/com/android/internal/os/LoggingPrintStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="316" column="0" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Android/sdk/sources/android-22/android/database/sqlite/SQLiteCursor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/GlobalSettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ScheduleManageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="24" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1029" column="32" selection-start-line="1029" selection-start-column="32" selection-end-line="1029" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="29" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/database/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="729" column="0" selection-start-line="729" selection-start-column="0" selection-end-line="729" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3891#3912#0" expanded="false" />
+            <element signature="e#8708#8729#0" expanded="false" />
+            <element signature="e#18557#18566#0" expanded="false" />
+            <element signature="e#23063#23075#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/infoparser/SubwayPaser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="250" column="1" selection-start-line="250" selection-start-column="1" selection-end-line="250" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/summarize/InfoTextSummarizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="360" column="25" selection-start-line="360" selection-start-column="25" selection-end-line="360" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3106#3107#0" expanded="false" />
+            <element signature="e#3138#3139#0" expanded="false" />
+            <element signature="e#3183#3184#0" expanded="false" />
+            <element signature="e#3215#3216#0" expanded="false" />
+            <element signature="e#4684#4692#0" expanded="false" />
+            <element signature="e#4749#4757#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/WakeonReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="291" column="10" selection-start-line="291" selection-start-column="10" selection-end-line="291" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1286#1488#0" expanded="false" />
+            <element signature="e#1487#1488#0" expanded="false" />
+            <element signature="e#8733#8734#0" expanded="false" />
+            <element signature="e#8770#8771#0" expanded="false" />
+            <element signature="e#8956#8957#0" expanded="false" />
+            <element signature="e#9001#9002#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="313" column="20" selection-start-line="313" selection-start-column="20" selection-end-line="313" selection-end-column="20" />
+          <folding>
+            <element signature="e#10138#11560#0" expanded="true" />
+            <element signature="e#11559#11560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwaySettingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="17" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -2081,10 +3050,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SignUpActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LogInActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -2092,391 +3061,16 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/LoadingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+          <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calendar.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SignUpActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6527415">
+          <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_logo.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_bus.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_subway.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_weather.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3333335">
-          <caret line="67" column="60" selection-start-line="67" selection-start-column="60" selection-end-line="67" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_row.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/ScheduleAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16239317">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_row_schedule.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/SettingListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28418803">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_row_add.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.4">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/calendar.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_app_info.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13013698">
-          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/AppInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08577878">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.1">
-          <caret line="489" column="8" selection-start-line="489" selection-start-column="8" selection-end-line="489" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/SubwaySettingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.84">
-          <caret line="112" column="51" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
-          <folding>
-            <element signature="e#2559#3476#0" expanded="false" />
-            <element signature="e#3475#3476#0" expanded="false" />
-            <element signature="e#3526#4221#0" expanded="false" />
-            <element signature="e#4220#4221#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/util/TransparentProgressDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57840234">
-          <caret line="38" column="22" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1875#1876#0" expanded="false" />
-            <element signature="e#1932#1933#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_row_setting_tts.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7647059">
-          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Program Files(D)/Android/SDK/sources/android-22/android/widget/AdapterView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33284023">
-          <caret line="770" column="18" selection-start-line="770" selection-start-column="18" selection-end-line="770" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="79" selection-start-line="7" selection-start-column="79" selection-end-line="7" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/adapter/SettingTTSAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ChooseTTSActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.633333">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding>
-            <element signature="e#2306#3339#0" expanded="true" />
-            <element signature="e#3338#3339#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/ScheduleManageActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="296" column="40" selection-start-line="296" selection-start-column="40" selection-end-line="296" selection-end-column="40" />
-          <folding>
-            <element signature="e#2698#3005#0" expanded="true" />
-            <element signature="e#3004#3005#0" expanded="true" />
-            <element signature="e#3046#7304#0" expanded="true" />
-            <element signature="e#7303#7304#0" expanded="true" />
-            <element signature="e#7977#12188#0" expanded="true" />
-            <element signature="e#12187#12188#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_schedule.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_schedule_manage.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.766666">
-          <caret line="80" column="44" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_tts.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_setting_app.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3333335">
-          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_row_setting.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3538175">
-          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.20.0/cc4dbc0633186f9970e9c6ee745a353fce953c13/google-api-client-android-1.20.0-sources.jar!/com/google/api/client/googleapis/extensions/android/gms/auth/GoogleAccountCredential.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1746032">
-          <caret line="65" column="72" selection-start-line="65" selection-start-column="72" selection-end-line="65" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CalendarActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323263">
-          <caret line="137" column="57" selection-start-line="137" selection-start-column="55" selection-end-line="137" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/calender/CalendarManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4669967">
-          <caret line="266" column="68" selection-start-line="266" selection-start-column="68" selection-end-line="266" selection-end-column="68" />
-          <folding>
-            <element signature="e#3302#3303#0" expanded="true" />
-            <element signature="e#3338#3339#0" expanded="true" />
-            <element signature="e#8127#9228#0" expanded="true" />
-            <element signature="e#9227#9228#0" expanded="true" />
-            <element signature="e#14413#14414#0" expanded="true" />
-            <element signature="e#14446#14447#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalGoogleCalendarManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2688679">
-          <caret line="10" column="34" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.7">
-          <caret line="409" column="49" selection-start-line="409" selection-start-column="49" selection-end-line="409" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/GlobalSettingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5335516">
-          <caret line="202" column="51" selection-start-line="202" selection-start-column="51" selection-end-line="202" selection-end-column="51" />
-          <folding>
-            <element signature="e#6180#6346#0" expanded="true" />
-            <element signature="e#6345#6346#0" expanded="true" />
-            <element signature="e#6377#6541#0" expanded="true" />
-            <element signature="e#6540#6541#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

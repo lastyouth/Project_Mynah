@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:longClickable="false"
+            android:longClickable="true"
             android:measureWithLargestChild="false">
             <CalendarView
                 android:id="@+id/calendarView"
@@ -23,9 +23,22 @@
                 android:layout_height="match_parent"
                 android:dateTextAppearance="@style/CalendarText"
                 android:focusedMonthDateColor="#ffffff"
-                android:longClickable="true" />
+                android:longClickable="true"
+                android:showWeekNumber="true" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_line"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="  일정 리스트"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,27 +53,48 @@
         </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_line"
+
+        />
+
     <LinearLayout
         android:id="@+id/lyScheduleAdd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="10">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_add"
-            android:scaleType="fitEnd"
-            android:layout_margin="10dp"/>
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="터치하여 새로운 일정을 입력하세요"
-            android:textColor="#ffffff"
-            android:gravity="center_vertical"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_add"
+                android:layout_margin="7dp"
+                android:layout_weight="8"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="터치하여 새로운 일정을 입력하세요."
+                android:textColor="#ffffff"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
 
 
 </LinearLayout>
-<!-- From: file:/D:/git/Mynah/app/src/main/res/layout/activity_calendar.xml -->
+<!-- From: file:/D:/Development/develop_backup/Mynah/app/src/main/res/layout/activity_calendar.xml -->

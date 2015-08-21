@@ -52,9 +52,9 @@ import java.io.InputStream;
  */
 public class LogInActivity extends Activity{
 
-    Button btn;
-    EditText etUserId;
-    EditText etUserPassword;
+    private Button btn;
+    private EditText etUserId;
+    private EditText etUserPassword;
 
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
@@ -66,7 +66,6 @@ public class LogInActivity extends Activity{
                 //ConnectionError();
                 System.out.println("handler error");
             }
-
 
             if (msg.what == 1) {
                 //핸들링 1일때 할 것
@@ -105,12 +104,9 @@ public class LogInActivity extends Activity{
                                 e.printStackTrace();
                             }
 
-                            //AsyncHttpTask aht = new AsyncHttpTask("https://192.168.35.75",jobj);
-
                             new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj2, 2, 1);
 
-
-                           //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             //startActivity(intent);
                             //finish();
                         }
@@ -127,7 +123,6 @@ public class LogInActivity extends Activity{
                 }catch(JSONException e){
                     e.printStackTrace();
                 }
-
             }
 
             if (msg.what == 2) {
@@ -199,9 +194,6 @@ public class LogInActivity extends Activity{
 
         etUserPassword = (EditText) findViewById(R.id.etUserPassword);
 
-        //new AsyncHttpTask(this, "192.168.35.75", mHandler, jobj, 1, 0);
-
-
         //세션 데이터 지우는 부분 들어가야 할 것 같아
         DBManager.getManager(getApplicationContext()).deleteSessionUser();
         System.out.println("세션 비워야지");
@@ -245,4 +237,5 @@ public class LogInActivity extends Activity{
             }
         });
     }
+
 }

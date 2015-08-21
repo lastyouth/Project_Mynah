@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -32,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -48,8 +50,17 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
+import com.seven.mynah.globalmanager.RECManager;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
+import com.seven.mynah.globalmanager.TTSManager;
+import com.seven.mynah.network.AsyncHttpTask;
+import com.seven.mynah.network.AsyncHttpUpload;
+import com.seven.mynah.summarize.InfoTextSummarizer;
 import com.seven.mynah.util.TransparentProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 //Google Calendar
 
@@ -58,6 +69,34 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
     public static final int SIGNAL_UI_UPDATE = 0x10001001;
+
+
+    protected Handler mhHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            // IF Sucessfull no timeout
+            System.out.println("in handler");
+            if (msg.what == -1) {
+                //   BreakTimeout();
+                //ConnectionError();
+                System.out.println("handler error");
+
+            }
+
+            if (msg.what == 1) {
+                //핸들링 1일때 할 것
+                System.out.println("response : "+msg.obj);
+
+            }
+
+            if (msg.what == 2) {
+                //핸들링 2일때 할 것
+                System.out.println("handling 2 !");
+                System.out.println("response : "+msg.obj);
+            }
+
+        }
+    };
+
 
     public class SendMassgeHandler extends Handler {
         @Override
@@ -80,6 +119,8 @@ public class MainActivity extends Activity {
 
         }
     };
+
+
     SendMassgeHandler mHandler = new SendMassgeHandler();
     GoogleCloudMessaging gcm;
     // for bk service connection
@@ -90,6 +131,9 @@ public class MainActivity extends Activity {
 
     RPiBluetoothConnectionManager BTmanager;
 
+    //TTSManager
+    private TTSManager mTTSManager;
+
     //GCM
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "AIzaSyBo7pigCHSXysJD-qxKsE0H9YBGXmIvaVQ";
@@ -98,14 +142,14 @@ public class MainActivity extends Activity {
 
     //GCM project key
     private static final String SENDER_ID = "803082977332";
+
     //GCM 등록용 키(핸드폰 기준 1개)
     String regid;
 
     private CalendarManager mCalendarManager;
-
     private Context mContext;
     //By JS
-    LinearLayout llSchedule, llBus, llSubway, llWeather, llRecord, llRefresh, llSetting, llProgressbar;
+    LinearLayout llSchedule, llBus, llSubway, llWeather, llRecord, llRefresh, llSetting, llProgressbar, llPlaying;
 
     //for Schedule
     private static int maxSchedules = 10;
@@ -156,6 +200,18 @@ public class MainActivity extends Activity {
     private TextView tvHour;
     private ArrayList<WeatherLocationInfo> weatherArrayList;
 
+
+    //for record
+    private TextView tvRecord;
+    private ImageView ivRecord;
+
+
+    //for Playing
+    private TextView tvPlaying;
+    private TextView tvPlayingText;
+    private ImageView ivPlaying;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "MainActivity onCreate Start");
@@ -173,13 +229,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTTSManager = new TTSManager(mContext);
+
         //By JS
         inflateButtonLayout();
         scheduleInitView();
         busInitView();
         subwayInitView();
         weatherInitView();
-
+        //add
+        recordInitView();
+        playingInitView();
 
         ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
         mServiceAccessManager.setContext(this);
@@ -192,13 +252,60 @@ public class MainActivity extends Activity {
         int bus = GlobalVariable.BUS;
         int subway = GlobalVariable.SUBWAY;
         int weather = GlobalVariable.WEATHER;
+        int record = GlobalVariable.RECORD;
 
-        int status = p.getInt("status", schedule | bus | subway | weather);
+        int status = p.getInt("status", schedule | bus | subway | weather | record);
         ed.putInt("status", status);
         ed.commit();
 
+        updateStatus();
+
         Log.d(TAG, "onCreate Finish");
     }
+
+    private void updateStatus()
+    {
+
+        SharedPreferences p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
+        SharedPreferences.Editor ed = p.edit();
+        int schedule = GlobalVariable.SCHEDULE;
+        int bus = GlobalVariable.BUS;
+        int subway = GlobalVariable.SUBWAY;
+        int weather = GlobalVariable.WEATHER;
+        int record = GlobalVariable.RECORD;
+
+        int ttsStatus = p.getInt("status", schedule | bus | subway | weather | record);
+        int ttsList[] = {schedule, bus, subway, weather, record};
+        int ttsFlag = 0;
+        int recFlag = 0;
+        for(int i = 0; i < 4; i++)
+        {
+            int s = ttsStatus & ttsList[i];
+            if(s != 0 )
+            {
+                ttsFlag = 1;
+                break;
+            }
+        }
+        int s = ttsStatus & ttsList[4];
+        if( s != 0) recFlag = 1;
+
+        JSONObject jobj = new JSONObject();
+
+        try {
+            jobj.put("messagetype", "update_status");
+            jobj.put("user_id",DBManager.getManager(this).getSessionUserDB().deviceId);
+            jobj.put("tts",ttsFlag);
+            jobj.put("rec",recFlag);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //handler type 2 : 상태 업데이트용
+        new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler, jobj, 2, 0);
+
+    }
+
 
     @Override
     protected void onRestart()
@@ -224,27 +331,9 @@ public class MainActivity extends Activity {
         Log.d(TAG, "onDestro.commit()");
     }
 
-    public void startSettingActivity(String type)
-    {
-        String intentActionName = "com.seven.mynah.";
-        intentActionName += type;
-        Intent intent = new Intent(intentActionName);
-        startActivity(intent);
-        this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-    }
-
     public SendMassgeHandler getHandler()
     {
         return mHandler;
-    }
-
-
-    public void startBluetoothActivity_temp()
-    {
-        Intent intent = new Intent("com.seven.mynah.Bluetooth");
-        //Intent intent = new Intent(this,DeviceListActivity.class);
-        startActivity(intent);
-        //this.overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
     /**
@@ -384,8 +473,6 @@ public class MainActivity extends Activity {
         // Your implementation here.
     }
 
-
-
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume Start");
@@ -416,7 +503,6 @@ public class MainActivity extends Activity {
             mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);
         }
 
-
         Log.d(TAG, "onResume Finish");
     }
 
@@ -430,6 +516,7 @@ public class MainActivity extends Activity {
         llRefresh = (LinearLayout)findViewById(R.id.llRefresh);
         llSetting = (LinearLayout)findViewById(R.id.llSetting);
         llProgressbar = (LinearLayout)findViewById(R.id.llProgressbar);
+        llPlaying = (LinearLayout)findViewById(R.id.llPlaying);
 
         llRefresh.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -444,7 +531,9 @@ public class MainActivity extends Activity {
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llRefresh.setAlpha((float) 1.0);
                     //allRefresh();
+                    ttsTest();
                     new doAllRefresh(MainActivity.this).execute();
+
                     return true;
                 }
                 return true;
@@ -499,11 +588,9 @@ public class MainActivity extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     llSchedule.setAlpha((float) 0.8);
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llSchedule.setAlpha((float) 1.0);
                     Intent intent = new Intent(mContext, CalendarActivity.class);
                     startActivity(intent);
@@ -517,7 +604,9 @@ public class MainActivity extends Activity {
     public void scheduleRefresh()
     {
         //Request service to get schedule information (through Mynah DB)
-        ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
+        //ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
+        ArrayList<ScheduleInfo> scheduleInfos = InfoTextSummarizer.getInstance(mContext).getScheduleInfo();
+
         if(scheduleInfos == null)
         {
             scheduleInfos = new ArrayList<ScheduleInfo>();
@@ -590,7 +679,9 @@ public class MainActivity extends Activity {
 
     public void busRefresh() {
         //Request service to get bus Information
-        BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
+        //BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
+        BusInfo bInfo = InfoTextSummarizer.getInstance(mContext).getBusInfo();
+
         setBusInfo(bInfo);
     }
 
@@ -634,6 +725,7 @@ public class MainActivity extends Activity {
         tvBusNextTime.setText(time1);
         tvBusNextTime2.setText(time2);
     }
+
     private String getBusArriveTime(BusInfo binfo, int pos)
     {
         long curTime = System.currentTimeMillis();
@@ -680,11 +772,9 @@ public class MainActivity extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     llSubway.setAlpha((float) 0.8);
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llSubway.setAlpha((float) 1.0);
                     Intent intent = new Intent(mContext, SubwaySettingActivity.class);
                     startActivity(intent);
@@ -697,7 +787,9 @@ public class MainActivity extends Activity {
 
     public void subwayRefresh() {
         // Request service to get subway information
-        SubwayInfo sInfo = ServiceAccessManager.getInstance().getService().getSubwayInfo();
+        //SubwayInfo sInfo = ServiceAccessManager.getInstance().getService().getSubwayInfo();
+        SubwayInfo sInfo = InfoTextSummarizer.getInstance(mContext).getSubwayInfo();
+
         setSubwayInfo(sInfo);
     }
 
@@ -707,7 +799,7 @@ public class MainActivity extends Activity {
             tvSubwayDirName.setText("터치해서 정보를 입력하세요");
             return;
         }
-        String line_num = sinfo.station.line_num;
+        String line_num = sinfo.station.line_num + "";
         tvSubwayName.setText(GlobalFunction.SubwayDecode(line_num));
         tvSubwayName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         tvSubwayName.setSelected(true);
@@ -717,6 +809,8 @@ public class MainActivity extends Activity {
         tvSubwayStopName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         tvSubwayStopName.setSelected(true);
         tvSubwayStopName.setSingleLine();
+
+        String time1,time2;
 
         Date curTime = new Date();
         SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
@@ -753,7 +847,14 @@ public class MainActivity extends Activity {
                 tvSubwayNextTime2.setText("");
                 return;
             }
-            String time1 = tt + "분 전";
+            if(tt==0)
+            {
+                time1 = "지금 도착";
+            }
+            else
+            {
+                time1 = tt + "분 전";
+            }
             tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
             tvSubwayNextTime.setText(time1);
 
@@ -771,7 +872,14 @@ public class MainActivity extends Activity {
                     e.printStackTrace();
                 }
                 tt2 = tt2/1000/60;
-                String time2 = tt2 + "분 전";
+                if(tt2 == 0)
+                {
+                    time2 = "지금 도착";
+                }
+                else
+                {
+                    time2 = tt2 + "분 전";
+                }
                 tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "행");
                 tvSubwayNextTime2.setText(time2);
 
@@ -800,11 +908,9 @@ public class MainActivity extends Activity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     llWeather.setAlpha((float) 0.8);
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llWeather.setAlpha((float) 1.0);
                     Intent intent = new Intent(mContext, WeatherSettingActivity.class);
                     startActivity(intent);
@@ -821,7 +927,8 @@ public class MainActivity extends Activity {
         Log.d(TAG, "weatherRefresh Start");
 
         // Request service to get weather Information
-        WeatherInfo wInfo = ServiceAccessManager.getInstance().getService().getWeatherInfo();
+        //WeatherInfo wInfo = ServiceAccessManager.getInstance().getService().getWeatherInfo();
+        WeatherInfo wInfo = InfoTextSummarizer.getInstance(mContext).getWeatherInfo();
         setWeatherInfo(wInfo);
 
         Log.d(TAG, "weatherRefresh End");
@@ -870,7 +977,164 @@ public class MainActivity extends Activity {
                 break;
             case 5:
                 ivWeatherImage.setImageResource(R.drawable.ic_question);
+                break;
         }
+    }
+
+
+    private void recordInitView()
+    {
+        Log.d(TAG, "recordInitView Start");
+
+        ivRecord = (ImageView)findViewById(R.id.ivRecord);
+        tvRecord = (TextView)findViewById(R.id.tvRecord);
+
+
+        //재생이 완료했을 경우를 대비함.
+        RECManager.getInstance().setCustomOnCompletionListener(new RECManager.CustomOnCompletionListener() {
+            @Override
+            public void onCompletion() {
+                recordRefresh();
+            }
+        });
+
+        llRecord.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    llRecord.setAlpha((float) 0.8);
+                    return true;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    return true;
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    llRecord.setAlpha((float) 1.0);
+                    if(RECManager.getInstance().getState() == RECManager.STOP)
+                    {
+                        //녹음 시작
+                        RECManager.getInstance().startRecording("fastrecord.mp4");
+
+                    }
+                    else if (RECManager.getInstance().getState() == RECManager.REC_ING)
+                    {
+                        //녹음 중지
+                        RECManager.getInstance().stopRecording();
+                        try {
+                            Thread.sleep(500);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            Log.d(TAG, e.getMessage());
+                        }
+                        //그리고 재생
+                        //RECManager.getInstance().startPlaying("test.mp4");
+                        //녹음이 완료후 파일 업로드
+                        new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
+                                RECManager.getInstance().getDefaultExStoragePath() + "fastrecord.mp4", 1, AsyncHttpUpload.TYPE_REC);
+
+                    }
+                    recordRefresh();
+                    return true;
+                }
+                return true;
+            }
+        });
+
+        Log.d(TAG, "recordInitView End");
+    }
+
+
+    private void playingInitView()
+    {
+        Log.d(TAG, "playingInitView Start");
+
+        ivPlaying = (ImageView)findViewById(R.id.ivPlaying);
+        tvPlaying = (TextView)findViewById(R.id.tvPlaying);
+        tvPlayingText = (TextView)findViewById(R.id.tvPlayingText);
+
+        llPlaying.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    llPlaying.setAlpha((float) 0.8);
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    llPlaying.setAlpha((float) 1.0);
+
+                    if (RECManager.getInstance().getState() == RECManager.STOP) {
+                       //재생을 시작한다.
+                        RECManager.getInstance().startPlaying("fastrecord.mp4");
+                    } else if (RECManager.getInstance().getState() == RECManager.PLAY_ING) {
+                        //재생을 중지한다.
+                        RECManager.getInstance().stopPlaying();
+
+                    }
+                    recordRefresh();
+                    return true;
+                }
+                return true;
+            }
+        });
+
+        Log.d(TAG, "playingInitView End");
+    }
+
+    private void ttsTest()
+    {
+
+        //mTTSManager.speakOut("도레미파솔라시도");
+        //mTTSManager.saveTTS("비가 올 확률이 있습니다.", getFilesDir() + "/tts.mp4");
+//        mTTSManager.saveTTS("비가 올 확률이 있습니다.", "tts.3gp");
+//        try {
+//            Thread.sleep(500);
+//        }
+//        catch (InterruptedException e)
+//        {
+//            Log.d(TAG, e.getMessage());
+//        }
+//        RECManager.getInstance().startPlaying("tts.3gp");
+
+    }
+
+    private void recordRefresh()
+    {
+
+        Log.d(TAG, "recordRefresh Start");
+
+        tvPlayingText.setText("");
+
+        if(RECManager.getInstance().getState() == RECManager.STOP)
+        {
+            tvRecord.setText("빠른 녹음");
+            ivRecord.setImageResource(R.drawable.ic_speaker);
+            llRecord.setClickable(true);
+
+            tvPlaying.setText("재생");
+            ivPlaying.setImageResource(R.drawable.ic_playing);
+            llPlaying.setClickable(true);
+        }
+        else if (RECManager.getInstance().getState() == RECManager.REC_ING)
+        {
+            tvRecord.setText("녹음중");
+            ivRecord.setImageResource(R.drawable.ic_speaker_ing);
+
+            tvPlaying.setText("녹음중 재생 불가");
+            llPlaying.setClickable(false);
+        }
+        else if (RECManager.getInstance().getState() == RECManager.PLAY_ING)
+        {
+            tvRecord.setText("재생중 녹음 불가");
+            llRecord.setClickable(false);
+
+            tvPlaying.setText("재생");
+            ivPlaying.setImageResource(R.drawable.ic_stop);
+            llPlaying.setClickable(true);
+        }
+
+        Log.d(TAG, "recordRefresh End");
     }
 
     private void setButtonsMarquee()
@@ -898,6 +1162,7 @@ public class MainActivity extends Activity {
         busRefresh();
         subwayRefresh();
         weatherRefresh();
+        recordRefresh();
     }
 
     class doAllRefresh extends AsyncTask<Void, Void, Void>{
