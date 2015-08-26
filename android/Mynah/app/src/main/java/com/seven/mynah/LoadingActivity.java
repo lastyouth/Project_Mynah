@@ -49,6 +49,8 @@ public class LoadingActivity extends Activity{
 
 	private static int handler_tag = 0; //서버 닫겨있을 경우 대비 핸들러 플래그 추가
 
+	public static Activity activity;
+
 	//클래스 안에 선언해놓을 것
 	protected Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -80,6 +82,8 @@ public class LoadingActivity extends Activity{
 							//회원가입 창으로
 							Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
 							startActivity(intent);
+							//여기서 finish 하기 되면 가입을 하더라도 정보 업데이트 안된 상태로 문제가 생김.
+
 						}
 						else if(result.equals("IS_MEMBER")) {
 //							Toast.makeText(getApplicationContext(), "회원입니다.", Toast.LENGTH_SHORT).show();
@@ -184,6 +188,9 @@ public class LoadingActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		activity = LoadingActivity.this;
+
 		setContentView(R.layout.activity_logo);
 
 		tvState = (TextView)findViewById(R.id.tvState);
@@ -201,6 +208,8 @@ public class LoadingActivity extends Activity{
 
 		//device id 받아오기
 		deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+		//dummy
+		//deviceID = "test_device_id_2";
 		Log.d(TAG, "DEVICE ID : " + deviceID);
 
 		JSONObject jobj = new JSONObject();

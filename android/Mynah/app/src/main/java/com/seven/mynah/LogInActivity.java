@@ -56,6 +56,7 @@ public class LogInActivity extends Activity{
     private EditText etUserId;
     private EditText etUserPassword;
 
+
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -189,6 +190,9 @@ public class LogInActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_login);
         etUserId = (EditText) findViewById(R.id.etUserId);
 

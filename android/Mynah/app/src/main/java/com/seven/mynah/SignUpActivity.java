@@ -39,6 +39,9 @@ public class SignUpActivity extends Activity {
 
     private static final String TAG = "LoginActivity";
 
+    private final long	FINSH_INTERVAL_TIME    = 2000;
+    private long		backPressedTime        = 0;
+
     GoogleCloudMessaging gcm;
     Context mContext;
 
@@ -91,6 +94,8 @@ public class SignUpActivity extends Activity {
                     if(messageType.equals("product_check")){
                         if(result.equals("PRODUCT_NOT_EXIST")){
 //                            Toast.makeText(getApplicationContext(), "Product Not Exist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "제품이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            productCheck = false;
                         }
                         else if(result.startsWith("PRODUCT_EXIST")) {
                             //인증성공
@@ -229,6 +234,8 @@ public class SignUpActivity extends Activity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -271,6 +278,10 @@ public class SignUpActivity extends Activity {
         etSignUpPassword = (EditText)findViewById(R.id.etSignUpPassword);
         etSignUpRePassword = (EditText)findViewById(R.id.etSignUpRePassword);
 
+        //passwd의 경우 현재 비활성화
+        etSignUpRePassword.setVisibility(View.GONE);
+        etSignUpPassword.setVisibility(View.GONE);
+
         productCheck = false; //기계 존재유무 확인
 
         //라즈베리파이 id 인증 버튼
@@ -309,11 +320,17 @@ public class SignUpActivity extends Activity {
                 final Boolean isRepresentative = true;
                 final Boolean isInHome = true;
 
-                if (!strNewUserPassword.equals(strNewUserRePassword))
+
+                //visible setting용
+                if(etSignUpPassword.getVisibility() == View.VISIBLE)
                 {
-                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    return;
+                    if (!strNewUserPassword.equals(strNewUserRePassword))
+                    {
+                        Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
+
 
                 if(!productCheck){
                     Toast.makeText(getApplicationContext(), "디바이스 확인이 되지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -477,4 +494,24 @@ public class SignUpActivity extends Activity {
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
     }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime        = System.currentTimeMillis();
+        long intervalTime    = tempTime - backPressedTime;
+
+        if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
+            super.onBackPressed();
+            LoadingActivity activity = (LoadingActivity)LoadingActivity.activity;
+            activity.finish();
+
+        }
+        else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(),"등록하지 않으면 사용하실 수 없습니다.\n" +
+                    "'뒤로'버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

@@ -356,7 +356,8 @@ public class InfoTextSummarizer {
         String tts;
         String temper = wInfo.array_ttw.get(0).temp;
         String wfKor = wInfo.array_ttw.get(0).wfKor;
-        wfKor = "비";
+        //dummy
+        //wfKor = "비";
         String rainfallProp = wInfo.array_ttw.get(0).pop;
         String temp = "";
         if(wfKor.equals("비")) temp = "우산을 챙기세요.";

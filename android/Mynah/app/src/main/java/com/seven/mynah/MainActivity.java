@@ -2,6 +2,7 @@ package com.seven.mynah;
 
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.artifacts.SessionUserInfo;
 import com.seven.mynah.artifacts.SubwayInfo;
+import com.seven.mynah.artifacts.TimeToBus;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.backgroundservice.GetInformationService;
@@ -237,9 +239,11 @@ public class MainActivity extends Activity {
         busInitView();
         subwayInitView();
         weatherInitView();
+
         //add
         recordInitView();
         playingInitView();
+
 
         ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
         mServiceAccessManager.setContext(this);
@@ -530,7 +534,7 @@ public class MainActivity extends Activity {
                 }
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llRefresh.setAlpha((float) 1.0);
-                    //allRefresh();
+                    allRefresh();
                     ttsTest();
                     new doAllRefresh(MainActivity.this).execute();
 
@@ -700,9 +704,27 @@ public class MainActivity extends Activity {
             bStation = binfo.station.stNm;
             bDir = binfo.dir + "행\n";
 
+            //dummy temp
+//            Date date = new Date();
+//            SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+//
+//
+//            TimeToBus timeToBus = new TimeToBus();
+//            TimeToBus timeToBus1 = new TimeToBus();
+//            long temp_time = (date.getTime() + Long.valueOf(240)*1000);
+//            date.setTime(temp_time);
+//            timeToBus.time = date_format.format(date);
+//            temp_time = (date.getTime() + Long.valueOf(600)*1000);
+//            date.setTime(temp_time);
+//            timeToBus1.time = date_format.format(date);
+//            binfo.array_ttb.add(timeToBus);
+//            binfo.array_ttb.add(timeToBus1);
+
+
             if (binfo.array_ttb.size() == 0)
             {
                 time1 = "차가 없음";
+
             }
             else if (binfo.array_ttb.size() == 1)
             {
@@ -1191,6 +1213,7 @@ public class MainActivity extends Activity {
         protected Void doInBackground(Void... params) {
 
             //TODO Test >> Do work like communication with SQLITE, API REQUEST
+            //allRefresh();
             try {
                 Thread.sleep(500);
             }
