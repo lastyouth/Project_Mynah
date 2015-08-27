@@ -6,6 +6,7 @@ package com.seven.mynah.network;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
@@ -86,7 +87,8 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... urls) {
 
         // urls[0]의 URL부터 데이터를 읽어와 String으로 리턴
-        // Log.i("URL", url);
+
+        Log.d(TAG,"upload 시작 : " + _url );
         return Task(_url,_filepath);
 
     }
@@ -95,6 +97,7 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
     public void onPreExecute() {
         // Log.i("Test", "onPreExecute Called on global");
 
+
     }
 
     @Override
@@ -102,6 +105,7 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
 
         Log.d(TAG, "Handle Type : " + handlernum);
         Log.d(TAG, "Data Type : " + DataContent);
+        Log.d(TAG,"Return Data : " + responseString);
 
 
         Message msg = mhandler.obtainMessage();
@@ -110,7 +114,7 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
         msg.arg1 = DataContent;
         mhandler.sendMessage(msg);
 
-        Log.d(TAG,"Return Data : " + responseString);
+        Log.d(TAG, "upload 종료 : " + _url);
 
     }
 

@@ -19,6 +19,8 @@ import com.seven.mynah.summarize.InfoTextSummarizer;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+
+    //현재 기능적으로 비활성화
     public static String ACTION_ALARM = "com.seven.mynah.backgroundservice.AlarmReceiver";
 
     private TTSManager mTTSManager;

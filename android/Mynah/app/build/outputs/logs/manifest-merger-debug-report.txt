@@ -421,10 +421,6 @@ action#android.intent.action.BOOT_COMPLETED
 ADDED from AndroidManifest.xml:151:17
 	android:name
 		ADDED from AndroidManifest.xml:151:25
-receiver#com.seven.mynah.backgroundservice.AlarmReceiver
-ADDED from AndroidManifest.xml:158:9
-	android:name
-		ADDED from AndroidManifest.xml:158:19
 receiver#com.seven.mynah.backgroundservice.GCMBroadcastReceiver
 ADDED from AndroidManifest.xml:161:9
 	android:permission

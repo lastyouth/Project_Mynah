@@ -155,7 +155,7 @@
         </receiver>
 
         <!-- 주기적인 서비스 알람을 위해 -->
-        <receiver android:name=".backgroundservice.AlarmReceiver"></receiver>
+        <!-- <receiver android:name=".backgroundservice.AlarmReceiver"></receiver> -->
 
         <!-- 구글 GCM 서비스 실행을 위해 -->
         <receiver

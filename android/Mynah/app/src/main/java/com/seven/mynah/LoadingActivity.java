@@ -231,6 +231,7 @@ public class LoadingActivity extends Activity{
 				{
 					Log.d(TAG, "handler 작동 X 서버 timeout 추측 (5초)");
 					tvState.setText("서버에 응답이 없어 임시 ID로 접속합니다.");
+					Toast.makeText(getApplicationContext(), "서버에 응답이 없어 임시 ID로 접속합니다.", Toast.LENGTH_SHORT).show();
 					try {
 						Thread.sleep(500);
 					}
@@ -244,7 +245,7 @@ public class LoadingActivity extends Activity{
 			}
 
 		};
-		tempHandler.sendEmptyMessageDelayed(0,5000);
+		tempHandler.sendEmptyMessageDelayed(0,7000);
 	}
 
 	public void Loading()

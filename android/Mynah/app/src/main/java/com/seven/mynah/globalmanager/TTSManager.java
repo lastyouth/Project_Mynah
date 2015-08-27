@@ -24,10 +24,10 @@ public class TTSManager implements TextToSpeech.OnInitListener {
 	public static final int PLAY_ING = 4;
 
 	private Context mContext;
+	private int initFlag = 0;
 	private TextToSpeech tts;
 	private String defaultExStoragePath;
 	private MediaPlayer player = null;
-
 	private int flag_state = STOP;
 
 	public TTSManager(Context context) {
@@ -45,11 +45,13 @@ public class TTSManager implements TextToSpeech.OnInitListener {
 
 		if (status == TextToSpeech.SUCCESS) {
 
+			Log.d(TAG, "Initilization success!");
+
 			int result = tts.setLanguage(Locale.KOREA);
 
 			if (result == TextToSpeech.LANG_MISSING_DATA
 					|| result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				Log.d("TTS", "This Language is not supported");
+				Log.d(TAG, "This Language is not supported");
 			} else {
 
 				//pitch는 음높이
@@ -58,21 +60,31 @@ public class TTSManager implements TextToSpeech.OnInitListener {
 				tts.setSpeechRate((float)1.3);
 			}
 
+			initFlag = 1;
+
 		} else {
-			Log.d("TTS", "Initilization Failed!");
+			Log.d(TAG, "Initilization Failed!");
 		}
 
 	}
 
 	public void speakOut(String text)
 	{
-		if(tts == null)
+		if(tts == null )
 		{
 			return;
 		}
 		else
 		{
-			tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+			if(initFlag == 1)
+			{
+				tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+			}
+			else
+			{
+				Log.d(TAG, "tts 엔진이 아직 초기화되지 않음");
+			}
+
 		}
 	}
 
@@ -89,7 +101,14 @@ public class TTSManager implements TextToSpeech.OnInitListener {
 
 		//user name id로 파일명과 방식 지정.
 		String tempDestFile = appTmpPath.getAbsolutePath() + "/" + filename;
-		tts.synthesizeToFile(text, myHashRender, tempDestFile);
+		if (initFlag == 1)
+		{
+			tts.synthesizeToFile(text, myHashRender, tempDestFile);
+		}
+		else
+		{
+			Log.d(TAG, "tts 엔진이 아직 초기화되지 않음");
+		}
 
 	}
 

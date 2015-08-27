@@ -72,6 +72,7 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
 		// urls[0]의 URL부터 데이터를 읽어와 String으로 리턴
 		// Log.i("URL", url);
+		Log.d(TAG,"task 시작 : " + _url );
 		return Task(_url,_jobj);
 
 	}
@@ -84,19 +85,20 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected void onPostExecute(String responseData) {
-		
+
 		Log.d(TAG, "Handle Type : " + handlernum);
 		Log.d(TAG, "Data Type : " + DataContent);
-		
-		
+		Log.d(TAG, "Return Data : " + responseString);
+
 		Message msg = mhandler.obtainMessage();
 		msg.what = handlernum;
 		msg.obj = responseString;
 		msg.arg1 = DataContent;
 		mhandler.sendMessage(msg);
-		
-		Log.d(TAG,"Return Data : " + responseString);
-		
+
+		Log.d(TAG,"task 종료 : " + _url );
+
+
 	}
 
 	public String Task(String urlString, JSONObject jobj) {
