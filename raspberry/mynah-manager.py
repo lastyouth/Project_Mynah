@@ -147,6 +147,7 @@ class ClientProcessThread(threading.Thread):
         except IOError:
             pass
         self.sock.close()
+        #g_productuser.pop(self.cid,None)
         removeClient(self)
         print self.client_info, ": disconnected"
 
@@ -222,7 +223,6 @@ class MynahManager:
                     print "Timer Cancelled"
                     self.t = 0
 
-                quote_str = " endend"
                 #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
                 global g_messagelist
                 global g_clientlist
@@ -249,69 +249,54 @@ class MynahManager:
                 print "Best rssi measure : ",brssi
                 #msg = g_messagelist[0]
                 print "id : ",cid," must be nearest!!!"
-                #http request
 
-                self.isFamily = True
-
-                #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    #self.isFamily = requestHTTPS("is_in_family",cid,"is_in_home","0")
-                #else:
-                    #self.isFamily = requestHTTPS("is_in_family",cid,"is_in_home","1")
-
-                #if self.isFamily == False:
-                #    print "Access Denied - Unauthorized Person Approching detected"
-                    #os.system('mplayer /home/pi/share/dog.mp3')
-                #    self.s1Activated = False
-                #    self.s2Activated = False
-                #    self.directionFlag = self.DIRECTION_TYPE_NONE
-                #    g_lock.release()
-                #    return
-
-                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT and cid != "":
-                   #os.system('mplayer '+g_defaultpath+'tempid_tts.mp3')
-                    usermediaobj = g_productuser[cid];
-                    policy = usermediaobj.getPolicy();
-                    print cid + ' policy is ' + policy
-                    if policy == 'n':
-                        os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                    elif policy == 't':
-                        filename = usermediaobj.getTTSFileName()
-                        if filename == '':
-                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        else:
-                            os.system('mplayer '+g_defaultpath+filename)
-                    elif policy == 'r':
-                        filename = usermediaobj.getRECFileName()
-                        if filename == '':
-                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
-
-                        else:
-                            os.system('mplayer '+g_defaultpath+filename)
-                    elif policy == 'b':
-                        ttsfilename = usermediaobj.getTTSFileName()
-                        recfilename = usermediaobj.getRECFileName()
-                        if ttsfilename == '':
-                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        else:
-                            os.system('mplayer '+g_defaultpath+ttsfilename)
-                        if recfilename == '':
-                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        else:
-                            os.system('mplayer '+g_defaultpath+recfilename)
+                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+                    if brssi == -200:
+                        os.system('mplayer '+g_defaultpath+'no_connected_device.mp3')
                     else:
-                        print "Unknown policy"
-                    g_productuser[cid].makeClear()
+                        usermediaobj = g_productuser[cid];
+                        policy = usermediaobj.getPolicy();
+                        print cid + ' policy is ' + policy
+                        if policy == 'n':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        elif policy == 't':
+                            filename = usermediaobj.getTTSFileName()
+                            if filename == '':
+                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                            else:
+                                os.system('mplayer '+g_defaultpath+filename)
+                        elif policy == 'r':
+                            filename = usermediaobj.getRECFileName()
+                            if filename == '':
+                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
+    
+                            else:
+                                os.system('mplayer '+g_defaultpath+filename)
+                        elif policy == 'b':
+                            ttsfilename = usermediaobj.getTTSFileName()
+                            recfilename = usermediaobj.getRECFileName()
+                            if ttsfilename == '':
+                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                            else:
+                                os.system('mplayer '+g_defaultpath+ttsfilename)
+                            if recfilename == '':
+                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                            else:
+                                os.system('mplayer '+g_defaultpath+recfilename)
+                        else:
+                            print "Unknown policy"
+                        g_productuser[cid].makeClear()
+                        time.sleep(6)
                     print "To Out Processing"
                 else:
                     os.system('mplayer '+g_defaultpath+'defaultin.mp3')
-                    os.system('mplayer '+g_defaultpath+'rs.mp3')
+                    os.system('mplayer '+g_defaultpath+'thankyou.mp3')
                     print "To In Processing"
 
                 self.s1Activated = False
                 self.s2Activated = False
                 self.directionFlag = self.DIRECTION_TYPE_NONE
         g_lock.release()
-
 
     def callbackFromS1(self):
         self.s1Activated = True
@@ -501,7 +486,7 @@ while True:
             if recname == '':
                 print key+' : No recorded voice'
             else:
-                print key+' : recored file exists ' +recname
+                print key+' : recorded file exists ' +recname
                 if g_productuser[key].isDuplicated(recname):
                     print recname + 'is already exist'
                 else:
