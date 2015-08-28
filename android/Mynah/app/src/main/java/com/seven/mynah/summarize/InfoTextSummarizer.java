@@ -194,6 +194,15 @@ public class InfoTextSummarizer {
                 timeList.add(time);
                 summaryList.add(summary);
                 time = sInfo.scheduleTime;
+                if(time.matches(".*:00"))
+                {
+                    time = time.replace(":00","시");
+                }
+                else
+                {
+                    time = time.replace(":","시").concat("분");
+                }
+
                 tts += time + ", " + summary + ", ";
                 cnt ++;
                 if(cnt == 3)
@@ -365,7 +374,7 @@ public class InfoTextSummarizer {
         //예시 : 현재 기온 23.9도, 강수확률 32 퍼센트
         //변경
         //날씨 타입 맑으면 그냥 패스, 비가 올 확률이 높으면 '우산을 챙기세요';
-        tts = "현재 기온, " + temper + "도, " + wfKor + "." + temp;
+        tts = "현재 기온, " + temper + "도, " + wfKor + "," + temp + ",";
 
         return tts;
     }
@@ -390,8 +399,9 @@ public class InfoTextSummarizer {
         String bus = getBusInfoTTS(getBusInfo());
         String subway = getSubwayInfoTTS(getSubwayInfo());
         String weather = getWeatherInfoTTS(getWeatherInfo());
-        String gas = getGasTemperatureTTS();
-        String ttsList[] = {gas, bus, subway, weather, schedule};
+        //String gas = getGasTemperatureTTS();
+        String record = "";
+        String ttsList[] = {schedule, bus, subway, weather, record};
         SharedPreferences p = mContext.getSharedPreferences(ServiceAccessManager.TSTAT, Context.MODE_PRIVATE);
 
         int status = p.getInt("status", 31);
