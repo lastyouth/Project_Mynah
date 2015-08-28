@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#339900" >
+    android:background="@drawable/bg" >
 
     <TextView
         android:id="@+id/textView2"
@@ -29,11 +29,22 @@
 
     <ProgressBar
         android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="114dp" />
+        android:layout_marginBottom="140dp" />
 
-</RelativeLayout><!-- From: file:/D:/git/Mynah/app/src/main/res/layout/activity_logo.xml -->
+    <TextView
+        android:id="@+id/tvState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:text="서버에 접속 중입니다."
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"/>
+
+</RelativeLayout><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_logo.xml -->

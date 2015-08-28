@@ -45,10 +45,17 @@ public class LoadingActivity extends Activity{
 	private String deviceID;
 	private static String TAG = "LOADING";
 
+	private TextView tvState;
+
+	private static int handler_tag = 0; //서버 닫겨있을 경우 대비 핸들러 플래그 추가
+
+	public static Activity activity;
+
 	//클래스 안에 선언해놓을 것
 	protected Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			// IF Sucessfull no timeout
+			handler_tag = 1;
 			System.out.println("in handler");
 			if (msg.what == -1) {
 				//   BreakTimeout();
@@ -75,6 +82,8 @@ public class LoadingActivity extends Activity{
 							//회원가입 창으로
 							Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
 							startActivity(intent);
+							//여기서 finish 하기 되면 가입을 하더라도 정보 업데이트 안된 상태로 문제가 생김.
+
 						}
 						else if(result.equals("IS_MEMBER")) {
 //							Toast.makeText(getApplicationContext(), "회원입니다.", Toast.LENGTH_SHORT).show();
@@ -93,7 +102,7 @@ public class LoadingActivity extends Activity{
 							new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj2, 2, 1);
 						}
 						else if(result.equals("MEMBER_CHECK_ERROR")) {
-							Toast.makeText(getApplicationContext(), "MEMBER CHECK ERRORr", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "MEMBER CHECK ERRORR", Toast.LENGTH_SHORT).show();
 						}
 						else {
 							Toast.makeText(getApplicationContext(), "WRONG MEMBER CHECK", Toast.LENGTH_SHORT).show();
@@ -104,6 +113,7 @@ public class LoadingActivity extends Activity{
 					}
 				}catch(JSONException e){
 					e.printStackTrace();
+					handler_tag = 0;
 				}
 
 			}
@@ -167,6 +177,7 @@ public class LoadingActivity extends Activity{
 				}
 				catch(JSONException e){
 					e.printStackTrace();
+					handler_tag = 0;
 				}
 			}
 
@@ -177,9 +188,13 @@ public class LoadingActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		activity = LoadingActivity.this;
+
 		setContentView(R.layout.activity_logo);
 
-		//Loading(); 핸들러 안으로 옮겼어
+		tvState = (TextView)findViewById(R.id.tvState);
+
 	}
 
 	@Override
@@ -193,6 +208,8 @@ public class LoadingActivity extends Activity{
 
 		//device id 받아오기
 		deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+		//dummy
+		//deviceID = "test_device_id_2";
 		Log.d(TAG, "DEVICE ID : " + deviceID);
 
 		JSONObject jobj = new JSONObject();
@@ -204,14 +221,42 @@ public class LoadingActivity extends Activity{
 			e.printStackTrace();
 		}
 
+		tvState.setText("서버에 접속 중 입니다...");
 		new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mHandler, jobj, 1, 0);
+		Handler tempHandler = new Handler()
+		{
+			public void handleMessage(Message msg)
+			{
+				if(handler_tag == 0)
+				{
+					Log.d(TAG, "handler 작동 X 서버 timeout 추측 (5초)");
+					tvState.setText("서버에 응답이 없어 임시 ID로 접속합니다.");
+					Toast.makeText(getApplicationContext(), "서버에 응답이 없어 임시 ID로 접속합니다.", Toast.LENGTH_SHORT).show();
+					try {
+						Thread.sleep(500);
+					}
+					catch (InterruptedException e)
+					{
+						Log.d(TAG, e.getMessage());
+					}
+					Loading();
+				}
+
+			}
+
+		};
+		tempHandler.sendEmptyMessageDelayed(0,7000);
 	}
 
 	public void Loading()
 	{
-		
-		//createTempUser();
-		//checkInitUser();
+		SessionUserInfo suinfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
+
+		if(suinfo.userId == null)
+		{
+			createTempUser();
+		}
+
 		loadWeatherLocation();
 
 		Handler handler = new Handler()
@@ -224,48 +269,74 @@ public class LoadingActivity extends Activity{
 				finish();
 			}
 		};
-		
-		handler.sendEmptyMessageDelayed(0, 1000);
+		tvState.setText("완료하였습니다.");
+		handler.sendEmptyMessageDelayed(0, 500);
 
-	}
-	
-	private void checkInitUser()
-	{
-		if (DBManager.getManager(this).isInitialUser())
-		{
-			UserProfile up =  DBManager.getManager(this).getMainUserDB();
-//			Toast.makeText(this, "김진성님 환영합니다.", Toast.LENGTH_SHORT).show();
-		}
-		else 
-		{
-//			Toast.makeText(this, "등록된 유저가 없습니다.", Toast.LENGTH_SHORT).show();
-		}
-			
 	}
 	
 	private void createTempUser()
 	{
-		UserProfile up = new UserProfile();
-		up.id = "pika";
-		up.passwd = "";
-		up.name = "김진성";
-		up.inout = 1;
-		up.mac_address = "";
-		up.usertype = 1;
-		up.usertype = GlobalVariable.UserType.me;
-		up.mastertype = GlobalVariable.UserType.master;
-		
-		DBManager.getManager(this).setMainUserDB(up);
+//		UserProfile up = new UserProfile();
+//		up.id = "pika";
+//		up.passwd = "";
+//		up.name = "김진성";
+//		up.inout = 1;
+//		up.mac_address = "";
+//		up.usertype = 1;
+//		up.usertype = GlobalVariable.UserType.me;
+//		up.mastertype = GlobalVariable.UserType.master;
+//
+//		DBManager.getManager(this).setMainUserDB(up);
+//
+
+		tvState.setText("임시 유저를 생성합니다.");
+		try {
+			Thread.sleep(500);
+		}
+		catch (InterruptedException e)
+		{
+			Log.d(TAG, e.getMessage());
+		}
+		SessionUserInfo suinfo = new SessionUserInfo();
+		suinfo.userId = "tempid";
+		suinfo.productId = "temp_product_id";
+		suinfo.registrationId = "temp_registration_id";
+		suinfo.userName = "pika";
+		suinfo.genderFlag = "";
+		suinfo.representativeFlag = "";
+		suinfo.inHomeFlag = "in_home_flag";
+		suinfo.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+		suinfo.inoutTime = "";
+
+		DBManager.getManager(getApplicationContext()).setSessionUserDB(suinfo);
+
+
 	}
 	
 	private void loadWeatherLocation()
 	{
+		tvState.setText("날씨 지역 정보를 불러옵니다.");
+		try {
+			Thread.sleep(500);
+		}
+		catch (InterruptedException e)
+		{
+			Log.d(TAG, e.getMessage());
+		}
 		if(DBManager.getManager(this).isSetWeatherLocation())
 		{
 			//지역정보 설정되어 있음.
 		}
 		else
 		{
+			tvState.setText("날씨 지역 정보를 다운로드합니다.");
+			try {
+				Thread.sleep(500);
+			}
+			catch (InterruptedException e)
+			{
+				Log.d(TAG, e.getMessage());
+			}
 			WeatherParser wp = new WeatherParser();
 	    	ArrayList<WeatherLocationInfo> array_location; 
 	    	array_location = wp.getAllLocationInfo();

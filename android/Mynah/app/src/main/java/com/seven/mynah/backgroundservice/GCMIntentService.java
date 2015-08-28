@@ -134,7 +134,5 @@ public class GCMIntentService extends IntentService {
 		notification.setLatestEventInfo(this, key1, key2, pendingIntent);
 		nm.notify(1234, notification);
 
-
-
 	}
 }
