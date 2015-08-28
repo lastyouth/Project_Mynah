@@ -125,6 +125,8 @@ public class BusSettingActivity extends Activity {
 
                 binfo.route = busRouteInfo;
                 binfo.station = vh.busStationInfo;
+//                BusPaser bp = new BusPaser();
+//                binfo = bp.getStationByUid(binfo);
 
                 String stNm = vh.tvBusStopNameListRow.getText().toString();
                 DBManager.getManager(getApplicationContext()).setBusDBbyLog(binfo);

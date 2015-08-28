@@ -240,7 +240,8 @@ public class CalendarManager {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                //Temp Setting
+                //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
 //                mStatusText.setText(message);
             }
         });

@@ -654,8 +654,7 @@ public class DBManager {
 		int route_name_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_NAME);
 		int route_type_index = c.getColumnIndex(MynahDB._BUS_COL_ROUTE_TYPE);
 		int station_id__index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ID);
-		int station_name_index = c
-				.getColumnIndex(MynahDB._BUS_COL_STATION_NAME);
+		int station_name_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_NAME);
 		int station_ord_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ORD);
 		int station_arsid_index = c.getColumnIndex(MynahDB._BUS_COL_STATION_ASRID);
 		int dir_index = c.getColumnIndex(MynahDB._BUS_COL_DIR);

@@ -63,7 +63,7 @@ public class GetInformationService extends Service
 
 
     //public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //3분
-    public static final long NOTIFY_INTERVAL = 1 * 60 * 1000; //1분
+    public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //1분
 
     private Timer mTimer = null;
     private Handler mTimeTaskHandler = new Handler(); // for new thread

@@ -1107,17 +1107,18 @@ public class MainActivity extends Activity {
     private void ttsTest()
     {
 
-        //mTTSManager.speakOut("도레미파솔라시도");
-        //mTTSManager.saveTTS("비가 올 확률이 있습니다.", getFilesDir() + "/tts.mp4");
-//        mTTSManager.saveTTS("비가 올 확률이 있습니다.", "tts.3gp");
-//        try {
-//            Thread.sleep(500);
-//        }
-//        catch (InterruptedException e)
-//        {
-//            Log.d(TAG, e.getMessage());
-//        }
-//        RECManager.getInstance().startPlaying("tts.3gp");
+        String tts = InfoTextSummarizer.getInstance(mContext).makeTotalTTS();
+
+        SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
+        mTTSManager.saveTTS(tts,"tts_temp.mp3");
+        try {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e)
+        {
+            Log.d(TAG, e.getMessage());
+        }
+        mTTSManager.startPlaying("tts_temp.mp3");
 
     }
 
