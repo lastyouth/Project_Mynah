@@ -98,7 +98,6 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 
 		Log.d(TAG,"task 종료 : " + _url );
 
-
 	}
 
 	public String Task(String urlString, JSONObject jobj) {

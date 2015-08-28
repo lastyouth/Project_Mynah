@@ -172,7 +172,7 @@ public class InfoTextSummarizer {
             String time = sInfo.scheduleDate + " " + sInfo.scheduleTime;
             String summary = sInfo.scheduleName;
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             long curTime = System.currentTimeMillis();
             long scheduleTime = 0;
@@ -251,7 +251,7 @@ public class InfoTextSummarizer {
 
         String time = binfo.array_ttb.get(pos).time;
         Date date = new Date();
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         try {
             date = date_format.parse(time);
