@@ -85,6 +85,9 @@ def requestHTTPS(mtype,tid,dtype,data):
 
         response = conn.getresponse()
         print "status : ",response.status," reason : ",response.reason
+        if response.status != 200:
+            print "Web wants to make this packet ignore"
+            return False
 
         data = json.loads(response.read())
 
