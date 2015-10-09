@@ -17,7 +17,7 @@ os.system('sudo hciconfig hci0 piscan')
 os.system('sudo hciconfig hci0 leadv')
 # global variables
 
-g_webhost = "1.227.248.51:13337"
+g_webhost = "211.189.20.165:13337"
 
 g_defaultpath = '/home/pi/share/mynahmedia/'
 
@@ -468,55 +468,57 @@ g_sensor2.start()
 while True:
     g_lock.acquire()
     data = requestHTTPS('get_devices','','','')
-    print 'Request deviceids from product2'
-    for pp in data['attach']:
-        if pp['device_id'] in g_productuser.keys():
-            print pp['device_id']+'is already in'
-        else:
-            g_productuser[pp['device_id']] = UserMediaData()
-    print g_productuser
-
-    print 'Request file from server'
-    for key in g_productuser.keys():
-        print key +' request file'
-        data = requestHTTPS('get_media',key,'','')
-        if data == False:
-            print 'Current Web Request Failure'
-        else:
-            targetlen = data['attach']
-            #record voice
-            recname = data['attach']['rec_file_name'];
-            if recname == '':
-                print key+' : No recorded voice'
+    if data == False:
+        print 'FATAL ERROR : Server is not responding'
+    else:
+        print 'Request deviceids from product2'
+        for pp in data['attach']:
+            if pp['device_id'] in g_productuser.keys():
+                print pp['device_id']+'is already in'
             else:
-                print key+' : recorded file exists ' +recname
-                if g_productuser[key].isDuplicated(recname):
-                    print recname + 'is already exist'
+                g_productuser[pp['device_id']] = UserMediaData()
+        print g_productuser
+        print 'Request file from server'
+        for key in g_productuser.keys():
+            print key +' request file'
+            data = requestHTTPS('get_media',key,'','')
+            if data == False:
+                print 'Current Web Request Failure'
+            else:
+                targetlen = data['attach']
+                #record voice
+                recname = data['attach']['rec_file_name'];
+                if recname == '':
+                    print key+' : No recorded voice'
                 else:
-                    filedata = base64.decodestring(data['attach']['rec_file'])
-                    fp = open(g_defaultpath+recname,'w')
+                    print key+' : recorded file exists ' +recname
+                    if g_productuser[key].isDuplicated(recname):
+                        print recname + 'is already exist'
+                    else:
+                        filedata = base64.decodestring(data['attach']['rec_file'])
+                        fp = open(g_defaultpath+recname,'w')
+                        fp.write(filedata)
+                        fp.close()
+                        g_productuser[key].setRECFileName(recname)
+    
+                ttsname = data['attach']['tts_file_name']
+                if ttsname == '':
+                    print key+' : No tts file'
+                else:
+                    filedata = base64.decodestring(data['attach']['tts_file'])
+                    fp = open(g_defaultpath+ttsname,'w')
                     fp.write(filedata)
                     fp.close()
-                    g_productuser[key].setRECFileName(recname)
-
-            ttsname = data['attach']['tts_file_name']
-            if ttsname == '':
-                print key+' : No tts file'
-            else:
-                filedata = base64.decodestring(data['attach']['tts_file'])
-                fp = open(g_defaultpath+ttsname,'w')
-                fp.write(filedata)
-                fp.close()
-                g_productuser[key].setTTSFileName(ttsname)
-            policy = data['attach']['opt']
-            print key+' : policy ' +policy
-            g_productuser[key].setPolicy(policy)
-    g_lock.release()
-    #print data['attach']['file_name']
-    #f = open(g_defaultpath+data['attach']['file_name'],'w')
-    #f.write(base64.decodestring(data['attach']['file']))
-    #f.close();
-    #broadcastCurrentClient()
+                    g_productuser[key].setTTSFileName(ttsname)
+                policy = data['attach']['opt']
+                print key+' : policy ' +policy
+                g_productuser[key].setPolicy(policy)
+        g_lock.release()
+        #print data['attach']['file_name']
+        #f = open(g_defaultpath+data['attach']['file_name'],'w')
+        #f.write(base64.decodestring(data['attach']['file']))
+        #f.close();
+        #broadcastCurrentClient()
     time.sleep(10)
     i=1
 
