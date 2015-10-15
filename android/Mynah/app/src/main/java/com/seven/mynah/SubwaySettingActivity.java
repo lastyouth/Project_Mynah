@@ -67,7 +67,7 @@ public class SubwaySettingActivity extends Activity {
 			//SubwayPaser sp = new SubwayPaser();
 			//sinfo = sp.getTimeTableByID(sinfo);
 			line_num = sinfo.station.line_num;
-			tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + GlobalFunction.SubwayDecode(line_num));
+			tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + GlobalVariable.hosunDecode(line_num));
 		}
 
 		ivSubwayStationSearch.setOnClickListener(new OnClickListener() {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.SubwayStationInfo;
 import com.seven.mynah.globalmanager.GlobalFunction;
+import com.seven.mynah.globalmanager.GlobalVariable;
 
 public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 
@@ -63,7 +64,7 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 		
 		
 		String code = getItem(position).line_num;
-		String stationName = GlobalFunction.SubwayDecode(code);
+		String stationName = GlobalVariable.hosunDecode(code);
 		
 		if(isFirst)
 		{

@@ -78,6 +78,12 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
         DataContent = Data;
         _filepath = filepath;
 
+        if(!GlobalVariable.isServerOn)
+        {
+            Log.d(TAG,"서버가 종료되어 있어 task를 수행하지 않습니다.");
+            return;
+        }
+
         super.execute();
     }
 

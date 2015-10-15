@@ -171,6 +171,9 @@ public class ChooseTTSActivity extends Activity {
         //handler type 2 : 상태 업데이트용
         new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler, jobj, 2, 0);
 
+
+
+
     }
 
     @Override

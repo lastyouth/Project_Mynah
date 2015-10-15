@@ -10,6 +10,7 @@ import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalFunction;
+import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
@@ -294,7 +295,7 @@ public class InfoTextSummarizer {
         String tts = "";
         String time = "";
         String lineNum = sInfo.station.line_num;
-        lineNum = GlobalFunction.SubwayDecode(lineNum);
+        lineNum = GlobalVariable.hosunDecode(lineNum);
 
         String station = sInfo.station.station_nm;
         String dir = "";
@@ -425,6 +426,7 @@ public class InfoTextSummarizer {
         preTotalInfoText = mTotalInfoText;
         mTotalInfoText = tts;
         return tts;
+
     }
 
     public boolean isUpdate()
