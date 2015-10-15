@@ -41,7 +41,7 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
     <eat-comment/>
-    <color name="bus_background">#993399</color>
+    <color name="bus_background">#E8977E</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="button_material_dark">#ff5a595b</color>
@@ -75,8 +75,6 @@
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="drawer_profile_background">#FFA648</color>
-    <color name="family_background">#339900</color>
-    <color name="gasalarm_background">#cc0000</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
@@ -96,6 +94,11 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
+    <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="mynah_icon_background">#ACD5EC</color>
+    <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
+    <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
     <color name="primary_material_dark">#ff212121</color>
@@ -104,16 +107,11 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
-    <eat-comment/>
-    <color name="refresh_background">#99cc99</color>
-    <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
-    <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
     <eat-comment/>
-    <color name="schedule_background">#669900</color>
+    <color name="schedule_background">#D26F70</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
@@ -124,7 +122,7 @@
     <eat-comment/>
     <color name="status_secret_color">#EDEDED</color>
     <color name="stroke">#dddddd</color>
-    <color name="subway_background">#993399</color>
+    <color name="subway_background">#726975</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
@@ -151,7 +149,7 @@
     <color name="wallet_link_text_light">#0000ee</color>
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values/colors.xml -->
     <eat-comment/>
-    <color name="weather_background">#66cccc</color>
+    <color name="weather_background">#B9CEC8</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>

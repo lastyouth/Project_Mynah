@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@color/black_translucent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="로그인"
             android:id="@+id/btnLogin"
-            android:background="@drawable/orange_button"
+            android:background="@drawable/purple_button"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="5dp"/>
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="회원가입"
             android:id="@+id/btnSignup"
-            android:background="@drawable/orange_button"
+            android:background="@drawable/purple_button"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

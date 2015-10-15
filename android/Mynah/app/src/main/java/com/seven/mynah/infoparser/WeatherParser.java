@@ -96,7 +96,6 @@ public class WeatherParser {
                 String temp = null;
                 switch (eventType){
                     case XmlPullParser.START_DOCUMENT:
-                        
                         break;
                     case XmlPullParser.START_TAG:
                         // 태그를 식별한 뒤 태그에 맞는 작업을 수행합니다.
@@ -115,8 +114,8 @@ public class WeatherParser {
                         	ttw.pop = parser.nextText();
                         }else if (name.equalsIgnoreCase("reh")){
                         	ttw.reh = parser.nextText();
-                        }else if (name.equalsIgnoreCase("sky")){
-                        	ttw.sky = parser.nextText();
+                        }else if (name.equalsIgnoreCase("sky")) {
+							ttw.sky = parser.nextText();
                         }else if (name.equalsIgnoreCase("hour")){
                         	
                         	temp = parser.nextText();
@@ -219,8 +218,7 @@ public class WeatherParser {
 						location.city_xpos = xpos;
 						location.city_ypos = ypos;
 						array_location.add(location);
-						
-						
+
 					}
 					
 				}
