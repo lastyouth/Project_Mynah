@@ -12,6 +12,8 @@ import os
 import json
 import base64
 import httplib
+import random
+import datetime
 
 os.system('sudo hciconfig hci0 piscan')
 os.system('sudo hciconfig hci0 leadv')
@@ -293,7 +295,9 @@ class MynahManager:
                     print "To Out Processing"
                 else:
                     os.system('mplayer '+g_defaultpath+'defaultin.mp3')
-                    os.system('mplayer '+g_defaultpath+'thankyou.mp3')
+                    ran = random.randrange(1,49)
+                    os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
+                    print "Current Hour : "+str(datetime.datetime.now().hour)
                     print "To In Processing"
 
                 self.s1Activated = False
@@ -500,7 +504,6 @@ while True:
                         fp.write(filedata)
                         fp.close()
                         g_productuser[key].setRECFileName(recname)
-    
                 ttsname = data['attach']['tts_file_name']
                 if ttsname == '':
                     print key+' : No tts file'
@@ -514,11 +517,6 @@ while True:
                 print key+' : policy ' +policy
                 g_productuser[key].setPolicy(policy)
         g_lock.release()
-        #print data['attach']['file_name']
-        #f = open(g_defaultpath+data['attach']['file_name'],'w')
-        #f.write(base64.decodestring(data['attach']['file']))
-        #f.close();
-        #broadcastCurrentClient()
     time.sleep(10)
     i=1
 
