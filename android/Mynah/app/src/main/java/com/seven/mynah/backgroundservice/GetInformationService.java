@@ -158,6 +158,16 @@ public class GetInformationService extends Service
             //mTempdata = temp;
             InfoTextSummarizer.getInstance(mCtx).setTempData(temp);
         }
+        @Override
+        public void onConnected()
+        {
+
+        }
+        @Override
+        public void onDisconnected()
+        {
+
+        }
     };
 
 	@Override

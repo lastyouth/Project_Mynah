@@ -7,4 +7,6 @@ public interface BluetoothRequestCallback {
     public void onRequestOutTTSWithRSSI();
     public void onRequestInTTSWithRSSI();
     public void onTempDataArrived(int temp);
+    public void onConnected();
+    public void onDisconnected();
 }
