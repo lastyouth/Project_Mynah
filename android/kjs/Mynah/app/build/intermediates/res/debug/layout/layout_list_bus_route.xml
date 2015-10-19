@@ -36,4 +36,4 @@
 		android:padding="35dip"
 		android:text="검색된 노선이 없습니다. \n\n올바른 노선번호를 검색 해주세요." />
 
-</LinearLayout><!-- From: file:/C:/Users/HJHOME/Documents/gittest/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/layout_list_bus_route.xml -->
+</LinearLayout><!-- From: file:/home/sbh/Project_Mynah/android/kjs/Mynah/app/src/main/res/layout/layout_list_bus_route.xml -->

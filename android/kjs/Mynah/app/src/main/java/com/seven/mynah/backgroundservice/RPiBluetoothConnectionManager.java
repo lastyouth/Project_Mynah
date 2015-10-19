@@ -110,6 +110,7 @@ public class RPiBluetoothConnectionManager {
                   Log.e(TAG,"Error in reading from Server !");
                   try {
                      btSocket.close();
+                     finalizeConnection();
                   } catch (IOException e1) {
                      // TODO Auto-generated catch block
                      e1.printStackTrace();
@@ -158,6 +159,7 @@ public class RPiBluetoothConnectionManager {
          btSocket = targetBTDevice.createRfcommSocketToServiceRecord(uuid);
          btSocket.connect();
          sendTo(SEND_TYPE_INIT,"HITHERE");
+         mCallback.onConnected();
       }catch(IOException e)
       {
          Log.e(TAG,"BTCONNECT - IO ERROR");
@@ -185,6 +187,11 @@ public class RPiBluetoothConnectionManager {
       btAdapter = BluetoothAdapter.getDefaultAdapter();
       this.deviceID = deviceID;
       isInitialize = false;
+   }
+
+   private void finalizeConnection()
+   {
+      mCallback.onDisconnected();
    }
 
    @SuppressLint("NewApi")
@@ -246,6 +253,7 @@ public class RPiBluetoothConnectionManager {
       {
          try {
             btSocket.close();
+            finalizeConnection();
          } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -308,6 +316,7 @@ public class RPiBluetoothConnectionManager {
          Log.e(TAG,"IOException BT");
          try {
             btSocket.close();
+            finalizeConnection();
          } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
