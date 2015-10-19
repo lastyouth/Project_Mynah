@@ -9,7 +9,6 @@
         android:id="@+id/llBus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="3dp"
         android:orientation="vertical"
         android:animateLayoutChanges="true">
@@ -43,7 +42,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -52,10 +50,9 @@
                     android:id="@+id/llBusFullCut"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:layout_gravity="center"
+                    >
 
                     <!-- 여기서부터 아래로 3등분 -->
 
@@ -191,9 +188,8 @@
                     android:id="@+id/llBusShortCut"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="4"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
                     android:padding="5dp">
 
                     <!-- 여기서부터 아래로 3등분 -->
@@ -296,7 +292,6 @@
                 <!-- full cut end -->
 
             </LinearLayout>
-
 
         </LinearLayout>
 

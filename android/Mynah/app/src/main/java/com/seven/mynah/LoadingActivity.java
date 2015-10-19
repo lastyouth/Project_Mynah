@@ -195,6 +195,7 @@ public class LoadingActivity extends Activity{
 
 		tvState = (TextView)findViewById(R.id.tvState);
 
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	@Override

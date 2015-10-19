@@ -9,10 +9,8 @@
         android:id="@+id/llSubway"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="3dp"
         android:orientation="vertical"
-        android:gravity="center"
         android:animateLayoutChanges="true">
 
 
@@ -29,8 +27,8 @@
                 android:id="@+id/llSubwayImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:layout_weight="3"
                 >
 
@@ -47,7 +45,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -56,8 +53,7 @@
                     android:id="@+id/llSubwayFullCut"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:orientation="vertical"
                     android:padding="5dp">
 
@@ -78,7 +74,7 @@
                             android:gravity="center"
                             android:textColor="#ffffff"
                             android:text = "청량리역"
-                            android:textSize="30sp"/>
+                            android:textSize="28sp"/>
 
 
 
@@ -263,9 +259,8 @@
                     android:id="@+id/llSubwayShortCut"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="5"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
                     android:padding="5dp">
 
                     <!-- 여기서부터 아래로 2 등분 -->
@@ -285,7 +280,7 @@
                             android:gravity="center_vertical"
                             android:textColor="#ffffff"
                             android:text = "청량리역"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginRight="5dp"/>
 
                         <TextView

@@ -25,7 +25,6 @@ import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.RECManager;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
@@ -35,6 +34,7 @@ import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.spec.RSAOtherPrimeInfo;
@@ -65,6 +65,8 @@ public class GetInformationService extends Service
     //public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //3분
     public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //1분
 
+    //public static final long BLUETOOTH_NOTIFY_INTERVAL = 3 * 1000;
+
     private Timer mTimer = null;
     private Handler mTimeTaskHandler = new Handler(); // for new thread
     private TTSManager mTTSManager = null;
@@ -78,18 +80,21 @@ public class GetInformationService extends Service
             if (msg.what == -1) {
                 //   BreakTimeout();
                 //ConnectionError();
-                System.out.println("handler error");
+                //System.out.println("handler error");
+                Log.d(TAG, "handler error");
             }
 
             if (msg.what == 1) {
                 //핸들링 1일때 할 것
-                System.out.println("response : "+msg.obj);
+                //System.out.println("response : "+msg.obj);
+                Log.d(TAG, "handling 1 -> response : " + msg.obj);
             }
 
             if (msg.what == 2) {
                 //핸들링 2일때 할 것
-                System.out.println("handling 2 !");
-                System.out.println("response : "+msg.obj);
+                //System.out.println("handling 2 !");
+                //System.out.println("response : "+msg.obj);
+                Log.d(TAG, "handling 2 -> response : " + msg.obj);
             }
 
         }
@@ -105,20 +110,21 @@ public class GetInformationService extends Service
                 int type = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
                 if(type == BluetoothAdapter.STATE_OFF)
                 {
-//                    Toast.makeText(mCtx,"Bluetooth is Off",Toast.LENGTH_SHORT).show();
+                    DebugToast.makeText(mCtx, "Bluetooth is Off", Toast.LENGTH_SHORT).show();
                     isBluetoothEnabled = false;
                 }
                 else if(type == BluetoothAdapter.STATE_ON)
                 {
-//                    Toast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
+                    DebugToast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
                     isBluetoothEnabled = true;
                 }
             }
         }
     };
 
-    //블투 콜백에 대한 tts 대응 필요없음
 
+
+    //블투 콜백에 대한 tts 대응 필요없음
     private BluetoothRequestCallback btCallback = new BluetoothRequestCallback() {
         @Override
         public void onRequestOutTTSWithRSSI() {
@@ -139,7 +145,6 @@ public class GetInformationService extends Service
             SessionUserInfo sInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
             String userName = sInfo.userName;
             String tts = "어서오세요, " + userName + "님, 오늘 하루도 수고하셨습니다.";
-
 
             //mBluetoothManager.sendTTSWithRSSI(RPiBluetoothConnectionManager.SEND_TYPE_INTTS, tts);
             mBluetoothManager.sendTTSWithRSSI(RPiBluetoothConnectionManager.SEND_TYPE_INTTS, "");
@@ -169,11 +174,15 @@ public class GetInformationService extends Service
         else {
             mTimer = new Timer();
         }
-        mTimer.scheduleAtFixedRate(new SendTTSTimerTask(),3000,NOTIFY_INTERVAL);
+
+        mTimer.scheduleAtFixedRate(new SendTTSTimerTask(), 3000, NOTIFY_INTERVAL);
         mTTSManager = new TTSManager(this);
 
         mCtx = this;
-		Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
+        DebugToast.makeText(this,"Service onCreate", Toast.LENGTH_SHORT).show();
+
+
         // register broadcast receiver
         IntentFilter btfilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(bluetoothReceiver,btfilter);
@@ -228,7 +237,7 @@ public class GetInformationService extends Service
         }
         else
         {
-//            Toast.makeText(this,"Unknown return value from RPiBluetoothConnectionManager",Toast.LENGTH_SHORT).show();
+            DebugToast.makeText(this, "Unknown return value from RPiBluetoothConnectionManager", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -245,9 +254,10 @@ public class GetInformationService extends Service
         // TODO Auto-generated method stub/Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onStartCommand Start");
 
-    	Toast.makeText(this, "GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
-        String tuuid = pref.getString("RPI_UUID", "NULL");
+    	//Toast.makeText(this, "GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
+        DebugToast.makeText(this,"GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
 
+        String tuuid = pref.getString("RPI_UUID", "NULL");
         String tmac = pref.getString("RPI_MAC","NULL");
 
         if(!mBluetoothManager.isInitialize())
@@ -315,29 +325,18 @@ public class GetInformationService extends Service
                     {
                         SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
                         mTTSManager.saveTTS(tts,"tts.mp3");
-                        try {
-                            Thread.sleep(1000);
-                        }
-                        catch (InterruptedException e)
-                        {
-                            Log.d(TAG, e.getMessage());
-                        }
-                        //mTTSManager.startPlaying("tts.mp3");
-                        //Toast.makeText(mCtx, "tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
+                        DebugToast.makeText(mCtx, TAG + ": tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
                         //주기적으로 파일 전송
                         new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
                                 RECManager.getInstance().getDefaultExStoragePath() + "tts.mp3", 1, AsyncHttpUpload.TYPE_TTS);
                     }
                     else
                     {
-                        //Toast.makeText(mCtx, "동일 tts 확인
-                        // 미전송 시퀸스", Toast.LENGTH_SHORT).show();
+                        DebugToast.makeText(mCtx, TAG + ": 동일 tts 확인 미전송 시퀸스", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             });
         }
     }
-
 
 }

@@ -23,6 +23,7 @@
                 android:layout_height="match_parent"
                 android:dateTextAppearance="@style/CalendarText"
                 android:focusedMonthDateColor="#ffffff"
+                android:weekNumberColor="#ffffff"
                 android:longClickable="true"
                 android:showWeekNumber="true" />
         </LinearLayout>

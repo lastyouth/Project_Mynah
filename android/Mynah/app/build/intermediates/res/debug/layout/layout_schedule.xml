@@ -9,7 +9,6 @@
         android:id="@+id/llSchedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_margin="3dp"
         android:orientation="vertical"
         android:animateLayoutChanges="true"
@@ -45,7 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center"
                 android:layout_weight="2">
 
                 <!-- 2등분 -->
@@ -55,7 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_gravity="center"
+                    >
 
                     <TextView
                         android:id="@+id/tvScheduleDate"
@@ -64,7 +63,8 @@
                         android:gravity="center"
                         android:textColor="#ffffff"
                         android:textSize="15sp"
-                        android:layout_margin="7dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="16dp"
                         android:text = "날짜 00월 00일"/>
 
                     <LinearLayout
@@ -73,7 +73,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_weight="1"
-                        android:layout_marginLeft="12dp">
+                        android:layout_marginLeft="16dp">
                     </LinearLayout>
 
                 </LinearLayout>
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    >
 
                     <TextView
                         android:id="@+id/tvScheduleDate2"
@@ -92,7 +92,8 @@
                         android:gravity="center"
                         android:textColor="#ffffff"
                         android:textSize="15sp"
-                        android:layout_margin="7dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="16dp"
                         android:text = "날짜 00월 00일"/>
 
                     <LinearLayout
@@ -101,7 +102,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_weight="1"
-                        android:layout_marginLeft="12dp">
+                        android:layout_marginLeft="16dp">
                     </LinearLayout>
 
                 </LinearLayout>

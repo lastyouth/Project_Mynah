@@ -43,8 +43,8 @@ public class WeatherSettingActivity extends Activity{
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_weather);
-		//overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         ivCityNameSearch = (ImageView)findViewById(R.id.ivCityNameSearch);
         lvCityName = (ListView)findViewById(R.id.lvCityName);
@@ -132,7 +132,7 @@ public class WeatherSettingActivity extends Activity{
 	@Override
 	public void finish() {
 		super.finish();
-		//overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 }

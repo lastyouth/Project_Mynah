@@ -51,7 +51,6 @@ import com.seven.mynah.backgroundservice.GetInformationService;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.RECManager;
@@ -60,6 +59,7 @@ import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.network.AsyncHttpTask;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
@@ -112,6 +112,7 @@ public class MainActivity extends Activity {
 
         SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
         Toast.makeText(getApplicationContext(), suInfo.userName + "님 환영합니다.", Toast.LENGTH_SHORT);
+        
 
         ServiceAccessManager.getInstance().setMainPid(android.os.Process.myPid());
 
@@ -193,7 +194,6 @@ public class MainActivity extends Activity {
         new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, layout.getHandler(), jobj, 2, 0);
 
     }
-
 
 
     @Override
@@ -402,7 +402,7 @@ public class MainActivity extends Activity {
     public void onWindowFocusChanged(boolean hasFocus)
     {
         if(hasFocus){
-            layout.startAnimation();
+            layout.startAnimationOnFocusChanged();
         }
     }
 

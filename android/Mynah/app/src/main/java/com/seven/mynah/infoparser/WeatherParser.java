@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
