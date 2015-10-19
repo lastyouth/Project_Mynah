@@ -1207,7 +1207,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         llWeatherFullCut = (LinearLayout) findViewById(R.id.llWeatherFullCut);
         llWeatherShortCut = (LinearLayout) findViewById(R.id.llWeatherShortCut);
-        layoutSizeChange(llWeatherFullCut,real_height);
+        layoutSizeChange(llWeatherFullCut,real_height*9/10);
         layoutSizeChange(llWeatherShortCut,margin_height*9/10);
 
         ivWeatherImage = (ImageView)findViewById(R.id.ivWeatherImage);
@@ -1276,16 +1276,16 @@ public class CustomLayoutSet extends RelativeLayout {
 
         if (winfo == null) {
             // 초기화
-            place = "길게 터치해서 정보를 입력하세요.";
-            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            place2 = "길게 터치해서 정보를 입력하세요.";
+            tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         }
         else
         {
 
-            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
-            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+            tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
             place = winfo.location.city_name;
             place2 = winfo.location.mdl_name;

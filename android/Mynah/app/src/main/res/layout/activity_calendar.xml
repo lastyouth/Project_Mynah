@@ -23,9 +23,10 @@
                 android:layout_height="match_parent"
                 android:dateTextAppearance="@style/CalendarText"
                 android:focusedMonthDateColor="#ffffff"
-                android:weekNumberColor="#ffffff"
+                android:weekNumberColor="#ded4d4"
                 android:longClickable="true"
-                android:showWeekNumber="true" />
+                android:showWeekNumber="true"
+                android:weekDayTextAppearance="@android:style/TextAppearance.Holo.Medium" />
         </LinearLayout>
 
         <TextView
