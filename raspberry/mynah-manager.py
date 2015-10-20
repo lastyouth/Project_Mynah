@@ -476,11 +476,11 @@ g_sensor2.daemon = True
 g_sensor2.start()
 
 while True:
-    g_lock.acquire()
+    #g_lock.acquire()
     data = requestHTTPS('get_devices','','','')
     if data == False:
         print 'FATAL ERROR : Server is not responding'
-        g_lock.release()
+        #g_lock.release()
     else:
         print 'Request deviceids from product2'
         for pp in data['attach']:
@@ -507,23 +507,27 @@ while True:
                         print recname + 'is already exist'
                     else:
                         filedata = base64.decodestring(data['attach']['rec_file'])
+                        g_lock.acquire()
                         fp = open(g_defaultpath+recname,'w')
                         fp.write(filedata)
                         fp.close()
+                        g_lock.release();
                         g_productuser[key].setRECFileName(recname)
                 ttsname = data['attach']['tts_file_name']
                 if ttsname == '':
                     print key+' : No tts file'
                 else:
                     filedata = base64.decodestring(data['attach']['tts_file'])
+                    g_lock.acquire()
                     fp = open(g_defaultpath+ttsname,'w')
                     fp.write(filedata)
                     fp.close()
+                    g_lock.release()
                     g_productuser[key].setTTSFileName(ttsname)
                 policy = data['attach']['opt']
                 print key+' : policy ' +policy
                 g_productuser[key].setPolicy(policy)
-        g_lock.release()
+        #g_lock.release()
     time.sleep(10)
     i=1
 
