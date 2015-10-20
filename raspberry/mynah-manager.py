@@ -14,6 +14,9 @@ import base64
 import httplib
 import random
 import datetime
+import socket
+
+socket.setdefaulttimeout(3)
 
 os.system('sudo hciconfig hci0 piscan')
 os.system('sudo hciconfig hci0 leadv')
@@ -273,19 +276,21 @@ class MynahManager:
                         elif policy == 'r':
                             filename = usermediaobj.getRECFileName()
                             if filename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
-    
+                                #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                                print 'no REC files'
                             else:
                                 os.system('mplayer '+g_defaultpath+filename)
                         elif policy == 'b':
                             ttsfilename = usermediaobj.getTTSFileName()
                             recfilename = usermediaobj.getRECFileName()
+                            print 'ttsfilename : '+ttsfilename
                             if ttsfilename == '':
                                 os.system('mplayer '+g_defaultpath+'nothing.mp3')
                             else:
                                 os.system('mplayer '+g_defaultpath+ttsfilename)
                             if recfilename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                                #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                                print "NO REC files"
                             else:
                                 os.system('mplayer '+g_defaultpath+recfilename)
                         else:
@@ -296,7 +301,7 @@ class MynahManager:
                 else:
                     os.system('mplayer '+g_defaultpath+'defaultin.mp3')
                     ran = random.randrange(1,49)
-                    os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
+                    #os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
                     print "Current Hour : "+str(datetime.datetime.now().hour)
                     print "To In Processing"
 
@@ -316,9 +321,9 @@ class MynahManager:
         self.check()
 
 class DistanceSensor(threading.Thread):
-    DETECT_THRESHOLD_VALUE = 0.30
+    DETECT_THRESHOLD_VALUE = 0.50
     MAX_WAIT_VALUE = 10000
-    MAX_RE_CAPTURE_TIME = 0.07
+    MAX_RE_CAPTURE_TIME = 0.05
 
     def __init__(self,sensortype):
         threading.Thread.__init__(self)
@@ -474,6 +479,7 @@ while True:
     data = requestHTTPS('get_devices','','','')
     if data == False:
         print 'FATAL ERROR : Server is not responding'
+        g_lock.release()
     else:
         print 'Request deviceids from product2'
         for pp in data['attach']:
