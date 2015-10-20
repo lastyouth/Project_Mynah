@@ -1,18 +1,17 @@
 package com.seven.mynah;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -23,7 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,7 +35,6 @@ import com.seven.mynah.artifacts.WeatherInfo;
 import com.seven.mynah.artifacts.WeatherLocationInfo;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.RECManager;
@@ -55,7 +52,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class CustomLayoutSet extends RelativeLayout {
@@ -130,7 +126,6 @@ public class CustomLayoutSet extends RelativeLayout {
     private LinearLayout llScheduleList2;
     private LinearLayout llPreparation2;
 
-
     private TextView tvSchedulesDate;
     private TextView tvSchedulesDate2;
 
@@ -139,6 +134,7 @@ public class CustomLayoutSet extends RelativeLayout {
     private CalendarManager calendarManager;
     private ArrayList<ScheduleInfo> scheduleInfo;
     private String today;
+    private String nextday;
 
     //for Bus
     private ImageView ivBusImage;
@@ -253,6 +249,9 @@ public class CustomLayoutSet extends RelativeLayout {
     private AnimationDrawable animWeather;
 
 
+    private Vibrator mVib;
+    private final static long vibLength = 100;
+
 
     public class SendMassgeHandler extends Handler {
         @Override
@@ -289,10 +288,10 @@ public class CustomLayoutSet extends RelativeLayout {
 
         mContext = context;
 
-        now_index = 0;
-
         f_list = new ArrayList<RelativeLayout>();
         mTTSManager = new TTSManager(mContext);
+
+        mVib = (Vibrator)mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
         for(int i=0;i<size;i++)
         {
@@ -325,6 +324,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 initRecordView();
 
                 //기본이 날씨 0임.
+                now_index = 1;
                 changeWeatherView(0);
                 changeBusView(1);
                 changeScheduleView(1);
@@ -348,37 +348,85 @@ public class CustomLayoutSet extends RelativeLayout {
     {
 
         ivBusImage.setBackgroundResource(R.drawable.bus_anim);
-//        ivBusImage.setScaleX((float)1.5);
-//        ivBusImage.setScaleY((float) 1.5);
+//        ivBusImage.setScaleX((float) 0.7);
+//        ivBusImage.setScaleY((float) 0.7);
         animBus = (AnimationDrawable) ivBusImage.getBackground();
 
 
         ivWeatherImage.setBackgroundResource(R.drawable.sun_anim);
-        //ivWeatherImage.setScaleX((float)1.5);
-//        ivWeatherImage.setScaleY((float) 1.5);
+//        ivWeatherImage.setScaleX((float)0.7);
+//        ivWeatherImage.setScaleY((float)0.7);
         animWeather = (AnimationDrawable) ivWeatherImage.getBackground();
 
 
         ivScheduleImage.setBackgroundResource(R.drawable.calendar_anim);
-//        ivScheduleImage.setScaleX((float) 1.5);
-//        ivScheduleImage.setScaleY((float) 1.5);
+//        ivScheduleImage.setScaleX((float) 0.7);
+//        ivScheduleImage.setScaleY((float) 0.7);
         animCaldendar = (AnimationDrawable) ivScheduleImage.getBackground();
 
 
         ivSubwayImage.setBackgroundResource(R.drawable.train_anim);
-//        ivSubwayImage.setScaleX((float) 1.5);
-//        ivSubwayImage.setScaleY((float) 1.5);
+//        ivSubwayImage.setScaleX((float) 0.7);
+//        ivSubwayImage.setScaleY((float) 0.7);
         animTrain = (AnimationDrawable) ivSubwayImage.getBackground();
 
     }
 
-    public void startAnimation()
+    public void startAnimationOnFocusChanged()
     {
-        animTrain.start();
-        animBus.start();
-        animCaldendar.start();
-        animWeather.start();
+        for(int i=1;i<size-1;i++)
+        {
+            if(i==now_index) showAnimation(i,true);
+            else showAnimation(i,false);
+        }
     }
+
+    private void showAnimation(int type, boolean on_off)
+    {
+        switch (type)
+        {
+            case index_weather:
+                if(on_off){
+                    llWeatherImage.setVisibility(VISIBLE);
+                    animWeather.start();
+                }else {
+                    llWeatherImage.setVisibility(INVISIBLE);
+                    animWeather.stop();
+                }
+                break;
+            case index_subway:
+                if(on_off){
+                    llSubwayImage.setVisibility(VISIBLE);
+                    animTrain.start();
+                }else {
+                    llSubwayImage.setVisibility(INVISIBLE);
+                    animTrain.stop();
+                }
+                break;
+            case index_schedule:
+                if(on_off){
+                    llScheduleImage.setVisibility(VISIBLE);
+                    animCaldendar.start();
+                }else{
+                    llScheduleImage.setVisibility(INVISIBLE);
+                    animCaldendar.stop();
+                }
+                break;
+            case index_bus:
+                if(on_off) {
+                    llBusImage.setVisibility(VISIBLE);
+                    animBus.start();
+                }else{
+                    llBusImage.setVisibility(INVISIBLE);
+                    animBus.stop();
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
 
 
     private void initClickListener()
@@ -398,6 +446,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 public boolean onLongClick(View v) {
 
                     Intent intent;
+                    mVib.vibrate(vibLength);
                     switch ((int)v.getTag())
                     {
                         case index_weather: //날씨
@@ -435,6 +484,7 @@ public class CustomLayoutSet extends RelativeLayout {
         llWeather.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                mVib.vibrate(vibLength);
                 Intent intent = new Intent(mContext, WeatherSettingActivity.class);
                 mContext.startActivity(intent);
                 return false;
@@ -452,6 +502,7 @@ public class CustomLayoutSet extends RelativeLayout {
         llSchedule.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                mVib.vibrate(vibLength);
                 Intent intent = new Intent(mContext, CalendarActivity.class);
                 mContext.startActivity(intent);
                 return false;
@@ -468,6 +519,7 @@ public class CustomLayoutSet extends RelativeLayout {
         llBus.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                mVib.vibrate(vibLength);
                 Intent intent = new Intent(mContext, BusSettingActivity.class);
                 mContext.startActivity(intent);
                 return false;
@@ -484,6 +536,7 @@ public class CustomLayoutSet extends RelativeLayout {
         llSubway.setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                mVib.vibrate(vibLength);
                 Intent intent = new Intent(mContext, SubwaySettingActivity.class);
                 mContext.startActivity(intent);
                 return false;
@@ -503,7 +556,7 @@ public class CustomLayoutSet extends RelativeLayout {
                     llRefresh.setAlpha((float) 1.0);
                     allRefresh();
                     ttsTest();
-                    //new doAllRefresh(MainActivity.this).execute();
+                    new doAllRefresh(mContext).execute();
 
                     return true;
                 }
@@ -540,7 +593,6 @@ public class CustomLayoutSet extends RelativeLayout {
         View v_schedule = new View(context);
         View v_subway = new View(context);
         View v_option = new View(context);
-
 
         v_title = inflate(context,R.layout.layout_title,f_list.get(index_title));
         v_weather = inflate(context,R.layout.layout_weather,f_list.get(index_weather));
@@ -634,6 +686,9 @@ public class CustomLayoutSet extends RelativeLayout {
         llScheduleFirst = (LinearLayout) findViewById(R.id.llScheduleFirst);
         llScheduleSecond = (LinearLayout) findViewById(R.id.llScheduleSecond);
 
+        layoutSizeChange(llScheduleFirst,real_height * 9 / 10);
+        layoutSizeChange(llScheduleSecond,real_height * 9 / 10);
+
         llScheduleList = (LinearLayout) findViewById(R.id.llScheduleList);
         llScheduleList2 = (LinearLayout) findViewById(R.id.llScheduleList2);
 
@@ -680,8 +735,21 @@ public class CustomLayoutSet extends RelativeLayout {
     {
         int size = scheduleInfos.size();
 
-        tvSchedulesDate.setText("");
-        tvSchedulesDate2.setText("");
+        String str_date = "";
+        String str_next_date = "";
+
+        Date date = new Date();
+        SimpleDateFormat date_format = new SimpleDateFormat("MM월dd일");
+        str_date = date_format.format(date);
+
+        long cDate = date.getTime();
+        cDate += (1000*60*60*24);
+        date.setTime(cDate);
+
+        str_next_date = date_format.format(date);
+
+        tvSchedulesDate.setText(str_date);
+        tvSchedulesDate2.setText(str_next_date);
 
         llScheduleList.removeAllViews();
         llScheduleList.setGravity(Gravity.NO_GRAVITY);
@@ -692,7 +760,7 @@ public class CustomLayoutSet extends RelativeLayout {
             tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             tvSchedules[0].setText("등록된 스케줄이 없습니다.");
 
-            llScheduleList.setGravity(Gravity.CENTER);
+            //llScheduleList.setGravity(Gravity.CENTER);
             llScheduleList.addView(tvSchedules[0]);
         }
 
@@ -722,7 +790,7 @@ public class CustomLayoutSet extends RelativeLayout {
         else //not
         {
             llScheduleList.setVisibility(VISIBLE);
-            llScheduleList2.setVisibility(GONE);
+            llScheduleList2.setVisibility(VISIBLE);
         }
     }
 
@@ -732,10 +800,10 @@ public class CustomLayoutSet extends RelativeLayout {
         Log.d(TAG,"initBusView start");
 
         llBusShortCut = (LinearLayout) findViewById(R.id.llBusShortCut);
-        layoutSizeChange(llBusShortCut,margin_height);
+        layoutSizeChange(llBusShortCut,margin_height * 9 / 10);
 
         llBusFullCut = (LinearLayout) findViewById(R.id.llBusFullCut);
-        layoutSizeChange(llBusFullCut,margin_height);
+        layoutSizeChange(llBusFullCut,real_height * 9 / 10);
 
         ivBusImage = (ImageView) findViewById(R.id.ivBusImage);
         llBusImage = (LinearLayout) findViewById(R.id.llBusImage);
@@ -769,14 +837,12 @@ public class CustomLayoutSet extends RelativeLayout {
         //Request service to get bus Information
         //BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
         BusInfo bInfo = InfoTextSummarizer.getInstance(mContext).getBusInfo();
-
         setBusInfo(bInfo);
     }
 
     private void clearBusInfo()
     {
         //full cut
-
         tvBusNumName.setText("");
         tvBusStopName.setText("");
         tvBusDirName.setText("");
@@ -786,7 +852,6 @@ public class CustomLayoutSet extends RelativeLayout {
         tvBusNextText2.setText("");
 
         //short cut
-
         tvBusNumNameSC.setText("");
         tvBusStopNameSC.setText("");
         tvBusDirNameSC.setText("");
@@ -816,9 +881,17 @@ public class CustomLayoutSet extends RelativeLayout {
             bRoute = "";
             bStation = "";
             bDir = "길게 터치해서 정보를 입력하세요.";
+
+            tvBusDirName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvBusDirNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+
         }
         else
         {
+
+            tvBusDirName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            tvBusDirNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+
             bRoute = binfo.route.busRouteNm + " 버스";
             bStation = binfo.station.stNm;
             bDir = binfo.dir + " 방향";
@@ -836,7 +909,7 @@ public class CustomLayoutSet extends RelativeLayout {
                     text1 = " 중";
                 }
                 else {
-                    text1 = "분 전";
+                    text1 = " 분 전";
                 }
             }
             else
@@ -861,7 +934,6 @@ public class CustomLayoutSet extends RelativeLayout {
         }
 
         //full cut
-
         tvBusNumName.setText(bRoute);
         tvBusStopName.setText(bStation);
         tvBusDirName.setText(bDir);
@@ -871,7 +943,6 @@ public class CustomLayoutSet extends RelativeLayout {
         tvBusNextText2.setText(text2);
 
         //short cut
-
         tvBusNumNameSC.setText(bRoute);
         tvBusStopNameSC.setText(bStation);
         tvBusDirNameSC.setText(bDir);
@@ -879,7 +950,6 @@ public class CustomLayoutSet extends RelativeLayout {
         tvBusNextTextSC.setText(text1);
         tvBusNextTime2SC.setText(time2);
         tvBusNextText2SC.setText(text2);
-
 
     }
 
@@ -925,9 +995,9 @@ public class CustomLayoutSet extends RelativeLayout {
 
 
         llSubwayFullCut = (LinearLayout)findViewById(R.id.llSubwayFullCut);
-        layoutSizeChange(llSubwayFullCut,margin_height);
+        layoutSizeChange(llSubwayFullCut,real_height*9/10);
         llSubwayShortCut = (LinearLayout)findViewById(R.id.llSubwayShortCut);
-        layoutSizeChange(llSubwayShortCut,margin_height);
+        layoutSizeChange(llSubwayShortCut,margin_height*9/10);
 
         ivSubwayImage = (ImageView) findViewById(R.id.ivSubwayImage);
         llSubwayImage = (LinearLayout) findViewById(R.id.llSubwayImage);
@@ -964,7 +1034,6 @@ public class CustomLayoutSet extends RelativeLayout {
         // Request service to get subway information
         //SubwayInfo sInfo = ServiceAccessManager.getInstance().getService().getSubwayInfo();
         SubwayInfo sInfo = InfoTextSummarizer.getInstance(mContext).getSubwayInfo();
-
         setSubwayInfo(sInfo);
     }
 
@@ -1013,82 +1082,86 @@ public class CustomLayoutSet extends RelativeLayout {
 
         if (sinfo == null) {
             // 초기화
-            stopname = "길게 터치해서 정보를 입력하세요.";
-            tvSubwayDirName.setText(stopname);
-            return;
-        }
+            linename = "길게 터치해서 정보를 입력하세요.";
 
-        linename = sinfo.station.line_num + "호선";
-        stopname = sinfo.station.station_nm + "역";
-        tvSubwayStopName.setText(stopname);
-        tvSubwayLineName.setText(linename);
-
-        tvSubwayStopNameSC.setText(stopname);
-        tvSubwayLineNameSC.setText(linename);
-
-        Date curTime = new Date();
-        SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
-
-        try {
-            curTime = cur_format.parse(cur_format.format(curTime));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        dirname1 = sinfo.array_tts.get(0).subway_end_name + "행";
-
-
-        if (sinfo.array_tts.size() == 0) {
+            tvSubwayLineName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvSubwayLineNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         }
         else
         {
-            long tt = 0;
+
+            tvSubwayLineName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+            tvSubwayLineNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+
+            linename = sinfo.station.line_num + "호선";
+            stopname = sinfo.station.station_nm + "역";
+
+            Date curTime = new Date();
+            SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
+
             try {
-                tt = cur_format.parse(sinfo.array_tts.get(0).arr_time).getTime() - curTime.getTime();
+                curTime = cur_format.parse(cur_format.format(curTime));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            tt = tt/1000/60;
-            if(tt >= 1000) {
-                time1 = "";
-                text1 = "종착역입니다.";
-            } else if(tt==0) {
-                time1 = "";
-                text1 = "지금 도착";
-            } else {
-                time1 = tt + "";
-                text1 = " 분 전";
-            }
+
             dirname1 = sinfo.array_tts.get(0).subway_end_name + "행";
 
-            if (sinfo.array_tts.size() == 1)
-            {
+            if (sinfo.array_tts.size() == 0) {
 
             }
             else
             {
-                long tt2 = 0;
+                long tt = 0;
                 try {
-                    tt2 = cur_format.parse(sinfo.array_tts.get(1).arr_time).getTime() - curTime.getTime();
+                    tt = cur_format.parse(sinfo.array_tts.get(0).arr_time).getTime() - curTime.getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                tt2 = tt2/1000/60;
-                if(tt2 == 0) {
-                    //time2 = "지금 도착";
-                    time2 = "";
-                    text2 = "지금 도착";
-                } else
-                {
-                    time2 = tt2 + "";
-                    text2 = " 분 전";
+                tt = tt/1000/60;
+                if(tt >= 1000) {
+                    time1 = "";
+                    text1 = "종착역입니다.";
+                } else if(tt==0) {
+                    time1 = "";
+                    text1 = "지금 도착";
+                } else {
+                    time1 = tt + "";
+                    text1 = " 분 전";
                 }
-                dirname2 = sinfo.array_tts.get(1).subway_end_name + "행";
+                dirname1 = sinfo.array_tts.get(0).subway_end_name + "행";
+
+                if (sinfo.array_tts.size() == 1)
+                {
+
+                }
+                else
+                {
+                    long tt2 = 0;
+                    try {
+                        tt2 = cur_format.parse(sinfo.array_tts.get(1).arr_time).getTime() - curTime.getTime();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    tt2 = tt2/1000/60;
+                    if(tt2 == 0) {
+                        //time2 = "지금 도착";
+                        time2 = "";
+                        text2 = "지금 도착";
+                    } else
+                    {
+                        time2 = tt2 + "";
+                        text2 = " 분 전";
+                    }
+                    dirname2 = sinfo.array_tts.get(1).subway_end_name + "행";
+                }
             }
         }
 
         //full cut
+        tvSubwayStopName.setText(stopname);
+        tvSubwayLineName.setText(linename);
 
         tvSubwayNextTime.setText(time1);
         tvSubwayNextText.setText(text1);
@@ -1099,6 +1172,8 @@ public class CustomLayoutSet extends RelativeLayout {
         tvSubwayDirName2.setText(dirname2);
 
         //short cut
+        tvSubwayStopNameSC.setText(stopname);
+        tvSubwayLineNameSC.setText(linename);
 
         tvSubwayNextTimeSC.setText(time1);
         tvSubwayNextTextSC.setText(text1);
@@ -1132,7 +1207,8 @@ public class CustomLayoutSet extends RelativeLayout {
 
         llWeatherFullCut = (LinearLayout) findViewById(R.id.llWeatherFullCut);
         llWeatherShortCut = (LinearLayout) findViewById(R.id.llWeatherShortCut);
-        layoutSizeChange(llWeatherShortCut,margin_height);
+        layoutSizeChange(llWeatherFullCut,real_height);
+        layoutSizeChange(llWeatherShortCut,margin_height*9/10);
 
         ivWeatherImage = (ImageView)findViewById(R.id.ivWeatherImage);
         llWeatherImage = (LinearLayout) findViewById(R.id.llWeatherImage);
@@ -1200,23 +1276,44 @@ public class CustomLayoutSet extends RelativeLayout {
 
         if (winfo == null) {
             // 초기화
-
             place = "길게 터치해서 정보를 입력하세요.";
-            tvWeatherPlace2.setText(place);
-            tvWeatherPlace2SC.setText(place);
+            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-            //TODO :이미지 바꿀것.!
-            //setWeatherImage(5);
-            return;
         }
+        else
+        {
 
-        place = winfo.location.city_name;
-        place2 = winfo.location.mdl_name;
-        temp = winfo.array_ttw.get(0).temp + " °C";
-        pop = "강수확률 : " + winfo.array_ttw.get(0).pop + "%";
-        reh = "습도 : " + winfo.array_ttw.get(0).reh + "%";
-        type = winfo.array_ttw.get(0).wfKor;
-        time = winfo.array_ttw.get(0).hour;
+            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+
+            place = winfo.location.city_name;
+            place2 = winfo.location.mdl_name;
+            temp = winfo.array_ttw.get(0).temp + " °C";
+            pop = "강수확률 : " + winfo.array_ttw.get(0).pop + "%";
+            reh = "습도 : " + winfo.array_ttw.get(0).reh + "%";
+            type = winfo.array_ttw.get(0).wfKor;
+            time = winfo.array_ttw.get(0).hour;
+
+            Date date = new Date();
+            SimpleDateFormat df_source = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                date = df_source.parse(time);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            SimpleDateFormat df_change = new SimpleDateFormat("MM월dd일 HH시 기준 기상청 제공");
+            time = df_change.format(date);
+
+            // Set weather image type
+            //TODO 날씨 여러개 다 세팅 바꾸고 해놓을것.
+
+            int code = GlobalVariable.wfKorDecode(winfo.array_ttw.get(0).wfKor);
+            setWeatherImage(code);
+            //웨더 타입에 대해서 보낼 때
+            updateWeatherType(code);
+
+        }
 
         //full cut
         tvWeatherPlace.setText(place);
@@ -1235,16 +1332,6 @@ public class CustomLayoutSet extends RelativeLayout {
         //tvWeatherRehSC.setText(reh);
         tvWeatherTypeSC.setText(type);
 
-        // Set weather image type
-
-        //TODO 날씨 여러개 다 세팅 바꾸고 해놓을것.
-
-
-        int code = GlobalVariable.wfKorDecode(winfo.array_ttw.get(0).wfKor);
-        setWeatherImage(code);
-        //웨더 타입에 대해서 보낼 때
-        updateWeatherType(code);
-
         Log.d(TAG, "setWeatherInfo End");
 
     }
@@ -1258,7 +1345,7 @@ public class CustomLayoutSet extends RelativeLayout {
         try {
             jobj.put("messagetype", "update_weather");
             jobj.put("user_id",DBManager.getManager(mContext).getSessionUserDB().deviceId);
-            jobj.put("type",type);
+            jobj.put("weather",type);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1272,40 +1359,45 @@ public class CustomLayoutSet extends RelativeLayout {
     private void setWeatherImage(int type) {
 
         //TODO 날씨 타입에 대해서 전부다 파악해서 다시 다 매핑할 것
+
+        animWeather.stop();
+
         switch (type) {
             case GlobalVariable.WeatherConstant.WFKOR.CLEAR: // 클리어 맑음.
-                ivWeatherImage.setImageResource(R.drawable.ic_sunny);
+                ivWeatherImage.setBackgroundResource(R.drawable.sun_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.PARTLY_CLOUDY:
                 //구름조금
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
+                ivWeatherImage.setBackgroundResource(R.drawable.cloud_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.MOSTLY_CLOUDY:
                 //구름 많음
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
+                ivWeatherImage.setBackgroundResource(R.drawable.cloud_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.CLOUDY:
                 //흐림
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
+                ivWeatherImage.setBackgroundResource(R.drawable.cloud_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.RAIN:
                 //비
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud3);
+                ivWeatherImage.setBackgroundResource(R.drawable.rain_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.SNOW_RAIN:
                 //눈/비 ---> 눈
-                ivWeatherImage.setImageResource(R.drawable.ic_question);
+                ivWeatherImage.setBackgroundResource(R.drawable.snow_anim);
                 break;
             case GlobalVariable.WeatherConstant.WFKOR.SNOW:
                 //눈
-                ivWeatherImage.setImageResource(R.drawable.ic_question);
+                ivWeatherImage.setBackgroundResource(R.drawable.snow_anim);
                 break;
             default:
                 //해당하는 것 없을때
-                ivWeatherImage.setImageResource(R.drawable.ic_question);
                 break;
 
         }
+
+        animWeather = (AnimationDrawable) ivWeatherImage.getBackground();
+        animWeather.start();
     }
 
     public void changeWeatherView(int type)
@@ -1355,11 +1447,6 @@ public class CustomLayoutSet extends RelativeLayout {
                     } else if (RECManager.getInstance().getState() == RECManager.REC_ING) {
                         //녹음 중지
                         RECManager.getInstance().stopRecording();
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            Log.d(TAG, e.getMessage());
-                        }
                         //그리고 재생
                         //RECManager.getInstance().startPlaying("test.mp4");
                         //녹음이 완료후 파일 업로드
@@ -1425,7 +1512,7 @@ public class CustomLayoutSet extends RelativeLayout {
         SessionUserInfo suInfo = DBManager.getManager(mContext).getSessionUserDB();
         mTTSManager.saveTTS(tts, "tts_temp.mp3");
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         }
         catch (InterruptedException e)
         {
@@ -1510,30 +1597,31 @@ public class CustomLayoutSet extends RelativeLayout {
         {
             if(type2 == 0) //아래에서 올라옴.
             {
+                showAnimation(code,true);
                 switch (code)
                 {
                     case index_weather:
-                        //moveLayoutDowntoIn(llWeatherImage);
-                        moveLayoutDowntoIn(llWeatherFullCut);
-                        moveLayoutUptoOut(llWeatherShortCut);
+                        moveLayoutDowntoIn(llWeatherImage,real_height,3);
+                        moveLayoutDowntoIn(llWeatherFullCut,real_height,0);
+                        moveLayoutUptoOut(llWeatherShortCut,margin_height,1);
                         break;
 
                     case index_schedule:
-                        //moveLayoutDowntoIn(llScheduleImage);
-                        moveLayoutDowntoIn(llScheduleFirst);
-                        moveLayoutDowntoIn(llScheduleSecond);
+                        moveLayoutDowntoIn(llScheduleImage,real_height,3);
+                        //moveLayoutDowntoIn(llScheduleFirst);
+                        //moveLayoutDowntoIn(llScheduleSecond);
                         break;
 
                     case index_bus:
-                        //moveLayoutDowntoIn(llBusImage);
-                        moveLayoutDowntoIn(llBusFullCut);
-                        moveLayoutUptoOut(llBusShortCut);
+                        moveLayoutDowntoIn(llBusImage,real_height,3);
+                        moveLayoutDowntoIn(llBusFullCut,real_height,0);
+                        moveLayoutUptoOut(llBusShortCut,margin_height,1);
                         break;
 
                     case index_subway:
-                        //moveLayoutDowntoIn(llSubwayImage);
-                        moveLayoutDowntoIn(llSubwayFullCut);
-                        moveLayoutUptoOut(llSubwayShortCut);
+                        moveLayoutDowntoIn(llSubwayImage,real_height,3);
+                        moveLayoutDowntoIn(llSubwayFullCut,real_height,0);
+                        moveLayoutUptoOut(llSubwayShortCut,margin_height,1);
                         break;
 
                     default:
@@ -1541,32 +1629,33 @@ public class CustomLayoutSet extends RelativeLayout {
                 }
 
             }
-            else //위에서 내려옴
+            else //위에서 내려옴  (type2 == 1)
             {
+                showAnimation(code,true);
                 switch (code)
                 {
                     case index_weather:
-                        //moveLayoutUptoIn(llWeatherImage);
-                        moveLayoutUptoIn(llWeatherFullCut);
-                        moveLayoutDowntoOut(llWeatherShortCut);
+                        moveLayoutUptoIn(llWeatherImage,real_height,3);
+                        moveLayoutUptoIn(llWeatherFullCut,real_height,0);
+                        moveLayoutDowntoOut(llWeatherShortCut,real_height,1);
                         break;
 
                     case index_schedule:
-                        //moveLayoutUptoIn(llScheduleImage);
-                        moveLayoutUptoIn(llScheduleFirst);
-                        moveLayoutUptoIn(llScheduleSecond);
+                        moveLayoutUptoIn(llScheduleImage,real_height,3);
+                        //moveLayoutUptoIn(llScheduleFirst,real_height);
+                        //moveLayoutUptoIn(llScheduleSecond,real_height);
                         break;
 
                     case index_bus:
-                        //moveLayoutUptoIn(llBusImage);
-                        moveLayoutUptoIn(llBusFullCut);
-                        moveLayoutDowntoOut(llBusShortCut);
+                        moveLayoutUptoIn(llBusImage,real_height,3);
+                        moveLayoutUptoIn(llBusFullCut,real_height,0);
+                        moveLayoutDowntoOut(llBusShortCut,real_height,1);
                         break;
 
                     case index_subway:
-                        //moveLayoutUptoIn(llSubwayImage);
-                        moveLayoutUptoIn(llSubwayFullCut);
-                        moveLayoutDowntoOut(llSubwayShortCut);
+                        moveLayoutUptoIn(llSubwayImage,real_height,3);
+                        moveLayoutUptoIn(llSubwayFullCut,real_height,0);
+                        moveLayoutDowntoOut(llSubwayShortCut,real_height,1);
                         break;
 
                     default:
@@ -1579,30 +1668,31 @@ public class CustomLayoutSet extends RelativeLayout {
         {
             if(type2 == 0) // 아래에서 밖으로 나감
             {
+                showAnimation(code,false);
                 switch (code)
                 {
                     case index_weather:
-                        //moveLayoutDowntoOut(llWeatherImage);
-                        moveLayoutDowntoOut(llWeatherFullCut);
-                        moveLayoutUptoIn(llWeatherShortCut);
+                        moveLayoutDowntoOut(llWeatherImage,real_height,3);
+                        moveLayoutDowntoOut(llWeatherFullCut,real_height,0);
+                        moveLayoutUptoIn(llWeatherShortCut,margin_height,1);
                         break;
 
                     case index_schedule:
-                        //moveLayoutDowntoOut(llScheduleImage);
+                        moveLayoutDowntoOut(llScheduleImage,real_height,3);
                         //moveLayoutDowntoOut(llScheduleFirst);
                         //moveLayoutDowntoOut(llScheduleSecond);
                         break;
 
                     case index_bus:
-                        //moveLayoutDowntoOut(llBusImage);
-                        moveLayoutDowntoOut(llBusFullCut);
-                        moveLayoutUptoIn(llBusShortCut);
+                        moveLayoutDowntoOut(llBusImage,real_height,3);
+                        moveLayoutDowntoOut(llBusFullCut,real_height,0);
+                        moveLayoutUptoIn(llBusShortCut,margin_height,1);
                         break;
 
                     case index_subway:
-                        //moveLayoutDowntoOut(llSubwayImage);
-                        moveLayoutDowntoOut(llSubwayFullCut);
-                        moveLayoutUptoIn(llSubwayShortCut);
+                        moveLayoutDowntoOut(llSubwayImage,real_height,3);
+                        moveLayoutDowntoOut(llSubwayFullCut,real_height,0);
+                        moveLayoutUptoIn(llSubwayShortCut,margin_height,1);
                         break;
 
                     default:
@@ -1611,30 +1701,31 @@ public class CustomLayoutSet extends RelativeLayout {
             }
             else // 위에서 밖으로 나감
             {
+                showAnimation(code,false);
                 switch (code)
                 {
                     case index_weather:
-                        //moveLayoutUptoOut(llWeatherImage);
-                        moveLayoutUptoOut(llWeatherFullCut);
-                        moveLayoutDowntoIn(llWeatherShortCut);
+                        moveLayoutUptoOut(llWeatherImage,real_height,3);
+                        moveLayoutUptoOut(llWeatherFullCut,real_height,0);
+                        moveLayoutDowntoIn(llWeatherShortCut,real_height,1);
                         break;
 
                     case index_schedule:
-                        //moveLayoutUptoOut(llScheduleImage);
+                        moveLayoutUptoOut(llScheduleImage,real_height,3);
                         //moveLayoutDowntoOut(llScheduleFirst);
                         //moveLayoutDowntoOut(llScheduleSecond);
                         break;
 
                     case index_bus:
-                        //moveLayoutUptoOut(llBusImage);
-                        moveLayoutUptoOut(llBusFullCut);
-                        moveLayoutDowntoIn(llBusShortCut);
+                        moveLayoutUptoOut(llBusImage,real_height,3);
+                        moveLayoutUptoOut(llBusFullCut,real_height,0);
+                        moveLayoutDowntoIn(llBusShortCut,real_height,1);
                         break;
 
                     case index_subway:
-                        //moveLayoutUptoOut(llSubwayImage);
-                        moveLayoutUptoOut(llSubwayFullCut);
-                        moveLayoutDowntoIn(llSubwayShortCut);
+                        moveLayoutUptoOut(llSubwayImage,real_height,3);
+                        moveLayoutUptoOut(llSubwayFullCut,real_height,0);
+                        moveLayoutDowntoIn(llSubwayShortCut,real_height,1);
                         break;
 
                     default:
@@ -1645,25 +1736,30 @@ public class CustomLayoutSet extends RelativeLayout {
     }
 
 
-    private void moveLayoutUptoIn(final LinearLayout ll)
+    private void moveLayoutUptoIn(final LinearLayout ll, int move_size, final int type)
     {
-        Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getTranslationY()-ll.getHeight(), ll.getTranslationY());
+        //Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getY()-move_size, ll.getY());
+        Animation moveAnimation = new TranslateAnimation(0,0,ll.getY()-move_size, ll.getY());
         moveAnimation.setInterpolator(interpolator);
         moveAnimation.setDuration(animationDuration);
         moveAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 isMoving = true;
-                ll.setVisibility(VISIBLE);
-
+                if(type == 1) {
+                    ll.setVisibility(GONE);
+                    return;
+                }
+                if(ll.getVisibility() == GONE) ll.setVisibility(VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 isMoving = false;
                 ll.clearAnimation();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
-                params.setMargins(0, 0, 0, 0);
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+                //params.setMargins(0, 0, 0, 0);
+                ll.setVisibility(VISIBLE);
 
             }
 
@@ -1675,27 +1771,36 @@ public class CustomLayoutSet extends RelativeLayout {
         ll.startAnimation(moveAnimation);
     }
 
-    private void moveLayoutUptoOut(final LinearLayout ll)
+    private void moveLayoutUptoOut(final LinearLayout ll, int move_size, final int type)
     {
-        Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getTranslationY(), ll.getTranslationY()-ll.getHeight());
+//        Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getY(), ll.getY()-move_size);
+        Animation moveAnimation = new TranslateAnimation(0,0,ll.getY(), ll.getY()-move_size);
         moveAnimation.setInterpolator(interpolator);
         moveAnimation.setDuration(animationDuration);
         moveAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 isMoving = true;
-                ll.setVisibility(VISIBLE);
+                if(type == 1) {
+                    ll.setVisibility(GONE);
+                    return;
+                }
+                if(ll.getVisibility() == GONE) ll.setVisibility(VISIBLE);
             }
 
             @Override
-            public void onAnimationEnd(Animation animation)
-            {
+            public void onAnimationEnd(Animation animation) {
                 isMoving = false;
                 ll.clearAnimation();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
-                ll.setVisibility(GONE);
-                params.setMargins(0, 0, 0, 0);
-
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+                //params.setMargins(0, 0, 0, 0);
+                if(type == 3){
+                    ll.setVisibility(INVISIBLE);
+                }
+                else
+                {
+                    ll.setVisibility(GONE);
+                }
             }
 
             @Override
@@ -1706,24 +1811,30 @@ public class CustomLayoutSet extends RelativeLayout {
         ll.startAnimation(moveAnimation);
     }
 
-    private void moveLayoutDowntoIn(final LinearLayout ll)
+    private void moveLayoutDowntoIn(final LinearLayout ll, int move_size, final int type)
     {
-        Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getTranslationY()+ll.getHeight(),ll.getTranslationY());
+        //Animation moveAnimation = new MyTranslateAnimation(ll, 0,0,ll.getY()+move_size,ll.getY());
+        Animation moveAnimation = new TranslateAnimation(0,0,ll.getY()+move_size,ll.getY());
         moveAnimation.setInterpolator(interpolator);
         moveAnimation.setDuration(animationDuration);
         moveAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 isMoving = true;
-                ll.setVisibility(VISIBLE);
+                if(type == 1) {
+                    ll.setVisibility(GONE);
+                    return;
+                }
+                if (ll.getVisibility() == GONE) ll.setVisibility(VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 isMoving = false;
                 ll.clearAnimation();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
-                params.setMargins(0, 0, 0, 0);
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+                //params.setMargins(0, 0, 0, 0);
+                ll.setVisibility(VISIBLE);
             }
 
             @Override
@@ -1734,9 +1845,10 @@ public class CustomLayoutSet extends RelativeLayout {
         ll.startAnimation(moveAnimation);
     }
 
-    private void moveLayoutDowntoOut(final LinearLayout ll)
+    private void moveLayoutDowntoOut(final LinearLayout ll, int move_size, final int type)
     {
-        Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getTranslationY(),ll.getTranslationY()+ll.getHeight());
+        //Animation moveAnimation = new MyTranslateAnimation(ll,0,0,ll.getY(),ll.getY()+move_size);
+        Animation moveAnimation = new TranslateAnimation(0,0,ll.getY(),ll.getY()+move_size);
         moveAnimation.setInterpolator(interpolator);
         moveAnimation.setDuration(animationDuration);
 
@@ -1744,17 +1856,30 @@ public class CustomLayoutSet extends RelativeLayout {
             @Override
             public void onAnimationStart(Animation animation) {
                 isMoving = true;
-                setVisibility(VISIBLE);
+                if(type == 1) {
+                    ll.setVisibility(GONE);
+                    return;
+                }
+                if(ll.getVisibility() == GONE) ll.setVisibility(VISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 isMoving = false;
                 ll.clearAnimation();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
-                ll.setVisibility(GONE);
-                params.setMargins(0, 0, 0, 0);
-
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+                //params.setMargins(0, 0, 0, 0);
+                isMoving = false;
+                ll.clearAnimation();
+//                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ll.getLayoutParams();
+                //params.setMargins(0, 0, 0, 0);
+                if(type == 3){
+                    ll.setVisibility(INVISIBLE);
+                }
+                else
+                {
+                    ll.setVisibility(GONE);
+                }
             }
 
             @Override
@@ -1827,7 +1952,9 @@ public class CustomLayoutSet extends RelativeLayout {
         if(isMoving==true) return;
         if(index == now_index) return;
 
-
+        //더 큰 인덱스로 이동하는 것이므로
+        //위로 올라가면서 메인이 아래에서 위로 올라오고
+        //아닌 것이 중간에서 위로 올라감
         if(index > now_index)
         {
             for(int i=now_index+1;i<=index;i++)
@@ -1888,7 +2015,7 @@ public class CustomLayoutSet extends RelativeLayout {
             //progressDialog.setCancelable(false);
             //progressDialog.show();
 
-            //progressDialog = TransparentProgressDialog.show(mContext, "", ".", true, false, null);
+            progressDialog = TransparentProgressDialog.show(mContext, "", ".", true, false, null);
         }
 
         @Override

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.seven.mynah.R;
 import com.seven.mynah.artifacts.SubwayStationInfo;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalVariable;
 
 public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {

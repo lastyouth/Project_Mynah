@@ -4,12 +4,17 @@ package com.seven.mynah.globalmanager;
 public final class GlobalVariable {
 
 	//public static final String WEB_SERVER_IP = "https://192.168.35.75"; //우리집 내부아이피 테스트용
-	public static final String WEB_SERVER_IP = "https://1.227.248.51"; //외부아이피.
+	//public static final String WEB_SERVER_IP = "https://1.227.248.51"; //외부아이피.
+	public static final String WEB_SERVER_IP = "https://211.189.20.165"; //맴 아이피
+
 	public static final int HTTP_PORT = 13337;
 	public static final int HTTPS_PORT = 13337;
 
 	public static boolean isScheduleDBUpdated = false;
 	public static boolean isServerOn = true;
+	public static boolean isBluetoothOn = false;
+	public static boolean isDebugMode = false;
+
 
 	public static final int SCHEDULE = 1;
 	public static final int BUS = 2;

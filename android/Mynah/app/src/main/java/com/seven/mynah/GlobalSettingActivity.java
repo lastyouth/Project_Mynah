@@ -119,8 +119,8 @@ public class GlobalSettingActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_app);
-		//overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class GlobalSettingActivity extends Activity{
 	@Override
 	public void finish() {
 		super.finish();
-		//overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+//		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 }

@@ -52,7 +52,8 @@ public class MyTranslateAnimation extends Animation {
 
         }
         //LayoutParams params = (LayoutParams) mView.getLayoutParams();
-
+//        mView.setY(y);
+//        mView.setX(x);
         mView.requestLayout();
     }
 }
