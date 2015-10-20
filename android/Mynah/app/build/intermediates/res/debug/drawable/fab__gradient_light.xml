@@ -9,4 +9,8 @@
         android:endColor="#0FFF"
         android:startColor="#9FFF" />
 
+<<<<<<< HEAD
 </shape><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/drawable/fab__gradient_light.xml -->
+=======
+</shape><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/fab__gradient_light.xml -->
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

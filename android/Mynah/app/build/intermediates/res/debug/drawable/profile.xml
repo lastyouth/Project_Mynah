@@ -17,4 +17,8 @@
         android:right="10dp"
         android:top="10dp" />
 
+<<<<<<< HEAD
 </shape><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/drawable/profile.xml -->
+=======
+</shape><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/profile.xml -->
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

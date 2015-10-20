@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+<<<<<<< HEAD
     android:background="@color/subway_background">
+=======
+    android:background="@drawable/bg">
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +22,10 @@
             android:textSize="20sp"
             android:text="Mynah"/>
         <TextView
+<<<<<<< HEAD
             android:id="@+id/tvMynahVersion"
+=======
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
@@ -38,4 +45,8 @@
 
 
 </LinearLayout>
+<<<<<<< HEAD
 <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_app_info.xml -->
+=======
+<!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_app_info.xml -->
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:background="@color/black_translucent">
+=======
+    android:background="@drawable/bg">
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +66,11 @@
             android:layout_height="wrap_content"
             android:text="로그인"
             android:id="@+id/btnLogin"
+<<<<<<< HEAD
             android:background="@drawable/purple_button"
+=======
+            android:background="@drawable/orange_button"
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
             android:textColor="#FFFFFF"
             android:layout_marginBottom="5dp"/>
 
@@ -71,7 +79,11 @@
             android:layout_height="wrap_content"
             android:text="회원가입"
             android:id="@+id/btnSignup"
+<<<<<<< HEAD
             android:background="@drawable/purple_button"
+=======
+            android:background="@drawable/orange_button"
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
@@ -84,4 +96,8 @@
 
     </LinearLayout>
 
+<<<<<<< HEAD
 </LinearLayout><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_login.xml -->
+=======
+</LinearLayout><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_login.xml -->
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

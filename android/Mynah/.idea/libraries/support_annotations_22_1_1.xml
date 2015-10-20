@@ -1,11 +1,27 @@
 <component name="libraryTable">
   <library name="support-annotations-22.1.1">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1-sources.jar!/" />
+=======
+<<<<<<< HEAD
+      <root url="jar://D:/android/androidsdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/android/androidsdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1-sources.jar!/" />
+=======
+      <root url="jar://$USER_HOME$/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1-sources.jar!/" />
+>>>>>>> 9bd4bc3743536782705cc730d800a1975d0877b8
+>>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
     </SOURCES>
   </library>
 </component>

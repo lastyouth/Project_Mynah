@@ -14,6 +14,9 @@ import base64
 import httplib
 import random
 import datetime
+import socket
+
+socket.setdefaulttimeout(3)
 
 os.system('sudo hciconfig hci0 piscan')
 os.system('sudo hciconfig hci0 leadv')
@@ -204,10 +207,90 @@ class MynahManager:
         self.s1Activated = False
         self.s2Activated = False
         self.directionFlag = self.DIRECTION_TYPE_NONE
-        print "Timeout";
+        print "Timeout"
         self.t = 0
         g_lock.release()
-        return 0;
+        return 0
+
+    def processInternal(self):
+        if self.t != 0:
+            self.t.cancel()
+            print "Timer Cancelled"
+            self.t = 0
+
+        #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+        global g_messagelist
+        global g_clientlist
+        g_messagelist = []
+        if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+            broadcastCurrentClient("outtts")
+        else:
+            broadcastCurrentClient("intts")
+
+        targetlen = len(g_clientlist)
+        print "target len : ",targetlen;
+        while len(g_messagelist) < targetlen:
+            time.sleep(0.1)
+        brssi = -200
+        msg = ""
+        cid = ""
+        for rssi,data,tid in g_messagelist:
+            print "rssi : ",rssi," data : ",data
+            if brssi < rssi:
+                brssi = rssi
+                msg = data
+                cid = tid
+
+        print "Best rssi measure : ",brssi
+        #msg = g_messagelist[0]
+        print "id : ",cid," must be nearest!!!"
+
+        if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
+            if brssi == -200:
+                os.system('mplayer '+g_defaultpath+'no_connected_device.mp3')
+            else:
+                usermediaobj = g_productuser[cid];
+                policy = usermediaobj.getPolicy();
+                print cid + ' policy is ' + policy
+                if policy == 'n':
+                    os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                elif policy == 't':
+                    filename = usermediaobj.getTTSFileName()
+                    if filename == '':
+                        os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                    else:
+                        os.system('mplayer '+g_defaultpath+filename)
+                elif policy == 'r':
+                    filename = usermediaobj.getRECFileName()
+                    if filename == '':
+                        #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        print 'no REC files'
+                    else:
+                        os.system('mplayer '+g_defaultpath+filename)
+                elif policy == 'b':
+                    ttsfilename = usermediaobj.getTTSFileName()
+                    recfilename = usermediaobj.getRECFileName()
+                    print 'ttsfilename : '+ttsfilename
+                    if ttsfilename == '':
+                        os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                    else:
+                        os.system('mplayer '+g_defaultpath+ttsfilename)
+                    if recfilename == '':
+                        #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        print "NO REC files"
+                    else:
+                        os.system('mplayer '+g_defaultpath+recfilename)
+                else:
+                    print "Unknown policy"
+                g_productuser[cid].makeClear()
+                time.sleep(6)
+            print "To Out Processing"
+        else:
+            os.system('mplayer '+g_defaultpath+'defaultin.mp3')
+            ran = random.randrange(1,49)
+            #os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
+            print "Current Hour : "+str(datetime.datetime.now().hour)
+            print "To In Processing"
 
     def check(self):
         #thread safe
@@ -223,83 +306,6 @@ class MynahManager:
                 self.t.start()
         else:
             if self.s1Activated == True and self.s2Activated == True:
-                if self.t != 0:
-                    self.t.cancel()
-                    print "Timer Cancelled"
-                    self.t = 0
-
-                #if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                global g_messagelist
-                global g_clientlist
-                g_messagelist = []
-                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    broadcastCurrentClient("outtts")
-                else:
-                    broadcastCurrentClient("intts")
-
-                targetlen = len(g_clientlist)
-                print "target len : ",targetlen;
-                while len(g_messagelist) < targetlen:
-                    time.sleep(0.1)
-                brssi = -200
-                msg = ""
-                cid = ""
-                for rssi,data,tid in g_messagelist:
-                    print "rssi : ",rssi," data : ",data
-                    if brssi < rssi:
-                        brssi = rssi
-                        msg = data
-                        cid = tid
-
-                print "Best rssi measure : ",brssi
-                #msg = g_messagelist[0]
-                print "id : ",cid," must be nearest!!!"
-
-                if self.directionFlag == self.DIRECTION_TYPE_TO_OUT:
-                    if brssi == -200:
-                        os.system('mplayer '+g_defaultpath+'no_connected_device.mp3')
-                    else:
-                        usermediaobj = g_productuser[cid];
-                        policy = usermediaobj.getPolicy();
-                        print cid + ' policy is ' + policy
-                        if policy == 'n':
-                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        elif policy == 't':
-                            filename = usermediaobj.getTTSFileName()
-                            if filename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                            else:
-                                os.system('mplayer '+g_defaultpath+filename)
-                        elif policy == 'r':
-                            filename = usermediaobj.getRECFileName()
-                            if filename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
-    
-                            else:
-                                os.system('mplayer '+g_defaultpath+filename)
-                        elif policy == 'b':
-                            ttsfilename = usermediaobj.getTTSFileName()
-                            recfilename = usermediaobj.getRECFileName()
-                            if ttsfilename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                            else:
-                                os.system('mplayer '+g_defaultpath+ttsfilename)
-                            if recfilename == '':
-                                os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                            else:
-                                os.system('mplayer '+g_defaultpath+recfilename)
-                        else:
-                            print "Unknown policy"
-                        g_productuser[cid].makeClear()
-                        time.sleep(6)
-                    print "To Out Processing"
-                else:
-                    os.system('mplayer '+g_defaultpath+'defaultin.mp3')
-                    ran = random.randrange(1,49)
-                    os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
-                    print "Current Hour : "+str(datetime.datetime.now().hour)
-                    print "To In Processing"
-
                 self.s1Activated = False
                 self.s2Activated = False
                 self.directionFlag = self.DIRECTION_TYPE_NONE
@@ -316,9 +322,9 @@ class MynahManager:
         self.check()
 
 class DistanceSensor(threading.Thread):
-    DETECT_THRESHOLD_VALUE = 0.30
+    DETECT_THRESHOLD_VALUE = 0.50
     MAX_WAIT_VALUE = 10000
-    MAX_RE_CAPTURE_TIME = 0.07
+    MAX_RE_CAPTURE_TIME = 0.05
 
     def __init__(self,sensortype):
         threading.Thread.__init__(self)
@@ -470,10 +476,11 @@ g_sensor2.daemon = True
 g_sensor2.start()
 
 while True:
-    g_lock.acquire()
+    #g_lock.acquire()
     data = requestHTTPS('get_devices','','','')
     if data == False:
         print 'FATAL ERROR : Server is not responding'
+        #g_lock.release()
     else:
         print 'Request deviceids from product2'
         for pp in data['attach']:
@@ -500,23 +507,27 @@ while True:
                         print recname + 'is already exist'
                     else:
                         filedata = base64.decodestring(data['attach']['rec_file'])
+                        g_lock.acquire()
                         fp = open(g_defaultpath+recname,'w')
                         fp.write(filedata)
                         fp.close()
+                        g_lock.release();
                         g_productuser[key].setRECFileName(recname)
                 ttsname = data['attach']['tts_file_name']
                 if ttsname == '':
                     print key+' : No tts file'
                 else:
                     filedata = base64.decodestring(data['attach']['tts_file'])
+                    g_lock.acquire()
                     fp = open(g_defaultpath+ttsname,'w')
                     fp.write(filedata)
                     fp.close()
+                    g_lock.release()
                     g_productuser[key].setTTSFileName(ttsname)
                 policy = data['attach']['opt']
                 print key+' : policy ' +policy
                 g_productuser[key].setPolicy(policy)
-        g_lock.release()
+        #g_lock.release()
     time.sleep(10)
     i=1
 
