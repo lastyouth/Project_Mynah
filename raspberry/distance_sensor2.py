@@ -3,8 +3,8 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 
-TRIG = 18
-ECHO = 23
+TRIG = 17
+ECHO = 22
 
 print "Distance Measurement In Progress"
 
@@ -17,7 +17,7 @@ GPIO.output(TRIG,GPIO.LOW)
 while True:
     print "Waiting For Sensor To Settle"
 
-    time.sleep(0.05)
+    time.sleep(0.07)
 
     GPIO.output(TRIG,True)
     time.sleep(0.00001)

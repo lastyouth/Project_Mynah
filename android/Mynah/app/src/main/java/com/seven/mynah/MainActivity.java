@@ -29,6 +29,8 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,7 +51,6 @@ import com.seven.mynah.backgroundservice.GetInformationService;
 import com.seven.mynah.calender.CalendarManager;
 import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.RECManager;
@@ -58,6 +59,7 @@ import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.network.AsyncHttpTask;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
@@ -72,59 +74,8 @@ public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
     public static final int SIGNAL_UI_UPDATE = 0x10001001;
 
-
-    protected Handler mhHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            // IF Sucessfull no timeout
-            System.out.println("in handler");
-            if (msg.what == -1) {
-                //   BreakTimeout();
-                //ConnectionError();
-                System.out.println("handler error");
-
-            }
-
-            if (msg.what == 1) {
-                //핸들링 1일때 할 것
-                System.out.println("response : "+msg.obj);
-
-            }
-
-            if (msg.what == 2) {
-                //핸들링 2일때 할 것
-                System.out.println("handling 2 !");
-                System.out.println("response : "+msg.obj);
-            }
-
-        }
-    };
-
-
-    public class SendMassgeHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            try {
-                switch (msg.what) {
-                    case SIGNAL_UI_UPDATE:
-                        Log.d(TAG, "UI UPDATE");
-                        new doAllRefresh(MainActivity.this).execute();
-
-                        break;
-                    default:
-                        break;
-                }
-            }catch(NullPointerException npe)
-            {
-                Log.d(TAG,"NullPointerException");
-            }
-
-        }
-    };
-
-
-    SendMassgeHandler mHandler = new SendMassgeHandler();
     GoogleCloudMessaging gcm;
+
     // for bk service connection
     GetInformationService infoService;
     boolean isServiceConnected = false;
@@ -133,8 +84,6 @@ public class MainActivity extends Activity {
 
     RPiBluetoothConnectionManager BTmanager;
 
-    //TTSManager
-    private TTSManager mTTSManager;
 
     //GCM
     public static final String EXTRA_MESSAGE = "message";
@@ -146,104 +95,39 @@ public class MainActivity extends Activity {
     private static final String SENDER_ID = "803082977332";
 
     //GCM 등록용 키(핸드폰 기준 1개)
-    String regid;
+    private String regid;
+
+    public CustomLayoutSet layout;
 
     private CalendarManager mCalendarManager;
     private Context mContext;
-    //By JS
-    LinearLayout llSchedule, llBus, llSubway, llWeather, llRecord, llRefresh, llSetting, llProgressbar, llPlaying;
-
-    //for Schedule
-    private static int maxSchedules = 10;
-    private static int maxPreparations = 10;
-    private LinearLayout layoutSchedule;
-    private LinearLayout layoutPreparation;
-    private TextView tvSchedules[];
-    private TextView tvPreparation;
-    private CalendarManager calendarManager;
-    private ArrayList<ScheduleInfo> scheduleInfo;
-    private String today;
-
-    //for Bus
-    private ImageView ivBusImage;
-    private TextView tvBusRoute;
-    private TextView tvBusStopName;
-    private TextView tvBusDirName;
-    private TextView tvBusNextTime;
-    private TextView tvBusNextTime2;
-    private TextView tvCurrentBusRoute;
-    private ArrayList<BusInfo> busArrayList;
-    private String bRoute;
-    private String bDir;
-    private String bStation;
-    private String time1;
-    private String time2;
-
-    //for Subway
-    private ImageView ivSubwayImage;
-    private TextView tvSubwayName;
-    private TextView tvSubwayStopName;
-    private TextView tvSubwayDirName;
-    private TextView tvSubwayNextTime;
-    private TextView tvSubwayDirName2;
-    private TextView tvSubwayNextTime2;
-    private ArrayList<SubwayInfo> subwayArrayList;
-
-
-    //for Weather
-    private ImageView ivWeatherImage;
-    private TextView tvWeatherType;
-    private TextView tvPlace;
-    private TextView tvPlace2;
-    private TextView tvTemper;
-    private TextView tvReh; // 습도
-    private TextView tvPop; // 강수확률
-    private TextView tvUpdateTime;
-    private TextView tvHour;
-    private ArrayList<WeatherLocationInfo> weatherArrayList;
-
-
-    //for record
-    private TextView tvRecord;
-    private ImageView ivRecord;
-
-
-    //for Playing
-    private TextView tvPlaying;
-    private TextView tvPlayingText;
-    private ImageView ivPlaying;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         Log.d(TAG, "MainActivity onCreate Start");
+
+        mContext = getApplicationContext();
 
         SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
         Toast.makeText(getApplicationContext(), suInfo.userName + "님 환영합니다.", Toast.LENGTH_SHORT);
+        
 
         ServiceAccessManager.getInstance().setMainPid(android.os.Process.myPid());
 
         Intent service = new Intent(this, GetInformationService.class);
         startService(service);
 
-        mContext = getApplicationContext();
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        mTTSManager = new TTSManager(mContext);
+        layout = new CustomLayoutSet(this);
+        layout.setAnimationDuration(400);
+        layout.setInterpolator(new AccelerateDecelerateInterpolator());
+        setContentView(layout);
 
-        //By JS
-        inflateButtonLayout();
-        scheduleInitView();
-        busInitView();
-        subwayInitView();
-        weatherInitView();
-
-        //add
-        recordInitView();
-        playingInitView();
-
+        //setContentView(R.layout.activity_main);
 
         ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
         mServiceAccessManager.setContext(this);
@@ -266,6 +150,7 @@ public class MainActivity extends Activity {
 
         Log.d(TAG, "onCreate Finish");
     }
+
 
     private void updateStatus()
     {
@@ -306,7 +191,7 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         //handler type 2 : 상태 업데이트용
-        new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler, jobj, 2, 0);
+        new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, layout.getHandler(), jobj, 2, 0);
 
     }
 
@@ -335,10 +220,6 @@ public class MainActivity extends Activity {
         Log.d(TAG, "onDestro.commit()");
     }
 
-    public SendMassgeHandler getHandler()
-    {
-        return mHandler;
-    }
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If
@@ -504,735 +385,25 @@ public class MainActivity extends Activity {
 
         if(ServiceAccessManager.getInstance().checkServiceConnected())
         {
-            mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);
+            layout.getHandler().sendEmptyMessage(SIGNAL_UI_UPDATE);
+            //mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);
         }
+
 
         Log.d(TAG, "onResume Finish");
     }
 
-    private void inflateButtonLayout()
+    public CustomLayoutSet.SendMassgeHandler getHandler()
     {
-        llSchedule = (LinearLayout)findViewById(R.id.llSchedule);
-        llBus = (LinearLayout)findViewById(R.id.llBus);
-        llSubway = (LinearLayout)findViewById(R.id.llSubway);
-        llWeather = (LinearLayout)findViewById(R.id.llWeather);
-        llRecord = (LinearLayout)findViewById(R.id.llRecord);
-        llRefresh = (LinearLayout)findViewById(R.id.llRefresh);
-        llSetting = (LinearLayout)findViewById(R.id.llSetting);
-        llProgressbar = (LinearLayout)findViewById(R.id.llProgressbar);
-        llPlaying = (LinearLayout)findViewById(R.id.llPlaying);
-
-        llRefresh.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llRefresh.setAlpha((float) 0.8);
-                    return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llRefresh.setAlpha((float) 1.0);
-                    allRefresh();
-                    ttsTest();
-                    new doAllRefresh(MainActivity.this).execute();
-
-                    return true;
-                }
-                return true;
-            }
-        });
-
-        llSetting.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llSetting.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llSetting.setAlpha((float) 1.0);
-                    Intent intent = new Intent(mContext, GlobalSettingActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return true;
-            }
-        });
-
+        return layout.getHandler();
     }
 
-    //SCHEDULE
-    public void scheduleInitView()
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
     {
-        layoutSchedule = (LinearLayout)findViewById(R.id.layoutSchedule);
-        tvSchedules = new TextView[maxSchedules];
-        tvPreparation = new TextView(mContext);
-
-        calendarManager = GlobalGoogleCalendarManager.calendarManager;
-        int tableCount = DBManager.getManager(mContext).getSchedulesCount();
-
-        if(tableCount == 0)
-        {
-            layoutSchedule.removeAllViews();
-            tvSchedules[0] = new TextView(mContext);
-            tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
-            tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-            tvSchedules[0].setText("터치하여 구글캘린더와 연동을 시작하세요.");
-
-            layoutSchedule.setGravity(Gravity.CENTER);
-            layoutSchedule.addView(tvSchedules[0]);
-        }
-
-        llSchedule.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llSchedule.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llSchedule.setAlpha((float) 1.0);
-                    Intent intent = new Intent(mContext, CalendarActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return true;
-            }
-        });
-    }
-
-    public void scheduleRefresh()
-    {
-        //Request service to get schedule information (through Mynah DB)
-        //ArrayList<ScheduleInfo> scheduleInfos = ServiceAccessManager.getInstance().getService().getScheduleInfo();
-        ArrayList<ScheduleInfo> scheduleInfos = InfoTextSummarizer.getInstance(mContext).getScheduleInfo();
-
-        if(scheduleInfos == null)
-        {
-            scheduleInfos = new ArrayList<ScheduleInfo>();
-        }
-        setScheduleInfo(scheduleInfos);
-    }
-
-    public void setScheduleInfo(ArrayList<ScheduleInfo> scheduleInfos)
-    {
-        int size = scheduleInfos.size();
-        layoutSchedule.removeAllViews();
-        layoutSchedule.setGravity(Gravity.NO_GRAVITY);
-        if(size == 0)
-        {
-            tvSchedules[0] = new TextView(mContext);
-            tvSchedules[0].setTextColor(Color.parseColor("#ffffff"));
-            tvSchedules[0].setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-            tvSchedules[0].setText("등록된 스케줄이 없습니다.");
-
-            layoutSchedule.setGravity(Gravity.CENTER);
-            layoutSchedule.addView(tvSchedules[0]);
-        }
-
-        for(int i = 0; i < size; i++)
-        {
-            tvSchedules[i] = new TextView(mContext);
-            tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
-            tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-            String str = scheduleInfos.get(i).scheduleTime + "    " + scheduleInfos.get(i).scheduleName;
-            tvSchedules[i].setText(str);
-
-            tvSchedules[0].setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            tvSchedules[0].setSelected(true);
-            tvSchedules[0].setSingleLine();
-
-            layoutSchedule.addView(tvSchedules[i]);
+        if(hasFocus){
+            layout.startAnimationOnFocusChanged();
         }
     }
 
-    //BUS
-    private void busInitView() {
-
-        ivBusImage = (ImageView)findViewById(R.id.ivBusImage);
-        tvBusRoute = (TextView)findViewById(R.id.tvBusRoute);
-
-        // (TextView)view.findViewById(R.id.tvCurrentBusRoute);
-        tvBusStopName = (TextView)findViewById(R.id.tvBusStopName);
-        tvBusNextTime = (TextView)findViewById(R.id.tvBusNextTime);
-        tvBusNextTime2 = (TextView)findViewById(R.id.tvBusNextTime2);
-        tvBusDirName = (TextView)findViewById(R.id.tvBusDirName);
-
-        llBus.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llBus.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llBus.setAlpha((float) 1.0);
-
-                    Intent intent = new Intent(mContext, BusSettingActivity.class);
-                    startActivity(intent);
-
-                    return true;
-                }
-                return true;
-            }
-        });
-    }
-
-    public void busRefresh() {
-        //Request service to get bus Information
-        //BusInfo bInfo = ServiceAccessManager.getInstance().getService().getBusInfo();
-        BusInfo bInfo = InfoTextSummarizer.getInstance(mContext).getBusInfo();
-
-        setBusInfo(bInfo);
-    }
-
-    private void setBusInfo(BusInfo binfo)  {
-        if (binfo == null)
-        {
-            bRoute = "";
-            bStation = "";
-            bDir = "터치해서 정보를 입력하세요";
-            time1 = "";
-            time2 = "";
-        }
-        else
-        {
-            bRoute = binfo.route.busRouteNm + " 버스";
-            bStation = binfo.station.stNm;
-            bDir = binfo.dir + "행\n";
-
-            //dummy temp
-//            Date date = new Date();
-//            SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-//
-//
-//            TimeToBus timeToBus = new TimeToBus();
-//            TimeToBus timeToBus1 = new TimeToBus();
-//            long temp_time = (date.getTime() + Long.valueOf(240)*1000);
-//            date.setTime(temp_time);
-//            timeToBus.time = date_format.format(date);
-//            temp_time = (date.getTime() + Long.valueOf(600)*1000);
-//            date.setTime(temp_time);
-//            timeToBus1.time = date_format.format(date);
-//            binfo.array_ttb.add(timeToBus);
-//            binfo.array_ttb.add(timeToBus1);
-
-
-            if (binfo.array_ttb.size() == 0)
-            {
-                time1 = "차가 없음";
-
-            }
-            else if (binfo.array_ttb.size() == 1)
-            {
-                time1 = getBusArriveTime(binfo, 0);
-            }
-            else
-            {
-                time1 = getBusArriveTime(binfo, 0);
-                time2 = getBusArriveTime(binfo, 1);
-            }
-        }
-
-        ivBusImage.setImageResource(R.drawable.ic_bus);
-        tvBusRoute.setText(bRoute);
-        tvBusStopName.setText(bStation);
-        tvBusStopName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvBusStopName.setSelected(true);
-        tvBusStopName.setSingleLine();
-        tvBusDirName.setText(bDir);
-        tvBusNextTime.setText(time1);
-        tvBusNextTime2.setText(time2);
-    }
-
-    private String getBusArriveTime(BusInfo binfo, int pos)
-    {
-        long curTime = System.currentTimeMillis();
-
-        String time = binfo.array_ttb.get(pos).time;
-        Date date = new Date();
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-
-        try {
-            date = date_format.parse(time);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        long arriveTime = date.getTime();
-        long arriveMinute = (arriveTime - curTime)/1000/60;
-        if(arriveMinute == 0)
-        {
-            time = "접근중";
-        }
-        else
-        {
-            time = arriveMinute + "분 전";
-        }
-        return time;
-    }
-
-    //SUBWAY
-    private void subwayInitView() {
-        ivSubwayImage = (ImageView)findViewById(R.id.ivSubwayImage);
-        tvSubwayName = (TextView)findViewById(R.id.tvSubwayName);
-        tvSubwayStopName = (TextView)findViewById(R.id.tvSubwayStopName);
-        tvSubwayDirName = (TextView)findViewById(R.id.tvSubwayDirName);
-        tvSubwayNextTime = (TextView)findViewById(R.id.tvSubwayNextTime);
-        tvSubwayDirName2 = (TextView)findViewById(R.id.tvSubwayDirName2);
-        tvSubwayNextTime2 = (TextView)findViewById(R.id.tvSubwayNextTime2);
-
-        ivSubwayImage.setImageResource(R.drawable.ic_subway);
-
-        llSubway.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llSubway.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llSubway.setAlpha((float) 1.0);
-                    Intent intent = new Intent(mContext, SubwaySettingActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return true;
-            }
-        });
-    }
-
-    public void subwayRefresh() {
-        // Request service to get subway information
-        //SubwayInfo sInfo = ServiceAccessManager.getInstance().getService().getSubwayInfo();
-        SubwayInfo sInfo = InfoTextSummarizer.getInstance(mContext).getSubwayInfo();
-
-        setSubwayInfo(sInfo);
-    }
-
-    private void setSubwayInfo(SubwayInfo sinfo) {
-        if (sinfo == null) {
-            // 초기화
-            tvSubwayDirName.setText("터치해서 정보를 입력하세요");
-            return;
-        }
-        String line_num = sinfo.station.line_num + "";
-        tvSubwayName.setText(GlobalFunction.SubwayDecode(line_num));
-        tvSubwayName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvSubwayName.setSelected(true);
-        tvSubwayName.setSingleLine();
-
-        tvSubwayStopName.setText(sinfo.station.station_nm);
-        tvSubwayStopName.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvSubwayStopName.setSelected(true);
-        tvSubwayStopName.setSingleLine();
-
-        String time1,time2;
-
-        Date curTime = new Date();
-        SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
-
-        try {
-            curTime = cur_format.parse(cur_format.format(curTime));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-        if (sinfo.array_tts.size() == 0)
-        {
-            tvSubwayNextTime.setText("");
-            tvSubwayNextTime2.setText("");
-        }
-        else
-        {
-            long tt = 0;
-            try {
-                tt = cur_format.parse(sinfo.array_tts.get(0).arr_time).getTime() - curTime.getTime();
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            tt = tt/1000/60;
-            if(tt >= 1000)
-            {
-                tvSubwayNextTime.setText("종착역입니다");
-                tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
-                tvSubwayNextTime.setTextSize(12);
-                tvSubwayDirName2.setText("");
-                tvSubwayNextTime2.setText("");
-                return;
-            }
-            if(tt==0)
-            {
-                time1 = "지금 도착";
-            }
-            else
-            {
-                time1 = tt + "분 전";
-            }
-            tvSubwayDirName.setText(sinfo.array_tts.get(0).subway_end_name + "행");
-            tvSubwayNextTime.setText(time1);
-
-            if (sinfo.array_tts.size() == 1)
-            {
-                tvSubwayNextTime2.setText("");
-            }
-            else
-            {
-                long tt2 = 0;
-                try {
-                    tt2 = cur_format.parse(sinfo.array_tts.get(1).arr_time).getTime() - curTime.getTime();
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                tt2 = tt2/1000/60;
-                if(tt2 == 0)
-                {
-                    time2 = "지금 도착";
-                }
-                else
-                {
-                    time2 = tt2 + "분 전";
-                }
-                tvSubwayDirName2.setText(sinfo.array_tts.get(1).subway_end_name + "행");
-                tvSubwayNextTime2.setText(time2);
-
-            }
-        }
-    }
-
-    //WEATHER
-    private void weatherInitView() {
-        Log.d(TAG, "weatherInitView Start");
-
-        ivWeatherImage = (ImageView)findViewById(R.id.ivWeatherImage);
-        tvWeatherType = (TextView)findViewById(R.id.tvWeatherType);
-
-        tvPlace = (TextView)findViewById(R.id.tvWeatherPlace);
-        tvPlace2 = (TextView)findViewById(R.id.tvWeatherPlace2);
-        tvTemper = (TextView)findViewById(R.id.tvWeatherTemper);
-
-        tvPop = (TextView)findViewById(R.id.tvPop);
-
-        setButtonsMarquee();
-
-        llWeather.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llWeather.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llWeather.setAlpha((float) 1.0);
-                    Intent intent = new Intent(mContext, WeatherSettingActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return true;
-            }
-        });
-
-        Log.d(TAG, "weatherInitView End");
-    }
-
-    public void weatherRefresh() {
-        Log.d(TAG, "weatherRefresh Start");
-
-        // Request service to get weather Information
-        //WeatherInfo wInfo = ServiceAccessManager.getInstance().getService().getWeatherInfo();
-        WeatherInfo wInfo = InfoTextSummarizer.getInstance(mContext).getWeatherInfo();
-        setWeatherInfo(wInfo);
-
-        Log.d(TAG, "weatherRefresh End");
-    }
-
-    private void setWeatherInfo(WeatherInfo winfo) {
-        Log.d(TAG, "setWeatherInfo Start");
-
-        if (winfo == null) {
-            // 초기화
-            tvPlace2.setText("터치해서 정보를 입력하세요");
-            setWeatherImage(5);
-            return;
-        }
-
-        tvPlace.setText(winfo.location.city_name);
-        tvPlace2.setText(winfo.location.mdl_name + "\n");
-        tvTemper.setText(winfo.array_ttw.get(0).temp + " °C");
-        tvPop.setText("강수확률 : " + winfo.array_ttw.get(0).pop + "%");
-        tvWeatherType.setText(winfo.array_ttw.get(0).wfKor);
-
-        // Set weather image type
-        setWeatherImage(Integer.valueOf(winfo.array_ttw.get(0).sky));
-        Log.d(TAG, "setWeatherInfo End");
-    }
-
-    private void setWeatherImage(int type) {
-
-        switch (type) {
-            case 1:
-                ivWeatherImage.setImageResource(R.drawable.ic_sunny);
-                break;
-            case 2:
-                //구름조금
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud2);
-                break;
-
-            case 3:
-                //구름 많음
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
-                break;
-
-            case 4:
-                //흐림  /비
-                ivWeatherImage.setImageResource(R.drawable.ic_cloud1);
-                break;
-            case 5:
-                ivWeatherImage.setImageResource(R.drawable.ic_question);
-                break;
-        }
-    }
-
-
-    private void recordInitView()
-    {
-        Log.d(TAG, "recordInitView Start");
-
-        ivRecord = (ImageView)findViewById(R.id.ivRecord);
-        tvRecord = (TextView)findViewById(R.id.tvRecord);
-
-
-        //재생이 완료했을 경우를 대비함.
-        RECManager.getInstance().setCustomOnCompletionListener(new RECManager.CustomOnCompletionListener() {
-            @Override
-            public void onCompletion() {
-                recordRefresh();
-            }
-        });
-
-        llRecord.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llRecord.setAlpha((float) 0.8);
-                    return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llRecord.setAlpha((float) 1.0);
-                    if(RECManager.getInstance().getState() == RECManager.STOP)
-                    {
-                        //녹음 시작
-                        RECManager.getInstance().startRecording("fastrecord.mp4");
-
-                    }
-                    else if (RECManager.getInstance().getState() == RECManager.REC_ING)
-                    {
-                        //녹음 중지
-                        RECManager.getInstance().stopRecording();
-                        try {
-                            Thread.sleep(500);
-                        }
-                        catch (InterruptedException e)
-                        {
-                            Log.d(TAG, e.getMessage());
-                        }
-                        //그리고 재생
-                        //RECManager.getInstance().startPlaying("test.mp4");
-                        //녹음이 완료후 파일 업로드
-                        new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
-                                RECManager.getInstance().getDefaultExStoragePath() + "fastrecord.mp4", 1, AsyncHttpUpload.TYPE_REC);
-
-                    }
-                    recordRefresh();
-                    return true;
-                }
-                return true;
-            }
-        });
-
-        Log.d(TAG, "recordInitView End");
-    }
-
-
-    private void playingInitView()
-    {
-        Log.d(TAG, "playingInitView Start");
-
-        ivPlaying = (ImageView)findViewById(R.id.ivPlaying);
-        tvPlaying = (TextView)findViewById(R.id.tvPlaying);
-        tvPlayingText = (TextView)findViewById(R.id.tvPlayingText);
-
-        llPlaying.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    llPlaying.setAlpha((float) 0.8);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    llPlaying.setAlpha((float) 1.0);
-
-                    if (RECManager.getInstance().getState() == RECManager.STOP) {
-                       //재생을 시작한다.
-                        RECManager.getInstance().startPlaying("fastrecord.mp4");
-                    } else if (RECManager.getInstance().getState() == RECManager.PLAY_ING) {
-                        //재생을 중지한다.
-                        RECManager.getInstance().stopPlaying();
-
-                    }
-                    recordRefresh();
-                    return true;
-                }
-                return true;
-            }
-        });
-
-        Log.d(TAG, "playingInitView End");
-    }
-
-    private void ttsTest()
-    {
-
-        String tts = InfoTextSummarizer.getInstance(mContext).makeTotalTTS();
-
-        SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
-        mTTSManager.saveTTS(tts,"tts_temp.mp3");
-        try {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e)
-        {
-            Log.d(TAG, e.getMessage());
-        }
-        mTTSManager.startPlaying("tts_temp.mp3");
-
-    }
-
-    private void recordRefresh()
-    {
-
-        Log.d(TAG, "recordRefresh Start");
-
-        tvPlayingText.setText("");
-
-        if(RECManager.getInstance().getState() == RECManager.STOP)
-        {
-            tvRecord.setText("빠른 녹음");
-            ivRecord.setImageResource(R.drawable.ic_speaker);
-            llRecord.setClickable(true);
-
-            tvPlaying.setText("재생");
-            ivPlaying.setImageResource(R.drawable.ic_playing);
-            llPlaying.setClickable(true);
-        }
-        else if (RECManager.getInstance().getState() == RECManager.REC_ING)
-        {
-            tvRecord.setText("녹음중");
-            ivRecord.setImageResource(R.drawable.ic_speaker_ing);
-
-            tvPlaying.setText("녹음중 재생 불가");
-            llPlaying.setClickable(false);
-        }
-        else if (RECManager.getInstance().getState() == RECManager.PLAY_ING)
-        {
-            tvRecord.setText("재생중 녹음 불가");
-            llRecord.setClickable(false);
-
-            tvPlaying.setText("재생");
-            ivPlaying.setImageResource(R.drawable.ic_stop);
-            llPlaying.setClickable(true);
-        }
-
-        Log.d(TAG, "recordRefresh End");
-    }
-
-    private void setButtonsMarquee()
-    {
-        tvPlace.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvPlace.setSelected(true);
-        tvPlace.setSingleLine();
-
-        tvPlace2.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvPlace2.setSelected(true);
-        tvPlace2.setSingleLine();
-
-        tvTemper.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvTemper.setSelected(true);
-        tvTemper.setSingleLine();
-
-        tvPop.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        tvPop.setSelected(true);
-        tvPop.setSingleLine();
-    }
-
-    private void allRefresh()
-    {
-        scheduleRefresh();
-        busRefresh();
-        subwayRefresh();
-        weatherRefresh();
-        recordRefresh();
-    }
-
-    class doAllRefresh extends AsyncTask<Void, Void, Void>{
-
-        private Context mContext;
-        private Boolean result = false;
-        private TransparentProgressDialog progressDialog;
-        //private ProgressDialog progressDialog;
-
-        public doAllRefresh(Context context) {
-            mContext = context;
-            progressDialog = new TransparentProgressDialog(mContext);
-            //progressDialog = new ProgressDialog(mContext, R.style.TransparentDialog);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            //progressDialog.setMessage("로딩중입니다...");
-            //progressDialog.setCancelable(false);
-            //progressDialog.show();
-            progressDialog = TransparentProgressDialog.show(mContext, "", ".", true, false, null);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            //TODO Test >> Do work like communication with SQLITE, API REQUEST
-            //allRefresh();
-            try {
-                Thread.sleep(500);
-            }
-            catch (InterruptedException e)
-            {
-                Log.d(TAG, e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            //TODO Do just changing UI by data from doInBackground
-            allRefresh();
-            if(progressDialog.isShowing())
-            {
-                progressDialog.dismiss();
-            }
-        }
-    }
 }

@@ -53,7 +53,7 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 	
 	public AsyncHttpTask(Context context, String urls, Handler handler,
 			JSONObject jobj, int hnum, int Data) {
-		
+
 		mhandler = handler;
 		mContext = context;
 		_url = urls;
@@ -61,6 +61,12 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 		handlernum = hnum;
 		DataContent = Data;
 		_jobj = jobj;
+
+		if(!GlobalVariable.isServerOn)
+		{
+			Log.d(TAG,"서버가 종료되어 있어 task를 수행하지 않습니다.");
+			return;
+		}
 
 		super.execute();
 	}

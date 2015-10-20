@@ -73,7 +73,8 @@ public class ChooseTTSActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_tts);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 
         mArrayList = new ArrayList<String[]>();
 
@@ -171,6 +172,9 @@ public class ChooseTTSActivity extends Activity {
         //handler type 2 : 상태 업데이트용
         new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler, jobj, 2, 0);
 
+
+
+
     }
 
     @Override
@@ -178,8 +182,8 @@ public class ChooseTTSActivity extends Activity {
         super.finish();
 
         updateStatus();
-        //overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     }
 }

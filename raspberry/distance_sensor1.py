@@ -5,8 +5,8 @@ import Queue
 GPIO.setmode(GPIO.BCM)
 
 
-TRIG = 17
-ECHO = 22
+TRIG = 23
+ECHO = 18
 
 print "Distance Measurement In Progress"
 
@@ -27,10 +27,10 @@ sq = Queue.Queue()
 while True:
     print "Waiting For Sensor To Settle"
 
-    time.sleep(0.4)
+    time.sleep(0.07)
 
     GPIO.output(TRIG,True)
-    time.sleep(0.00001)
+    time.sleep(0.001)
     GPIO.output(TRIG,False)
 
     while GPIO.input(ECHO)==0:
@@ -45,6 +45,7 @@ while True:
 
     distance = round(distance,2)
 
+    print distance,'cm'
     if distance_cnt < 5:
         distance_cnt+=1
         sq.put(distance)

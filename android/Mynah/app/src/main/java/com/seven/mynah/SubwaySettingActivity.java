@@ -20,7 +20,6 @@ import com.seven.mynah.adapter.ViewHolder;
 import com.seven.mynah.artifacts.SubwayInfo;
 import com.seven.mynah.artifacts.SubwayStationInfo;
 import com.seven.mynah.database.DBManager;
-import com.seven.mynah.globalmanager.GlobalFunction;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.infoparser.SubwayPaser;
 
@@ -47,8 +46,8 @@ public class SubwaySettingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_subway);
-		//overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
 		ivSubwayStationSearch = (ImageView) findViewById(R.id.ivSubwayStationSearch);
 		lvSubwayStation = (ListView) findViewById(R.id.lvSubwayStation);
@@ -67,7 +66,7 @@ public class SubwaySettingActivity extends Activity {
 			//SubwayPaser sp = new SubwayPaser();
 			//sinfo = sp.getTimeTableByID(sinfo);
 			line_num = sinfo.station.line_num;
-			tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + GlobalFunction.SubwayDecode(line_num));
+			tvCurrentSubwayStation.setText(sinfo.station.station_nm + " " + GlobalVariable.hosunDecode(line_num));
 		}
 
 		ivSubwayStationSearch.setOnClickListener(new OnClickListener() {
@@ -148,7 +147,7 @@ public class SubwaySettingActivity extends Activity {
 	@Override
 		public void finish() {
 		super.finish();
-		//overridePendingTransition(R.anim.slide_in_from_left,	R.anim.slide_out_to_right);
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		overridePendingTransition(R.anim.slide_in_from_left,	R.anim.slide_out_to_right);
+		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 }

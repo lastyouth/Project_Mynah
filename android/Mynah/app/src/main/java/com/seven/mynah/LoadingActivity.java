@@ -195,6 +195,7 @@ public class LoadingActivity extends Activity{
 
 		tvState = (TextView)findViewById(R.id.tvState);
 
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	@Override
@@ -232,6 +233,9 @@ public class LoadingActivity extends Activity{
 					Log.d(TAG, "handler 작동 X 서버 timeout 추측 (5초)");
 					tvState.setText("서버에 응답이 없어 임시 ID로 접속합니다.");
 					Toast.makeText(getApplicationContext(), "서버에 응답이 없어 임시 ID로 접속합니다.", Toast.LENGTH_SHORT).show();
+
+					GlobalVariable.isServerOn = false;
+
 					try {
 						Thread.sleep(500);
 					}
@@ -245,7 +249,7 @@ public class LoadingActivity extends Activity{
 			}
 
 		};
-		tempHandler.sendEmptyMessageDelayed(0,7000);
+		tempHandler.sendEmptyMessageDelayed(0,3500);
 	}
 
 	public void Loading()

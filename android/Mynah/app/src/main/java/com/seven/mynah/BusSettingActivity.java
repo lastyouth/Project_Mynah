@@ -45,8 +45,8 @@ public class BusSettingActivity extends Activity {
    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_bus);
-        //overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-       overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+       //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
 
         etBusName = (EditText)findViewById(R.id.etBusName);
@@ -159,8 +159,8 @@ public class BusSettingActivity extends Activity {
     @Override
     public void finish() {
         super.finish();
-        //overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
 }

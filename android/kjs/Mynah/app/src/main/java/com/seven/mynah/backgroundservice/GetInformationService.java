@@ -101,8 +101,19 @@ public class GetInformationService extends Service
 
         @Override
         public void onTempDataArrived(int temp) {
-            Log.d(TAG,"Temparture : "+temp);
+            Log.d(TAG, "Temparture : " + temp);
             mTempdata = temp;
+        }
+
+        @Override
+        public void onConnected()
+        {
+
+        }
+        @Override
+        public void onDisconnected()
+        {
+
         }
     };
 
