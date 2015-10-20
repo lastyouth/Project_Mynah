@@ -132,6 +132,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.seven.mynah.WifiInfoActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.WifiInfo" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service android:name="com.seven.mynah.backgroundservice.GetInformationService" >
         </service>

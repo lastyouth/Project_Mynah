@@ -67,7 +67,6 @@ public class WeatherSettingActivity extends Activity{
 			public void onClick(View v) {
 				Log.d(TAG, "onClick Start");
 
-				// TODO Auto-generated method stub
 				cityName = etCityName.getText().toString().trim();
 
 				if (cityName.equals("")) {
@@ -96,8 +95,7 @@ public class WeatherSettingActivity extends Activity{
         lvCityName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO
-				//DB
+
 				Log.d(TAG, "onItemClick Start");
 				WeatherInfo winfo = new WeatherInfo();
 				ViewHolder vh = (ViewHolder) view.getTag();

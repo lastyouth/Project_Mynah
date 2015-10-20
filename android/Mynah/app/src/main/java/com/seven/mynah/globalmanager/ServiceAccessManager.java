@@ -19,6 +19,7 @@ public class ServiceAccessManager {
     private String TAG = "ServiceAccessManager";
     public static final String PREF = "PREF_RPI";
     public static final String TSTAT = "TTS_STATUS";
+    public static final String WIFISTAT = "WIFI_STATUS";
     private boolean mDelete ;
     private int pid;
 

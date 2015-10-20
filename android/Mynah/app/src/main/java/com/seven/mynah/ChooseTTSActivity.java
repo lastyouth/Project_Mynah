@@ -1,7 +1,9 @@
 package com.seven.mynah;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,8 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.network.AsyncHttpTask;
+import com.seven.mynah.util.DebugToast;
+import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +46,8 @@ public class ChooseTTSActivity extends Activity {
     private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER,RECORD};
     private int ttsStatus;
     private SharedPreferences p;
+
+    private static final String TAG = "ChooseTTSActivity";
 
     protected Handler mhHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -172,9 +178,6 @@ public class ChooseTTSActivity extends Activity {
         //handler type 2 : 상태 업데이트용
         new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler, jobj, 2, 0);
 
-
-
-
     }
 
     @Override
@@ -182,8 +185,80 @@ public class ChooseTTSActivity extends Activity {
         super.finish();
 
         updateStatus();
+        //엑티비티 종료하기 직전에 변경된 스테이터스를 기반으로 서버에게 tts를 업데이트함
+
+        //ui쓰레드에서 하면 안된다....새로운 쓰레드를 만들고 거기서 해야함?
+
+        //ServiceAccessManager.getInstance().getService().sendTTSNow();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            ServiceAccessManager.getInstance().getService().sendTTS();
+        DebugToast.makeText(getApplicationContext(), "즉시 tts 생성 시퀸스 완료", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //new doAllRefresh(getApplication()).execute();
+
+
         overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 //        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     }
+
+    class doAllRefresh extends AsyncTask<Void, Void, Void> {
+
+        private Context mContext;
+        private Boolean result = false;
+        private TransparentProgressDialog progressDialog;
+        //private ProgressDialog progressDialog;
+
+        public doAllRefresh(Context context) {
+            mContext = context;
+            progressDialog = new TransparentProgressDialog(mContext);
+
+            //progressDialog = new ProgressDialog(mContext, R.style.TransparentDialog);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            //progressDialog.setMessage("로딩중입니다...");
+            //progressDialog.setCancelable(false);
+            //progressDialog.show();
+
+            progressDialog = TransparentProgressDialog.show(mContext, "", ".", true, false, null);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            //TODO Test >> Do work like communication with SQLITE, API REQUEST
+            //allRefresh();
+
+            ServiceAccessManager.getInstance().getService().sendTTS();
+            DebugToast.makeText(getApplicationContext(), "즉시 tts 생성 시퀸스 완료", Toast.LENGTH_SHORT).show();
+
+            try {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException e)
+            {
+                Log.d(TAG, e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            //TODO Do just changing UI by data from doInBackground
+
+            if(progressDialog.isShowing())
+            {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
 }

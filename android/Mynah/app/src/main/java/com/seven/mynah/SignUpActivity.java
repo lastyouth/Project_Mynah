@@ -182,6 +182,11 @@ public class SignUpActivity extends Activity {
                             System.out.println("세션 저장 성공");
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+
+                            //TODO 여기서 옵션으로 와이파이 세팅이 되어있을 경우 바로 메인 엑티비티로 간다
+                            //TODO 와이파이 세팅 안되어 있으면 와이파이로 간다고 함,
+
                             startActivity(intent);
                             finish();
                         }

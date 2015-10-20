@@ -47,6 +47,7 @@ import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,8 +110,19 @@ public class CustomLayoutSet extends RelativeLayout {
     private TextView tvTitle;
     private ImageView ivTitle;
 
-    //for Schedule
+    private TextView tvTitleText1;
+    private ImageView ivIcon1;
 
+    private TextView tvTitleText2;
+    private ImageView ivIcon2;
+
+    private TextView tvTitleText3;
+    private ImageView ivIcon3;
+
+    private TextView tvTitleText4;
+
+
+    //for Schedule
     private ImageView ivScheduleImage;
     private LinearLayout llScheduleImage;
 
@@ -316,6 +328,8 @@ public class CustomLayoutSet extends RelativeLayout {
 
                 initWithDimentions(context);
                 initMainLayout();
+
+                initTitleView();
                 initWeatherView();
                 initBusView();
                 initSubwayView();
@@ -333,6 +347,9 @@ public class CustomLayoutSet extends RelativeLayout {
                 initClickListener();
                 initAnimation();
 
+                changeStatusText();
+                changeUpdateTime();
+
             }
         });
     }
@@ -341,6 +358,57 @@ public class CustomLayoutSet extends RelativeLayout {
     {
         //ActionBar bar = context.getActionBar();
         //bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00C4CD")));
+    }
+
+
+    public void changeStatusText()
+    {
+        //String text = "";
+        if(GlobalVariable.isServerOn)
+        {
+            //text = "Server";
+            ivIcon1.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = "Server";
+            ivIcon1.setImageResource(R.drawable.ic_x);
+        }
+        //tvTitleText1.setText(text);
+
+        if(GlobalVariable.isBluetoothOn)
+        {
+            //text = " Bluetooth";
+            ivIcon2.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = " Bluetooth";
+            ivIcon2.setImageResource(R.drawable.ic_x);
+        }
+
+        //tvTitleText2.setText(text);
+
+        if(GlobalVariable.isRaspberryOn)
+        {
+            //text = "Mynah Device";
+            ivIcon3.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = "Mynah Device";
+            ivIcon3.setImageResource(R.drawable.ic_x);
+        }
+
+        //tvTitleText3.setText(text);
+
+
+    }
+
+    public void changeUpdateTime()
+    {
+        //TODO 일단은 디폴트로 시간 없는걸로 표기
+        tvTitleText4.setText("");
     }
 
 
@@ -372,6 +440,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
     }
 
+
     public void startAnimationOnFocusChanged()
     {
         for(int i=1;i<size-1;i++)
@@ -380,6 +449,7 @@ public class CustomLayoutSet extends RelativeLayout {
             else showAnimation(i,false);
         }
     }
+
 
     private void showAnimation(int type, boolean on_off)
     {
@@ -665,7 +735,6 @@ public class CustomLayoutSet extends RelativeLayout {
 
         //default type에 대해서 서술
         // TODO: 2015-10-08
-
         llTitle = (LinearLayout)findViewById(R.id.llTitle);
         llSchedule = (LinearLayout)findViewById(R.id.llSchedule);
         llBus = (LinearLayout)findViewById(R.id.llBus);
@@ -678,6 +747,21 @@ public class CustomLayoutSet extends RelativeLayout {
         llPlaying = (LinearLayout)findViewById(R.id.llPlaying);
 
     }
+
+    private void initTitleView()
+    {
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvTitleText1 = (TextView)findViewById(R.id.tvTitleText1);
+        tvTitleText2 = (TextView)findViewById(R.id.tvTitleText2);
+        tvTitleText3 = (TextView)findViewById(R.id.tvTitleText3);
+        tvTitleText4 = (TextView)findViewById(R.id.tvTitleText4);
+
+        ivIcon1 = (ImageView)findViewById(R.id.ivIcon1);
+        ivIcon2 = (ImageView)findViewById(R.id.ivIcon2);
+        ivIcon3 = (ImageView)findViewById(R.id.ivIcon3);
+
+    }
+
 
     //SCHEDULE
     private void initScheduleView()
@@ -959,7 +1043,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         String time = binfo.array_ttb.get(pos).time;
         Date date = new Date();
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         try {
             date = date_format.parse(time);
@@ -1075,6 +1159,7 @@ public class CustomLayoutSet extends RelativeLayout {
         String stopname, linename;
         String dirname1, time1, text1;
         String dirname2, time2, text2;
+        String tag = "";
 
         stopname = ""; linename = "";
         dirname1 = ""; time1 = ""; text1 = "";
@@ -1094,8 +1179,20 @@ public class CustomLayoutSet extends RelativeLayout {
             tvSubwayLineName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             tvSubwayLineNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
 
-            linename = sinfo.station.line_num + "호선";
+            if(sinfo.station.inout_tag.equalsIgnoreCase("1"))
+            {
+                //TODO 상행 내선
+                tag = "상행(내선)";
+
+            }
+            else if (sinfo.station.inout_tag.equalsIgnoreCase("2"))
+            {
+                //TODO 하행 외선
+                tag = "하행(외선)";
+            }
+            linename = sinfo.station.line_num + "호선" + " " + tag;
             stopname = sinfo.station.station_nm + "역";
+
 
             Date curTime = new Date();
             SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
@@ -1302,7 +1399,7 @@ public class CustomLayoutSet extends RelativeLayout {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            SimpleDateFormat df_change = new SimpleDateFormat("MM월dd일 HH시 기준 기상청 제공");
+            SimpleDateFormat df_change = new SimpleDateFormat("MM월dd일 HH시 기준");
             time = df_change.format(date);
 
             // Set weather image type
@@ -1586,6 +1683,9 @@ public class CustomLayoutSet extends RelativeLayout {
         subwayRefresh();
         weatherRefresh();
         recordRefresh();
+
+        changeStatusText();
+        changeUpdateTime();
     }
 
 

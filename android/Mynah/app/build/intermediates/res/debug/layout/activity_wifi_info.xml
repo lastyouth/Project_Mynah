@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_translucent"
+    >
+
+    <!-- Left Margin -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <!-- Sign up -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="2.5">
+
+            <TextView
+                android:id="@+id/tvWifiTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wi-Fi Setting"
+                android:textColor="#FFFFFF"
+                android:textSize="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Wi-Fi SSID 이름과 비밀번호를 입력해주세요."
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:id="@+id/tvWifiNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="현재 설정된 Wifi SSID , PSSWD"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:layout_marginTop="40dp"
+                />
+
+        </LinearLayout>
+
+        <!-- Input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:hint="SSID 이름을 입력하세요"
+                        android:inputType="textPersonName"
+                        android:ems="20"
+                        android:id="@+id/etSSIDName"
+                        android:layout_marginRight="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="비밀번호를 입력하세요"
+                android:ems="20"
+                android:id="@+id/etSSIDPasswd" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="세팅 보내기"
+                android:id="@+id/btnWifiSave"
+                android:background="@drawable/orange_button"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="5dp"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <!-- Right Margin -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+    </LinearLayout>
+
+
+</LinearLayout>
+<!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_wifi_info.xml -->
