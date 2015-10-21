@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Binder;
+import android.os.DeadObjectException;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -18,6 +19,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.seven.mynah.MainActivity;
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.artifacts.SessionUserInfo;
@@ -163,6 +165,8 @@ public class GetInformationService extends Service
         {
             //TODO 메인에서 호출하는 변경 내용
             GlobalVariable.isBluetoothOn = true;
+            Intent intent = new Intent(GlobalVariable.BROADCAST_MESSAGE);
+            sendBroadcast(intent);
 
 
         }
@@ -171,6 +175,8 @@ public class GetInformationService extends Service
         {
             //TODO 접속 종료시
             GlobalVariable.isBluetoothOn = false;
+            Intent intent = new Intent(GlobalVariable.BROADCAST_MESSAGE);
+            sendBroadcast(intent);
         }
     };
 
@@ -265,10 +271,7 @@ public class GetInformationService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        // TODO Auto-generated method stub/Toast.makeText(this, "Service onStartCommand",  Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onStartCommand Start");
-
-    	//Toast.makeText(this, "GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
         DebugToast.makeText(this,"GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
 
         String tuuid = pref.getString("RPI_UUID", "NULL");
@@ -336,28 +339,35 @@ public class GetInformationService extends Service
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sendTTS();
-                DebugToast.makeText(mCtx,"즉시 tts 생성 시퀸스 완료",Toast.LENGTH_SHORT).show();
+                sendTTS(false);
+                //DebugToast.makeText(mCtx,"즉시 tts 생성 시퀸스 완료",Toast.LENGTH_SHORT).show();
             }
         }).start();
     }
 
 
-    public void sendTTS()
+    public void sendTTS(boolean toastOn)
     {
         String tts = InfoTextSummarizer.getInstance(mCtx).makeTotalTTS();
         if(InfoTextSummarizer.getInstance(mCtx).isUpdate())
         {
             SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
-            mTTSManager.saveTTS(tts,"tts.mp3");
-            DebugToast.makeText(mCtx, TAG + ": tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
-            //주기적으로 파일 전송
-            new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
-                    RECManager.getInstance().getDefaultExStoragePath() + "tts.mp3", 1, AsyncHttpUpload.TYPE_TTS);
+
+            try {
+                mTTSManager.saveTTS(tts,"tts.mp3");
+                if(toastOn) DebugToast.makeText(mCtx, TAG + ": tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
+                //주기적으로 파일 전송
+                new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
+                        RECManager.getInstance().getDefaultExStoragePath() + "tts.mp3", 1, AsyncHttpUpload.TYPE_TTS);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+                return;
+            }
         }
         else
         {
-            DebugToast.makeText(mCtx, TAG + ": 동일 tts 확인 미전송 시퀸스", Toast.LENGTH_SHORT).show();
+            if(toastOn) DebugToast.makeText(mCtx, TAG + ": 동일 tts 확인 미전송 시퀸스", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -368,7 +378,7 @@ public class GetInformationService extends Service
             mTimeTaskHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    sendTTS();
+                    sendTTS(true);
                 }
             });
         }

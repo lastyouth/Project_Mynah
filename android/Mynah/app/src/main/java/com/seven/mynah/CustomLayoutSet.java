@@ -1,6 +1,7 @@
 package com.seven.mynah;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.ScheduleInfo;
@@ -43,6 +45,7 @@ import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.network.AsyncHttpTask;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
@@ -249,6 +252,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
     private Context mContext;
     private TTSManager mTTSManager;
+    private Activity mActivity;
 
 
     long animationDuration = 800;
@@ -294,11 +298,12 @@ public class CustomLayoutSet extends RelativeLayout {
         return mHandler;
     }
 
-    public CustomLayoutSet(final Context context) {
+    public CustomLayoutSet(final Context context, Activity activity) {
 
         super(context);
 
         mContext = context;
+        mActivity = activity;
 
         f_list = new ArrayList<RelativeLayout>();
         mTTSManager = new TTSManager(mContext);
@@ -624,10 +629,9 @@ public class CustomLayoutSet extends RelativeLayout {
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llRefresh.setAlpha((float) 1.0);
-                    allRefresh();
-                    ttsTest();
+                    //allRefresh();
                     new doAllRefresh(mContext).execute();
-
+                    ttsTest();
                     return true;
                 }
                 return true;
@@ -734,7 +738,6 @@ public class CustomLayoutSet extends RelativeLayout {
     {
 
         //default type에 대해서 서술
-        // TODO: 2015-10-08
         llTitle = (LinearLayout)findViewById(R.id.llTitle);
         llSchedule = (LinearLayout)findViewById(R.id.llSchedule);
         llBus = (LinearLayout)findViewById(R.id.llBus);
@@ -1376,11 +1379,9 @@ public class CustomLayoutSet extends RelativeLayout {
             place2 = "길게 터치해서 정보를 입력하세요.";
             tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-
         }
         else
         {
-
             tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
@@ -1454,8 +1455,6 @@ public class CustomLayoutSet extends RelativeLayout {
 
 
     private void setWeatherImage(int type) {
-
-        //TODO 날씨 타입에 대해서 전부다 파악해서 다시 다 매핑할 것
 
         animWeather.stop();
 
@@ -1540,18 +1539,19 @@ public class CustomLayoutSet extends RelativeLayout {
                     if (RECManager.getInstance().getState() == RECManager.STOP) {
                         //녹음 시작
                         RECManager.getInstance().startRecording("fastrecord.mp4");
-
+                        Toast.makeText(mContext, "녹음을 시작합니다.", Toast.LENGTH_SHORT).show();
+                        recordRefresh();
                     } else if (RECManager.getInstance().getState() == RECManager.REC_ING) {
                         //녹음 중지
+                        Toast.makeText(mContext, "녹음을 종료하고 저장합니다.", Toast.LENGTH_SHORT).show();
                         RECManager.getInstance().stopRecording();
                         //그리고 재생
                         //RECManager.getInstance().startPlaying("test.mp4");
-                        //녹음이 완료후 파일 업로드
+                        //DebugToast.makeText(mContext,"녹음 파일을 전송", Toast.LENGTH_SHORT).show();
                         new AsyncHttpUpload(mContext, GlobalVariable.WEB_SERVER_IP, mhHandler,
                                 RECManager.getInstance().getDefaultExStoragePath() + "fastrecord.mp4", 1, AsyncHttpUpload.TYPE_REC);
-
+                        recordRefresh();
                     }
-                    recordRefresh();
                     return true;
                 }
                 return true;
@@ -1585,6 +1585,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
                     if (RECManager.getInstance().getState() == RECManager.STOP) {
                         //재생을 시작한다.
+                        Toast.makeText(mContext,"빠른 녹음 재생을 시작합니다.",Toast.LENGTH_SHORT).show();
                         RECManager.getInstance().startPlaying("fastrecord.mp4");
                     } else if (RECManager.getInstance().getState() == RECManager.PLAY_ING) {
                         //재생을 중지한다.
@@ -1638,7 +1639,7 @@ public class CustomLayoutSet extends RelativeLayout {
         }
         else if (RECManager.getInstance().getState() == RECManager.REC_ING)
         {
-            tvRecord.setText("녹음중");
+            tvRecord.setText("녹음 중지");
             ivRecord.setImageResource(R.drawable.ic_speaker_ing);
 
             tvPlaying.setText("녹음중 재생 불가");
@@ -2104,7 +2105,6 @@ public class CustomLayoutSet extends RelativeLayout {
         public doAllRefresh(Context context) {
             mContext = context;
             progressDialog = new TransparentProgressDialog(mContext);
-
             //progressDialog = new ProgressDialog(mContext, R.style.TransparentDialog);
         }
 
@@ -2121,8 +2121,7 @@ public class CustomLayoutSet extends RelativeLayout {
         @Override
         protected Void doInBackground(Void... params) {
 
-            //TODO Test >> Do work like communication with SQLITE, API REQUEST
-            //allRefresh();
+            //Test >> Do work like communication with SQLITE, API REQUEST
             try {
                 Thread.sleep(500);
             }
@@ -2135,7 +2134,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         @Override
         protected void onPostExecute(Void result) {
-            //TODO Do just changing UI by data from doInBackground
+            //Do just changing UI by data from doInBackground
             allRefresh();
             if(progressDialog.isShowing())
             {

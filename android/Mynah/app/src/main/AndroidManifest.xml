@@ -29,6 +29,13 @@
 
     <!-- google calendar -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!-- calendar -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
 
     <!-- WAKE_LOCK 추가 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -38,6 +45,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -183,7 +191,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.calendar.v2.API_KEY"
-            android:value="AIzaSyCPA6My1YuRw5h2pD1uCMVcz70ZeTPNgAg" />
+            android:value="AIzaSyC9pEnikoJQzajG-pkM4Sr7KX-2rkyG0uA" />
 
     </application>
 

@@ -184,11 +184,7 @@ public class WifiInfoActivity extends Activity {
 
         if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
             super.onBackPressed();
-            LoadingActivity activity = (LoadingActivity)LoadingActivity.activity;
-            activity.finish();
-
-            //wifi setting을
-
+            //TODO 여기 프로세스 확인해놓을 것!
         }
         else {
             backPressedTime = tempTime;

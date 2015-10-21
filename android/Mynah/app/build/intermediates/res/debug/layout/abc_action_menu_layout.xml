@@ -22,8 +22,4 @@
         app:divider="?attr/actionBarDivider"
         app:dividerPadding="12dip"
         android:gravity="center_vertical"/>
-<<<<<<< HEAD
 <!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_action_menu_layout.xml --><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/layout/abc_action_menu_layout.xml -->
-=======
-<!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/layout/abc_action_menu_layout.xml --><!-- From: file:/D:/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/layout/abc_action_menu_layout.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

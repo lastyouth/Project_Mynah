@@ -3,11 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-<<<<<<< HEAD
     android:background="@color/schedule_background">
-=======
-    android:background="@drawable/bg">
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,15 +23,10 @@
                 android:layout_height="match_parent"
                 android:dateTextAppearance="@style/CalendarText"
                 android:focusedMonthDateColor="#ffffff"
-<<<<<<< HEAD
                 android:weekNumberColor="#ded4d4"
                 android:longClickable="true"
                 android:showWeekNumber="true"
                 android:weekDayTextAppearance="@android:style/TextAppearance.Holo.Medium" />
-=======
-                android:longClickable="true"
-                android:showWeekNumber="true" />
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
         </LinearLayout>
 
         <TextView
@@ -108,8 +99,4 @@
 
 
 </LinearLayout>
-<<<<<<< HEAD
 <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_calendar.xml -->
-=======
-<!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_calendar.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

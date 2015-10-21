@@ -17,8 +17,4 @@
 <alpha xmlns:android="http://schemas.android.com/apk/res/android"
        android:interpolator="@android:anim/decelerate_interpolator"
        android:fromAlpha="1.0" android:toAlpha="0.0"
-<<<<<<< HEAD
        android:duration="@android:integer/config_mediumAnimTime" /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/anim/abc_fade_out.xml --><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/anim/abc_fade_out.xml -->
-=======
-       android:duration="@android:integer/config_mediumAnimTime" /><!-- From: file:/usr/local/google/buildbot/repo_clients/https___googleplex-android.googlesource.com_a_platform_manifest.git/lmp-mr1-supportlib-release/frameworks/support/v7/appcompat/res/anim/abc_fade_out.xml --><!-- From: file:/D:/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/anim/abc_fade_out.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

@@ -23,6 +23,7 @@ public final class GlobalVariable {
 
 	public static String VersionText = "";
 
+	public static final String BROADCAST_MESSAGE = "com.seven.broadcastreceiver.status";
 
 	public static final int SCHEDULE = 1;
 	public static final int BUS = 2;

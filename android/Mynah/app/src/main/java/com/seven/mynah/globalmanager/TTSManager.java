@@ -101,15 +101,19 @@ public class TTSManager implements TextToSpeech.OnInitListener {
 
 		//user name id로 파일명과 방식 지정.
 		String tempDestFile = appTmpPath.getAbsolutePath() + "/" + filename;
-		if (initFlag == 1)
+		try {
+			if (initFlag == 1)
+			{
+				tts.synthesizeToFile(text, myHashRender, tempDestFile);
+			}
+			else
+			{
+				Log.d(TAG, "tts 엔진이 아직 초기화되지 않음");
+			}
+		}catch (Exception e)
 		{
-			tts.synthesizeToFile(text, myHashRender, tempDestFile);
+			e.printStackTrace();
 		}
-		else
-		{
-			Log.d(TAG, "tts 엔진이 아직 초기화되지 않음");
-		}
-
 	}
 
 	public void startPlaying(String filename)

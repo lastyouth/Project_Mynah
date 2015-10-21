@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/values-v14/styles.xml -->
-=======
-    <!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/values-v14/styles.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar">
         <!-- API 14 theme customizations can go here. -->
     </style>
-<<<<<<< HEAD
     <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v14/values.xml -->
-=======
-    <!-- From: file:/D:/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v14/values.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat.Button">
         <item name="android:textSize">@dimen/abc_text_size_button_material</item>

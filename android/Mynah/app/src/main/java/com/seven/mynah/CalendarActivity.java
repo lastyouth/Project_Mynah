@@ -78,17 +78,17 @@ public class CalendarActivity extends Activity {
         cv = (CalendarView) this.findViewById(R.id.calendarView);
         ViewGroup vg = (ViewGroup) cv.getChildAt(0);
         View month_name = vg.getChildAt(0);
-        //View day_name = vg.getChildAt(1);
+        View day_name = vg.getChildAt(1);
         cv.setShowWeekNumber(false);
 
         if (month_name instanceof TextView) {
             ((TextView) month_name).setTextColor(WHITE);
         }
 
-        /*
+        //TODO 색깔 확인
         if(day_name instanceof TextView) {
-            ((TextView)day_name).setTextColor(Color.WHITE);
-        }*/
+            ((TextView)day_name).setTextColor(WHITE);
+        }
 
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

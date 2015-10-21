@@ -1,5 +1,6 @@
 package com.seven.mynah.globalmanager;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +103,8 @@ public class ServiceAccessManager {
     {
         return mDelete;
     }
+
+    public Activity getMainActivity() {return (MainActivity)mCtx;}
 
 
     public GetInformationService getService()

@@ -49,27 +49,24 @@ public class ChooseTTSActivity extends Activity {
 
     private static final String TAG = "ChooseTTSActivity";
 
+    private TransparentProgressDialog progressDialog;
+
     protected Handler mhHandler = new Handler() {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
             System.out.println("in handler");
             if (msg.what == -1) {
-                //   BreakTimeout();
-                //ConnectionError();
-                System.out.println("handler error");
-
+                Log.d(TAG,"handler error");
             }
 
             if (msg.what == 1) {
                 //핸들링 1일때 할 것
-                System.out.println("response : "+msg.obj);
-
+                Log.d(TAG, "handling 1 -> response : "+msg.obj);
             }
 
             if (msg.what == 2) {
                 //핸들링 2일때 할 것
-                System.out.println("handling 2 !");
-                System.out.println("response : "+msg.obj);
+                Log.d(TAG, "handling 2 -> response : " + msg.obj);
             }
 
         }
@@ -82,6 +79,7 @@ public class ChooseTTSActivity extends Activity {
 //        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 
+        progressDialog = new TransparentProgressDialog(ChooseTTSActivity.this);
         mArrayList = new ArrayList<String[]>();
 
         p = getSharedPreferences(ServiceAccessManager.TSTAT, MODE_PRIVATE);
@@ -181,84 +179,45 @@ public class ChooseTTSActivity extends Activity {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-
-        updateStatus();
-        //엑티비티 종료하기 직전에 변경된 스테이터스를 기반으로 서버에게 tts를 업데이트함
-
-        //ui쓰레드에서 하면 안된다....새로운 쓰레드를 만들고 거기서 해야함?
-
-        //ServiceAccessManager.getInstance().getService().sendTTSNow();
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-            ServiceAccessManager.getInstance().getService().sendTTS();
-        DebugToast.makeText(getApplicationContext(), "즉시 tts 생성 시퀸스 완료", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //new doAllRefresh(getApplication()).execute();
-
-
-        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    public void onBackPressed() {
+        super.onBackPressed();
+        //progressDialog = TransparentProgressDialog.show(ChooseTTSActivity.this, "", ".", true, false, null);
 
     }
 
-    class doAllRefresh extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void finish() {
+        super.finish();
+        progressDialog = TransparentProgressDialog.show(ChooseTTSActivity.this, "", ".", true, false, null);
+        updateStatus();
+        updateTTS();
+        //DebugToast.makeText(getApplicationContext(), "즉시 tts 생성 시퀸스 완료", Toast.LENGTH_SHORT).show();
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
-        private Context mContext;
-        private Boolean result = false;
-        private TransparentProgressDialog progressDialog;
-        //private ProgressDialog progressDialog;
 
-        public doAllRefresh(Context context) {
-            mContext = context;
-            progressDialog = new TransparentProgressDialog(mContext);
-
-            //progressDialog = new ProgressDialog(mContext, R.style.TransparentDialog);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            //progressDialog.setMessage("로딩중입니다...");
-            //progressDialog.setCancelable(false);
-            //progressDialog.show();
-
-            progressDialog = TransparentProgressDialog.show(mContext, "", ".", true, false, null);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            //TODO Test >> Do work like communication with SQLITE, API REQUEST
-            //allRefresh();
-
-            ServiceAccessManager.getInstance().getService().sendTTS();
-            DebugToast.makeText(getApplicationContext(), "즉시 tts 생성 시퀸스 완료", Toast.LENGTH_SHORT).show();
-
-            try {
-                Thread.sleep(500);
+    public void updateTTS()
+    {
+        //엑티비티 종료하기 직전에 변경된 스테이터스를 기반으로 서버에게 tts를 업데이트함
+        //ui쓰레드에서 하면 안된다....새로운 쓰레드를 만들고 거기서 해야함?
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServiceAccessManager.getInstance().getService().sendTTS(false);
+                Log.d(TAG,"즉시 tts 생성 시퀸스 완료");
             }
-            catch (InterruptedException e)
-            {
-                Log.d(TAG, e.getMessage());
-            }
-            return null;
-        }
+        }).start();
+    }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            //TODO Do just changing UI by data from doInBackground
-
-            if(progressDialog.isShowing())
-            {
-                progressDialog.dismiss();
-            }
+    @Override
+    protected void onDestroy()
+    {
+        if(progressDialog.isShowing())
+        {
+            progressDialog.dismiss();
         }
+        super.onDestroy();
     }
 
 }

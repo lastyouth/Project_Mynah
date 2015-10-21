@@ -2,14 +2,17 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,6 +24,8 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.network.AsyncHttpTask;
+import com.seven.mynah.util.DebugToast;
+import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +50,10 @@ public class GlobalSettingActivity extends Activity{
 	private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER, RECORD};
 	private int ttsStatus;
 	private SharedPreferences p;
+
+	public static final int SIGNAL_UI_UPDATE = 0x10001001;
+
+	private static final String TAG = "GlobalSettingActivity";
 
 	//클래스 안에 선언해놓을 것
 	protected Handler mHandler = new Handler() {
@@ -117,6 +126,7 @@ public class GlobalSettingActivity extends Activity{
 		}
 	};
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -139,7 +149,7 @@ public class GlobalSettingActivity extends Activity{
 		String setting2[] = {"TTS 설정", "현재 선택된 TTS 정보"};
 		String setting3[] = {"와이파이 접속 정보", ""};
 		String setting4[] = {"제품 연결 해제", "product2"};
-		String setting5[] = {"라즈베리파이 종료",""};
+		String setting5[] = {"Mynah Device 종료",""};
 
 		//앱정보
 		String version = "";
@@ -168,7 +178,6 @@ public class GlobalSettingActivity extends Activity{
 		{
 			setting2[1] = settingTTS;
 		}
-
 
 
 		//와이파이정보
@@ -300,10 +309,12 @@ public class GlobalSettingActivity extends Activity{
 		alert.show();
 	}
 
+
 	@Override
 	public void finish() {
 		super.finish();
 		overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 //		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
+
 }

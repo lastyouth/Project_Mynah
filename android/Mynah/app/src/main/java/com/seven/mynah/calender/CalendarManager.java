@@ -3,12 +3,15 @@ package com.seven.mynah.calender;
 import android.content.Context;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 
 import com.google.api.services.calendar.CalendarScopes;
@@ -32,6 +35,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
+import android.net.Credentials;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -46,8 +50,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,6 +70,7 @@ public class CalendarManager {
     private GoogleAccountCredential credential;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+    //final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -80,6 +90,8 @@ public class CalendarManager {
     private SchedulesOnDateInfo schedulesOnDateInfo;
 
     private String TAG = "CalendarManager";
+
+    private static final String APPLICATION_NAME = "Google Calendar API";
 
     public CalendarManager(Context _mContext, Activity _activity) {
         mContext = _mContext;
@@ -102,10 +114,9 @@ public class CalendarManager {
 
         mService = new com.google.api.services.calendar.Calendar.Builder(
                 transport, jsonFactory, credential)
-                .setApplicationName("Mynah")
+                .setApplicationName(APPLICATION_NAME)
                 .build();
     }
-
 
     public void asyncSchedule() {
         if (isGooglePlayServicesAvailable()) {
@@ -241,15 +252,10 @@ public class CalendarManager {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-<<<<<<< HEAD
-                   //Temp Setting
 
-                //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-=======
                 //Temp Setting
                 DebugToast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                 Log.d(TAG,message);
->>>>>>> 9bd4bc3743536782705cc730d800a1975d0877b8
 //                mStatusText.setText(message);
             }
         });

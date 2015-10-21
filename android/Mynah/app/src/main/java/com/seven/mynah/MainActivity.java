@@ -12,8 +12,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -84,6 +86,7 @@ public class MainActivity extends Activity {
 
     RPiBluetoothConnectionManager BTmanager;
 
+    private BroadcastReceiver mReceiver = null;
 
     //GCM
     public static final String EXTRA_MESSAGE = "message";
@@ -120,9 +123,10 @@ public class MainActivity extends Activity {
         startService(service);
 
 
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        layout = new CustomLayoutSet(this);
+        layout = new CustomLayoutSet(this,MainActivity.this);
         layout.setAnimationDuration(400);
         layout.setInterpolator(new AccelerateDecelerateInterpolator());
         setContentView(layout);
@@ -205,7 +209,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
+
         Log.d(TAG, "onDestroy Start");
         super.onDestroy();
 //        Toast.makeText(this,"MainActivity OnDestory",Toast.LENGTH_SHORT).show();
@@ -284,6 +288,26 @@ public class MainActivity extends Activity {
         }
         Log.i(TAG, "Registration id : " + registrationId);
         return registrationId;
+    }
+
+    private void registerReceiver() {
+
+        if(mReceiver != null)
+            return;
+
+        final IntentFilter theFilter = new IntentFilter();
+        theFilter.addAction(GlobalVariable.BROADCAST_MESSAGE);
+        this.mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //int strNewPostion = intent.getIntExtra("value", 0);
+                if (intent.getAction().equals(GlobalVariable.BROADCAST_MESSAGE)) {
+                    if(layout == null) return;
+                    layout.changeStatusText();
+                }
+            }
+        };
+        this.registerReceiver(this.mReceiver, theFilter);
     }
 
 
@@ -389,6 +413,7 @@ public class MainActivity extends Activity {
             //mHandler.sendEmptyMessage(SIGNAL_UI_UPDATE);
         }
 
+        registerReceiver();
 
         Log.d(TAG, "onResume Finish");
     }

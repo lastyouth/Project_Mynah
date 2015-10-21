@@ -171,11 +171,19 @@ public class DBManager {
 
 		// city코드를 기준으로 현재 시간의 이후 정보를 하루치로 return함
 		// 현재 시간에 대해서 기준 필요함..
+//		String sql = "select * from " + MynahDB._WEATHER_TABLE_NAME + " where "
+//				+ MynahDB._WEATHER_COL_CITY_CODE + "= '"
+//				+ winfo.location.city_code + "' and "
+//				+ MynahDB._WEATHER_COL_DATETIME
+//				+ " > datetime('now','localtime');";
+
+
 		String sql = "select * from " + MynahDB._WEATHER_TABLE_NAME + " where "
 				+ MynahDB._WEATHER_COL_CITY_CODE + "= '"
 				+ winfo.location.city_code + "' and "
 				+ MynahDB._WEATHER_COL_DATETIME
-				+ " > datetime('now','localtime');";
+				+ " >= datetime('now','localtime');";
+
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 
@@ -226,8 +234,6 @@ public class DBManager {
 
 			c.moveToNext();
 		}
-
-
 		Log.d(TAG,"getWeatherDB 완료");
 		return winfo;
 
@@ -635,7 +641,7 @@ public class DBManager {
 				+ binfo.route.busRouteId + "' and "
 				+ MynahDB._BUS_COL_STATION_ORD + "= '" + binfo.staOrd
 				+ "' and " + MynahDB._BUS_COL_ARR_TIME
-				+ " > datetime('now','localtime') order by "
+				+ " >= datetime('now','localtime') order by "
 				+ MynahDB._BUS_COL_ARR_TIME + " ;";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
@@ -841,7 +847,7 @@ public class DBManager {
 				+ MynahDB._SUBWAY_COL_WEEK_TAG + " = '" + swinfo.week_tag
 				+ "' and " + MynahDB._SUBWAY_COL_INOUT_TAG + " = '"
 				+ swinfo.station.inout_tag + "' and " + MynahDB._SUBWAY_COL_ARR_TIME
-				+ "  > time('now','localtime') order by " + MynahDB._SUBWAY_COL_ARR_TIME + ";";
+				+ "  >= time('now','localtime') order by " + MynahDB._SUBWAY_COL_ARR_TIME + ";";
 
 		Cursor c = dbh.mDB.rawQuery(sql, null);
 

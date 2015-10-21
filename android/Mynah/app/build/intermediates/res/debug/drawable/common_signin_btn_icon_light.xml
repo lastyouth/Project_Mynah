@@ -16,8 +16,4 @@
     <item
         android:drawable="@drawable/common_signin_btn_icon_normal_light" />
 </selector>
-<<<<<<< HEAD
 <!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/res/drawable/common_signin_btn_icon_light.xml -->
-=======
-<!-- From: file:/D:/Project_Mynah/android/Mynah/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/res/drawable/common_signin_btn_icon_light.xml -->
->>>>>>> 1a971f5676b05f70bc9d2c237efd87711cfa1a0d

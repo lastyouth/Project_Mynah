@@ -81,7 +81,7 @@
                 android:layout_height="match_parent"
                 android:textColor="#030303"
                 android:textSize="10sp"
-                android:text="Mynah device"
+                android:text="Mynah Device"
                 android:gravity="center"
                 android:layout_marginLeft="10dp"/>
 
