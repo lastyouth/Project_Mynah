@@ -9,4 +9,8 @@ lines = lines.replace(' ','')
 
 splited = lines.split('\n')
 
-print splited
+for line in splited:
+    if str.startswith(line,'ESSID') == True:
+        print line.split('ESSID:')[1]
+
+

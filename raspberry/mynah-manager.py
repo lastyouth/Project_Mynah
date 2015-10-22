@@ -15,34 +15,116 @@ import httplib
 import random
 import datetime
 import socket
+import sbhwifi
 
-socket.setdefaulttimeout(3)
+# prevent long timeout of server response
+socket.setdefaulttimeout(4)
 
+# activate BLE advertising and scanning
 os.system('sudo hciconfig hci0 piscan')
 os.system('sudo hciconfig hci0 leadv')
 # global variables
 
-g_webhost = "211.189.20.165:13337"
+g_webhost = "211.189.20.165:13337" #server address
 
-g_defaultpath = '/home/pi/share/mynahmedia/'
+g_defaultpath = '/home/pi/share/mynahmedia/' #media default path
 
-#this product id
+#this product id - holding
 g_productid = 'product2'
 
-g_productuser = {}
+g_productuser = {} # user who registers using g_productid
 
+# lock for sensing and web request 
 g_lock = threading.Lock()
 
+# lock for accepting client
 g_clientlock = threading.Lock()
 
 GPIO.setmode(GPIO.BCM)
 
+# client who is connected via Bluetooth
 g_clientlist = {}
 
 g_messagelist = []
 
 g_currenttemp = 0
 
+
+#LED control class
+class LEDSensor(threading.Thread):
+    def __init__(self,sensortype):
+        threading.Thread.__init__(self)
+        self.stype = sensortype
+        if self.stype == 'left':
+            self.out = 24
+        elif self.stype == 'right':
+            self.out = 27
+        GPIO.setup(self.out,GPIO.OUT)
+        GPIO.output(self.out,GPIO.LOW)
+
+        self.toggle = False
+        self.on = False
+
+    def setToggle(self,flag,turn_on):
+        self.toggle = flag
+        self.after = turn_on
+
+    def onLED(self):
+        self.on = True
+        GPIO.output(self.out,GPIO.HIGH)
+
+    def offLED(self):
+        self.on = False
+        GPIO.output(self.out,GPIO.LOW)
+
+    def run(self):
+        while self.toggle == True:
+            if self.on == True:
+                self.offLED()
+            else:
+                self.onLED()
+            time.sleep(0.75)
+        self.offLED()
+        if self.after == True:
+            self.onLED()
+            self.after = False
+
+
+#left LED for wifi
+g_ledLeftWifi = LEDSensor('left')
+
+#right LED for bluetooth
+g_ledRightBluetooth = LEDSensor('right')
+
+def wifiIsAvailable():
+    global g_ledLeftWifi
+    hostname = '211.189.20.165'
+
+    response = os.system('fping -c 1 -t 2000 '+hostname)
+
+    if response == 0:
+        g_ledLeftWifi.setToggle(False,True)
+        return True
+    else:
+        g_ledLeftWifi.setToggle(False,False)
+        g_ledLeftWifi = LEDSensor('left')
+        g_ledLeftWifi.setToggle(True,False)
+        g_ledLeftWifi.start()
+        return False
+
+def init():
+    os.system('mplayer '+g_defaultpath+'online.mp3')
+    g_ledLeftWifi.setToggle(True,False)
+    g_ledRightBluetooth.setToggle(True,False)
+
+    #g_ledLeftWifi.daemon = True
+    #g_ledRightBluetooth.daemon = True
+
+    g_ledLeftWifi.start()
+    g_ledRightBluetooth.start()
+
+
+# add client via bluetootn connection
 def addClient(obj):
     g_clientlock.acquire()
     try:
@@ -53,6 +135,10 @@ def addClient(obj):
     except:
         pass
     g_clientlock.release()
+    # LED
+    if len(g_clientlist) > 0:
+        g_ledRightBluetooth.setToggle(False,True)
+
 
 def removeClient(obj):
     g_clientlock.acquire()
@@ -64,12 +150,26 @@ def removeClient(obj):
     except:
         pass
     g_clientlock.release()
+    if len(g_clientlist) == 0:
+        global g_ledRightBluetooth
+        g_ledRightBluetooth.setToggle(False,False)
+        g_ledRightBluetooth = LEDSensor('right')
+        g_ledRightBluetooth.setToggle(True,False)
+        g_ledRightBluetooth.start()
 
 def broadcastCurrentClient(mtype):
     g_clientlock.acquire()
     for key, value in g_clientlist.iteritems():
         print "broadcast Key : ",key," type : ",mtype
         value.sendTo(mtype)
+    g_clientlock.release()
+
+def sendTargetClient(mtype,mid):
+    g_clientlock.acquire()
+    for key, value in g_clientlist.iteritems():
+        if key == mid:
+            print "Target Key : ",mid," Send : ",mtype
+            value.sendTo(mtype)
     g_clientlock.release()
 
 def requestHTTPS(mtype,tid,dtype,data):
@@ -149,8 +249,29 @@ class ClientProcessThread(threading.Thread):
                     ret += str(g_currenttemp)
                     self.sock.send(ret)
                     print "temp"
+                elif ctype == "newwifi":
+                    wifiinfo = cdata.split('//')
+                    ret = 'wifiresultsuccess'
+                    print 'wifiinfo : ',wifiinfo
+                    if len(wifiinfo) != 2:
+                        ret = 'wifiresultfail'
+                    flag = sbhwifi.addNewWifiAP(wifiinfo[0],wifiinfo[1])
+
+                    if flag == False:
+                        ret = 'wifiresultfail'
+
+                    print "addNewWifiAP resullt : ",ret
+                    sendTargetClient(ret,cid)
+                elif ctype == 'poweroff':
+                    os.system('poweroff')
+                elif ctype == 'stopsound':
+                    print 'stopsound in'
+                    os.system('pkill -9 omxplayer')
+                    os.system('pkill -9 mplayer')
+                    print 'Success'
+
                 else:
-                    print "bad"
+                    print "BAD REQUEST FROM CLIENT"
 
         except IOError:
             pass
@@ -249,46 +370,49 @@ class MynahManager:
             if brssi == -200:
                 os.system('mplayer '+g_defaultpath+'no_connected_device.mp3')
             else:
-                usermediaobj = g_productuser[cid];
-                policy = usermediaobj.getPolicy();
-                print cid + ' policy is ' + policy
-                if policy == 'n':
-                    os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                elif policy == 't':
-                    filename = usermediaobj.getTTSFileName()
-                    if filename == '':
+                try:
+                    usermediaobj = g_productuser[cid];
+                    policy = usermediaobj.getPolicy();
+                    print cid + ' policy is ' + policy
+                    if policy == 'n':
                         os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                    elif policy == 't':
+                        filename = usermediaobj.getTTSFileName()
+                        if filename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        else:
+                            os.system('mplayer '+g_defaultpath+filename)
+                    elif policy == 'r':
+                        filename = usermediaobj.getRECFileName()
+                        if filename == '':
+                            #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                            print 'no REC files'
+                        else:
+                            os.system('mplayer '+g_defaultpath+filename)
+                    elif policy == 'b':
+                        ttsfilename = usermediaobj.getTTSFileName()
+                        recfilename = usermediaobj.getRECFileName()
+                        print 'ttsfilename : '+ttsfilename
+                        if ttsfilename == '':
+                            os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                        else:
+                            os.system('mplayer '+g_defaultpath+ttsfilename)
+                        if recfilename == '':
+                            #os.system('mplayer '+g_defaultpath+'nothing.mp3')
+                            print "NO REC files"
+                        else:
+                            os.system('mplayer '+g_defaultpath+recfilename)
                     else:
-                        os.system('mplayer '+g_defaultpath+filename)
-                elif policy == 'r':
-                    filename = usermediaobj.getRECFileName()
-                    if filename == '':
-                        #os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        print 'no REC files'
-                    else:
-                        os.system('mplayer '+g_defaultpath+filename)
-                elif policy == 'b':
-                    ttsfilename = usermediaobj.getTTSFileName()
-                    recfilename = usermediaobj.getRECFileName()
-                    print 'ttsfilename : '+ttsfilename
-                    if ttsfilename == '':
-                        os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                    else:
-                        os.system('mplayer '+g_defaultpath+ttsfilename)
-                    if recfilename == '':
-                        #os.system('mplayer '+g_defaultpath+'nothing.mp3')
-                        print "NO REC files"
-                    else:
-                        os.system('mplayer '+g_defaultpath+recfilename)
-                else:
-                    print "Unknown policy"
-                g_productuser[cid].makeClear()
-                time.sleep(6)
+                        print "Unknown policy"
+                    g_productuser[cid].makeClear()
+                    time.sleep(2)
+                except:
+                    pass
             print "To Out Processing"
         else:
             os.system('mplayer '+g_defaultpath+'defaultin.mp3')
             ran = random.randrange(1,49)
-            #os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
+            os.system('omxplayer -o local '+g_defaultpath+'music/T/'+str(ran)+'.mp3 --vol -500')
             print "Current Hour : "+str(datetime.datetime.now().hour)
             print "To In Processing"
 
@@ -306,6 +430,7 @@ class MynahManager:
                 self.t.start()
         else:
             if self.s1Activated == True and self.s2Activated == True:
+                self.processInternal()
                 self.s1Activated = False
                 self.s2Activated = False
                 self.directionFlag = self.DIRECTION_TYPE_NONE
@@ -322,7 +447,7 @@ class MynahManager:
         self.check()
 
 class DistanceSensor(threading.Thread):
-    DETECT_THRESHOLD_VALUE = 0.50
+    DETECT_THRESHOLD_VALUE = 0.265
     MAX_WAIT_VALUE = 10000
     MAX_RE_CAPTURE_TIME = 0.05
 
@@ -401,8 +526,8 @@ class DistanceSensor(threading.Thread):
                     self.seq_queue.put(dist)
                     self.distance_sum += dist
                 else:
-                    avg = self.distance_sum / self.distance_cnt
-
+                    #avg = self.distance_sum / self.distance_cnt
+                    avg = 200
                     if dist < (avg*self.DETECT_THRESHOLD_VALUE):
                         print "sensor ",self.sensortype," Detect person : ",dist
                         if self.sensortype == 1:
@@ -413,10 +538,10 @@ class DistanceSensor(threading.Thread):
                         dmin = avg*0.9
                         dmax = avg*1.1
 
-                        if dmin <= dist and dist <= dmax:
-                            self.distance_sum -= self.seq_queue.get()
-                            self.seq_queue.put(dist)
-                            self.distance_sum += dist
+                        #if dmin <= dist and dist <= dmax:
+                        #    self.distance_sum -= self.seq_queue.get()
+                        #    self.seq_queue.put(dist)
+                        #    self.distance_sum += dist
 
                             #print "Sensor",self.sensortype," Distance : ",dist,"cm Avg :",avg
 
@@ -456,81 +581,115 @@ class UserMediaData:
         self.recfile = ''
 
 g_Mynah = MynahManager()
-
-#g_readtempthread = ReadCurrentTempThread("20:15:04:24:13:32")
-#g_readtempthread.daemon = True
-#g_readtempthread.start()
-
-g_serverthread = BTServerThread();
-g_serverthread.daemon = True
-g_serverthread.start();
-
+g_serverthread = BTServerThread()
 g_sensor1 = DistanceSensor(1)
-g_sensor1.ready()
-g_sensor1.daemon = True
-g_sensor1.start()
-
 g_sensor2 = DistanceSensor(2)
-g_sensor2.ready()
-g_sensor2.daemon = True
-g_sensor2.start()
 
-while True:
-    #g_lock.acquire()
-    data = requestHTTPS('get_devices','','','')
-    if data == False:
-        print 'FATAL ERROR : Server is not responding'
-        #g_lock.release()
-    else:
-        print 'Request deviceids from product2'
-        for pp in data['attach']:
-            if pp['device_id'] in g_productuser.keys():
-                print pp['device_id']+'is already in'
-            else:
-                g_productuser[pp['device_id']] = UserMediaData()
-        print g_productuser
-        print 'Request file from server'
-        for key in g_productuser.keys():
-            print key +' request file'
-            data = requestHTTPS('get_media',key,'','')
-            if data == False:
-                print 'Current Web Request Failure'
-            else:
-                targetlen = data['attach']
-                #record voice
-                recname = data['attach']['rec_file_name'];
-                if recname == '':
-                    print key+' : No recorded voice'
+def main():
+    #g_Mynah = MynahManager()
+
+    #g_readtempthread = ReadCurrentTempThread("20:15:04:24:13:32")
+    #g_readtempthread.daemon = True
+    #g_readtempthread.start()
+
+    #g_serverthread = BTServerThread();
+    g_serverthread.daemon = True
+    g_serverthread.start();
+
+    #g_sensor1 = DistanceSensor(1)
+    g_sensor1.ready()
+    g_sensor1.daemon = True
+    g_sensor1.start()
+
+    #g_sensor2 = DistanceSensor(2)
+    g_sensor2.ready()
+    g_sensor2.daemon = True
+    g_sensor2.start()
+
+    while True:
+        #g_lock.acquire()
+        data = requestHTTPS('get_devices','','','')
+        if data == False:
+            print 'FATAL ERROR : Server is not responding'
+            #g_lock.release()
+        else:
+            print 'Request deviceids from product2'
+            for pp in data['attach']:
+                if pp['device_id'] in g_productuser.keys():
+                    print pp['device_id']+'is already in'
                 else:
-                    print key+' : recorded file exists ' +recname
-                    if g_productuser[key].isDuplicated(recname):
-                        print recname + 'is already exist'
+                    g_productuser[pp['device_id']] = UserMediaData()
+            print g_productuser
+            print 'Request file from server'
+            for key in g_productuser.keys():
+                print key +' request file'
+                data = requestHTTPS('get_media',key,'','')
+                if data == False:
+                    print 'Current Web Request Failure'
+                else:
+                    targetlen = data['attach']
+                    #record voice
+                    recname = data['attach']['rec_file_name'];
+                    if recname == '':
+                        print key+' : No recorded voice'
                     else:
-                        filedata = base64.decodestring(data['attach']['rec_file'])
+                        print key+' : recorded file exists ' +recname
+                        if g_productuser[key].isDuplicated(recname):
+                            print recname + 'is already exist'
+                        else:
+                            filedata = base64.decodestring(data['attach']['rec_file'])
+                            g_lock.acquire()
+                            fp = open(g_defaultpath+recname,'w')
+                            fp.write(filedata)
+                            fp.close()
+                            g_lock.release();
+                            g_productuser[key].setRECFileName(recname)
+                    ttsname = data['attach']['tts_file_name']
+                    if ttsname == '':
+                        print key+' : No tts file'
+                    else:
+                        filedata = base64.decodestring(data['attach']['tts_file'])
                         g_lock.acquire()
-                        fp = open(g_defaultpath+recname,'w')
+                        fp = open(g_defaultpath+ttsname,'w')
                         fp.write(filedata)
                         fp.close()
-                        g_lock.release();
-                        g_productuser[key].setRECFileName(recname)
-                ttsname = data['attach']['tts_file_name']
-                if ttsname == '':
-                    print key+' : No tts file'
-                else:
-                    filedata = base64.decodestring(data['attach']['tts_file'])
-                    g_lock.acquire()
-                    fp = open(g_defaultpath+ttsname,'w')
-                    fp.write(filedata)
-                    fp.close()
-                    g_lock.release()
-                    g_productuser[key].setTTSFileName(ttsname)
-                policy = data['attach']['opt']
-                print key+' : policy ' +policy
-                g_productuser[key].setPolicy(policy)
-        #g_lock.release()
-    time.sleep(10)
-    i=1
+                        g_lock.release()
+                        g_productuser[key].setTTSFileName(ttsname)
+                    policy = data['attach']['opt']
+                    print key+' : policy ' +policy
+                    g_productuser[key].setPolicy(policy)
+        wifiIsAvailable()
+        time.sleep(10)
+        i=1
 
-GPIO.cleanup()
+g_finalizeflag = False
 
-print "all done"
+def finalize():
+    global g_finalizeflag
+    print 'finalize : ',g_finalizeflag
+    if g_finalizeflag:
+        print 'finalize mynah, GOOD BYE!'
+        global g_finalizeflag
+        global g_ledRightBluetooth
+        global g_ledLeftWifi
+
+        g_finalizeflag = True
+
+        g_ledRightBluetooth.setToggle(False,False)
+        g_ledLeftWifi.setToggle(False,False)
+
+        g_ledRightBluetooth.join()
+        g_ledLeftWifi.join()
+
+        GPIO.cleanup()
+
+if __name__ == '__main__':
+    try:
+        init()
+        main()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        g_serverthread.stopServer()
+    GPIO.cleanup()
+    g_serverthread.stopServer()
+    print "all done"

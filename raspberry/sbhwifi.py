@@ -46,14 +46,14 @@ def parse():
     for line in lines:
         line = line.replace('\t','')
         line = line.replace('\n','')
-        print line
-        print start
+        #print line
+        #print start
         if str.startswith(line,'network') == True:
             start = True
             continue
 
         if start == True and str.startswith(line,'}'):
-            print 'makefalse'
+            #print 'makefalse'
             start = False
             #then append it
             g_wpalist.append(info)
@@ -62,7 +62,7 @@ def parse():
         if start == True:
             #this we can do it only using parse
             spilted = line.split('=')
-            print 'spilted : ',spilted
+            #print 'spilted : ',spilted
             info.set(spilted[0],spilted[1])
 
 
@@ -80,11 +80,11 @@ def updateWpa():
         else:
             res.append(line)
 
-    print 'pre-condition',res
+    #print 'pre-condition',res
     for wpa in g_wpalist:
         res = res+wpa.getSavedString()
 
-    print 'final',res
+    #print 'final',res
 
     f = open('/etc/wpa_supplicant/wpa_supplicant.conf','w')
 
@@ -92,13 +92,13 @@ def updateWpa():
         f.write(line)
 
     f.close()
-    print 'finished!'
+    print 'Update wpa_supplicant is finished!'
 
 
 
 def ssidExist(ssid):
     for wpa in g_wpalist:
-        print 'ssid : '+wpa.getValue('ssid')
+        #print 'ssid : '+wpa.getValue('ssid')
         if wpa.getValue('ssid') == '"'+ssid+'"':
             return True
     return False
@@ -106,7 +106,7 @@ def ssidExist(ssid):
 def setEnabled(ssid):
     print 'setEnabled ssid is '+ssid
     if ssidExist(ssid) == True:
-        print 'ssid is exists'
+        #print 'ssid is exists'
         for i in range(len(g_wpalist)):
             if g_wpalist[i].getValue('ssid') == '"'+ssid+'"':
                 g_wpalist[i].set('disabled','0')
@@ -114,8 +114,34 @@ def setEnabled(ssid):
                 g_wpalist[i].set('disabled','1')
         updateWpa()
 
+def ssidScannable(ssid):
+    f = os.popen('iwlist wlan0 scan','r')
+    lines = f.read()
+    lines = lines.replace('\t','')
+    lines = lines.replace(' ','')
+
+    splited = lines.split('\n')
+
+    for line in splited:
+        if str.startswith(line,'ESSID') == True:
+            if '"'+ssid+'"' ==  line.split('ESSID:')[1]:
+                return True
+    return False
+
+
 def addNewWifiAP(ssid,password):
     if ssidExist(ssid) == True:
+        for i in range(len(g_wpalist)):
+            if g_wpalist[i].getValue('ssid') == '"'+ssid+'"':
+                g_wpalist[i].set('ssid','"'+ssid+'"')
+                g_wpalist[i].set('psk','"'+password+'"')
+
+                updateWpa()
+                setEnabled(ssid)
+                os.system('ifdown wlan0')
+                os.system('ifup wlan0')
+                return True
+    elif ssidScannable(ssid) == False:
         return False
     else:
         wpa = wpa_info()
@@ -125,12 +151,9 @@ def addNewWifiAP(ssid,password):
         g_wpalist.append(wpa)
 
         updateWpa()
-
+        setEnabled(ssid)
+        os.system('ifdown wlan0')
+        os.system('ifup wlan0')
         return True
-
-parse()
-setEnabled('G2_2075')
-os.system('ifdown wlan0')
-os.system('ifup wlan0')
 
 
