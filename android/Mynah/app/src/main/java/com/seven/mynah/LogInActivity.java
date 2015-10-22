@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.UserHandle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -56,16 +57,19 @@ public class LogInActivity extends Activity{
     private EditText etUserId;
     private EditText etUserPassword;
 
+    private static final String TAG = "LoginActivity";
+
+
+    //현재 미 사용중
 
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
-            System.out.println("in handler");
+            Log.d(TAG, "in Handler");
             if (msg.what == -1) {
                 //   BreakTimeout();
-                //ConnectionError();
-                System.out.println("handler error");
+                Log.d(TAG,"handler error");
             }
 
             if (msg.what == 1) {
@@ -189,9 +193,8 @@ public class LogInActivity extends Activity{
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-
-
 
         setContentView(R.layout.activity_login);
         etUserId = (EditText) findViewById(R.id.etUserId);

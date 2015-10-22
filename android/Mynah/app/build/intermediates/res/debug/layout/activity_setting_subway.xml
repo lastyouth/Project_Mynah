@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@color/subway_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -107,4 +107,4 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
 
-</LinearLayout><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_setting_subway.xml -->
+</LinearLayout><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_setting_subway.xml -->

@@ -13,8 +13,17 @@ public final class GlobalVariable {
 	public static boolean isScheduleDBUpdated = false;
 	public static boolean isServerOn = true;
 	public static boolean isBluetoothOn = false;
-	public static boolean isDebugMode = false;
+	public static boolean isDebugMode = true;
+	//public static boolean isWifiSetting = false;
+	public static boolean isRaspberryOn = false;
 
+	public static int SmallVersion = 0;
+	public static int BigVersion = 1;
+
+
+	public static String VersionText = "";
+
+	public static final String BROADCAST_MESSAGE = "com.seven.broadcastreceiver.status";
 
 	public static final int SCHEDULE = 1;
 	public static final int BUS = 2;

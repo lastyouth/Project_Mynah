@@ -1,6 +1,7 @@
 package com.seven.mynah;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.seven.mynah.artifacts.BusInfo;
 import com.seven.mynah.artifacts.ScheduleInfo;
@@ -43,10 +45,12 @@ import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.network.AsyncHttpTask;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,8 +113,19 @@ public class CustomLayoutSet extends RelativeLayout {
     private TextView tvTitle;
     private ImageView ivTitle;
 
-    //for Schedule
+    private TextView tvTitleText1;
+    private ImageView ivIcon1;
 
+    private TextView tvTitleText2;
+    private ImageView ivIcon2;
+
+    private TextView tvTitleText3;
+    private ImageView ivIcon3;
+
+    private TextView tvTitleText4;
+
+
+    //for Schedule
     private ImageView ivScheduleImage;
     private LinearLayout llScheduleImage;
 
@@ -237,6 +252,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
     private Context mContext;
     private TTSManager mTTSManager;
+    private Activity mActivity;
 
 
     long animationDuration = 800;
@@ -282,11 +298,12 @@ public class CustomLayoutSet extends RelativeLayout {
         return mHandler;
     }
 
-    public CustomLayoutSet(final Context context) {
+    public CustomLayoutSet(final Context context, Activity activity) {
 
         super(context);
 
         mContext = context;
+        mActivity = activity;
 
         f_list = new ArrayList<RelativeLayout>();
         mTTSManager = new TTSManager(mContext);
@@ -316,6 +333,8 @@ public class CustomLayoutSet extends RelativeLayout {
 
                 initWithDimentions(context);
                 initMainLayout();
+
+                initTitleView();
                 initWeatherView();
                 initBusView();
                 initSubwayView();
@@ -333,6 +352,9 @@ public class CustomLayoutSet extends RelativeLayout {
                 initClickListener();
                 initAnimation();
 
+                changeStatusText();
+                changeUpdateTime();
+
             }
         });
     }
@@ -341,6 +363,57 @@ public class CustomLayoutSet extends RelativeLayout {
     {
         //ActionBar bar = context.getActionBar();
         //bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00C4CD")));
+    }
+
+
+    public void changeStatusText()
+    {
+        //String text = "";
+        if(GlobalVariable.isServerOn)
+        {
+            //text = "Server";
+            ivIcon1.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = "Server";
+            ivIcon1.setImageResource(R.drawable.ic_x);
+        }
+        //tvTitleText1.setText(text);
+
+        if(GlobalVariable.isBluetoothOn)
+        {
+            //text = " Bluetooth";
+            ivIcon2.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = " Bluetooth";
+            ivIcon2.setImageResource(R.drawable.ic_x);
+        }
+
+        //tvTitleText2.setText(text);
+
+        if(GlobalVariable.isRaspberryOn)
+        {
+            //text = "Mynah Device";
+            ivIcon3.setImageResource(R.drawable.ic_v);
+        }
+        else
+        {
+            //text = "Mynah Device";
+            ivIcon3.setImageResource(R.drawable.ic_x);
+        }
+
+        //tvTitleText3.setText(text);
+
+
+    }
+
+    public void changeUpdateTime()
+    {
+        //TODO 일단은 디폴트로 시간 없는걸로 표기
+        tvTitleText4.setText("");
     }
 
 
@@ -372,6 +445,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
     }
 
+
     public void startAnimationOnFocusChanged()
     {
         for(int i=1;i<size-1;i++)
@@ -380,6 +454,7 @@ public class CustomLayoutSet extends RelativeLayout {
             else showAnimation(i,false);
         }
     }
+
 
     private void showAnimation(int type, boolean on_off)
     {
@@ -554,10 +629,9 @@ public class CustomLayoutSet extends RelativeLayout {
                     return true;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     llRefresh.setAlpha((float) 1.0);
-                    allRefresh();
-                    ttsTest();
+                    //allRefresh();
                     new doAllRefresh(mContext).execute();
-
+                    ttsTest();
                     return true;
                 }
                 return true;
@@ -664,8 +738,6 @@ public class CustomLayoutSet extends RelativeLayout {
     {
 
         //default type에 대해서 서술
-        // TODO: 2015-10-08
-
         llTitle = (LinearLayout)findViewById(R.id.llTitle);
         llSchedule = (LinearLayout)findViewById(R.id.llSchedule);
         llBus = (LinearLayout)findViewById(R.id.llBus);
@@ -678,6 +750,21 @@ public class CustomLayoutSet extends RelativeLayout {
         llPlaying = (LinearLayout)findViewById(R.id.llPlaying);
 
     }
+
+    private void initTitleView()
+    {
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvTitleText1 = (TextView)findViewById(R.id.tvTitleText1);
+        tvTitleText2 = (TextView)findViewById(R.id.tvTitleText2);
+        tvTitleText3 = (TextView)findViewById(R.id.tvTitleText3);
+        tvTitleText4 = (TextView)findViewById(R.id.tvTitleText4);
+
+        ivIcon1 = (ImageView)findViewById(R.id.ivIcon1);
+        ivIcon2 = (ImageView)findViewById(R.id.ivIcon2);
+        ivIcon3 = (ImageView)findViewById(R.id.ivIcon3);
+
+    }
+
 
     //SCHEDULE
     private void initScheduleView()
@@ -959,7 +1046,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         String time = binfo.array_ttb.get(pos).time;
         Date date = new Date();
-        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         try {
             date = date_format.parse(time);
@@ -1075,6 +1162,7 @@ public class CustomLayoutSet extends RelativeLayout {
         String stopname, linename;
         String dirname1, time1, text1;
         String dirname2, time2, text2;
+        String tag = "";
 
         stopname = ""; linename = "";
         dirname1 = ""; time1 = ""; text1 = "";
@@ -1094,8 +1182,20 @@ public class CustomLayoutSet extends RelativeLayout {
             tvSubwayLineName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
             tvSubwayLineNameSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
 
-            linename = sinfo.station.line_num + "호선";
+            if(sinfo.station.inout_tag.equalsIgnoreCase("1"))
+            {
+                //TODO 상행 내선
+                tag = "상행(내선)";
+
+            }
+            else if (sinfo.station.inout_tag.equalsIgnoreCase("2"))
+            {
+                //TODO 하행 외선
+                tag = "하행(외선)";
+            }
+            linename = sinfo.station.line_num + "호선" + " " + tag;
             stopname = sinfo.station.station_nm + "역";
+
 
             Date curTime = new Date();
             SimpleDateFormat cur_format = new SimpleDateFormat("HH:mm", Locale.KOREA);
@@ -1207,7 +1307,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         llWeatherFullCut = (LinearLayout) findViewById(R.id.llWeatherFullCut);
         llWeatherShortCut = (LinearLayout) findViewById(R.id.llWeatherShortCut);
-        layoutSizeChange(llWeatherFullCut,real_height);
+        layoutSizeChange(llWeatherFullCut,real_height*9/10);
         layoutSizeChange(llWeatherShortCut,margin_height*9/10);
 
         ivWeatherImage = (ImageView)findViewById(R.id.ivWeatherImage);
@@ -1276,16 +1376,14 @@ public class CustomLayoutSet extends RelativeLayout {
 
         if (winfo == null) {
             // 초기화
-            place = "길게 터치해서 정보를 입력하세요.";
-            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-
+            place2 = "길게 터치해서 정보를 입력하세요.";
+            tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         }
         else
         {
-
-            tvWeatherPlace.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
-            tvWeatherPlaceSC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+            tvWeatherPlace2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            tvWeatherPlace2SC.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
             place = winfo.location.city_name;
             place2 = winfo.location.mdl_name;
@@ -1302,7 +1400,7 @@ public class CustomLayoutSet extends RelativeLayout {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            SimpleDateFormat df_change = new SimpleDateFormat("MM월dd일 HH시 기준 기상청 제공");
+            SimpleDateFormat df_change = new SimpleDateFormat("MM월dd일 HH시 기준");
             time = df_change.format(date);
 
             // Set weather image type
@@ -1357,8 +1455,6 @@ public class CustomLayoutSet extends RelativeLayout {
 
 
     private void setWeatherImage(int type) {
-
-        //TODO 날씨 타입에 대해서 전부다 파악해서 다시 다 매핑할 것
 
         animWeather.stop();
 
@@ -1443,18 +1539,19 @@ public class CustomLayoutSet extends RelativeLayout {
                     if (RECManager.getInstance().getState() == RECManager.STOP) {
                         //녹음 시작
                         RECManager.getInstance().startRecording("fastrecord.mp4");
-
+                        Toast.makeText(mContext, "녹음을 시작합니다.", Toast.LENGTH_SHORT).show();
+                        recordRefresh();
                     } else if (RECManager.getInstance().getState() == RECManager.REC_ING) {
                         //녹음 중지
+                        Toast.makeText(mContext, "녹음을 종료하고 저장합니다.", Toast.LENGTH_SHORT).show();
                         RECManager.getInstance().stopRecording();
                         //그리고 재생
                         //RECManager.getInstance().startPlaying("test.mp4");
-                        //녹음이 완료후 파일 업로드
+                        //DebugToast.makeText(mContext,"녹음 파일을 전송", Toast.LENGTH_SHORT).show();
                         new AsyncHttpUpload(mContext, GlobalVariable.WEB_SERVER_IP, mhHandler,
                                 RECManager.getInstance().getDefaultExStoragePath() + "fastrecord.mp4", 1, AsyncHttpUpload.TYPE_REC);
-
+                        recordRefresh();
                     }
-                    recordRefresh();
                     return true;
                 }
                 return true;
@@ -1488,6 +1585,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
                     if (RECManager.getInstance().getState() == RECManager.STOP) {
                         //재생을 시작한다.
+                        Toast.makeText(mContext,"빠른 녹음 재생을 시작합니다.",Toast.LENGTH_SHORT).show();
                         RECManager.getInstance().startPlaying("fastrecord.mp4");
                     } else if (RECManager.getInstance().getState() == RECManager.PLAY_ING) {
                         //재생을 중지한다.
@@ -1541,7 +1639,7 @@ public class CustomLayoutSet extends RelativeLayout {
         }
         else if (RECManager.getInstance().getState() == RECManager.REC_ING)
         {
-            tvRecord.setText("녹음중");
+            tvRecord.setText("녹음 중지");
             ivRecord.setImageResource(R.drawable.ic_speaker_ing);
 
             tvPlaying.setText("녹음중 재생 불가");
@@ -1586,6 +1684,9 @@ public class CustomLayoutSet extends RelativeLayout {
         subwayRefresh();
         weatherRefresh();
         recordRefresh();
+
+        changeStatusText();
+        changeUpdateTime();
     }
 
 
@@ -2004,7 +2105,6 @@ public class CustomLayoutSet extends RelativeLayout {
         public doAllRefresh(Context context) {
             mContext = context;
             progressDialog = new TransparentProgressDialog(mContext);
-
             //progressDialog = new ProgressDialog(mContext, R.style.TransparentDialog);
         }
 
@@ -2021,8 +2121,7 @@ public class CustomLayoutSet extends RelativeLayout {
         @Override
         protected Void doInBackground(Void... params) {
 
-            //TODO Test >> Do work like communication with SQLITE, API REQUEST
-            //allRefresh();
+            //Test >> Do work like communication with SQLITE, API REQUEST
             try {
                 Thread.sleep(500);
             }
@@ -2035,7 +2134,7 @@ public class CustomLayoutSet extends RelativeLayout {
 
         @Override
         protected void onPostExecute(Void result) {
-            //TODO Do just changing UI by data from doInBackground
+            //Do just changing UI by data from doInBackground
             allRefresh();
             if(progressDialog.isShowing())
             {

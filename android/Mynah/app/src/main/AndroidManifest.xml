@@ -29,6 +29,13 @@
 
     <!-- google calendar -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!-- calendar -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
 
     <!-- WAKE_LOCK 추가 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -36,19 +43,18 @@
     <!-- 녹음 추가 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <application
         android:allowBackup="true"
-        android:largeHeap="true"
         android:icon="@drawable/ic_mynah"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoadingActivity"
-
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -71,7 +77,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" >
-
         </activity>
         <activity android:name=".CalendarActivity" >
             <intent-filter>
@@ -136,6 +141,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".WifiInfoActivity" >
+            <intent-filter>
+                <action android:name="com.seven.mynah.WifiInfo" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <service android:name=".backgroundservice.GetInformationService" >
         </service>
 
@@ -159,6 +173,7 @@
         <!-- 주기적인 서비스 알람을 위해 -->
         <!-- <receiver android:name=".backgroundservice.AlarmReceiver"></receiver> -->
 
+
         <!-- 구글 GCM 서비스 실행을 위해 -->
         <receiver
             android:name=".backgroundservice.GCMBroadcastReceiver"
@@ -176,8 +191,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.calendar.v2.API_KEY"
-            android:value="AIzaSyCPA6My1YuRw5h2pD1uCMVcz70ZeTPNgAg" />
-
+            android:value="AIzaSyC9pEnikoJQzajG-pkM4Sr7KX-2rkyG0uA" />
 
     </application>
 

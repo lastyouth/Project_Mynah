@@ -83,15 +83,8 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
             Log.d(TAG,"서버가 종료되어 있어 task를 수행하지 않습니다.");
             return;
         }
-        //파일이 준비되는 시간을 벌기 위한 임시 조치 3초 딜레이
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Log.d(TAG, e.getMessage());
-        }
         super.execute();
     }
-
 
 
     @Override
@@ -99,6 +92,12 @@ public class AsyncHttpUpload extends AsyncTask<Void, Void, String> {
 
         // urls[0]의 URL부터 데이터를 읽어와 String으로 리턴
 
+        //파일이 준비되는 시간을 벌기 위한 임시 조치 3초 딜레이
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Log.d(TAG, e.getMessage());
+        }
         Log.d(TAG,"upload 시작 : " + _url );
         return Task(_url,_filepath);
 

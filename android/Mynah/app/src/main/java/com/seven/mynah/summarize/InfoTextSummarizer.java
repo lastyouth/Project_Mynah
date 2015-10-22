@@ -135,6 +135,7 @@ public class InfoTextSummarizer {
             {
                 WeatherParser wp = new WeatherParser();
                 wInfo = wp.getWeatherInfo(wInfo);
+                DBManager.getManager(mContext).setWeatherDB(wInfo);
             }
             return wInfo;
         }

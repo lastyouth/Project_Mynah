@@ -61,18 +61,17 @@ public class SubwayStationAdapter extends ArrayAdapter<SubwayStationInfo> {
 			viewHolder = (ViewHolder) v.getTag();
 		}
 		
-		
 		String code = getItem(position).line_num;
 		String stationName = GlobalVariable.hosunDecode(code);
 		
 		if(isFirst)
 		{
-			stationName += " 상행";
+			stationName += " 상행(내선)";
 			isFirst = false;
 		}
 		else
 		{
-			stationName += " 하행";
+			stationName += " 하행(외선)";
 			isFirst = true;
 		}
 		

@@ -43,7 +43,8 @@ public class LoadingActivity extends Activity{
 	RelativeLayout rlayout;
 
 	private String deviceID;
-	private static String TAG = "LOADING";
+	private static final String TAG = "LoadingActivity";
+
 
 	private TextView tvState;
 
@@ -62,7 +63,6 @@ public class LoadingActivity extends Activity{
 				//ConnectionError();
 				System.out.println("handler error");
 			}
-
 
 			if (msg.what == 1) {
 				//핸들링 1일때 할 것
@@ -249,7 +249,7 @@ public class LoadingActivity extends Activity{
 			}
 
 		};
-		tempHandler.sendEmptyMessageDelayed(0,3500);
+		tempHandler.sendEmptyMessageDelayed(0,5000);
 	}
 
 	public void Loading()

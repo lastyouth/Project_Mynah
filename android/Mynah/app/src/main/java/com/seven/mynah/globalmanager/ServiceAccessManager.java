@@ -1,5 +1,6 @@
 package com.seven.mynah.globalmanager;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ public class ServiceAccessManager {
     private String TAG = "ServiceAccessManager";
     public static final String PREF = "PREF_RPI";
     public static final String TSTAT = "TTS_STATUS";
+    public static final String WIFISTAT = "WIFI_STATUS";
     private boolean mDelete ;
     private int pid;
 
@@ -101,6 +103,8 @@ public class ServiceAccessManager {
     {
         return mDelete;
     }
+
+    public Activity getMainActivity() {return (MainActivity)mCtx;}
 
 
     public GetInformationService getService()

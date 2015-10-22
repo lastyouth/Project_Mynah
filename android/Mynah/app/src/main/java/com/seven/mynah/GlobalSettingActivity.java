@@ -2,12 +2,17 @@ package com.seven.mynah;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,6 +24,8 @@ import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.network.AsyncHttpTask;
+import com.seven.mynah.util.DebugToast;
+import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +46,14 @@ public class GlobalSettingActivity extends Activity{
 	private int WEATHER = GlobalVariable.WEATHER;
 	private int RECORD = GlobalVariable.RECORD;
 
+
 	private int ttsList[] = {SCHEDULE, BUS, SUBWAY, WEATHER, RECORD};
 	private int ttsStatus;
 	private SharedPreferences p;
+
+	public static final int SIGNAL_UI_UPDATE = 0x10001001;
+
+	private static final String TAG = "GlobalSettingActivity";
 
 	//클래스 안에 선언해놓을 것
 	protected Handler mHandler = new Handler() {
@@ -114,6 +126,7 @@ public class GlobalSettingActivity extends Activity{
 		}
 	};
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -121,6 +134,7 @@ public class GlobalSettingActivity extends Activity{
 		setContentView(R.layout.activity_setting_app);
 		overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 		//overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
 	}
 
 	@Override
@@ -130,10 +144,26 @@ public class GlobalSettingActivity extends Activity{
 		lvSetting = (ListView)findViewById(R.id.lvSetting);
 
 		mArrayList = new ArrayList<String[]>();
-		String setting1[] = {"TTS 설정", "현재 선택된 TTS 정보"};
-		String setting2[] = {"제품 연결 해제", "product2"};
-		String setting3[] = {"App 정보", ""};
 
+		String setting1[] = {"App 정보", ""};
+		String setting2[] = {"TTS 설정", "현재 선택된 TTS 정보"};
+		String setting3[] = {"와이파이 접속 정보", ""};
+		String setting4[] = {"제품 연결 해제", "product2"};
+		String setting5[] = {"Mynah Device 종료",""};
+
+		//앱정보
+		String version = "";
+		try {
+			PackageInfo i = getApplication().getPackageManager().getPackageInfo(getApplication().getPackageName(), 0);
+			version = i.versionName;
+		} catch(PackageManager.NameNotFoundException e) {
+			version = "Ver1.0";
+		}
+
+		setting1[1] = "Ver"+version;
+
+
+		//TTS 설정
 		ArrayList<String> currentSetting = getCurrentTTSSetting();
 		String settingTTS = "";
 		for(int i = 0; i < currentSetting.size(); i++)
@@ -142,17 +172,44 @@ public class GlobalSettingActivity extends Activity{
 		}
 		if(settingTTS.trim().equals(""))
 		{
-			setting1[1] = "선택된 TTS 정보가 없습니다.";
+			setting2[1] = "선택된 TTS 정보가 없습니다.";
 		}
 		else
 		{
-			setting1[1] = settingTTS;
+			setting2[1] = settingTTS;
 		}
+
+
+		//와이파이정보
+		p = getSharedPreferences(ServiceAccessManager.WIFISTAT, MODE_PRIVATE);
+		SharedPreferences.Editor ed = p.edit();
+
+		String temp = "";
+		String wifi_name = p.getString("wifi_name", "");
+		String wifi_passwd = p.getString("wifi_passwd", "");
+
+		if(!wifi_name.equalsIgnoreCase("")) {
+
+			temp = "SSID : " + wifi_name;
+
+			if(!wifi_passwd.equalsIgnoreCase("")) {
+				temp += ", PASSWORD : " + wifi_passwd;
+			}
+		}
+
+		if(temp.equalsIgnoreCase(""))
+		{
+			temp = "SSID와 PASSWD을 입력해주세요.";
+		}
+
+		setting3[1] = temp;
 
 
 		mArrayList.add(setting1);
 		mArrayList.add(setting2);
 		mArrayList.add(setting3);
+		mArrayList.add(setting4);
+		mArrayList.add(setting5);
 
 		mAdapter = new SettingListAdapter(getApplicationContext(), R.layout.list_row_setting, mArrayList);
 		lvSetting.setAdapter(mAdapter);
@@ -163,26 +220,40 @@ public class GlobalSettingActivity extends Activity{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if(position == 0)
 				{
-					Intent intent = new Intent(getApplicationContext(), ChooseTTSActivity.class);
+					//앱정보
+					Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
 					startActivity(intent);
 				}
 				else if(position == 1)
+				{
+					Intent intent = new Intent(getApplicationContext(), ChooseTTSActivity.class);
+					startActivity(intent);
+				}
+				else if(position == 2)
+				{
+					//TODO 와이파이 접속용 액티비티 만들 것
+					Intent intent = new Intent(getApplicationContext(), WifiInfoActivity.class);
+					startActivity(intent);
+				}
+				else if(position == 3)
 				{
 					//Dialog Are you sure?
 					DialogConfirm();
 					//Request unregister to server
 					//deleteUser();
 				}
-				else if(position == 2)
+				else if(position == 4)
 				{
-					Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
-					startActivity(intent);
+					//TODO 라파 접속 종료하게 하는 블루투스용 모듈 만들 것.
+					//그걸 서비스측에만들어놓고 여기서 부를 것임.
 				}
 			}
 		});
 	}
 
-	private void deleteUser(){
+	private void deleteUser()
+	{
+
 		SessionUserInfo suInfo = DBManager.getManager(getApplicationContext()).getSessionUserDB();
 
 		JSONObject jobj = new JSONObject();
@@ -238,10 +309,12 @@ public class GlobalSettingActivity extends Activity{
 		alert.show();
 	}
 
+
 	@Override
 	public void finish() {
 		super.finish();
 		overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 //		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
+
 }

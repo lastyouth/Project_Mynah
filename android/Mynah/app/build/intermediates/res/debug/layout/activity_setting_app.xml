@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@color/black_translucent">
     
     <ListView
         android:id="@+id/lvSetting"
@@ -15,4 +15,4 @@
 
 
 </LinearLayout>
-<!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_setting_app.xml -->
+<!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_setting_app.xml -->

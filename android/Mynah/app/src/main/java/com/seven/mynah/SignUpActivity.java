@@ -72,24 +72,21 @@ public class SignUpActivity extends Activity {
         public void handleMessage(Message msg) {
             // IF Sucessfull no timeout
 
-            //여기서는 이런식으로 what에 헨들링 넘버 넣어놨으니까 그거에 맞는 동작하면 됨.
-            System.out.println("in handler");
+            Log.d(TAG,"in handler");
             if (msg.what == -1) {
-                //   BreakTimeout();
-                //ConnectionError();
-            }
 
+            }
 
             if (msg.what == 1) {
                 //핸들링 1일때 할 것 product 존재 확인
-                System.out.println("response : "+msg.obj);
+                Log.d(TAG,"response : "+msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
                     String messageType = jobj.get("messagetype") + "";
                     String result = jobj.get("result")+"";
 
-                    System.out.println("MT : "+messageType);
-                    System.out.println("RT : "+result);
+                    Log.d(TAG, "MT : " + messageType);
+                    Log.d(TAG, "RT : " + result);
 
                     if(messageType.equals("product_check")){
                         if(result.equals("PRODUCT_NOT_EXIST")){
@@ -99,7 +96,7 @@ public class SignUpActivity extends Activity {
                         }
                         else if(result.startsWith("PRODUCT_EXIST")) {
                             //인증성공
-                            Toast.makeText(getApplicationContext(), "인증된 제품입니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "제품이 인증 되었습니다.", Toast.LENGTH_SHORT).show();
                             String res = result;
 
                             String[] data = res.split("//");
@@ -144,8 +141,8 @@ public class SignUpActivity extends Activity {
             if (msg.what == 2) {
                //2일 떄 하는 일
                 //핸들링 2일때 할 것
-                System.out.println("handling 2 !");
-                System.out.println("response : "+msg.obj);
+                Log.d(TAG, "handling 2 !");
+                Log.d(TAG, "response : " + msg.obj);
 
                 try {
                     JSONObject jobj = new JSONObject(msg.obj + "");
@@ -179,9 +176,14 @@ public class SignUpActivity extends Activity {
                             suinfo.inoutTime = ((user_jobj.get("inout_time")+"").replace('Z', ' ')).replace('T', ' ');
 
                             DBManager.getManager(getApplicationContext()).setSessionUserDB(suinfo);
-                            System.out.println("세션 저장 성공");
+                            Log.d(TAG, "세션 저장 성공");
 
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+
+                            //TODO 여기서 옵션으로 와이파이 세팅이 되어있을 경우 바로 메인 엑티비티로 간다
+                            //TODO 와이파이 세팅 안되어 있으면 와이파이로 간다고 함,
+
                             startActivity(intent);
                             finish();
                         }
@@ -203,7 +205,7 @@ public class SignUpActivity extends Activity {
 
             if (msg.what == 3) {
                 //핸들링 2일때 할 것 회원가입 서브밋
-                System.out.println("response : "+msg.obj);
+                Log.d(TAG, "response : " + msg.obj);
                 try{
                     JSONObject jobj = new JSONObject(msg.obj+"");
                     String messageType = jobj.get("messagetype") + "";
@@ -504,7 +506,6 @@ public class SignUpActivity extends Activity {
             super.onBackPressed();
             LoadingActivity activity = (LoadingActivity)LoadingActivity.activity;
             activity.finish();
-
         }
         else {
             backPressedTime = tempTime;

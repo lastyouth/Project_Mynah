@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@color/accent_material_light">
 
     <!-- Left Margin -->
     <LinearLayout
@@ -199,4 +199,4 @@
         android:layout_weight="3">
 
     </LinearLayout>
-</LinearLayout><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_signup.xml -->
+</LinearLayout><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/layout/activity_signup.xml -->

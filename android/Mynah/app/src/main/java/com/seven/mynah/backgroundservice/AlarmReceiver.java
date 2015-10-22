@@ -16,6 +16,7 @@ import com.seven.mynah.globalmanager.RECManager;
 import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
+import com.seven.mynah.util.DebugToast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -55,7 +56,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // For our recurring task, we'll just display a message
 
         Log.i("Alarm Receiver", "Entered");
-        Toast.makeText(context, "Entered", Toast.LENGTH_SHORT).show();
+        DebugToast.makeText(context, "Entered", Toast.LENGTH_SHORT).show();
         mCtx = context;
 
         Bundle bundle = intent.getExtras();
@@ -68,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         else
         {
             Log.i("Alarm Receiver", "Else loop");
-            Toast.makeText(context, "Else loop", Toast.LENGTH_SHORT).show();
+            DebugToast.makeText(context, "Else loop", Toast.LENGTH_SHORT).show();
         }
 
     }
