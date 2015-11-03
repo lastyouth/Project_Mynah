@@ -1,8 +1,10 @@
 package com.seven.mynah;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -23,10 +25,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.seven.mynah.artifacts.SessionUserInfo;
+import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
 import com.seven.mynah.network.AsyncHttpTask;
+import com.seven.mynah.util.DebugToast;
+import com.seven.mynah.util.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +47,7 @@ public class WifiInfoActivity extends Activity {
     private long		backPressedTime        = 0;
 
     private Context mContext;
+    private BroadcastReceiver mReceiver = null;
 
     //activity 관련
 
@@ -52,6 +58,7 @@ public class WifiInfoActivity extends Activity {
 
     private SharedPreferences p;
 
+    private TransparentProgressDialog progressDialog;
 
     //클래스 안에 선언해놓을 것
     protected Handler mHandler = new Handler() {
@@ -87,6 +94,8 @@ public class WifiInfoActivity extends Activity {
         }
     };
 
+
+
     private void initWifiInfo()
     {
         String wifi_name = "";
@@ -111,7 +120,7 @@ public class WifiInfoActivity extends Activity {
             temp = "SSID : " + wifi_name;
 
             if(!wifi_passwd.equalsIgnoreCase("")) {
-                temp += ", PASSWORD : " + wifi_passwd;
+                temp += "\n PASSWORD : " + wifi_passwd;
             }
         }
 
@@ -119,8 +128,13 @@ public class WifiInfoActivity extends Activity {
         {
             temp = "SSID와 PASSWD을 입력해주세요.";
         }
+        else
+        {
+            temp = "현재 " + temp;
+        }
         tvWifiNow.setText(temp);
 
+        registerReceiver();
 
         btnWifiSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,17 +144,19 @@ public class WifiInfoActivity extends Activity {
                 String ssid_name = etSSIDName.getText() + "";
                 String ssid_passwd = etSSIDPasswd.getText() + "";
 
+                progressDialog = TransparentProgressDialog.show(WifiInfoActivity.this, "", ".", true, false, null);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                    }
+                },7000);
                 setWifiInfo(ssid_name, ssid_passwd);
 
+                //progressDialog.setOn
                 //TODO 블루트스 통신이 되는지 확인하는 로직 필요
                 sendWifiInfo();
-
-
-                //TODO 이게 설정에서 오는 건지 아니면 애초에 초기 등록할 때 부분인지 확인할 것
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-
-
 
             }
         });
@@ -148,9 +164,21 @@ public class WifiInfoActivity extends Activity {
     }
 
     //TODO 블루투스 디바이스로 와이파이 전송용
-    public void sendWifiInfo()
+    private void sendWifiInfo()
     {
+        p = getSharedPreferences(ServiceAccessManager.WIFISTAT, MODE_PRIVATE);
+        SharedPreferences.Editor ed = p.edit();
 
+        String wifi_name = p.getString("wifi_name","");
+        String wifi_passwd = p.getString("wifi_passwd","");
+        if(!ServiceAccessManager.getInstance().getService().sendData(RPiBluetoothConnectionManager.SEND_TYPE_NEWWIFI, wifi_name + "//" + wifi_passwd))
+        {
+            //실패하였을 경우 다이얼로그 끌것.. 어차피 콜백이 안올 것이므로
+            if(progressDialog.isShowing())
+            {
+                progressDialog.dismiss();
+            }
+        }
     }
 
     private void setWifiInfo(String wifi_name, String wifi_passwd)
@@ -161,7 +189,42 @@ public class WifiInfoActivity extends Activity {
         ed.commit();
     }
 
+    private void registerReceiver() {
 
+        if(mReceiver != null)
+            return;
+
+        final IntentFilter theFilter = new IntentFilter();
+        theFilter.addAction(GlobalVariable.BROADCAST_WIFI);
+        this.mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //int strNewPostion = intent.getIntExtra("value", 0);
+                if (intent.getAction().equals(GlobalVariable.BROADCAST_WIFI)) {
+                    if(progressDialog.isShowing())
+                    {
+                        progressDialog.dismiss();
+                    }
+                    int temp = intent.getIntExtra("WIFI",0);
+                    if(temp == 0){
+                        //TODO 실패시
+                        Toast.makeText(getApplicationContext(),"와이파이 접속에 실패했습니다.\nSSID와 PASSWORD를 확인해주세요.",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(temp == 1)
+                    {
+                        //TODO 성공시
+                        //TODO 이게 설정에서 오는 건지 아니면 애초에 초기 등록할 때 부분인지 확인할 것
+                        //Intent new_intent = new Intent(getApplicationContext(), MainActivity.class);
+                        //startActivity(new_intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(),"와이파이 접속에 성공했습니다.",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        };
+        this.registerReceiver(this.mReceiver, theFilter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,17 +233,21 @@ public class WifiInfoActivity extends Activity {
 
         mContext = getApplicationContext();
 
+        progressDialog = new TransparentProgressDialog(WifiInfoActivity.this);
+
         initWifiInfo();
 
     }
-
-
-
 
     @Override
     public void onBackPressed() {
         long tempTime        = System.currentTimeMillis();
         long intervalTime    = tempTime - backPressedTime;
+
+        if(progressDialog.isShowing())
+        {
+            progressDialog.dismiss();
+        }
 
         if ( 0 <= intervalTime && FINSH_INTERVAL_TIME >= intervalTime ) {
             super.onBackPressed();
@@ -192,6 +259,17 @@ public class WifiInfoActivity extends Activity {
                     "'뒤로'버튼을 한번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onDestroy()
+    {
+        Log.d(TAG, "onDestroy Start");
+        super.onDestroy();
+        this.unregisterReceiver(mReceiver);
+        //BTmanager.stopBTConnection();
+        Log.d(TAG, "onDestro.commit()");
+    }
+
 
     @Override
     public void finish() {

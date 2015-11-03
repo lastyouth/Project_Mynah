@@ -32,6 +32,10 @@ public class BusPaser {
 	private static String TAG = "BusPaser";
 	
 	private final String serviceKey = "0x3MtlITSbQrDntCBFU0A%2FKeCpVidWB9jeKt8acPuZ0ZHSTW%2FaMiRmuCAsifYUWyYn5jBZN0xEReaIKPMSJSWQ%3D%3D"; 
+
+	//보훈이 계정 키
+	//private final String serviceKey = "tes78LfDhi0OybX8hKJXyl6ACF3A9WVN2BHQ8dhx89N3yyDVqvH6gOZViL0LAkiUE4krx7WzZqOcZ78hSEgplg%3D%3D";
+
 	private final String open_Url = "http://ws.bus.go.kr/api/rest";
 	
 	

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.seven.mynah.adapter.SettingListAdapter;
 import com.seven.mynah.artifacts.SessionUserInfo;
+import com.seven.mynah.backgroundservice.RPiBluetoothConnectionManager;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.globalmanager.ServiceAccessManager;
@@ -221,6 +222,8 @@ public class GlobalSettingActivity extends Activity{
 				if(position == 0)
 				{
 					//앱정보
+					ServiceAccessManager.getInstance().getService().sendData(RPiBluetoothConnectionManager.SEND_TYPE_STOPSOUND,"");
+
 					Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
 					startActivity(intent);
 				}
@@ -246,6 +249,8 @@ public class GlobalSettingActivity extends Activity{
 				{
 					//TODO 라파 접속 종료하게 하는 블루투스용 모듈 만들 것.
 					//그걸 서비스측에만들어놓고 여기서 부를 것임.
+					DisconnectDialogConfirm();
+
 				}
 			}
 		});
@@ -308,6 +313,28 @@ public class GlobalSettingActivity extends Activity{
 		AlertDialog alert = alt_bld.create();
 		alert.show();
 	}
+
+	private void DisconnectDialogConfirm(){
+		AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
+		alt_bld.setMessage("정말 종료하시겠습니까?").setCancelable(
+				false).setPositiveButton("No",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'NO' Button
+						dialog.cancel();
+					}
+				}).setNegativeButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						// Action for 'Yes' Button
+						ServiceAccessManager.getInstance().getService().sendData(RPiBluetoothConnectionManager.SEND_TYPE_POWEROFF,"");
+						Toast.makeText(getApplicationContext(), "종료 신호를 성공적으로 송신했습니다.", Toast.LENGTH_SHORT).show();
+					}
+				});
+		AlertDialog alert = alt_bld.create();
+		alert.show();
+	}
+
 
 
 	@Override

@@ -62,6 +62,7 @@ public class AsyncHttpTask extends AsyncTask<Void, Void, String> {
 		DataContent = Data;
 		_jobj = jobj;
 
+
 		if(!GlobalVariable.isServerOn)
 		{
 			Log.d(TAG,"서버가 종료되어 있어 task를 수행하지 않습니다.");
