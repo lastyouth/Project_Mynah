@@ -102,4 +102,4 @@
     <item android:drawable="@drawable/bus00098" android:duration="80"/>
     <item android:drawable="@drawable/bus00099" android:duration="80"/>
 
-</animation-list><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/drawable/bus_anim.xml -->
+</animation-list><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/bus_anim.xml -->
