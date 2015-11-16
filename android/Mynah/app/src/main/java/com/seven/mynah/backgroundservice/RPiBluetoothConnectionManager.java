@@ -17,7 +17,8 @@ import android.util.Base64;
 import android.util.Log;
 
 public class RPiBluetoothConnectionManager {
-   private UUID uuid; //Standard SerialPortService ID
+   private UUID uuid;
+   private String macaddr;
    //private String struuid = "94f39d29-7d6d-437d-973b-fba39e49daae";
    private BluetoothSocket btSocket;
    private BluetoothDevice targetBTDevice;
@@ -44,6 +45,7 @@ public class RPiBluetoothConnectionManager {
       @Override
       public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
          // TODO Auto-generated method stub
+         Log.d(TAG,"RSSI : "+rssi);
          currentRSSI = rssi;
       }};
 
@@ -58,6 +60,10 @@ public class RPiBluetoothConnectionManager {
    public static final int SEND_TYPE_INTTS = 0x30001005;
    public static final int SEND_TYPE_INIT = 0x30001003;
    public static final int SEND_TYPE_TEMP = 0x30001004;
+   public static final int SEND_TYPE_POWEROFF = 0x30001006;
+   public static final int SEND_TYPE_NEWWIFI = 0x30001007;
+   public static final int SEND_TYPE_STOPSOUND = 0x30001008;
+
 
    // settings
    private final int MAX_WAIT_FOR_RECONNECT = 1500;
@@ -104,6 +110,15 @@ public class RPiBluetoothConnectionManager {
                      str = str.replace("temp : ","");
 
                      mCallback.onTempDataArrived(Integer.parseInt(str));
+                  }else if(str.startsWith("wifiresult"))
+                  {
+                     if(str.startsWith("wifiresultsuccess"))
+                     {
+                        mCallback.onNewWifiResult(true);
+                     }else
+                     {
+                        mCallback.onNewWifiResult(false);
+                     }
                   }
                } catch (Exception e) {
                   // TODO Auto-generated catch block
@@ -197,22 +212,20 @@ public class RPiBluetoothConnectionManager {
          return ERROR_BT_NOT_SUPPORTED;
       }
 
-      if(!btAdapter.isEnabled())
+      /*if(!btAdapter.isEnabled())
       {
          return ERROR_BT_IS_NOT_ENABLED;
-      }
-
+      }*/
       if(mCallback == null)
       {
          return ERROR_CALLBACK_IS_NOT_REGISTERED;
       }
-
       if(tuuid.equals("NULL"))
       {
          return ERROR_TARGET_UUID_NOT_REGISTERED;
       }
       this.uuid = UUID.fromString(tuuid);
-
+      this.macaddr = macAddr;
       targetBTDevice = btAdapter.getRemoteDevice(macAddr);
 
       if(targetBTDevice == null)
@@ -278,7 +291,6 @@ public class RPiBluetoothConnectionManager {
             case SEND_TYPE_OUTTTS:
                json.put("type", "outtts");
                break;
-
             case SEND_TYPE_INTTS:
                json.put("type","intts");
                break;
@@ -289,7 +301,15 @@ public class RPiBluetoothConnectionManager {
             case SEND_TYPE_TEMP:
                json.put("type","temp");
                break;
-
+            case SEND_TYPE_NEWWIFI:
+               json.put("type","newwifi");
+               break;
+            case SEND_TYPE_POWEROFF:
+               json.put("type","poweroff");
+               break;
+            case SEND_TYPE_STOPSOUND:
+               json.put("type","stopsound");
+               break;
             default:
                json.put("type", "bad");
          }

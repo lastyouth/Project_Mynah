@@ -119,8 +119,8 @@ public class CustomLayoutSet extends RelativeLayout {
     private TextView tvTitleText2;
     private ImageView ivIcon2;
 
-    private TextView tvTitleText3;
-    private ImageView ivIcon3;
+    //private TextView tvTitleText3;
+    //private ImageView ivIcon3;
 
     private TextView tvTitleText4;
 
@@ -394,16 +394,16 @@ public class CustomLayoutSet extends RelativeLayout {
 
         //tvTitleText2.setText(text);
 
-        if(GlobalVariable.isRaspberryOn)
-        {
-            //text = "Mynah Device";
-            ivIcon3.setImageResource(R.drawable.ic_v);
-        }
-        else
-        {
-            //text = "Mynah Device";
-            ivIcon3.setImageResource(R.drawable.ic_x);
-        }
+//        if(GlobalVariable.isRaspberryOn)
+//        {
+//            //text = "Mynah Device";
+//            ivIcon3.setImageResource(R.drawable.ic_v);
+//        }
+//        else
+//        {
+//            //text = "Mynah Device";
+//            ivIcon3.setImageResource(R.drawable.ic_x);
+//        }
 
         //tvTitleText3.setText(text);
 
@@ -631,7 +631,7 @@ public class CustomLayoutSet extends RelativeLayout {
                     llRefresh.setAlpha((float) 1.0);
                     //allRefresh();
                     new doAllRefresh(mContext).execute();
-                    ttsTest();
+                    if(GlobalVariable.isDebugMode) ttsTest();
                     return true;
                 }
                 return true;
@@ -756,12 +756,12 @@ public class CustomLayoutSet extends RelativeLayout {
         tvTitle = (TextView)findViewById(R.id.tvTitle);
         tvTitleText1 = (TextView)findViewById(R.id.tvTitleText1);
         tvTitleText2 = (TextView)findViewById(R.id.tvTitleText2);
-        tvTitleText3 = (TextView)findViewById(R.id.tvTitleText3);
+        //tvTitleText3 = (TextView)findViewById(R.id.tvTitleText3);
         tvTitleText4 = (TextView)findViewById(R.id.tvTitleText4);
 
         ivIcon1 = (ImageView)findViewById(R.id.ivIcon1);
         ivIcon2 = (ImageView)findViewById(R.id.ivIcon2);
-        ivIcon3 = (ImageView)findViewById(R.id.ivIcon3);
+        //ivIcon3 = (ImageView)findViewById(R.id.ivIcon3);
 
     }
 
@@ -855,7 +855,7 @@ public class CustomLayoutSet extends RelativeLayout {
         {
             tvSchedules[i] = new TextView(mContext);
             tvSchedules[i].setTextColor(Color.parseColor("#ffffff"));
-            tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+            tvSchedules[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             String str = scheduleInfos.get(i).scheduleTime + "    " + scheduleInfos.get(i).scheduleName;
             tvSchedules[i].setText(str);
 

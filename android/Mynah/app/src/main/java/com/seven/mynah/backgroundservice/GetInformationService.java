@@ -34,9 +34,13 @@ import com.seven.mynah.globalmanager.TTSManager;
 import com.seven.mynah.infoparser.BusPaser;
 import com.seven.mynah.infoparser.SubwayPaser;
 import com.seven.mynah.infoparser.WeatherParser;
+import com.seven.mynah.network.AsyncHttpTask;
 import com.seven.mynah.network.AsyncHttpUpload;
 import com.seven.mynah.summarize.InfoTextSummarizer;
 import com.seven.mynah.util.DebugToast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.spec.RSAOtherPrimeInfo;
@@ -65,7 +69,7 @@ public class GetInformationService extends Service
 
 
     //public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //3분
-    public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //1분
+    public static final long NOTIFY_INTERVAL = 1 * 60 * 1000; //1분
 
     //public static final long BLUETOOTH_NOTIFY_INTERVAL = 3 * 1000;
 
@@ -97,6 +101,40 @@ public class GetInformationService extends Service
                 //System.out.println("handling 2 !");
                 //System.out.println("response : "+msg.obj);
                 Log.d(TAG, "handling 2 -> response : " + msg.obj);
+            }
+
+            if (msg.what == 3)
+            {
+                JSONObject jobj = null;
+                try {
+                    jobj = new JSONObject(msg.obj+"");
+                    String messageType = jobj.get("messagetype") + "";
+
+                    if(messageType.equals("get_uuid")) {
+                        String result = jobj.get("result") + "";
+
+
+                        String data[] = result.split("//");
+
+                        if(data[0].equals("GET_UUID_SUCCESS")) {
+                            SharedPreferences pref = getSharedPreferences(ServiceAccessManager.PREF, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("RPI_MAC", data[1]);
+                            editor.putString("RPI_UUID", data[2]);
+
+                            if(!mBluetoothManager.isInitialize())
+                            {
+                                int ret = mBluetoothManager.initializeBTConnection(data[2],data[1]);
+                                processErrorHandler(ret);
+                            }
+
+                            editor.commit();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         }
@@ -178,6 +216,22 @@ public class GetInformationService extends Service
             Intent intent = new Intent(GlobalVariable.BROADCAST_MESSAGE);
             sendBroadcast(intent);
         }
+
+        @Override
+        public void onNewWifiResult(boolean flag) {
+            if(flag)
+            {
+                Intent intent = new Intent(GlobalVariable.BROADCAST_WIFI);
+                intent.putExtra("WIFI",1);
+                sendBroadcast(intent);
+            }
+            else
+            {
+                Intent intent = new Intent(GlobalVariable.BROADCAST_WIFI);
+                intent.putExtra("WIFI",0);
+                sendBroadcast(intent);
+            }
+        }
     };
 
 	@Override
@@ -229,6 +283,23 @@ public class GetInformationService extends Service
         Log.d(TAG, "onCreate Finish");
     }
 
+    public boolean sendData(int type, String str)
+    {
+        //RPiBluetoothConnectionManager.SEND_TYPE_NEWWIFI , str //로 구분해서 다 보낼것
+        //RPiBluetoothConnectionManager.SEND_TYPE_POWEROFF  str // ""으로 본낼것
+        //type
+        boolean flag = mBluetoothManager.sendTTSWithRSSI(type,str);
+        if(flag)
+        {
+            DebugToast.makeText(this,"블루투스 전송 성공 " + str,Toast.LENGTH_SHORT).show();
+        }else
+        {
+            DebugToast.makeText(this,"블루투스 전송 실패 " + str,Toast.LENGTH_SHORT).show();
+        }
+        return flag;
+    }
+
+
     private void processErrorHandler(int ret)
     {
         if(ret == RPiBluetoothConnectionManager.ERROR_BT_NOT_SUPPORTED)
@@ -241,11 +312,21 @@ public class GetInformationService extends Service
 
         }else if(ret == RPiBluetoothConnectionManager.ERROR_TARGET_UUID_NOT_REGISTERED)
         {
+            // if uuid is not exist, then re-load it
+            JSONObject jobj = new JSONObject();
+            try{
+                jobj.put("messagetype", "get_uuid");
+                jobj.put("device_id",Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
+                //jobj.put("product_id", strProductId);
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
 
+            new AsyncHttpTask(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,jobj, 3, 2);
         }
         else if(ret == RPiBluetoothConnectionManager.ERROR_TARGET_DEVICE_NOT_REGISTERED)
         {
-
+            Toast.makeText(getApplicationContext(),"디바이스와 최초 페어링이 되지 않았습니다. Mynah-Device 기능을 사용할 수 없습니다",Toast.LENGTH_LONG).show();
         }
         else if(ret == RPiBluetoothConnectionManager.ERROR_BT_IS_NOT_ENABLED)
         {

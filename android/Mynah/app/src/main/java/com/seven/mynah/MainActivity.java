@@ -218,6 +218,7 @@ public class MainActivity extends Activity {
         //infoService.setBindStatus(false);
         //unbindService(mBkServiceConnection);
 
+        this.unregisterReceiver(mReceiver);
         ServiceAccessManager.getInstance().releaseService();
 
         //BTmanager.stopBTConnection();
