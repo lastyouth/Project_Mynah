@@ -69,7 +69,7 @@ public class GetInformationService extends Service
 
 
     //public static final long NOTIFY_INTERVAL = 3 * 60 * 1000; //3분
-    public static final long NOTIFY_INTERVAL = 1 * 60 * 1000; //1분
+    public static final long NOTIFY_INTERVAL = 2 * 60 * 1000; //1분
 
     //public static final long BLUETOOTH_NOTIFY_INTERVAL = 3 * 1000;
 
@@ -150,12 +150,12 @@ public class GetInformationService extends Service
                 int type = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
                 if(type == BluetoothAdapter.STATE_OFF)
                 {
-                    DebugToast.makeText(mCtx, "Bluetooth is Off", Toast.LENGTH_SHORT).show();
+                    if(GlobalVariable.isDebugMode) DebugToast.makeText(mCtx, "Bluetooth is Off", Toast.LENGTH_SHORT).show();
                     isBluetoothEnabled = false;
                 }
                 else if(type == BluetoothAdapter.STATE_ON)
                 {
-                    DebugToast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
+                    if(GlobalVariable.isDebugMode) DebugToast.makeText(mCtx,"Bluetooth is On",Toast.LENGTH_SHORT).show();
                     isBluetoothEnabled = true;
                 }
             }
@@ -254,7 +254,7 @@ public class GetInformationService extends Service
 
         mCtx = this;
 		//Toast.makeText(this, "Service onCreate", Toast.LENGTH_SHORT).show();
-        DebugToast.makeText(this,"Service onCreate", Toast.LENGTH_SHORT).show();
+        if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"Service onCreate", Toast.LENGTH_SHORT).show();
 
 
         // register broadcast receiver
@@ -264,7 +264,14 @@ public class GetInformationService extends Service
         // Get Device Id
         deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        isBluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
+
+        try{
+            isBluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
+        } catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"Bluetooth null pointer error",Toast.LENGTH_SHORT).show();
+        }
 
         mBluetoothManager = new RPiBluetoothConnectionManager(deviceID);
         mBluetoothManager.registerCallback(btCallback);
@@ -291,10 +298,10 @@ public class GetInformationService extends Service
         boolean flag = mBluetoothManager.sendTTSWithRSSI(type,str);
         if(flag)
         {
-            DebugToast.makeText(this,"블루투스 전송 성공 " + str,Toast.LENGTH_SHORT).show();
+            if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"블루투스 전송 성공 " + str,Toast.LENGTH_SHORT).show();
         }else
         {
-            DebugToast.makeText(this,"블루투스 전송 실패 " + str,Toast.LENGTH_SHORT).show();
+            if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"블루투스 전송 실패 " + str,Toast.LENGTH_SHORT).show();
         }
         return flag;
     }
@@ -338,7 +345,7 @@ public class GetInformationService extends Service
         }
         else
         {
-            DebugToast.makeText(this, "Unknown return value from RPiBluetoothConnectionManager", Toast.LENGTH_SHORT).show();
+            if(GlobalVariable.isDebugMode) DebugToast.makeText(this, "Unknown return value from RPiBluetoothConnectionManager", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -353,7 +360,7 @@ public class GetInformationService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Log.d(TAG, "onStartCommand Start");
-        DebugToast.makeText(this,"GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
+        if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"GetInformation Service onStartCommand",  Toast.LENGTH_SHORT).show();
 
         String tuuid = pref.getString("RPI_UUID", "NULL");
         String tmac = pref.getString("RPI_MAC","NULL");
@@ -395,7 +402,7 @@ public class GetInformationService extends Service
         {
             mBluetoothManager.stopBTConnection();
         }
-        DebugToast.makeText(this, "Service onDestroy", Toast.LENGTH_SHORT).show();
+        if(GlobalVariable.isDebugMode) DebugToast.makeText(this, "Service onDestroy", Toast.LENGTH_SHORT).show();
 
         Log.d(TAG, "onDestroy Finish");
     	super.onDestroy();
@@ -414,19 +421,6 @@ public class GetInformationService extends Service
         return mTimer;
     }
 
-
-    public void sendTTSNow()
-    {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sendTTS(false);
-                //DebugToast.makeText(mCtx,"즉시 tts 생성 시퀸스 완료",Toast.LENGTH_SHORT).show();
-            }
-        }).start();
-    }
-
-
     public void sendTTS(boolean toastOn)
     {
         String tts = InfoTextSummarizer.getInstance(mCtx).makeTotalTTS();
@@ -436,7 +430,11 @@ public class GetInformationService extends Service
 
             try {
                 mTTSManager.saveTTS(tts,"tts.mp3");
-                if(toastOn) DebugToast.makeText(mCtx, TAG + ": tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
+                if(toastOn)
+                {
+                    if(GlobalVariable.isDebugMode) DebugToast.makeText(mCtx, TAG + ": tts 생성 period 성공 , id : " + suInfo.userId + " data : " + tts, Toast.LENGTH_SHORT).show();
+                }
+
                 //주기적으로 파일 전송
                 new AsyncHttpUpload(getApplicationContext(), GlobalVariable.WEB_SERVER_IP, mhHandler,
                         RECManager.getInstance().getDefaultExStoragePath() + "tts.mp3", 1, AsyncHttpUpload.TYPE_TTS);
@@ -448,7 +446,10 @@ public class GetInformationService extends Service
         }
         else
         {
-            if(toastOn) DebugToast.makeText(mCtx, TAG + ": 동일 tts 확인 미전송 시퀸스", Toast.LENGTH_SHORT).show();
+            if(toastOn) {
+                if(GlobalVariable.isDebugMode) DebugToast.makeText(mCtx, TAG + ": 동일 tts 확인 미전송 시퀸스", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

@@ -6,8 +6,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -420,29 +425,83 @@ public class CustomLayoutSet extends RelativeLayout {
     private void initAnimation()
     {
 
+        //ivBusImage.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.bus_anim, 100, 100));
         ivBusImage.setBackgroundResource(R.drawable.bus_anim);
-//        ivBusImage.setScaleX((float) 0.7);
-//        ivBusImage.setScaleY((float) 0.7);
+        //ivBusImage.setScaleX((float) 0.7);
+        //ivBusImage.setScaleY((float) 0.7);
         animBus = (AnimationDrawable) ivBusImage.getBackground();
+        //animBus = (AnimationDrawable) ivBusImage.getDrawable();
 
 
+        //ivWeatherImage.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.sun_anim, 100, 100));
         ivWeatherImage.setBackgroundResource(R.drawable.sun_anim);
 //        ivWeatherImage.setScaleX((float)0.7);
 //        ivWeatherImage.setScaleY((float)0.7);
         animWeather = (AnimationDrawable) ivWeatherImage.getBackground();
+        //animWeather = (AnimationDrawable) ivWeatherImage.getDrawable();
 
 
+        //ivScheduleImage.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.calendar_anim, 100, 100));
         ivScheduleImage.setBackgroundResource(R.drawable.calendar_anim);
 //        ivScheduleImage.setScaleX((float) 0.7);
 //        ivScheduleImage.setScaleY((float) 0.7);
         animCaldendar = (AnimationDrawable) ivScheduleImage.getBackground();
+        //animCaldendar = (AnimationDrawable) ivScheduleImage.getDrawable();
 
 
+        //ivSubwayImage.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.train_anim, 100, 100));
         ivSubwayImage.setBackgroundResource(R.drawable.train_anim);
 //        ivSubwayImage.setScaleX((float) 0.7);
 //        ivSubwayImage.setScaleY((float) 0.7);
         animTrain = (AnimationDrawable) ivSubwayImage.getBackground();
+       //animTrain = (AnimationDrawable) ivSubwayImage.getDrawable();
 
+    }
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+
+        //옵션 조정.
+        options.inJustDecodeBounds = true;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inSampleSize = 1;
+        options.inPurgeable = true;
+
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 
 
@@ -453,6 +512,19 @@ public class CustomLayoutSet extends RelativeLayout {
             if(i==now_index) showAnimation(i,true);
             else showAnimation(i,false);
         }
+    }
+
+
+    private void aniStopRecycle(AnimationDrawable ad)
+    {
+        for (int i = 0; i < ad.getNumberOfFrames(); ++i){
+            Drawable frame = ad.getFrame(i);
+            if (frame instanceof BitmapDrawable) {
+                ((BitmapDrawable)frame).getBitmap().recycle();
+            }
+            frame.setCallback(null);
+        }
+        ad.setCallback(null);
     }
 
 
@@ -467,6 +539,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 }else {
                     llWeatherImage.setVisibility(INVISIBLE);
                     animWeather.stop();
+                    //aniStopRecycle(animWeather);
                 }
                 break;
             case index_subway:
@@ -476,6 +549,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 }else {
                     llSubwayImage.setVisibility(INVISIBLE);
                     animTrain.stop();
+                    //aniStopRecycle(animTrain);
                 }
                 break;
             case index_schedule:
@@ -485,6 +559,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 }else{
                     llScheduleImage.setVisibility(INVISIBLE);
                     animCaldendar.stop();
+                    //aniStopRecycle(animCaldendar);
                 }
                 break;
             case index_bus:
@@ -494,6 +569,7 @@ public class CustomLayoutSet extends RelativeLayout {
                 }else{
                     llBusImage.setVisibility(INVISIBLE);
                     animBus.stop();
+                    //aniStopRecycle(animBus);
                 }
                 break;
 

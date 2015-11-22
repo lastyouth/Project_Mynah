@@ -13,6 +13,7 @@ public final class GlobalVariable {
 	public static boolean isScheduleDBUpdated = false;
 	public static boolean isServerOn = true;
 	public static boolean isBluetoothOn = false;
+
 	public static boolean isDebugMode = false;
 	//public static boolean isWifiSetting = false;
 	public static boolean isRaspberryOn = false;

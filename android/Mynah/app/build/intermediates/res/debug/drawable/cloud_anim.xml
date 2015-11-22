@@ -52,6 +52,7 @@
     <item android:drawable="@drawable/cloud00048" android:duration="80"/>
     <item android:drawable="@drawable/cloud00049" android:duration="80"/>
     <item android:drawable="@drawable/cloud00050" android:duration="80"/>
+    <!--
     <item android:drawable="@drawable/cloud00051" android:duration="80"/>
     <item android:drawable="@drawable/cloud00052" android:duration="80"/>
     <item android:drawable="@drawable/cloud00053" android:duration="80"/>
@@ -82,6 +83,7 @@
     <item android:drawable="@drawable/cloud00078" android:duration="80"/>
     <item android:drawable="@drawable/cloud00079" android:duration="80"/>
     <item android:drawable="@drawable/cloud00080" android:duration="80"/>
+    -->
 
 
 </animation-list><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/drawable/cloud_anim.xml -->

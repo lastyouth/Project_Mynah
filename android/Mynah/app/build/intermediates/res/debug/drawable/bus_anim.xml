@@ -52,6 +52,8 @@
     <item android:drawable="@drawable/bus00048" android:duration="80"/>
     <item android:drawable="@drawable/bus00049" android:duration="80"/>
     <item android:drawable="@drawable/bus00050" android:duration="80"/>
+
+    <!--
     <item android:drawable="@drawable/bus00051" android:duration="80"/>
     <item android:drawable="@drawable/bus00052" android:duration="80"/>
     <item android:drawable="@drawable/bus00053" android:duration="80"/>
@@ -101,5 +103,6 @@
     <item android:drawable="@drawable/bus00097" android:duration="80"/>
     <item android:drawable="@drawable/bus00098" android:duration="80"/>
     <item android:drawable="@drawable/bus00099" android:duration="80"/>
+    -->
 
 </animation-list><!-- From: file:/D:/git/Project_Mynah/android/Mynah/app/src/main/res/drawable/bus_anim.xml -->

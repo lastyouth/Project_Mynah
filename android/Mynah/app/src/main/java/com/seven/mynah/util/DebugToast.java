@@ -19,6 +19,7 @@ public class DebugToast extends Toast {
     @Override
     public void show()
     {
+        //디버그 모드가 false라면 바로 return 한다.
         if(!GlobalVariable.isDebugMode) return;
         super.show();
     }
