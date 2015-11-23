@@ -151,6 +151,7 @@ public class GlobalSettingActivity extends Activity{
 		String setting3[] = {"와이파이 접속 정보", ""};
 		String setting4[] = {"제품 연결 해제", "product2"};
 		String setting5[] = {"Mynah Device 종료",""};
+		String setting6[] = {"음성 출력 종료",""};
 
 		//앱정보
 		String version = "";
@@ -211,6 +212,7 @@ public class GlobalSettingActivity extends Activity{
 		mArrayList.add(setting3);
 		mArrayList.add(setting4);
 		mArrayList.add(setting5);
+		mArrayList.add(setting6);
 
 		mAdapter = new SettingListAdapter(getApplicationContext(), R.layout.list_row_setting, mArrayList);
 		lvSetting.setAdapter(mAdapter);
@@ -222,8 +224,6 @@ public class GlobalSettingActivity extends Activity{
 				if(position == 0)
 				{
 					//앱정보
-					ServiceAccessManager.getInstance().getService().sendData(RPiBluetoothConnectionManager.SEND_TYPE_STOPSOUND,"");
-
 					Intent intent = new Intent(getApplicationContext(), AppInfoActivity.class);
 					startActivity(intent);
 				}
@@ -250,6 +250,12 @@ public class GlobalSettingActivity extends Activity{
 					//TODO 라파 접속 종료하게 하는 블루투스용 모듈 만들 것.
 					//그걸 서비스측에만들어놓고 여기서 부를 것임.
 					DisconnectDialogConfirm();
+
+				}
+				else if(position == 5)
+				{
+					//음성 강제 종료용
+					ServiceAccessManager.getInstance().getService().sendData(RPiBluetoothConnectionManager.SEND_TYPE_STOPSOUND,"");
 
 				}
 			}

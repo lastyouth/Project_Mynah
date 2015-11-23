@@ -52,6 +52,8 @@
     <item android:drawable="@drawable/sun00048" android:duration="80"/>
     <item android:drawable="@drawable/sun00049" android:duration="80"/>
     <item android:drawable="@drawable/sun00050" android:duration="80"/>
+
+    <!--
     <item android:drawable="@drawable/sun00051" android:duration="80"/>
     <item android:drawable="@drawable/sun00052" android:duration="80"/>
     <item android:drawable="@drawable/sun00053" android:duration="80"/>
@@ -102,6 +104,6 @@
     <item android:drawable="@drawable/sun00098" android:duration="80"/>
     <item android:drawable="@drawable/sun00099" android:duration="80"/>
 
-
+    -->
 
 </animation-list><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/sun_anim.xml -->

@@ -52,6 +52,7 @@
     <item android:drawable="@drawable/rain00048" android:duration="80"/>
     <item android:drawable="@drawable/rain00049" android:duration="80"/>
     <item android:drawable="@drawable/rain00050" android:duration="80"/>
+    <!--
     <item android:drawable="@drawable/rain00051" android:duration="80"/>
     <item android:drawable="@drawable/rain00052" android:duration="80"/>
     <item android:drawable="@drawable/rain00053" android:duration="80"/>
@@ -101,7 +102,7 @@
     <item android:drawable="@drawable/rain00097" android:duration="80"/>
     <item android:drawable="@drawable/rain00098" android:duration="80"/>
     <item android:drawable="@drawable/rain00099" android:duration="80"/>
-
+    -->
 
 
 </animation-list><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/rain_anim.xml -->

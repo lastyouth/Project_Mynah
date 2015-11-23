@@ -25,6 +25,7 @@ import com.seven.mynah.artifacts.ScheduleInfo;
 import com.seven.mynah.artifacts.SchedulesOnDateInfo;
 import com.seven.mynah.database.DBManager;
 import com.seven.mynah.globalmanager.GlobalGoogleCalendarManager;
+import com.seven.mynah.globalmanager.GlobalVariable;
 import com.seven.mynah.util.DebugToast;
 
 import android.accounts.AccountManager;
@@ -254,7 +255,7 @@ public class CalendarManager {
             public void run() {
 
                 //Temp Setting
-                DebugToast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                if(GlobalVariable.isDebugMode) DebugToast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
                 Log.d(TAG,message);
 //                mStatusText.setText(message);
             }

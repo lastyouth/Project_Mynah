@@ -52,6 +52,8 @@
     <item android:drawable="@drawable/snow00048" android:duration="80"/>
     <item android:drawable="@drawable/snow00049" android:duration="80"/>
     <item android:drawable="@drawable/snow00050" android:duration="80"/>
+
+    <!--
     <item android:drawable="@drawable/snow00051" android:duration="80"/>
     <item android:drawable="@drawable/snow00052" android:duration="80"/>
     <item android:drawable="@drawable/snow00053" android:duration="80"/>
@@ -101,5 +103,6 @@
     <item android:drawable="@drawable/snow00097" android:duration="80"/>
     <item android:drawable="@drawable/snow00098" android:duration="80"/>
     <item android:drawable="@drawable/snow00099" android:duration="80"/>
+    -->
 
 </animation-list>

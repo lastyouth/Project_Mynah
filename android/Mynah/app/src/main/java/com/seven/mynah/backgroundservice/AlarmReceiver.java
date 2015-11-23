@@ -56,7 +56,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // For our recurring task, we'll just display a message
 
         Log.i("Alarm Receiver", "Entered");
-        DebugToast.makeText(context, "Entered", Toast.LENGTH_SHORT).show();
+        if(GlobalVariable.isDebugMode) DebugToast.makeText(context, "Entered", Toast.LENGTH_SHORT).show();
         mCtx = context;
 
         Bundle bundle = intent.getExtras();
@@ -69,7 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         else
         {
             Log.i("Alarm Receiver", "Else loop");
-            DebugToast.makeText(context, "Else loop", Toast.LENGTH_SHORT).show();
+            if(GlobalVariable.isDebugMode) DebugToast.makeText(context, "Else loop", Toast.LENGTH_SHORT).show();
         }
 
     }

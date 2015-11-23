@@ -52,6 +52,8 @@
     <item android:drawable="@drawable/calendar00048" android:duration="80"/>
     <item android:drawable="@drawable/calendar00049" android:duration="80"/>
     <item android:drawable="@drawable/calendar00050" android:duration="80"/>
+
+    <!--
     <item android:drawable="@drawable/calendar00051" android:duration="80"/>
     <item android:drawable="@drawable/calendar00052" android:duration="80"/>
     <item android:drawable="@drawable/calendar00053" android:duration="80"/>
@@ -101,6 +103,7 @@
     <item android:drawable="@drawable/calendar00097" android:duration="80"/>
     <item android:drawable="@drawable/calendar00098" android:duration="80"/>
     <item android:drawable="@drawable/calendar00099" android:duration="80"/>
+    -->
 
 
 </animation-list><!-- From: file:/D:/Project_Mynah/android/Mynah/app/src/main/res/drawable/calendar_anim.xml -->
