@@ -19,13 +19,13 @@ import android.util.Log;
 public class RPiBluetoothConnectionManager {
    private UUID uuid;
    private String macaddr;
-   //private String struuid = "94f39d29-7d6d-437d-973b-fba39e49daae";
+   private String struuid = "94f39d29-7d6d-437d-973b-fba39e49daae";
    private BluetoothSocket btSocket;
    private BluetoothDevice targetBTDevice;
    private final String TAG = "RPI_BT";
    private boolean isInitialize;
    private BluetoothAdapter btAdapter;
-   //private String TARGET_MAC_ADDR = "00:1A:7D:DA:71:07";
+   private String TARGET_MAC_ADDR = "00:1A:7D:DA:71:07";
 
    //private final String PREF = "mynah_rpi";
 
@@ -220,13 +220,13 @@ public class RPiBluetoothConnectionManager {
       {
          return ERROR_CALLBACK_IS_NOT_REGISTERED;
       }
-      if(tuuid.equals("NULL"))
+      /*if(tuuid.equals("NULL"))
       {
          return ERROR_TARGET_UUID_NOT_REGISTERED;
-      }
-      this.uuid = UUID.fromString(tuuid);
-      this.macaddr = macAddr;
-      targetBTDevice = btAdapter.getRemoteDevice(macAddr);
+      }*/
+      this.uuid = UUID.fromString(struuid);
+      this.macaddr = this.TARGET_MAC_ADDR;
+      targetBTDevice = btAdapter.getRemoteDevice(macaddr);
 
       if(targetBTDevice == null)
       {

@@ -27,6 +27,12 @@ public final class GlobalVariable {
 	public static final String BROADCAST_MESSAGE = "com.seven.broadcastreceiver.status";
 	public static final String BROADCAST_WIFI = "com.seven.broadcastreceiver.wifi";
 
+
+	public static final String GLOBAL_FONT = "HMKMMAG.TTF";
+
+	public static final int GLOBAL_DPI_DEFAULT = 320;
+	public static int GLOBAL_DPI;
+
 	public static final int SCHEDULE = 1;
 	public static final int BUS = 2;
 	public static final int SUBWAY = 4;

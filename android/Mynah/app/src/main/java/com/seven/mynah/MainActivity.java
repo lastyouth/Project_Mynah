@@ -2,6 +2,7 @@ package com.seven.mynah;
 
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,17 +21,21 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
@@ -131,6 +136,9 @@ public class MainActivity extends Activity {
         layout.setInterpolator(new AccelerateDecelerateInterpolator());
         setContentView(layout);
 
+        getDpi(this);
+        initDefaultTypeface(this);
+
         //setContentView(R.layout.activity_main);
 
         ServiceAccessManager mServiceAccessManager = ServiceAccessManager.getInstance();
@@ -153,6 +161,72 @@ public class MainActivity extends Activity {
         updateStatus();
 
         Log.d(TAG, "onCreate Finish");
+    }
+
+
+    public void getDpi(Context context)
+    {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+
+        Log.i(TAG, "density :" +  metrics.density);
+
+        // density interms of dpi
+        Log.i(TAG, "D density :" +  metrics.densityDpi);
+
+        // horizontal pixel resolution
+        Log.i(TAG, "width pix :" +  metrics.widthPixels);
+
+        // actual horizontal dpi
+        Log.i(TAG, "xdpi :" +  metrics.xdpi);
+
+        // actual vertical dpi
+        Log.i(TAG, "ydpi :" +  metrics.ydpi);
+
+        GlobalVariable.GLOBAL_DPI = metrics.densityDpi;
+
+
+    }
+
+
+
+    private void initDefaultTypeface(Context context) {
+        try {
+            Typeface defaultTypeface = Typeface.createFromAsset(context.getAssets(), GlobalVariable.GLOBAL_FONT);
+            final Field field = Typeface.class.getDeclaredField("DEFAULT");
+            field.setAccessible(true);
+            field.set(null, defaultTypeface);
+        } catch ( NoSuchFieldException e ) {
+            e.printStackTrace();
+        } catch ( IllegalArgumentException e ) {
+            e.printStackTrace();
+        } catch ( IllegalAccessException e ) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setGlobalFont(Context context,View view){
+
+        if (view != null) {
+            if (view instanceof ViewGroup) {
+                ViewGroup vg = (ViewGroup) view;
+                int len = vg.getChildCount();
+                for (int i = 0; i < len; i++) {
+                    View v = vg.getChildAt(i);
+                    if (v instanceof TextView) {
+                        ((TextView) v).setTypeface(Typeface.createFromAsset(context.getAssets(), GlobalVariable.GLOBAL_FONT));
+                        float tempSize = ((TextView) v).getTextSize();
+                        ((TextView) v).setTextSize(tempSize * GlobalVariable.GLOBAL_DPI / GlobalVariable.GLOBAL_DPI_DEFAULT);
+
+                    }
+                    setGlobalFont(context, v);
+                }
+            }
+        } else {
+            Log.d(TAG,"setGlobalFont");
+        }
+
     }
 
 
@@ -400,7 +474,7 @@ public class MainActivity extends Activity {
         }
 
         mCalendarManager = GlobalGoogleCalendarManager.calendarManager;
-        if(mCalendarManager != null)
+        if (mCalendarManager != null)
         {
             if(mCalendarManager.getCalendarCredential().getSelectedAccountName() != null)
             {
@@ -415,8 +489,16 @@ public class MainActivity extends Activity {
         }
 
         registerReceiver();
+        //setGlobalFont(this,getWindow().getDecorView());
 
         Log.d(TAG, "onResume Finish");
+    }
+
+
+    @Override
+    public void onAttachedToWindow()
+    {
+        setGlobalFont(this,getWindow().getDecorView());
     }
 
     public CustomLayoutSet.SendMassgeHandler getHandler()

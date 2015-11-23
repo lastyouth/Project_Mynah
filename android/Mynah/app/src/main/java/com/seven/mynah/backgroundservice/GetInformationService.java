@@ -264,9 +264,7 @@ public class GetInformationService extends Service
         // Get Device Id
         deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-<<<<<<< HEAD
         isBluetoothEnabled = false;// BluetoothAdapter.getDefaultAdapter().isEnabled();
-=======
 
         try{
             isBluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
@@ -275,7 +273,6 @@ public class GetInformationService extends Service
             e.printStackTrace();
             if(GlobalVariable.isDebugMode) DebugToast.makeText(this,"Bluetooth null pointer error",Toast.LENGTH_SHORT).show();
         }
->>>>>>> ddbec9b6f592b383c7829d46dd38bb3418ea117f
 
         mBluetoothManager = new RPiBluetoothConnectionManager(deviceID);
         mBluetoothManager.registerCallback(btCallback);

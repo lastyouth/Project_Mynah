@@ -30,28 +30,67 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="266" column="8" selection-start-line="266" selection-start-column="8" selection-end-line="266" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#12086#12087#0" expanded="false" />
-                <element signature="e#12143#12144#0" expanded="false" />
-                <element signature="e#13192#13193#0" expanded="false" />
-                <element signature="e#13235#13236#0" expanded="false" />
-                <element signature="e#14019#14020#0" expanded="false" />
-                <element signature="e#14048#14049#0" expanded="false" />
-                <element signature="e#15594#15595#0" expanded="false" />
-                <element signature="e#15647#15648#0" expanded="false" />
-              </folding>
+              <caret line="246" column="9" selection-start-line="246" selection-start-column="9" selection-end-line="246" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomLayoutSet.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CustomLayoutSet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16314779">
-              <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="305" column="11" selection-start-line="305" selection-start-column="11" selection-end-line="305" selection-end-column="11" />
+              <folding>
+                <element signature="e#2513#3113#0" expanded="true" />
+                <element signature="e#3112#3113#0" expanded="true" />
+                <element signature="e#8675#8676#0" expanded="true" />
+                <element signature="e#8706#8707#0" expanded="true" />
+                <element signature="e#9221#10360#0" expanded="true" />
+                <element signature="e#10359#10360#0" expanded="true" />
+                <element signature="e#17561#17736#0" expanded="true" />
+                <element signature="e#17735#17736#0" expanded="true" />
+                <element signature="e#17789#19053#0" expanded="true" />
+                <element signature="e#19052#19053#0" expanded="true" />
+                <element signature="e#19104#19256#0" expanded="true" />
+                <element signature="e#19255#19256#0" expanded="true" />
+                <element signature="e#19300#19625#0" expanded="true" />
+                <element signature="e#19624#19625#0" expanded="true" />
+                <element signature="e#19668#19821#0" expanded="true" />
+                <element signature="e#19820#19821#0" expanded="true" />
+                <element signature="e#19867#20186#0" expanded="true" />
+                <element signature="e#20185#20186#0" expanded="true" />
+                <element signature="e#20223#20371#0" expanded="true" />
+                <element signature="e#20370#20371#0" expanded="true" />
+                <element signature="e#20412#20733#0" expanded="true" />
+                <element signature="e#20732#20733#0" expanded="true" />
+                <element signature="e#20773#20924#0" expanded="true" />
+                <element signature="e#20923#20924#0" expanded="true" />
+                <element signature="e#20968#21292#0" expanded="true" />
+                <element signature="e#21291#21292#0" expanded="true" />
+                <element signature="e#21334#22098#0" expanded="true" />
+                <element signature="e#22097#22098#0" expanded="true" />
+                <element signature="e#22139#22884#0" expanded="true" />
+                <element signature="e#22883#22884#0" expanded="true" />
+                <element signature="e#51923#52088#0" expanded="true" />
+                <element signature="e#52087#52088#0" expanded="true" />
+                <element signature="e#52128#53844#0" expanded="true" />
+                <element signature="e#53843#53844#0" expanded="true" />
+                <element signature="e#54275#55429#0" expanded="true" />
+                <element signature="e#55428#55429#0" expanded="true" />
+                <element signature="e#70067#70068#0" expanded="true" />
+                <element signature="e#70114#70115#0" expanded="true" />
+                <element signature="e#70199#70200#0" expanded="true" />
+                <element signature="e#70247#70248#0" expanded="true" />
+                <element signature="e#70897#70898#0" expanded="true" />
+                <element signature="e#70944#70945#0" expanded="true" />
+                <element signature="e#71028#71029#0" expanded="true" />
+                <element signature="e#71076#71077#0" expanded="true" />
+                <element signature="e#72570#72571#0" expanded="true" />
+                <element signature="e#72602#72603#0" expanded="true" />
+                <element signature="e#72647#72648#0" expanded="true" />
+                <element signature="e#72678#72679#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="28" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="28" />
+              <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -69,15 +108,69 @@
       <file leaf-file-name="RPiBluetoothConnectionManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="249" column="40" selection-start-line="249" selection-start-column="40" selection-end-line="249" selection-end-column="40" />
+            <state vertical-scroll-proportion="-8.16">
+              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#9795#9796#0" expanded="false" />
-                <element signature="e#9832#9833#0" expanded="false" />
-                <element signature="e#10018#10019#0" expanded="false" />
-                <element signature="e#10063#10064#0" expanded="false" />
+                <element signature="e#9810#9811#0" expanded="true" />
+                <element signature="e#9847#9848#0" expanded="true" />
+                <element signature="e#10033#10034#0" expanded="true" />
+                <element signature="e#10078#10079#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout_bus.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_bus.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.9333334">
+              <caret line="307" column="20" selection-start-line="307" selection-start-column="20" selection-end-line="307" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="501" column="0" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
+              <folding>
+                <element signature="e#17261#17262#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PhoneWindow.java" pinned="false" current-in-tab="true">
+        <entry file="file://D:/android/androidsdk/sources/android-22/com/android/internal/policy/impl/PhoneWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3326886">
+              <caret line="2675" column="0" selection-start-line="2675" selection-start-column="0" selection-end-line="2675" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewGroup.java" pinned="false" current-in-tab="false">
+        <entry file="file://D:/android/androidsdk/sources/android-22/android/view/ViewGroup.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5463" column="9" selection-start-line="5463" selection-start-column="9" selection-end-line="5463" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GlobalVariable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.84">
+              <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1615,8 +1708,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1624,9 +1721,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="960" />
-    <option name="width" value="960" />
-    <option name="height" value="1040" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1638,13 +1736,108 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectView">
+    <navigator currentView="AndroidView" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mynah" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="globalmanager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.103:5555" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_22_x86" />
     <property name="FullScreen" value="false" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
   </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1653,6 +1846,31 @@
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
@@ -1686,6 +1904,22 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1705,6 +1939,11 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1806,28 +2045,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.47333333" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3926585" sideWeight="0.51119405" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.4911111" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37712345" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37712345" sideWeight="0.4911111" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17963752" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3926585" sideWeight="0.48880598" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1849,7 +2089,23 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java</url>
+          <line>217</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java</url>
+          <line>211</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="6" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -1857,25 +2113,64 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="266" column="8" selection-start-line="266" selection-start-column="8" selection-end-line="266" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#12086#12087#0" expanded="false" />
-            <element signature="e#12143#12144#0" expanded="false" />
-            <element signature="e#13192#13193#0" expanded="false" />
-            <element signature="e#13235#13236#0" expanded="false" />
-            <element signature="e#14019#14020#0" expanded="false" />
-            <element signature="e#14048#14049#0" expanded="false" />
-            <element signature="e#15594#15595#0" expanded="false" />
-            <element signature="e#15647#15648#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#2513#3113#0" expanded="true" />
+            <element signature="e#3112#3113#0" expanded="true" />
+            <element signature="e#8675#8676#0" expanded="true" />
+            <element signature="e#8706#8707#0" expanded="true" />
+            <element signature="e#9221#10360#0" expanded="true" />
+            <element signature="e#10359#10360#0" expanded="true" />
+            <element signature="e#17561#17736#0" expanded="true" />
+            <element signature="e#17735#17736#0" expanded="true" />
+            <element signature="e#17789#19053#0" expanded="true" />
+            <element signature="e#19052#19053#0" expanded="true" />
+            <element signature="e#19104#19256#0" expanded="true" />
+            <element signature="e#19255#19256#0" expanded="true" />
+            <element signature="e#19300#19625#0" expanded="true" />
+            <element signature="e#19624#19625#0" expanded="true" />
+            <element signature="e#19668#19821#0" expanded="true" />
+            <element signature="e#19820#19821#0" expanded="true" />
+            <element signature="e#19867#20186#0" expanded="true" />
+            <element signature="e#20185#20186#0" expanded="true" />
+            <element signature="e#20223#20371#0" expanded="true" />
+            <element signature="e#20370#20371#0" expanded="true" />
+            <element signature="e#20412#20733#0" expanded="true" />
+            <element signature="e#20732#20733#0" expanded="true" />
+            <element signature="e#20773#20924#0" expanded="true" />
+            <element signature="e#20923#20924#0" expanded="true" />
+            <element signature="e#20968#21292#0" expanded="true" />
+            <element signature="e#21291#21292#0" expanded="true" />
+            <element signature="e#21334#22098#0" expanded="true" />
+            <element signature="e#22097#22098#0" expanded="true" />
+            <element signature="e#22139#22884#0" expanded="true" />
+            <element signature="e#22883#22884#0" expanded="true" />
+            <element signature="e#51923#52088#0" expanded="true" />
+            <element signature="e#52087#52088#0" expanded="true" />
+            <element signature="e#52128#53844#0" expanded="true" />
+            <element signature="e#53843#53844#0" expanded="true" />
+            <element signature="e#54275#55429#0" expanded="true" />
+            <element signature="e#55428#55429#0" expanded="true" />
+            <element signature="e#70067#70068#0" expanded="true" />
+            <element signature="e#70114#70115#0" expanded="true" />
+            <element signature="e#70199#70200#0" expanded="true" />
+            <element signature="e#70247#70248#0" expanded="true" />
+            <element signature="e#70897#70898#0" expanded="true" />
+            <element signature="e#70944#70945#0" expanded="true" />
+            <element signature="e#71028#71029#0" expanded="true" />
+            <element signature="e#71076#71077#0" expanded="true" />
+            <element signature="e#72570#72571#0" expanded="true" />
+            <element signature="e#72602#72603#0" expanded="true" />
+            <element signature="e#72647#72648#0" expanded="true" />
+            <element signature="e#72678#72679#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1892,11 +2187,96 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="249" column="40" selection-start-line="249" selection-start-column="40" selection-end-line="249" selection-end-column="40" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#9795#9796#0" expanded="false" />
-            <element signature="e#9832#9833#0" expanded="false" />
-            <element signature="e#10018#10019#0" expanded="false" />
-            <element signature="e#10063#10064#0" expanded="false" />
+            <element signature="e#9810#9811#0" expanded="true" />
+            <element signature="e#9847#9848#0" expanded="true" />
+            <element signature="e#10033#10034#0" expanded="true" />
+            <element signature="e#10078#10079#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="266" column="8" selection-start-line="266" selection-start-column="8" selection-end-line="266" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
+          <folding>
+            <element signature="e#2513#3113#0" expanded="true" />
+            <element signature="e#3112#3113#0" expanded="true" />
+            <element signature="e#8675#8676#0" expanded="true" />
+            <element signature="e#8706#8707#0" expanded="true" />
+            <element signature="e#9221#10360#0" expanded="true" />
+            <element signature="e#10359#10360#0" expanded="true" />
+            <element signature="e#17561#17736#0" expanded="true" />
+            <element signature="e#17735#17736#0" expanded="true" />
+            <element signature="e#17789#19053#0" expanded="true" />
+            <element signature="e#19052#19053#0" expanded="true" />
+            <element signature="e#19104#19256#0" expanded="true" />
+            <element signature="e#19255#19256#0" expanded="true" />
+            <element signature="e#19300#19625#0" expanded="true" />
+            <element signature="e#19624#19625#0" expanded="true" />
+            <element signature="e#19668#19821#0" expanded="true" />
+            <element signature="e#19820#19821#0" expanded="true" />
+            <element signature="e#19867#20186#0" expanded="true" />
+            <element signature="e#20185#20186#0" expanded="true" />
+            <element signature="e#20223#20371#0" expanded="true" />
+            <element signature="e#20370#20371#0" expanded="true" />
+            <element signature="e#20412#20733#0" expanded="true" />
+            <element signature="e#20732#20733#0" expanded="true" />
+            <element signature="e#20773#20924#0" expanded="true" />
+            <element signature="e#20923#20924#0" expanded="true" />
+            <element signature="e#20968#21292#0" expanded="true" />
+            <element signature="e#21291#21292#0" expanded="true" />
+            <element signature="e#21334#22098#0" expanded="true" />
+            <element signature="e#22097#22098#0" expanded="true" />
+            <element signature="e#22139#22884#0" expanded="true" />
+            <element signature="e#22883#22884#0" expanded="true" />
+            <element signature="e#51923#52088#0" expanded="true" />
+            <element signature="e#52087#52088#0" expanded="true" />
+            <element signature="e#52128#53844#0" expanded="true" />
+            <element signature="e#53843#53844#0" expanded="true" />
+            <element signature="e#54275#55429#0" expanded="true" />
+            <element signature="e#55428#55429#0" expanded="true" />
+            <element signature="e#70067#70068#0" expanded="true" />
+            <element signature="e#70114#70115#0" expanded="true" />
+            <element signature="e#70199#70200#0" expanded="true" />
+            <element signature="e#70247#70248#0" expanded="true" />
+            <element signature="e#70897#70898#0" expanded="true" />
+            <element signature="e#70944#70945#0" expanded="true" />
+            <element signature="e#71028#71029#0" expanded="true" />
+            <element signature="e#71076#71077#0" expanded="true" />
+            <element signature="e#72570#72571#0" expanded="true" />
+            <element signature="e#72602#72603#0" expanded="true" />
+            <element signature="e#72647#72648#0" expanded="true" />
+            <element signature="e#72678#72679#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="112" column="28" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="249" column="40" selection-start-line="249" selection-start-column="40" selection-end-line="249" selection-end-column="40" />
+          <folding>
+            <element signature="e#9810#9811#0" expanded="true" />
+            <element signature="e#9847#9848#0" expanded="true" />
+            <element signature="e#10033#10034#0" expanded="true" />
+            <element signature="e#10078#10079#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1905,16 +2285,103 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/android/androidsdk/platforms/android-22/android.jar!/org/apache/http/impl/conn/DefaultClientConnectionOperator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8447581">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.16">
+          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#12086#12087#0" expanded="false" />
-            <element signature="e#12143#12144#0" expanded="false" />
-            <element signature="e#13192#13193#0" expanded="false" />
-            <element signature="e#13235#13236#0" expanded="false" />
-            <element signature="e#14019#14020#0" expanded="false" />
-            <element signature="e#14048#14049#0" expanded="false" />
-            <element signature="e#15594#15595#0" expanded="false" />
-            <element signature="e#15647#15648#0" expanded="false" />
+            <element signature="e#9810#9811#0" expanded="true" />
+            <element signature="e#9847#9848#0" expanded="true" />
+            <element signature="e#10033#10034#0" expanded="true" />
+            <element signature="e#10078#10079#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_bus.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.9333334">
+          <caret line="307" column="20" selection-start-line="307" selection-start-column="20" selection-end-line="307" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="64" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="305" column="11" selection-start-line="305" selection-start-column="11" selection-end-line="305" selection-end-column="11" />
+          <folding>
+            <element signature="e#2513#3113#0" expanded="true" />
+            <element signature="e#3112#3113#0" expanded="true" />
+            <element signature="e#8675#8676#0" expanded="true" />
+            <element signature="e#8706#8707#0" expanded="true" />
+            <element signature="e#9221#10360#0" expanded="true" />
+            <element signature="e#10359#10360#0" expanded="true" />
+            <element signature="e#17561#17736#0" expanded="true" />
+            <element signature="e#17735#17736#0" expanded="true" />
+            <element signature="e#17789#19053#0" expanded="true" />
+            <element signature="e#19052#19053#0" expanded="true" />
+            <element signature="e#19104#19256#0" expanded="true" />
+            <element signature="e#19255#19256#0" expanded="true" />
+            <element signature="e#19300#19625#0" expanded="true" />
+            <element signature="e#19624#19625#0" expanded="true" />
+            <element signature="e#19668#19821#0" expanded="true" />
+            <element signature="e#19820#19821#0" expanded="true" />
+            <element signature="e#19867#20186#0" expanded="true" />
+            <element signature="e#20185#20186#0" expanded="true" />
+            <element signature="e#20223#20371#0" expanded="true" />
+            <element signature="e#20370#20371#0" expanded="true" />
+            <element signature="e#20412#20733#0" expanded="true" />
+            <element signature="e#20732#20733#0" expanded="true" />
+            <element signature="e#20773#20924#0" expanded="true" />
+            <element signature="e#20923#20924#0" expanded="true" />
+            <element signature="e#20968#21292#0" expanded="true" />
+            <element signature="e#21291#21292#0" expanded="true" />
+            <element signature="e#21334#22098#0" expanded="true" />
+            <element signature="e#22097#22098#0" expanded="true" />
+            <element signature="e#22139#22884#0" expanded="true" />
+            <element signature="e#22883#22884#0" expanded="true" />
+            <element signature="e#51923#52088#0" expanded="true" />
+            <element signature="e#52087#52088#0" expanded="true" />
+            <element signature="e#52128#53844#0" expanded="true" />
+            <element signature="e#53843#53844#0" expanded="true" />
+            <element signature="e#54275#55429#0" expanded="true" />
+            <element signature="e#55428#55429#0" expanded="true" />
+            <element signature="e#70067#70068#0" expanded="true" />
+            <element signature="e#70114#70115#0" expanded="true" />
+            <element signature="e#70199#70200#0" expanded="true" />
+            <element signature="e#70247#70248#0" expanded="true" />
+            <element signature="e#70897#70898#0" expanded="true" />
+            <element signature="e#70944#70945#0" expanded="true" />
+            <element signature="e#71028#71029#0" expanded="true" />
+            <element signature="e#71076#71077#0" expanded="true" />
+            <element signature="e#72570#72571#0" expanded="true" />
+            <element signature="e#72602#72603#0" expanded="true" />
+            <element signature="e#72647#72648#0" expanded="true" />
+            <element signature="e#72678#72679#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1922,47 +2389,49 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/GetInformationService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="266" column="8" selection-start-line="266" selection-start-column="8" selection-end-line="266" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#12086#12087#0" expanded="false" />
-            <element signature="e#12143#12144#0" expanded="false" />
-            <element signature="e#13192#13193#0" expanded="false" />
-            <element signature="e#13235#13236#0" expanded="false" />
-            <element signature="e#14019#14020#0" expanded="false" />
-            <element signature="e#14048#14049#0" expanded="false" />
-            <element signature="e#15594#15595#0" expanded="false" />
-            <element signature="e#15647#15648#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/backgroundservice/RPiBluetoothConnectionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="249" column="40" selection-start-line="249" selection-start-column="40" selection-end-line="249" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#9795#9796#0" expanded="false" />
-            <element signature="e#9832#9833#0" expanded="false" />
-            <element signature="e#10018#10019#0" expanded="false" />
-            <element signature="e#10063#10064#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="28" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="28" />
+          <caret line="246" column="9" selection-start-line="246" selection-start-column="9" selection-end-line="246" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/CustomLayoutSet.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/globalmanager/GlobalVariable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16314779">
-          <caret line="427" column="0" selection-start-line="427" selection-start-column="0" selection-end-line="427" selection-end-column="0" />
+        <state vertical-scroll-proportion="-8.84">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android/androidsdk/sources/android-22/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9666667">
+          <caret line="2632" column="0" selection-start-line="2632" selection-start-column="0" selection-end-line="2632" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android/androidsdk/sources/android-22/android/view/ViewGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5463" column="9" selection-start-line="5463" selection-start-column="9" selection-end-line="5463" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/seven/mynah/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="501" column="0" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
+          <folding>
+            <element signature="e#17261#17262#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android/androidsdk/sources/android-22/com/android/internal/policy/impl/PhoneWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3326886">
+          <caret line="2675" column="0" selection-start-line="2675" selection-start-column="0" selection-end-line="2675" selection-end-column="0" />
           <folding />
         </state>
       </provider>
