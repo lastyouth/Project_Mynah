@@ -264,7 +264,7 @@ public class GetInformationService extends Service
         // Get Device Id
         deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        isBluetoothEnabled = BluetoothAdapter.getDefaultAdapter().isEnabled();
+        isBluetoothEnabled = false;// BluetoothAdapter.getDefaultAdapter().isEnabled();
 
         mBluetoothManager = new RPiBluetoothConnectionManager(deviceID);
         mBluetoothManager.registerCallback(btCallback);
